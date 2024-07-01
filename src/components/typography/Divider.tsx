@@ -1,11 +1,5 @@
 /** @jsxImportSource @emotion/react */
 
-// # --------------------------------------------------------------------------------
-//
-// Modules
-//
-// # --------------------------------------------------------------------------------
-
 import { css, keyframes } from '@emotion/react'
 import { RerenderInView } from '../utils/RerenderInView'
 import React from 'react'
