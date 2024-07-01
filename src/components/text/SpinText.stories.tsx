@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { SpinText } from './SpinText'
 
 const meta: Meta<typeof SpinText> = {
-  title: 'Image/SpinText',
+  title: 'Text/SpinText',
   component: SpinText,
   parameters: {},
   tags: ['autodocs']
