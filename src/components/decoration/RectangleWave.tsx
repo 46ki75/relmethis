@@ -63,11 +63,7 @@ export interface RectangleWaveProps {
 // # --------------------------------------------------------------------------------
 
 const RectangleWaveComponent = ({ color }: RectangleWaveProps): JSX.Element => {
-  return (
-    <div style={{ position: 'relative', width: '100%', height: 400 }}>
-      <div css={style(color)}></div>
-    </div>
-  )
+  return <div css={style(color)}></div>
 }
 
 // # --------------------------------------------------------------------------------
