@@ -56,15 +56,17 @@ export interface SpinTextProps {
 const SpinTextComponent = ({ text }: SpinTextProps) => {
   const length = useMemo(() => text.length, [text])
 
-  return (
-    <div css={containerStyle}>
-      {text.split('').map((char, index) => (
+  const renderedText = useMemo(
+    () =>
+      text.split('').map((char, index) => (
         <span css={style(index * 50, length * 50 + 200)} key={index}>
           {char === ' ' ? <>&nbsp;</> : char}
         </span>
-      ))}
-    </div>
+      )),
+    [text, length]
   )
+
+  return <div css={containerStyle}>{renderedText}</div>
 }
 
 // # --------------------------------------------------------------------------------
