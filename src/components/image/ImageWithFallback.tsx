@@ -28,6 +28,8 @@ const fallbackStyle = ({
   display: flex;
   align-items: center;
   justify-content: center;
+
+  user-select: none;
 `
 
 const fallbackInnerStyle = css`
@@ -36,6 +38,7 @@ const fallbackInnerStyle = css`
   justify-content: center;
   flex-direction: column;
   gap: 1rem;
+  user-select: none;
 `
 
 const imageStyle = (isLoading: boolean) => css`
@@ -44,6 +47,8 @@ const imageStyle = (isLoading: boolean) => css`
 
   transition: opacity 300ms;
   opacity: ${isLoading ? 0 : 1};
+
+  user-select: none;
 `
 
 // # --------------------------------------------------------------------------------
