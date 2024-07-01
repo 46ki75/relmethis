@@ -149,7 +149,7 @@ const ImageWithModalComponent = ({
       case 'en':
         return 'Press the Escape key to close the modal'
       case 'ja':
-        return 'Escape キーを押下でモーダルを閉じる'
+        return 'Escape キー押下でモーダルを閉じる'
     }
   }, [lang])
 
