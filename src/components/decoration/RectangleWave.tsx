@@ -80,4 +80,21 @@ RectangleWaveComponent.defaultProps = {
   color: 'rgb(0, 0, 0)'
 }
 
+// # --------------------------------------------------------------------------------
+//
+// memoize
+//
+// # --------------------------------------------------------------------------------
+
+/**
+ * Please set the position of the parent component to relative when using this component.
+ *
+ * ## Example
+ *
+ * ```tsx
+ * <div style={{ position: 'relative', width: '100%', height: 400 }}>
+ *   <RectangleWave />
+ * </div>
+ * ```
+ */
 export const RectangleWave = React.memo(RectangleWaveComponent)
