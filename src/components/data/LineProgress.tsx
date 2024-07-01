@@ -48,7 +48,6 @@ const lineStyle = ({
           height: ${weight}px;
           border-radius: ${weight / 2}px;
 
-          /* background-color: ${color}; */
           background: linear-gradient(
             to right,
             ${color} 0% 50%,
@@ -75,13 +74,16 @@ const lineStyle = ({
           content: '';
           top: 0;
           left: 0;
-          width: ${percent}%;
+          width: 100%;
           height: ${weight}px;
           background: ${color};
           border-radius: ${weight / 2}px;
           opacity: 0.25;
 
           transition: all 400ms;
+
+          transform-origin: 0 0;
+          transform: scaleX(${percent}%);
         }
 
         /* PERCENT */
@@ -90,12 +92,15 @@ const lineStyle = ({
           content: '';
           top: 0;
           left: 0;
-          width: ${percent}%;
+          width: 100%;
           height: ${weight}px;
           background: ${color};
           border-radius: ${weight / 2}px;
 
           transition: all 1600ms;
+
+          transform-origin: 0 0;
+          transform: scaleX(${percent}%);
         }
       `
 
