@@ -1,0 +1,17 @@
+{
+  "name": "React Dev Container",
+  "build": { "dockerfile": "Dockerfile" },
+  "postCreateCommand": "npm i",
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "svipas.prettier-plus",
+        "usernamehw.errorlens"
+      ]
+    }
+  },
+  "forwardPorts": [5173, 6006]
+}
