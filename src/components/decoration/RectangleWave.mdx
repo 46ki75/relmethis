@@ -1,0 +1,23 @@
+import { Canvas, Meta, Controls } from '@storybook/blocks'
+import * as RectangleWave from './RectangleWave.stories'
+
+<Meta of={RectangleWave} />
+
+# RectangleWave
+
+This component is used for decorative purposes.
+
+<Canvas of={RectangleWave.Default} />
+<Controls />
+
+Please note the following when using it as a parent component:
+
+- `width`: Specify a specific value or 100%.
+- `height`: Specify a specific value or 100%.
+- `positon`: Set to `absolute`.
+
+```tsx
+<div style={{ position: 'relative', width: '100%', height: 400 }}>
+  <RectangleWave />
+</div>
+```
