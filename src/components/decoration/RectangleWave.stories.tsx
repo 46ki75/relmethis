@@ -4,17 +4,30 @@ import { RectangleWave } from './RectangleWave'
 const meta: Meta<typeof RectangleWave> = {
   title: 'Decoration/RectangleWave',
   component: RectangleWave,
-  parameters: {},
-  tags: ['autodocs']
+  parameters: {}
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {}
+  args: {},
+  render: () => {
+    return (
+      <div style={{ position: 'relative', width: '100%', height: 400 }}>
+        <RectangleWave />
+      </div>
+    )
+  }
 }
 
 export const Colored: Story = {
-  args: { color: 'darkgreen' }
+  args: { color: 'darkgreen' },
+  render: ({ color }) => {
+    return (
+      <div style={{ position: 'relative', width: '100%', height: 400 }}>
+        <RectangleWave color={color} />
+      </div>
+    )
+  }
 }
