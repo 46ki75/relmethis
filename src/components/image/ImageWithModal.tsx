@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { RectangleWave } from '../decoration/RectangleWave'
 import { SquareLoadingIcon } from '../icon/SquareLoadingIcon'
 import { SpinText } from '../text/SpinText'
@@ -117,6 +117,12 @@ export interface ImageWithModalProps {
    * ```
    */
   height: number
+  /**
+   * **optional**
+   *
+   * Language for displaying flavor text or guide text
+   */
+  lang: 'en' | 'ja'
 }
 
 // # --------------------------------------------------------------------------------
@@ -128,7 +134,8 @@ export interface ImageWithModalProps {
 const ImageWithModalComponent = ({
   src,
   width,
-  height
+  height,
+  lang
 }: ImageWithModalProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true)
   const [isModalShow, setIsModalShow] = useState(false)
@@ -136,6 +143,15 @@ const ImageWithModalComponent = ({
   useKey('Escape', () => {
     setIsModalShow(false)
   })
+
+  const guideText = useMemo(() => {
+    switch (lang) {
+      case 'en':
+        return 'Press the Escape key to close the modal'
+      case 'ja':
+        return 'Escape キーを押下でモーダルを閉じる'
+    }
+  }, [lang])
 
   return (
     <>
@@ -148,9 +164,7 @@ const ImageWithModalComponent = ({
           }}
         >
           <img css={modalImageStyle} alt='' src={src} />
-          <span css={guideTextStyle}>
-            Press the Escape key to close the modal.
-          </span>
+          <span css={guideTextStyle}>{guideText}</span>
         </div>,
         document.body
       )}
@@ -192,7 +206,8 @@ const ImageWithModalComponent = ({
 
 ImageWithModalComponent.defaultProps = {
   width: 1200,
-  height: 630
+  height: 630,
+  lang: 'ja'
 }
 
 // # --------------------------------------------------------------------------------
