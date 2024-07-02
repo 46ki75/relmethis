@@ -43,7 +43,7 @@ const fallbackInnerStyle = css`
 
 const imageStyle = (isLoading: boolean) => css`
   width: ${isLoading ? '0px' : '100%'};
-  height: ${isLoading ? '0px' : '100%'};
+  height: ${isLoading ? '0px' : 'auto'};
 
   transition: opacity 300ms;
   opacity: ${isLoading ? 0 : 1};
