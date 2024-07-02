@@ -165,6 +165,11 @@ export interface MultiLineProgressProps {
     value: number
     color: string
   }>
+  /**
+   * **optional** default: undefined
+   *
+   * The unit displayed after the numerical value of the indicator.
+   */
   unit: string
 }
 
