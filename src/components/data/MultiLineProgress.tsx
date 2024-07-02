@@ -67,8 +67,10 @@ const lineStyle = ({
         border-radius: 2px;
 
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
+
+        overflow: hidden;
       `
 
 const childStyle = ({
@@ -85,6 +87,32 @@ const childStyle = ({
   flex-grow: ${value};
 
   transition: flex-grow 8000ms;
+  transition-timing-function: linear;
+`
+
+const indicatorContainerStyle = css`
+  margin-top: 0.25rem;
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.25rem;
+`
+
+const indicatorStyle = (color: string) => css`
+  position: relative;
+  padding: 0 0.75rem;
+  color: ${color};
+  font-size: 0.75rem;
+
+  &:before {
+    position: absolute;
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    top: 0.25rem;
+    left: 0;
+    background-color: ${color};
+    border-radius: 50%;
+  }
 `
 
 // # --------------------------------------------------------------------------------
@@ -137,6 +165,7 @@ export interface MultiLineProgressProps {
     value: number
     color: string
   }>
+  unit: string
 }
 
 // # --------------------------------------------------------------------------------
@@ -149,7 +178,8 @@ const MultiLineProgressComponent = ({
   weight,
   color,
   isLoading,
-  data
+  data,
+  unit
 }: MultiLineProgressProps) => {
   const { ref, inView } = useInView({
     threshold: 0
@@ -165,11 +195,21 @@ const MultiLineProgressComponent = ({
             color: d.color,
             value: inView ? d.value : 1
           })}
-          style={{}}
         ></div>
       )
     })
   }, [data, inView, weight])
+
+  const renderNumber = useMemo(() => {
+    return data.map((d) => {
+      return (
+        <div css={indicatorStyle(d.color)}>
+          {d.value}
+          {unit}
+        </div>
+      )
+    })
+  }, [data, unit])
 
   return (
     <>
@@ -183,6 +223,7 @@ const MultiLineProgressComponent = ({
       >
         {renderProgress}
       </div>
+      {!isLoading && <div css={indicatorContainerStyle}>{renderNumber}</div>}
     </>
   )
 }
