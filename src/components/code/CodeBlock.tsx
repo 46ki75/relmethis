@@ -19,11 +19,11 @@ import {
 
 // icons
 import {
-  CodeBracketIcon,
   NumberedListIcon,
   ClipboardDocumentIcon
 } from '@heroicons/react/24/outline'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
+import { LanguageIcon } from '../icon/LanguageIcon'
 
 // # --------------------------------------------------------------------------------
 //
@@ -152,7 +152,7 @@ export const CodeBlockComponent = ({
 
       <div css={headerStyle}>
         <div>
-          <CodeBracketIcon css={iconStyle({ isDark })} />
+          <LanguageIcon language={language} size={'20px'} color={undefined} />
           <span css={captionStyle({ isDark })}>{caption}</span>
         </div>
         <div>
