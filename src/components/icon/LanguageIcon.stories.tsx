@@ -7,7 +7,7 @@ const meta: Meta<typeof LanguageIcon> = {
   tags: ['autodocs'],
   argTypes: {
     language: {
-      control: { type: 'select' },
+      control: { type: 'radio' },
       options: [
         'txt',
         'javascript',
