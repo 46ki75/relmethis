@@ -1,7 +1,25 @@
 /** @jsxImportSource @emotion/react */
 
+import { css, keyframes } from '@emotion/react'
 import { CodeBracketIcon } from '@heroicons/react/24/outline'
 import React, { Suspense } from 'react'
+
+// # --------------------------------------------------------------------------------
+//
+// styles
+//
+// # --------------------------------------------------------------------------------
+
+const fade = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`
+
+const iconStyle = css`
+  animation-name: ${fade};
+  animation-duration: 300ms;
+  animation-fill-mode: both;
+`
 
 interface LanguageIconProps {
   size?: string
@@ -44,16 +62,19 @@ const LanguageIconComponent = ({
       break
 
     default:
-      return <CodeBracketIcon style={{ width: size, height: size, color }} />
+      return (
+        <CodeBracketIcon
+          style={{ width: size, height: size, color }}
+          css={iconStyle}
+        />
+      )
   }
 
   return (
-    <Suspense
-      fallback={
-        <CodeBracketIcon style={{ width: size, height: size, color }} />
-      }
-    >
-      {IconComponent && <IconComponent size={size} color={color} />}
+    <Suspense fallback={<div style={{ width: size, height: size, color }} />}>
+      <div css={iconStyle}>
+        {IconComponent && <IconComponent size={size} color={color} />}
+      </div>
     </Suspense>
   )
 }
