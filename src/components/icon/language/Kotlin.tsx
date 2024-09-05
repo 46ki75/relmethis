@@ -1,7 +1,8 @@
 import React from 'react'
+import { type LanguageIconSvgProps } from './Props'
 
 export const Kotlin = React.memo(
-  ({ size, color }: { size?: string; color?: string }) => {
+  ({ size = '20px', color }: LanguageIconSvgProps) => {
     return (
       <svg
         xmlns='http://www.w3.org/2000/svg'

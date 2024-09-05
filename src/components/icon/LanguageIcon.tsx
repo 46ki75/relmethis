@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
 import { css, keyframes } from '@emotion/react'
-import { CodeBracketIcon } from '@heroicons/react/24/outline'
 import React, { Suspense } from 'react'
+import { type LanguageIconSvgProps } from './language/Props'
+import { CodeBracketIcon } from '@heroicons/react/24/outline'
 
 // # --------------------------------------------------------------------------------
 //
@@ -33,7 +34,7 @@ const LanguageIconComponent = ({
   language
 }: LanguageIconProps) => {
   let IconComponent: React.LazyExoticComponent<
-    React.ComponentType<{ size: string; color?: string }>
+    React.ComponentType<LanguageIconSvgProps>
   > | null = null
 
   switch (language) {
