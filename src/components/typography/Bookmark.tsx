@@ -41,6 +41,7 @@ const hyperLinkStyle = css`
 
 const imageStyle = (isLoading: boolean) => css`
   ${isLoading && 'width: 0;'}
+  width: 100%;
   height: 100%;
 
   @media (min-width: 768px) {
@@ -51,13 +52,13 @@ const imageStyle = (isLoading: boolean) => css`
 `
 
 const imageFallbackStyle = (isLoading: boolean) => css`
-  height: 100%;
+  width: 100%;
+  height: 128px;
   display: ${isLoading ? 'flex' : 'none'};
   justify-content: center;
   align-items: center;
 
   @media (min-width: 768px) {
-    height: 100%;
     max-width: 35%;
     border-radius: 0.25rem 0 0 0.25rem;
   }
@@ -137,10 +138,7 @@ const BookmarkComponent = ({
           }}
         />
 
-        <div
-          css={imageFallbackStyle(isLoading)}
-          style={{ width: '35%', height: '128px' }}
-        >
+        <div css={imageFallbackStyle(isLoading)}>
           <DotLoadingIcon color={'rgba(128,128,128,0.9)'} />
         </div>
 
