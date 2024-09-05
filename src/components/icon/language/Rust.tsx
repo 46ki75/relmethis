@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const Rust = React.memo(
-  ({ size = '20px', color = '#ff7043' }: { size?: string; color?: string }) => {
+  ({ size = '20px', color = '#de6e4c' }: { size?: string; color?: string }) => {
     return (
       <svg
         xmlns='http://www.w3.org/2000/svg'
