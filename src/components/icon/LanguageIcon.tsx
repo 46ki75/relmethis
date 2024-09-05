@@ -77,6 +77,14 @@ const LanguageIconComponent = ({
       )
       break
 
+    case 'json':
+      IconComponent = React.lazy(() =>
+        import('./language/Json').then((module) => ({
+          default: module.Json
+        }))
+      )
+      break
+
     default:
       return (
         <CodeBracketIcon
