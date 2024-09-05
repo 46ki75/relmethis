@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import React, { useState } from 'react'
-import { css } from '@emotion/react'
+import { css, keyframes } from '@emotion/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
@@ -11,6 +11,11 @@ import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 // styles
 //
 // # --------------------------------------------------------------------------------
+
+const fade = keyframes`
+  from { opacity: 0;}
+  to { opacity: 1;}
+`
 
 const hyperLinkStyle = css`
   all: unset;
@@ -40,12 +45,15 @@ const hyperLinkStyle = css`
 `
 
 const imageStyle = (isLoading: boolean) => css`
-  ${isLoading && 'width: 0;'}
-  width: 100%;
-  height: 100%;
+  display: flex;
+  width: ${isLoading ? '0px' : '100%'};
+  height: ${isLoading ? '0px' : '100%'};
+
+  animation-name: ${fade};
+  animation-duration: 200ms;
+  animation-fill-mode: both;
 
   @media (min-width: 768px) {
-    height: 100%;
     max-width: 35%;
     border-radius: 0.25rem 0 0 0.25rem;
   }
@@ -130,6 +138,7 @@ const BookmarkComponent = ({
       <a css={hyperLinkStyle} href={url} target='_blank' rel='nopager noopener'>
         <img
           css={imageStyle(isLoading)}
+          key={String(isLoading)}
           src={image}
           alt={description}
           loading='lazy'
