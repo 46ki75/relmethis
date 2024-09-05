@@ -16,7 +16,9 @@ const fade = keyframes`
   to { opacity: 1; }
 `
 
-const iconStyle = css`
+const iconStyle = (size: string) => css`
+  width: ${size};
+  height: ${size};
   animation-name: ${fade};
   animation-duration: 300ms;
   animation-fill-mode: both;
@@ -90,14 +92,14 @@ const LanguageIconComponent = ({
       return (
         <CodeBracketIcon
           style={{ width: size, height: size, color }}
-          css={iconStyle}
+          css={iconStyle(size)}
         />
       )
   }
 
   return (
     <Suspense fallback={<div style={{ width: size, height: size, color }} />}>
-      <div css={iconStyle}>
+      <div css={iconStyle(size)}>
         {IconComponent && <IconComponent size={size} color={color} />}
       </div>
     </Suspense>
