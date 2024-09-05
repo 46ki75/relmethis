@@ -61,6 +61,14 @@ const LanguageIconComponent = ({
       )
       break
 
+    case 'java':
+      IconComponent = React.lazy(() =>
+        import('./language/Java').then((module) => ({
+          default: module.Java
+        }))
+      )
+      break
+
     default:
       return (
         <CodeBracketIcon

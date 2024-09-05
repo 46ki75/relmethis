@@ -8,7 +8,7 @@ const meta: Meta<typeof LanguageIcon> = {
   argTypes: {
     language: {
       control: { type: 'select' },
-      options: ['txt', 'rust', 'javascript', 'typescript']
+      options: ['txt', 'javascript', 'typescript', 'rust', 'java']
     }
   }
 }
