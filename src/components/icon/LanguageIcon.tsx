@@ -69,6 +69,14 @@ const LanguageIconComponent = ({
       )
       break
 
+    case 'kotlin':
+      IconComponent = React.lazy(() =>
+        import('./language/Kotlin').then((module) => ({
+          default: module.Kotlin
+        }))
+      )
+      break
+
     default:
       return (
         <CodeBracketIcon
