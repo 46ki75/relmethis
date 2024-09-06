@@ -8,7 +8,7 @@ import {
   ShieldCheckIcon,
   XCircleIcon
 } from '@heroicons/react/24/outline'
-import { darken, rgba } from 'polished'
+import { darken, lighten, rgba } from 'polished'
 import React, { useMemo } from 'react'
 import { useInView } from 'react-intersection-observer'
 
@@ -36,7 +36,7 @@ const wrapperStyle = ({
   background: linear-gradient(
     to left,
     rgba(0, 0, 0, 0) 0% 50%,
-    ${rgba(color, 0.1)} 50% 100%
+    ${lighten(0.15, rgba(color, 0.2))} 50% 100%
   );
   background-size: 200% 100%;
   background-position: ${inView ? 0 : 100}%;
@@ -45,7 +45,7 @@ const wrapperStyle = ({
 `
 
 const headerStyle = ({ color }: { color: string }) => css`
-  color: ${darken(0.15, color)};
+  color: ${darken(0.05, color)};
   display: flex;
   flex-direction: row;
   align-items: center;
