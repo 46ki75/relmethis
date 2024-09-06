@@ -42,6 +42,8 @@ const h1Style = ({ inView }: { inView: boolean }) => css`
     transition:
       height 400ms ease-in-out 0ms,
       width 400ms ease-in-out 200ms;
+
+    pointer-events: none;
   }
 
   &::after {
@@ -58,6 +60,12 @@ const h1Style = ({ inView }: { inView: boolean }) => css`
     transition:
       height 400ms ease-in-out 0ms,
       width 400ms ease-in-out 200ms;
+
+    pointer-events: none;
+  }
+
+  &::selection {
+    background-color: #aed8be8c;
   }
 `
 
