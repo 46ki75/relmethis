@@ -19,8 +19,7 @@ const fade = keyframes`
 const h1Style = ({ inView }: { inView: boolean }) => css`
   box-sizing: border-box;
   padding: 0.5rem 1rem;
-  /* border: solid 1px #d7925a; */
-  color: rgba(0, 0, 0, 0.9);
+  color: rgba(0, 0, 0, 0.8);
 
   animation-name: ${fade};
   animation-duration: 800ms;
