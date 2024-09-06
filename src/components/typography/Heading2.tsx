@@ -142,7 +142,7 @@ const Heading2Component = ({
         <div></div>
         <div></div>
       </div>
-      <h2 ref={ref} css={headingStyle({ isDark })}>
+      <h2 ref={ref} css={headingStyle({ isDark })} id={identifier}>
         {text}
       </h2>
       <div css={bottomStyle({ inView, isDark })}></div>
