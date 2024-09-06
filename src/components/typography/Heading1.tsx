@@ -3,6 +3,7 @@
 import { css, keyframes } from '@emotion/react'
 import React from 'react'
 import { useInView } from 'react-intersection-observer'
+import { FragmentIdentifier } from './FragmentIdentifier'
 
 // # --------------------------------------------------------------------------------
 //
@@ -90,9 +91,12 @@ export const Heading1Component = ({
   const { ref, inView } = useInView()
 
   return (
-    <h1 id={identifier} css={h1Style({ inView })} ref={ref}>
-      {text}
-    </h1>
+    <>
+      <h1 id={identifier} css={h1Style({ inView })} ref={ref}>
+        {text}
+      </h1>
+      <FragmentIdentifier identifier={identifier} />
+    </>
   )
 }
 
