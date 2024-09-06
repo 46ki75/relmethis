@@ -56,7 +56,14 @@ const iconStyle = css`
 // # --------------------------------------------------------------------------------
 
 export interface InlineLinkProps {
+  /**
+   * The text to be displayed
+   */
   text: string
+  /**
+   * The URL to which the link points. Links within the same domain will open in the same tab,
+   * while links to different domains will open in a new tab.
+   */
   href: string
 }
 

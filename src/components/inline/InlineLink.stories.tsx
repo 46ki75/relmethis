@@ -16,3 +16,17 @@ export const Primary: Story = {
     href: 'https://example.com'
   }
 }
+
+export const External: Story = {
+  args: {
+    text: 'Link to Page',
+    href: 'https://example.com'
+  }
+}
+
+export const Internal: Story = {
+  args: {
+    text: 'Link to Page',
+    href: window.location.href
+  }
+}
