@@ -88,6 +88,14 @@ const LanguageIconComponent = ({
       )
       break
 
+    case 'markdown':
+      IconComponent = React.lazy(() =>
+        import('./language/Markdown').then((module) => ({
+          default: module.Markdown
+        }))
+      )
+      break
+
     default:
       return (
         <CodeBracketIcon

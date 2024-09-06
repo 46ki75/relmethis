@@ -15,7 +15,8 @@ const meta: Meta<typeof LanguageIcon> = {
         'rust',
         'java',
         'kotlin',
-        'json'
+        'json',
+        'markdown'
       ]
     }
   }
