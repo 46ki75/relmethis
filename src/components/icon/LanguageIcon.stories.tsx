@@ -16,7 +16,8 @@ const meta: Meta<typeof LanguageIcon> = {
         'java',
         'kotlin',
         'json',
-        'markdown'
+        'markdown',
+        'bash'
       ]
     }
   }

@@ -96,6 +96,14 @@ const LanguageIconComponent = ({
       )
       break
 
+    case 'bash':
+      IconComponent = React.lazy(() =>
+        import('./language/Bash').then((module) => ({
+          default: module.Bash
+        }))
+      )
+      break
+
     default:
       return (
         <CodeBracketIcon
