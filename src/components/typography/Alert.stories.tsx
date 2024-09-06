@@ -3,7 +3,7 @@ import { Alert } from './Alert'
 import { ImageWithModal } from '../image/ImageWithModal'
 
 const meta: Meta<typeof Alert> = {
-  title: 'Typography/Alert',
+  title: 'Components/Typography/Alert',
   component: Alert,
   tags: ['autodocs'],
   argTypes: {

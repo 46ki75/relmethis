@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { ImageWithModal } from './ImageWithModal'
 
 const meta: Meta<typeof ImageWithModal> = {
-  title: 'Image/ImageWithModal',
+  title: 'Components/Image/ImageWithModal',
   component: ImageWithModal,
   parameters: {},
   tags: ['autodocs']

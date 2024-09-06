@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Pagetop } from './Pagetop'
 
 const meta: Meta<typeof Pagetop> = {
-  title: 'Navigation/Pagetop',
+  title: 'Components/Navigation/Pagetop',
   component: Pagetop,
   parameters: {},
   tags: ['autodocs']

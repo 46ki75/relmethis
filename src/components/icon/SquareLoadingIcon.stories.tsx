@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { SquareLoadingIcon } from './SquareLoadingIcon'
 
 const meta: Meta<typeof SquareLoadingIcon> = {
-  title: 'Icon/SquareLoadingIcon',
+  title: 'Components/Icon/SquareLoadingIcon',
   component: SquareLoadingIcon,
   parameters: {},
   tags: ['autodocs']

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { CodeBlock } from './CodeBlock'
 
 const meta: Meta<typeof CodeBlock> = {
-  title: 'Code/CodeBlock',
+  title: 'Components/Code/CodeBlock',
   component: CodeBlock,
   tags: ['autodocs']
 }

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { LanguageIcon } from './LanguageIcon'
 
 const meta: Meta<typeof LanguageIcon> = {
-  title: 'Icon/LanguageIcon',
+  title: 'Components/Icon/LanguageIcon',
   component: LanguageIcon,
   tags: ['autodocs'],
   argTypes: {

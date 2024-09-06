@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { FragmentIdentifier } from './FragmentIdentifier'
 
 const meta: Meta<typeof FragmentIdentifier> = {
-  title: 'Typography/FragmentIdentifier',
+  title: 'Components/Typography/FragmentIdentifier',
   component: FragmentIdentifier,
   tags: ['autodocs']
 }

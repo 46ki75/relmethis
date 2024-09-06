@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Bookmark } from './Bookmark'
 
 const meta: Meta<typeof Bookmark> = {
-  title: 'Typography/Bookmark',
+  title: 'Components/Typography/Bookmark',
   component: Bookmark,
   tags: ['autodocs']
 }

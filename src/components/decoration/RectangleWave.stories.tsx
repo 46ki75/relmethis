@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { RectangleWave } from './RectangleWave'
 
 const meta: Meta<typeof RectangleWave> = {
-  title: 'Decoration/RectangleWave',
+  title: 'Components/Decoration/RectangleWave',
   component: RectangleWave,
   parameters: {}
 }

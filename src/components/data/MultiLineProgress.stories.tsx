@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { MultiLineProgress } from './MultiLineProgress'
 
 const meta: Meta<typeof MultiLineProgress> = {
-  title: 'Data/MultiLineProgress',
+  title: 'Components/Data/MultiLineProgress',
   component: MultiLineProgress,
   tags: ['autodocs'],
   parameters: {}

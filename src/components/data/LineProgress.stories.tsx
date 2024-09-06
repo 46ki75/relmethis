@@ -3,7 +3,7 @@ import { LineProgress } from './LineProgress'
 import { useState } from 'react'
 
 const meta: Meta<typeof LineProgress> = {
-  title: 'Data/LineProgress',
+  title: 'Components/Data/LineProgress',
   component: LineProgress,
   tags: ['autodocs'],
   parameters: {}
