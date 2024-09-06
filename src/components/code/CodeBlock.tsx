@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { css } from '@emotion/react'
+import { css, keyframes } from '@emotion/react'
 import React, { Suspense, useState } from 'react'
 import { useCopyToClipboard } from 'react-use'
 
@@ -103,6 +103,17 @@ const fallbackStyle = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? 'rgba(250, 250, 250, 0.8)' : 'rgba(40, 44, 52, 0.8)'};
 `
 
+const fade = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`
+
+const codeStyle = css`
+  animation-name: ${fade};
+  animation-duration: 800ms;
+  animation-fill-mode: both;
+`
+
 // # --------------------------------------------------------------------------------
 //
 // Props Interface
@@ -186,6 +197,7 @@ export const CodeBlockComponent = ({
       >
         <SyntaxHighlighter
           language={language}
+          css={codeStyle}
           style={isDark ? oneDark : oneLight}
           showLineNumbers={isShowNumber}
           customStyle={{ borderRadius: '0 0 0.25rem 0.25rem', margin: 0 }}
