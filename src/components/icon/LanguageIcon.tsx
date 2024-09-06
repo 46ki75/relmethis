@@ -28,12 +28,14 @@ interface LanguageIconProps {
   size?: string
   color?: string
   language: string
+  isDark?: boolean
 }
 
 const LanguageIconComponent = ({
   size = '20px',
   color,
-  language
+  language,
+  isDark = false
 }: LanguageIconProps) => {
   let IconComponent: React.LazyExoticComponent<
     React.ComponentType<LanguageIconSvgProps>
@@ -116,7 +118,9 @@ const LanguageIconComponent = ({
   return (
     <Suspense fallback={<div style={{ width: size, height: size, color }} />}>
       <div css={iconStyle(size)}>
-        {IconComponent && <IconComponent size={size} color={color} />}
+        {IconComponent && (
+          <IconComponent size={size} color={color} isDark={isDark} />
+        )}
       </div>
     </Suspense>
   )

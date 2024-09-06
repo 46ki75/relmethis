@@ -163,7 +163,12 @@ export const CodeBlockComponent = ({
 
       <div css={headerStyle}>
         <div>
-          <LanguageIcon language={language} size={'20px'} color={undefined} />
+          <LanguageIcon
+            language={language}
+            size={'20px'}
+            color={undefined}
+            isDark={theme === 'dark'}
+          />
           <span css={captionStyle({ isDark })}>{caption}</span>
         </div>
         <div>
