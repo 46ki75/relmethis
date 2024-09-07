@@ -1,7 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
 import { css, keyframes } from '@emotion/react'
-import React, { ReactNode, Suspense, useCallback, useState } from 'react'
+import React, {
+  ReactNode,
+  Suspense,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import { useCopyToClipboard } from 'react-use'
 
 // highlight
@@ -174,7 +180,12 @@ export const CodeBlockComponent = ({
   isDark = false,
   enablePreview = true
 }: CodeBlockProps) => {
-  const [isShowNumber, setIsShowNumber] = useState<boolean>(true)
+  const [isShowNumber, setIsShowNumber] = useState<boolean>(false)
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 480px)')
+    setIsShowNumber(media.matches)
+  }, [])
 
   const [, copyToClipboard] = useCopyToClipboard()
 
