@@ -5,12 +5,21 @@ import { css } from '@emotion/react'
 import mermaid from 'mermaid'
 
 import { ImageWithModal } from '../image/ImageWithModal'
+import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 
 // # --------------------------------------------------------------------------------
 //
 // styles
 //
 // # --------------------------------------------------------------------------------
+
+const fallbackStyle = css`
+  box-sizing: border-box;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 const mermaidStyle = ({ isLoading }: { isLoading: boolean }) => css`
   opacity: ${isLoading ? 0 : 1};
@@ -82,7 +91,11 @@ const MermaidComponent = ({
   }, [code, isDark, securityLevel])
 
   if (isLoading) {
-    return <div>Loading chart...</div>
+    return (
+      <div css={fallbackStyle}>
+        <DotLoadingIcon size={32} color='rgba(128,128,128,0.5)' />
+      </div>
+    )
   }
 
   return svgBase64 ? (
