@@ -1,8 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import mermaid from 'mermaid'
+
+import { ImageWithModal } from '../image/ImageWithModal'
 
 // # --------------------------------------------------------------------------------
 //
@@ -31,17 +33,11 @@ export interface MermaidProps {
    */
   isDark?: boolean
   /**
-   * - `strict`: (default) HTML tags in the text are encoded and click functionality is disabled.
-   * - `antiscript`: HTML tags in text are allowed (only script elements are removed)
-   *                 and click functionality is enabled.
-   * - `loose`: HTML tags in text are allowed and click functionality is enabled.
-   * - `sandbox`: With this security level, all rendering takes place in a sandboxed iframe.
-   *              This prevents any JavaScript from running in the context.
-   *              This may hinder interactive functionality of the diagram,
-   *              like scripts, popups in the sequence diagram, links to other tabs or targets, etc.
+   * Security level for Mermaid
    */
   securityLevel?: 'loose' | 'strict' | 'antiscript' | 'sandbox' | undefined
 }
+
 // # --------------------------------------------------------------------------------
 //
 // component
@@ -54,32 +50,55 @@ const MermaidComponent = ({
   securityLevel = 'loose'
 }: MermaidProps) => {
   const [isLoading, setIsLoading] = useState(true)
-
-  const ref = useRef<HTMLDivElement>(null)
+  const [svgBase64, setSvgBase64] = useState<string | null>(null)
 
   useEffect(() => {
-    void (async () => {
-      if (ref.current != null) {
+    const renderChart = async () => {
+      try {
         setIsLoading(true)
 
-        ref.current.innerHTML = code
-
         mermaid.initialize({
-          startOnLoad: true,
-          theme: isDark ? 'dark' : 'base',
-          darkMode: isDark,
+          startOnLoad: false,
+          theme: isDark ? 'dark' : 'default',
           securityLevel
         })
 
-        await mermaid.run({ nodes: [ref.current] })
+        const { svg } = await mermaid.render('mermaid-svg', code)
 
+        const base64 = btoa(
+          encodeURIComponent(svg).replace(/%([0-9A-F]{2})/g, (_, p1) =>
+            String.fromCharCode(parseInt(p1, 16))
+          )
+        )
+        setSvgBase64(`data:image/svg+xml;base64,${base64}`)
+        setIsLoading(false)
+      } catch (error) {
+        console.error('Error rendering Mermaid chart:', error)
         setIsLoading(false)
       }
-    })()
+    }
+
+    renderChart()
   }, [code, isDark, securityLevel])
 
-  return (
-    <div ref={ref} key={code + isDark} css={mermaidStyle({ isLoading })}></div>
+  if (isLoading) {
+    return <div>Loading chart...</div>
+  }
+
+  return svgBase64 ? (
+    <div css={mermaidStyle({ isLoading })}>
+      <ImageWithModal src={svgBase64} alt='Mermaid Chart' />
+    </div>
+  ) : (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        color: 'rgba(128,128,128,0.5)'
+      }}
+    >
+      <div style={{ margin: '2rem' }}>Preview not available</div>
+    </div>
   )
 }
 
