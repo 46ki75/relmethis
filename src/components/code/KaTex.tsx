@@ -73,7 +73,7 @@ export interface KaTexProps {
 // # --------------------------------------------------------------------------------
 
 const KaTexComponent = ({
-  equation: expression,
+  equation,
   display = true,
   isDark = false,
   throwOnError = display
@@ -82,9 +82,10 @@ const KaTexComponent = ({
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    setError(null)
     if (targetRef.current) {
       try {
-        katex.render(expression, targetRef.current, {
+        katex.render(equation, targetRef.current, {
           throwOnError: display && throwOnError,
           displayMode: display
         })
@@ -94,7 +95,7 @@ const KaTexComponent = ({
         setError(err instanceof Error ? err.message : String(err))
       }
     }
-  }, [expression, display, throwOnError])
+  }, [equation, display, throwOnError])
 
   return error ? (
     <>
@@ -103,7 +104,7 @@ const KaTexComponent = ({
           <span css={errorStyle}>ERROR</span>
           <span css={errorMessageStyle}>{error}</span>
         </div>
-        <code>{expression}</code>
+        <code>{equation}</code>
       </div>
     </>
   ) : (
