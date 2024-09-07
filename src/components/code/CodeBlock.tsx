@@ -71,6 +71,8 @@ const headerStyle = css`
   box-sizing: border-box;
   padding: 0.75rem;
   width: 100%;
+  font-family: 'Fira Code', 'Fira Mono', Menlo, Consolas, 'DejaVu Sans Mono',
+    monospace;
 
   display: flex;
   justify-content: space-between;
