@@ -55,7 +55,7 @@ export const Dark: Story = {
   }
 }
 
-export const Tex: Story = {
+export const Katex: Story = {
   args: {
     code: 'E = mc^2',
     language: 'katex',
