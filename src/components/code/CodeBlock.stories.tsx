@@ -41,7 +41,7 @@ export const Light: Story = {
   args: {
     code,
     language: 'rust',
-    theme: 'light'
+    isDark: false
   }
 }
 
@@ -49,6 +49,6 @@ export const Dark: Story = {
   args: {
     code,
     language: 'rust',
-    theme: 'dark'
+    isDark: true
   }
 }

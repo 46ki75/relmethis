@@ -136,7 +136,7 @@ interface CodeBlockProps {
   /**
    * The theme
    */
-  theme?: 'light' | 'dark'
+  isDark?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -149,10 +149,8 @@ export const CodeBlockComponent = ({
   code,
   language = 'txt',
   caption = language,
-  theme = 'light'
+  isDark = false
 }: CodeBlockProps) => {
-  const isDark = theme === 'dark'
-
   const [isShowNumber, setIsShowNumber] = useState<boolean>(true)
 
   const [, copyToClipboard] = useCopyToClipboard()
@@ -167,7 +165,7 @@ export const CodeBlockComponent = ({
             language={language}
             size={'20px'}
             color={undefined}
-            isDark={theme === 'dark'}
+            isDark={isDark}
           />
           <span css={captionStyle({ isDark })}>{caption}</span>
         </div>
