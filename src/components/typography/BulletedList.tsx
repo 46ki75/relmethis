@@ -3,9 +3,36 @@
 import React, { ReactNode } from 'react'
 import { css } from '@emotion/react'
 
-import bulletedListIcon1 from '../../assets/bulleted-list-icon-1.svg'
-import bulletedListIcon2 from '../../assets/bulleted-list-icon-2.svg'
-import bulletedListIcon3 from '../../assets/bulleted-list-icon-3.svg'
+const bulletedListIcon1 = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12px" height="12px">
+    <path
+        fill="#449763"
+        opacity="0.8"
+        d="M3 3.732a1.5 1.5 0 0 1 2.305-1.265l6.706 4.267a1.5 1.5 0 0 1 0 2.531l-6.706 4.268A1.5 1.5 0 0 1 3 12.267V3.732Z" />
+</svg>
+`
+
+const bulletedListIcon2 = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12px" height="12px"
+    stroke="#449763" fill="transparent">
+    <path strokeLinecap="round" strokeLinejoin="round"
+        d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+</svg>
+`
+
+const bulletedListIcon3 = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="12px" height="12px"
+    stroke="#449763" fill="#449763">
+    <path fillRule="evenodd"
+        d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+        clipRule="evenodd" />
+</svg>
+`
+
+function svgToBase64(svg: string): string {
+  const base64 = btoa(svg)
+  return `data:image/svg+xml;base64,${base64}`
+}
 
 // # --------------------------------------------------------------------------------
 //
@@ -24,18 +51,18 @@ const style = ({ isDark }: { isDark: boolean }) => css`
     margin: 0.75rem auto;
 
     &::marker {
-      content: url(${bulletedListIcon1});
+      content: url(${svgToBase64(bulletedListIcon1)});
     }
 
     ul {
       li {
         &::marker {
-          content: url(${bulletedListIcon2});
+          content: url(${svgToBase64(bulletedListIcon2)});
         }
         ul {
           li {
             &::marker {
-              content: url(${bulletedListIcon3});
+              content: url(${svgToBase64(bulletedListIcon3)});
             }
           }
         }
