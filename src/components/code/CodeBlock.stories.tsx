@@ -41,7 +41,8 @@ export const Light: Story = {
   args: {
     code,
     language: 'rust',
-    isDark: false
+    isDark: false,
+    enablePreview: true
   }
 }
 
@@ -49,6 +50,16 @@ export const Dark: Story = {
   args: {
     code,
     language: 'rust',
-    isDark: true
+    isDark: true,
+    enablePreview: true
+  }
+}
+
+export const Tex: Story = {
+  args: {
+    code: 'E = mc^2',
+    language: 'katex',
+    isDark: false,
+    enablePreview: true
   }
 }

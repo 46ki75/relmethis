@@ -22,6 +22,7 @@ const style = ({
 }) => css`
   ${!display && 'margin-left: 0.5rem;'}
   ${!display && 'margin-right: 0.5rem;'}
+  ${display && 'margin: 0.5rem;'}
   color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
 `
 

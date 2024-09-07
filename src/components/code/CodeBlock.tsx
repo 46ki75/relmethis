@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css, keyframes } from '@emotion/react'
-import React, { Suspense, useState } from 'react'
+import React, { ReactNode, Suspense, useEffect, useMemo, useState } from 'react'
 import { useCopyToClipboard } from 'react-use'
 
 // highlight
@@ -20,10 +20,12 @@ import {
 // icons
 import {
   NumberedListIcon,
-  ClipboardDocumentIcon
+  ClipboardDocumentIcon,
+  ArrowsRightLeftIcon
 } from '@heroicons/react/24/outline'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 import { LanguageIcon } from '../icon/LanguageIcon'
+import { KaTex } from './KaTex'
 
 // # --------------------------------------------------------------------------------
 //
@@ -91,7 +93,7 @@ const hrStyle = ({ isDark }: { isDark: boolean }) => css`
   padding: 0;
   border: none;
   border-bottom: solid 1px
-    ${isDark ? 'rgba(250, 250, 250, 0.3)' : 'rgba(40, 44, 52, 0.3)'};
+    ${isDark ? 'rgba(250, 250, 250, 0.2)' : 'rgba(40, 44, 52, 0.2)'};
 `
 
 const fallbackStyle = ({ isDark }: { isDark: boolean }) => css`
@@ -137,6 +139,10 @@ interface CodeBlockProps {
    * The theme
    */
   isDark?: boolean
+  /**
+   *
+   */
+  enablePreview?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -149,11 +155,41 @@ export const CodeBlockComponent = ({
   code,
   language = 'txt',
   caption = language,
-  isDark = false
+  isDark = false,
+  enablePreview = true
 }: CodeBlockProps) => {
   const [isShowNumber, setIsShowNumber] = useState<boolean>(true)
 
   const [, copyToClipboard] = useCopyToClipboard()
+
+  const fallbackComponent = useMemo(
+    () => (
+      <div css={fallbackStyle({ isDark })}>
+        <DotLoadingIcon size={32} color='rgba(128,128,128,0.8)' />
+      </div>
+    ),
+    [isDark]
+  )
+
+  // # --------------------------------------------------------------------------------
+  //
+  // preview
+  //
+  // # --------------------------------------------------------------------------------
+
+  const isAvailablePreview =
+    enablePreview &&
+    (language === 'tex' || language === 'latex' || language === 'katex')
+
+  const [showPreview, setShowPreview] = useState(isAvailablePreview)
+
+  const renderPreviewComponent = (): ReactNode => {
+    if (language === 'katex') {
+      return <KaTex equation={code} />
+    } else {
+      return <></>
+    }
+  }
 
   return (
     <div css={wrapperStyle({ isDark })}>
@@ -170,6 +206,14 @@ export const CodeBlockComponent = ({
           <span css={captionStyle({ isDark })}>{caption}</span>
         </div>
         <div>
+          {isAvailablePreview && (
+            <ArrowsRightLeftIcon
+              css={clickableIconStyle({ isDark })}
+              onClick={() => {
+                setShowPreview(!showPreview)
+              }}
+            />
+          )}
           <NumberedListIcon
             css={clickableIconStyle({ isDark })}
             onClick={() => {
@@ -191,22 +235,20 @@ export const CodeBlockComponent = ({
 
       {/* code */}
 
-      <Suspense
-        fallback={
-          <div css={fallbackStyle({ isDark })}>
-            <DotLoadingIcon size={32} color='rgba(128,128,128,0.8)' />
-          </div>
-        }
-      >
-        <SyntaxHighlighter
-          language={language}
-          css={codeStyle}
-          style={isDark ? oneDark : oneLight}
-          showLineNumbers={isShowNumber}
-          customStyle={{ borderRadius: '0 0 0.25rem 0.25rem', margin: 0 }}
-        >
-          {code.trim()}
-        </SyntaxHighlighter>
+      <Suspense fallback={fallbackComponent}>
+        {showPreview ? (
+          renderPreviewComponent()
+        ) : (
+          <SyntaxHighlighter
+            language={language}
+            css={codeStyle}
+            style={isDark ? oneDark : oneLight}
+            showLineNumbers={isShowNumber}
+            customStyle={{ borderRadius: '0 0 0.25rem 0.25rem', margin: 0 }}
+          >
+            {code.trim()}
+          </SyntaxHighlighter>
+        )}
       </Suspense>
     </div>
   )
