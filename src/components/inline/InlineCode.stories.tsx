@@ -12,6 +12,7 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    text: 'JSON.stringify()'
+    text: 'JSON.stringify()',
+    isDark: false
   }
 }
