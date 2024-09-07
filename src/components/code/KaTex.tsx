@@ -47,7 +47,7 @@ export interface KaTexProps {
   /**
    * The KaTex expression.
    */
-  expression: string
+  equation: string
   /**
    * If `true`, the expression will be rendered as a **block** element.
    * If `false`, it will be rendered as an **inline** element. The default value is true, rendering it as a block element.
@@ -72,7 +72,7 @@ export interface KaTexProps {
 // # --------------------------------------------------------------------------------
 
 const KaTexComponent = ({
-  expression,
+  equation: expression,
   display = true,
   isDark = false,
   throwOnError = display
