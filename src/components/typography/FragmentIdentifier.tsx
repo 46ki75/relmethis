@@ -55,7 +55,7 @@ export interface FragmentIdentifierProps {
 //
 // # --------------------------------------------------------------------------------
 
-export const FragmentIdentifierComponent = ({
+const FragmentIdentifierComponent = ({
   identifier
 }: FragmentIdentifierProps) => {
   const [, copy] = useCopyToClipboard()

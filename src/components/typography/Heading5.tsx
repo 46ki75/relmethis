@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { css } from '@emotion/react'
+import { FragmentIdentifier } from './FragmentIdentifier'
 
 // # --------------------------------------------------------------------------------
 //
@@ -12,7 +13,8 @@ import { css } from '@emotion/react'
 const style = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
   font-size: 1.25rem;
-  margin: 2rem auto;
+  margin-top: 2rem;
+  margin-bottom: 0;
 `
 
 // # --------------------------------------------------------------------------------
@@ -48,9 +50,12 @@ const Heading5Component = ({
   isDark = false
 }: Heading5Props) => {
   return (
-    <h5 id={identifier} css={style({ isDark })}>
-      {text}
-    </h5>
+    <>
+      <h5 id={identifier} css={style({ isDark })}>
+        {text}
+      </h5>
+      <FragmentIdentifier identifier={identifier} />
+    </>
   )
 }
 
