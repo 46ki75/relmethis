@@ -184,15 +184,6 @@ export const CodeBlockComponent = ({
 
   const [, copyToClipboard] = useCopyToClipboard()
 
-  const fallbackComponent = useMemo(
-    () => (
-      <div css={fallbackStyle}>
-        <DotLoadingIcon size={32} color='rgba(128,128,128,0.8)' />
-      </div>
-    ),
-    []
-  )
-
   // # --------------------------------------------------------------------------------
   //
   // preview
@@ -279,7 +270,13 @@ export const CodeBlockComponent = ({
 
       {/* code */}
 
-      <Suspense fallback={fallbackComponent}>
+      <Suspense
+        fallback={
+          <div css={fallbackStyle}>
+            <DotLoadingIcon size={32} color='rgba(128,128,128,0.8)' />
+          </div>
+        }
+      >
         {showPreview ? (
           renderPreviewComponent()
         ) : (
