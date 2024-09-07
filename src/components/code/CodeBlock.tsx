@@ -109,13 +109,13 @@ const hrStyle = ({ isDark }: { isDark: boolean }) => css`
     ${isDark ? 'rgba(250, 250, 250, 0.2)' : 'rgba(40, 44, 52, 0.2)'};
 `
 
-const fallbackStyle = ({ isDark }: { isDark: boolean }) => css`
+const fallbackStyle = css`
   box-sizing: border-box;
   padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${isDark ? 'rgba(250, 250, 250, 0.8)' : 'rgba(40, 44, 52, 0.8)'};
+  color: rgba(128, 128, 128, 0.5);
 `
 
 const fade = keyframes`
@@ -178,11 +178,11 @@ export const CodeBlockComponent = ({
 
   const fallbackComponent = useMemo(
     () => (
-      <div css={fallbackStyle({ isDark })}>
+      <div css={fallbackStyle}>
         <DotLoadingIcon size={32} color='rgba(128,128,128,0.8)' />
       </div>
     ),
-    [isDark]
+    []
   )
 
   // # --------------------------------------------------------------------------------
