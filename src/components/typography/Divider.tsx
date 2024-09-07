@@ -97,7 +97,7 @@ interface DividerProps {
    * E.G.) `'#000000'`, `'rgb(0, 0, 0)'`
    *
    */
-  color: string
+  color?: string
 }
 
 // # --------------------------------------------------------------------------------
@@ -106,7 +106,10 @@ interface DividerProps {
 //
 // # --------------------------------------------------------------------------------
 
-const DividerComponent = ({ text, color }: DividerProps): JSX.Element => {
+const DividerComponent = ({
+  text,
+  color = 'rgba(128,128,128,0.3)'
+}: DividerProps): JSX.Element => {
   return (
     <RerenderInView
       element={
@@ -124,16 +127,6 @@ const DividerComponent = ({ text, color }: DividerProps): JSX.Element => {
       }
     />
   )
-}
-
-// # --------------------------------------------------------------------------------
-//
-// Default Props
-//
-// # --------------------------------------------------------------------------------
-
-DividerComponent.defaultProps = {
-  color: 'rgb(182, 182, 182)'
 }
 
 // # --------------------------------------------------------------------------------
