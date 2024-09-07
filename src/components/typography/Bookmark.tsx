@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react'
 import { css, keyframes } from '@emotion/react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLink } from '@fortawesome/free-solid-svg-icons'
+
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
+import { LinkIcon } from '@heroicons/react/24/outline'
 
 // # --------------------------------------------------------------------------------
 //
@@ -155,7 +155,7 @@ const BookmarkComponent = ({
           <div css={titleStyle}>{title}</div>
           <div css={descriptionStyle}>{description}</div>
           <div css={linktextStyle}>
-            <FontAwesomeIcon icon={faLink} />
+            <LinkIcon style={{ width: 16, height: 16 }} />
             <span>{url}</span>
           </div>
         </div>
