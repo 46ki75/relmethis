@@ -109,7 +109,7 @@ interface DividerProps {
 
 const DividerComponent = ({
   text,
-  color = 'rgba(128,128,128,0.3)'
+  color = 'rgba(128,128,128,0.4)'
 }: DividerProps): JSX.Element => {
   return (
     <RerenderInView
