@@ -1,7 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
 import { css, keyframes } from '@emotion/react'
-import React, { ReactNode, Suspense, useEffect, useMemo, useState } from 'react'
+import React, {
+  ReactNode,
+  Suspense,
+  useCallback,
+  useMemo,
+  useState
+} from 'react'
 import { useCopyToClipboard } from 'react-use'
 
 // highlight
@@ -11,6 +17,14 @@ const SyntaxHighlighter = React.lazy(() =>
     default: module.Prism
   }))
 ) as React.ComponentType<React.ComponentProps<typeof SyntaxHighlighterType>>
+
+// KaTex
+import type { KaTex as KaTexType } from './KaTex'
+const KaTex = React.lazy(() =>
+  import('./KaTex').then((module) => ({
+    default: module.KaTex
+  }))
+) as React.ComponentType<React.ComponentProps<typeof KaTexType>>
 
 import {
   oneLight,
@@ -25,7 +39,6 @@ import {
 } from '@heroicons/react/24/outline'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 import { LanguageIcon } from '../icon/LanguageIcon'
-import { KaTex } from './KaTex'
 
 // # --------------------------------------------------------------------------------
 //
@@ -140,7 +153,8 @@ interface CodeBlockProps {
    */
   isDark?: boolean
   /**
-   *
+   * Displays a preview of the code. When set to `true`,
+   * the preview is shown first; when set to `false`, the code is shown first.
    */
   enablePreview?: boolean
 }
@@ -177,19 +191,25 @@ export const CodeBlockComponent = ({
   //
   // # --------------------------------------------------------------------------------
 
-  const isAvailablePreview =
-    enablePreview &&
-    (language === 'tex' || language === 'latex' || language === 'katex')
+  const previewAvailableLanguages = ['katex']
 
-  const [showPreview, setShowPreview] = useState(isAvailablePreview)
+  const isAvailablePreview = previewAvailableLanguages.includes(language)
 
-  const renderPreviewComponent = (): ReactNode => {
+  const [showPreview, setShowPreview] = useState(
+    enablePreview && isAvailablePreview
+  )
+
+  const renderPreviewComponent = useCallback((): ReactNode => {
     if (language === 'katex') {
-      return <KaTex equation={code} />
+      return (
+        <div css={codeStyle}>
+          <KaTex equation={code} />
+        </div>
+      )
     } else {
       return <></>
     }
-  }
+  }, [code, language])
 
   return (
     <div css={wrapperStyle({ isDark })}>
