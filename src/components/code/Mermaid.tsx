@@ -30,6 +30,17 @@ export interface MermaidProps {
    * Whether or not to use the dark theme
    */
   isDark?: boolean
+  /**
+   * - `strict`: (default) HTML tags in the text are encoded and click functionality is disabled.
+   * - `antiscript`: HTML tags in text are allowed (only script elements are removed)
+   *                 and click functionality is enabled.
+   * - `loose`: HTML tags in text are allowed and click functionality is enabled.
+   * - `sandbox`: With this security level, all rendering takes place in a sandboxed iframe.
+   *              This prevents any JavaScript from running in the context.
+   *              This may hinder interactive functionality of the diagram,
+   *              like scripts, popups in the sequence diagram, links to other tabs or targets, etc.
+   */
+  securityLevel?: 'loose' | 'strict' | 'antiscript' | 'sandbox' | undefined
 }
 // # --------------------------------------------------------------------------------
 //
@@ -37,7 +48,11 @@ export interface MermaidProps {
 //
 // # --------------------------------------------------------------------------------
 
-const MermaidComponent = ({ code, isDark }: MermaidProps) => {
+const MermaidComponent = ({
+  code,
+  isDark,
+  securityLevel = 'loose'
+}: MermaidProps) => {
   const [isLoading, setIsLoading] = useState(true)
 
   const ref = useRef<HTMLDivElement>(null)
@@ -53,7 +68,7 @@ const MermaidComponent = ({ code, isDark }: MermaidProps) => {
           startOnLoad: true,
           theme: isDark ? 'dark' : 'base',
           darkMode: isDark,
-          securityLevel: 'loose'
+          securityLevel
         })
 
         await mermaid.run({ nodes: [ref.current] })
@@ -61,7 +76,7 @@ const MermaidComponent = ({ code, isDark }: MermaidProps) => {
         setIsLoading(false)
       }
     })()
-  }, [code, isDark])
+  }, [code, isDark, securityLevel])
 
   return (
     <div ref={ref} key={code + isDark} css={mermaidStyle({ isLoading })}></div>
