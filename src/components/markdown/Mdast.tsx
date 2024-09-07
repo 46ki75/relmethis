@@ -20,6 +20,8 @@ import { Heading6 } from '../typography/Heading6'
 import { ImageWithModal } from '../image/ImageWithModal'
 import { Divider } from '../typography/Divider'
 import { Alert } from '../typography/Alert'
+import { NumberedList } from '../typography/NumberedList'
+import { BulletedList } from '../typography/BulletedList'
 
 // # --------------------------------------------------------------------------------
 //
@@ -389,19 +391,19 @@ const renderMdast = ({
       case 'list': {
         reactNodes.push(
           node.ordered ? (
-            <ol>
+            <NumberedList isDark={isDark}>
               {
                 renderMdast({ mdastNodes: node.children, definitions, isDark })
                   .reactNodes
               }
-            </ol>
+            </NumberedList>
           ) : (
-            <ul>
+            <BulletedList isDark={isDark}>
               {
                 renderMdast({ mdastNodes: node.children, definitions, isDark })
                   .reactNodes
               }
-            </ul>
+            </BulletedList>
           )
         )
         break
@@ -409,12 +411,12 @@ const renderMdast = ({
 
       case 'listItem': {
         reactNodes.push(
-          <li style={{ color }}>
+          <>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
                 .reactNodes
             }
-          </li>
+          </>
         )
         break
       }

@@ -75,7 +75,13 @@ export const List: Story = {
       '- Bulleted 1',
       '- Bulleted 2',
       '1. Numbered 1',
-      '2. Numbered 2'
+      '2. Numbered 2',
+      '   1. Numbered 12a',
+      '   2. Numbered 2-b',
+      '- Bulleted 1',
+      '- Bulleted 2',
+      '- - Bulleted 2-a',
+      '- - Bulleted 2-b'
     ].join('\n')
   }
 }
