@@ -98,6 +98,14 @@ const LanguageIconComponent = ({
       )
       break
 
+    case 'mermaid':
+      IconComponent = React.lazy(() =>
+        import('./language/Mermaid').then((module) => ({
+          default: module.Mermaid
+        }))
+      )
+      break
+
     case 'bash':
       IconComponent = React.lazy(() =>
         import('./language/Bash').then((module) => ({

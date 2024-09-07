@@ -17,6 +17,7 @@ const meta: Meta<typeof LanguageIcon> = {
         'kotlin',
         'json',
         'markdown',
+        'mermaid',
         'bash',
         'tex',
         'katex',
