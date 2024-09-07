@@ -1,13 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css, keyframes } from '@emotion/react'
-import React, {
-  ReactNode,
-  Suspense,
-  useCallback,
-  useMemo,
-  useState
-} from 'react'
+import React, { ReactNode, Suspense, useCallback, useState } from 'react'
 import { useCopyToClipboard } from 'react-use'
 
 // highlight
