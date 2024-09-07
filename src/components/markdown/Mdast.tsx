@@ -110,7 +110,7 @@ const renderMdast = ({
 }): { reactNodes: ReactNode[]; definitions: Definition[] } => {
   const reactNodes: ReactNode[] = []
 
-  const color = isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'
+  const color = isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'
 
   for (const node of mdastNodes) {
     switch (node.type) {
