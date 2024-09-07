@@ -63,3 +63,35 @@ export const Tex: Story = {
     enablePreview: true
   }
 }
+
+const git = `
+gitGraph
+   commit id: "Initial Commit"
+   branch feature
+   commit id: "Feature work 1"
+   branch bugfix
+   commit id: "Bugfix work 1"
+   checkout main
+   commit id: "Main work 1"
+   checkout feature
+   commit id: "Feature work 2"
+   checkout bugfix
+   commit id: "Bugfix work 2"
+   checkout main
+   commit id: "Main work 2"
+   merge bugfix tag: "Bugfix merged"
+   checkout feature
+   commit id: "Feature work 3"
+   checkout main
+   merge feature tag: "Feature merged"
+   commit id: "Main work 3"
+`
+
+export const Mermaid: Story = {
+  args: {
+    code: git,
+    language: 'mermaid',
+    isDark: false,
+    enablePreview: true
+  }
+}

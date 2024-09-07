@@ -26,6 +26,14 @@ const KaTex = React.lazy(() =>
   }))
 ) as React.ComponentType<React.ComponentProps<typeof KaTexType>>
 
+// mermaid
+import type { Mermaid as MermaidType } from './Mermaid'
+const Mermaid = React.lazy(() =>
+  import('./Mermaid').then((module) => ({
+    default: module.Mermaid
+  }))
+) as React.ComponentType<React.ComponentProps<typeof MermaidType>>
+
 import {
   oneLight,
   oneDark
@@ -191,7 +199,7 @@ export const CodeBlockComponent = ({
   //
   // # --------------------------------------------------------------------------------
 
-  const previewAvailableLanguages = ['katex']
+  const previewAvailableLanguages = ['katex', 'mermaid']
 
   const isAvailablePreview = previewAvailableLanguages.includes(language)
 
@@ -206,8 +214,24 @@ export const CodeBlockComponent = ({
           <KaTex equation={code} isDark={isDark} />
         </div>
       )
+    } else if (language === 'mermaid') {
+      return (
+        <div css={codeStyle} style={{ margin: '2rem' }}>
+          <Mermaid code={code} isDark={isDark} />
+        </div>
+      )
     } else {
-      return <></>
+      return (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            color: 'rgba(128,128,128,0.5)'
+          }}
+        >
+          <div style={{ margin: '2rem' }}>Preview not available</div>
+        </div>
+      )
     }
   }, [code, isDark, language])
 
