@@ -22,7 +22,7 @@ const style = css`
 //
 // # --------------------------------------------------------------------------------
 
-export interface InlineLinkProps {
+export interface InlineCodeProps {
   /**
    * The text to be displayed
    */
@@ -35,7 +35,7 @@ export interface InlineLinkProps {
 //
 // # --------------------------------------------------------------------------------
 
-const InlineCodeComponent = ({ text }: InlineLinkProps) => {
+const InlineCodeComponent = ({ text }: InlineCodeProps) => {
   return <code css={style}>{text}</code>
 }
 
