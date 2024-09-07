@@ -16,7 +16,8 @@ const fade = keyframes`
   to { opacity: 1; }
 `
 
-const iconStyle = (size: string) => css`
+const iconStyle = ({ size, isDark }: { size: string; isDark: boolean }) => css`
+  color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
   width: ${size};
   height: ${size};
   animation-name: ${fade};
@@ -43,6 +44,7 @@ const LanguageIconComponent = ({
 
   switch (language) {
     case 'javascript':
+    case 'js':
       IconComponent = React.lazy(() =>
         import('./language/Javascript').then((module) => ({
           default: module.Javascript
@@ -51,6 +53,7 @@ const LanguageIconComponent = ({
       break
 
     case 'typescript':
+    case 'ts':
       IconComponent = React.lazy(() =>
         import('./language/Typescript').then((module) => ({
           default: module.Typescript
@@ -59,6 +62,7 @@ const LanguageIconComponent = ({
       break
 
     case 'rust':
+    case 'rs':
       IconComponent = React.lazy(() =>
         import('./language/Rust').then((module) => ({
           default: module.Rust
@@ -75,6 +79,7 @@ const LanguageIconComponent = ({
       break
 
     case 'kotlin':
+    case 'kt':
       IconComponent = React.lazy(() =>
         import('./language/Kotlin').then((module) => ({
           default: module.Kotlin
@@ -108,6 +113,8 @@ const LanguageIconComponent = ({
       break
 
     case 'bash':
+    case 'sh':
+    case 'shell':
       IconComponent = React.lazy(() =>
         import('./language/Bash').then((module) => ({
           default: module.Bash
@@ -129,14 +136,14 @@ const LanguageIconComponent = ({
       return (
         <CodeBracketIcon
           style={{ width: size, height: size, color }}
-          css={iconStyle(size)}
+          css={iconStyle({ size, isDark })}
         />
       )
   }
 
   return (
     <Suspense fallback={<div style={{ width: size, height: size, color }} />}>
-      <div css={iconStyle(size)}>
+      <div css={iconStyle({ size, isDark })}>
         {IconComponent && (
           <IconComponent size={size} color={color} isDark={isDark} />
         )}
