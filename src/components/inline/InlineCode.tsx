@@ -15,6 +15,13 @@ const style = ({ isDark }: { isDark: boolean }) => css`
   background-color: rgba(128, 128, 128, 0.1);
   border-radius: 0.25rem;
   font-family: monospace;
+
+  &::selection {
+    background-color: ${isDark
+      ? 'rgba(255, 255, 255, 0.8)'
+      : 'rgba(0, 0, 0, 0.8)'};
+    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
+  }
 `
 
 // # --------------------------------------------------------------------------------
