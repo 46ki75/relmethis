@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { css, keyframes } from '@emotion/react'
-import { rgba } from 'polished'
+import { darken, lighten, rgba } from 'polished'
 import {
   ArrowTopRightOnSquareIcon,
   ChevronRightIcon
@@ -20,7 +20,7 @@ const style = ({ isDark }: { isDark: boolean }) => css`
   cursor: pointer;
   padding: 0 0.25rem;
 
-  color: #6987b8;
+  color: ${isDark ? lighten(0.1, '#6987b8') : darken(0.1, '#6987b8')};
   border-bottom: dashed 1px #6987b8;
   border-radius: 2px;
   transition:
@@ -28,7 +28,10 @@ const style = ({ isDark }: { isDark: boolean }) => css`
     border-bottom 200ms;
 
   &:hover {
-    background-color: ${rgba('#6987b8', 0.2)};
+    background-color: ${rgba(
+      isDark ? lighten(0.1, '#6987b8') : darken(0.1, '#6987b8'),
+      0.2
+    )};
     border-bottom: dashed 0px rgba(0, 0, 0, 0);
   }
 
