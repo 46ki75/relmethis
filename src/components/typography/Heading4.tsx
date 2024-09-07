@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { css } from '@emotion/react'
-import { FragmentIdentifier } from './FragmentIdentifier'
 
 // # --------------------------------------------------------------------------------
 //
@@ -10,17 +9,9 @@ import { FragmentIdentifier } from './FragmentIdentifier'
 //
 // # --------------------------------------------------------------------------------
 
-const headingStyle = ({ isDark }: { isDark: boolean }) => css`
+const style = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-  padding: 0 0 0.25rem 0.5rem;
-  font-size: 1.4rem;
-
-  position: relative;
-
-  border-left: solid 3px
-    ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-  border-bottom: dotted 1px
-    ${isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'};
+  font-size: 1.3rem;
 `
 
 // # --------------------------------------------------------------------------------
@@ -29,7 +20,7 @@ const headingStyle = ({ isDark }: { isDark: boolean }) => css`
 //
 // # --------------------------------------------------------------------------------
 
-export interface Heading3Props {
+export interface Heading4Props {
   /**
    * The text to be displayed
    */
@@ -50,18 +41,15 @@ export interface Heading3Props {
 //
 // # --------------------------------------------------------------------------------
 
-export const Heading3Component = ({
+const Heading4Component = ({
   text,
   identifier = text,
   isDark = false
-}: Heading3Props) => {
+}: Heading4Props) => {
   return (
-    <>
-      <h3 id={identifier} css={headingStyle({ isDark })}>
-        {text}
-      </h3>
-      <FragmentIdentifier identifier={identifier} />
-    </>
+    <h4 id={identifier} css={style({ isDark })}>
+      {text}
+    </h4>
   )
 }
 
@@ -71,4 +59,4 @@ export const Heading3Component = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Heading3 = React.memo(Heading3Component)
+export const Heading4 = React.memo(Heading4Component)

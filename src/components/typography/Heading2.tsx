@@ -36,6 +36,7 @@ const headingStyle = ({ isDark }: { isDark: boolean }) => css`
   margin: 0;
   position: relative;
   color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
+  font-size: 1.5rem;
 
   &::selection {
     background: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
