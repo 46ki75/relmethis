@@ -12,6 +12,7 @@ import React from 'react'
 
 const containerStyle = css`
   width: 100%;
+  margin: 1rem 0;
 
   display: flex;
   flex-direction: row;

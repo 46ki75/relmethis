@@ -12,6 +12,7 @@ import { css } from '@emotion/react'
 const style = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
   font-size: 1.3rem;
+  margin: 2rem auto;
 `
 
 // # --------------------------------------------------------------------------------
