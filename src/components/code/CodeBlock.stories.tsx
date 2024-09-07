@@ -95,3 +95,37 @@ export const Mermaid: Story = {
     enablePreview: true
   }
 }
+
+const markdown = `
+## Lists
+
+Here are some bulleted and numbered lists for organizing information:
+
+- Bullet 1
+- Bullet 2
+
+1. Number 1
+2. Number 2
+
+## GFM Alerts
+
+> [!NOTE]
+> Here's a note to keep in mind while reading this section.
+
+## Code Example
+
+Below is a code snippet demonstrating simple TypeScript code:
+
+\`\`\`ts
+console.log('Hello, world!');
+\`\`\`
+`
+
+export const Markdown: Story = {
+  args: {
+    code: markdown,
+    language: 'markdown',
+    isDark: false,
+    enablePreview: true
+  }
+}

@@ -91,6 +91,7 @@ const LanguageIconComponent = ({
       break
 
     case 'markdown':
+    case 'md':
       IconComponent = React.lazy(() =>
         import('./language/Markdown').then((module) => ({
           default: module.Markdown

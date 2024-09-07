@@ -47,6 +47,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 import { LanguageIcon } from '../icon/LanguageIcon'
+import { Markdown } from '../markdown/Markdown'
 
 // # --------------------------------------------------------------------------------
 //
@@ -195,7 +196,7 @@ export const CodeBlockComponent = ({
   //
   // # --------------------------------------------------------------------------------
 
-  const previewAvailableLanguages = ['katex', 'mermaid']
+  const previewAvailableLanguages = ['katex', 'mermaid', 'markdown', 'md']
 
   const isAvailablePreview = previewAvailableLanguages.includes(language)
 
@@ -214,6 +215,12 @@ export const CodeBlockComponent = ({
       return (
         <div css={codeStyle} style={{ margin: '2rem' }}>
           <Mermaid code={code} isDark={isDark} />
+        </div>
+      )
+    } else if (language === 'markdown' || language === 'md') {
+      return (
+        <div style={{ padding: '1rem' }}>
+          <Markdown markdown={code} />
         </div>
       )
     } else {
