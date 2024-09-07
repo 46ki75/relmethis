@@ -120,3 +120,127 @@ export const GfmAlert: Story = {
     markdown: GfmAlertMarkdown
   }
 }
+
+const longMarkdown = `
+# Markdown Components Showcase
+
+In this document, you'll find examples of different markdown components that can be rendered using our custom \`Markdown\` component. Below are examples of blockquote, headings, lists, tables, and more.
+
+## Blockquote
+
+> This is a blockquote, used for quoting external content or highlighting important sections in your document.
+
+---
+
+## Formatting in Paragraphs
+
+This section demonstrates different text formatting options. You can use **bold** text to emphasize important information, *italic* text for highlighting terms, __underline__ for underlined sections, and even ~~strikethrough~~ to indicate deletions.
+
+Additionally, here's an example of \`inline code\`. [You can also include links](https://example.com) within your paragraphs for navigation purposes.
+
+---
+
+## Code Example
+
+Below is a code snippet demonstrating simple TypeScript code:
+
+\`\`\`ts
+console.log('Hello, world!');
+\`\`\`
+
+---
+
+## Footnotes
+
+Sometimes, you may want to add extra details without cluttering the main text. This is where footnotes come in handy.
+
+This is part of the main text[^1].
+
+This is another part of the main text[^2].
+
+[^1]: Footnote one with additional details goes here.
+[^2]: Footnote two with more explanation is included here.
+
+---
+
+## Headings
+
+You can create hierarchical structures in your document using headings of different levels:
+
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+
+---
+
+## Image Example
+
+![A beautiful nature image from Unsplash](https://images.unsplash.com/photo-1556983703-27576e5afa24?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb)
+
+---
+
+## Lists
+
+Here are some bulleted and numbered lists for organizing information:
+
+- Bullet 1
+- Bullet 2
+
+1. Number 1
+2. Number 2
+
+---
+
+## Table Example
+
+Tables can be used to represent structured data:
+
+| A  | B  |
+|----|----|
+| A1 | B1 |
+| A2 | B2 |
+
+---
+
+## Definition Links
+
+You can use reference-style links for cleaner markdown syntax:
+
+Here is a link to [GitHub][GitHub Home Page].
+
+Here is another link to [Google][Google Home Page].
+
+![Unsplash image][Unsplash Image]
+
+[GitHub Home Page]: https://github.com "GitHub"
+[Google Home Page]: https://www.google.com "Google"
+[Unsplash Image]: https://images.unsplash.com/photo-1556983703-27576e5afa24?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb "Nature"
+
+---
+
+## GFM Alerts
+
+> [!NOTE]
+> Here's a note to keep in mind while reading this section.
+
+> [!TIP]
+> A useful tip for improving productivity!
+
+> [!IMPORTANT]
+> Don't forget this crucial piece of information.
+
+> [!WARNING]
+> Pay attention to this warning to avoid issues.
+
+> [!CAUTION]
+> Be cautious when performing certain actions to prevent problems.
+`
+
+export const Full: Story = {
+  args: {
+    markdown: longMarkdown
+  }
+}
