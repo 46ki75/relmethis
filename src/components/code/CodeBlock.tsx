@@ -176,7 +176,7 @@ interface CodeBlockProps {
 //
 // # --------------------------------------------------------------------------------
 
-export const CodeBlockComponent = ({
+const CodeBlockComponent = ({
   code,
   language = 'txt',
   caption = language,
