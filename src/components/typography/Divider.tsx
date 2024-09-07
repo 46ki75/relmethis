@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
-import { css, keyframes } from '@emotion/react'
-import { RerenderInView } from '../utils/RerenderInView'
+import { css } from '@emotion/react'
 import React from 'react'
+import { useInView } from 'react-intersection-observer'
 
 // # --------------------------------------------------------------------------------
 //
@@ -22,35 +22,15 @@ const containerStyle = css`
   gap: 1rem;
 `
 
-const animation = keyframes`
-    from {
-        width: 0%;
-    }
-
-    to {
-        width: 100%;
-    }
-`
-
-const animationHalf = keyframes`
-    from {
-        width: 0%;
-    }
-
-    to {
-        width: 46%;
-    }
-`
-
-const dividerStyle = (flag: boolean, color: string) => css`
+const dividerStyle = (flag: boolean, color: string, inView: boolean) => css`
   position: relative;
 
   height: 1px;
   background-color: ${color};
 
-  animation-name: ${flag ? animationHalf : animation};
-  animation-duration: 1200ms;
-  animation-fill-mode: both;
+  width: ${inView ? (flag ? '46%' : '100%') : '0%'};
+
+  transition: width 1200ms;
 
   &::before {
     position: absolute;
@@ -111,22 +91,20 @@ const DividerComponent = ({
   text,
   color = 'rgba(128,128,128,0.4)'
 }: DividerProps): JSX.Element => {
+  const { ref, inView } = useInView()
+
   return (
-    <RerenderInView
-      element={
-        <div css={containerStyle}>
-          {text != null ? (
-            <>
-              <div css={dividerStyle(true, color)}></div>
-              <div style={{ color }}>{text}</div>
-              <div css={dividerStyle(true, color)}></div>
-            </>
-          ) : (
-            <div css={dividerStyle(false, color)}></div>
-          )}
-        </div>
-      }
-    />
+    <div css={containerStyle} ref={ref}>
+      {text != null ? (
+        <>
+          <div css={dividerStyle(true, color, inView)}></div>
+          <div style={{ color }}>{text}</div>
+          <div css={dividerStyle(true, color, inView)}></div>
+        </>
+      ) : (
+        <div css={dividerStyle(false, color, inView)}></div>
+      )}
+    </div>
   )
 }
 
