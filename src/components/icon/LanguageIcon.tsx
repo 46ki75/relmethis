@@ -106,6 +106,16 @@ const LanguageIconComponent = ({
       )
       break
 
+    case 'tex':
+    case 'katex':
+    case 'latex':
+      IconComponent = React.lazy(() =>
+        import('./language/Tex').then((module) => ({
+          default: module.Tex
+        }))
+      )
+      break
+
     default:
       return (
         <CodeBracketIcon

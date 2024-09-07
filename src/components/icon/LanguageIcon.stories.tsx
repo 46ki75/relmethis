@@ -17,7 +17,10 @@ const meta: Meta<typeof LanguageIcon> = {
         'kotlin',
         'json',
         'markdown',
-        'bash'
+        'bash',
+        'tex',
+        'katex',
+        'latex'
       ]
     }
   }
