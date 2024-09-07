@@ -20,6 +20,10 @@ import { Mdast } from './Mdast'
 
 export interface MarkdownProps {
   markdown: string
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -33,12 +37,12 @@ const parseMarkdownToMdast = (markdown: string) => {
   return processor
 }
 
-const MarkdownComponent = ({ markdown }: MarkdownProps) => {
+const MarkdownComponent = ({ markdown, isDark }: MarkdownProps) => {
   const mdast = useMemo(() => parseMarkdownToMdast(markdown), [markdown])
 
   return (
     <>
-      <Mdast mdast={mdast.children} />
+      <Mdast mdast={mdast.children} isDark={isDark} />
     </>
   )
 }

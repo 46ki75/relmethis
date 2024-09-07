@@ -158,7 +158,7 @@ interface CodeBlockProps {
    */
   caption?: string
   /**
-   * The theme
+   * Whether or not to use the dark theme
    */
   isDark?: boolean
   /**
@@ -220,7 +220,7 @@ export const CodeBlockComponent = ({
     } else if (language === 'markdown' || language === 'md') {
       return (
         <div style={{ padding: '1rem' }}>
-          <Markdown markdown={code} />
+          <Markdown markdown={code} isDark={isDark} />
         </div>
       )
     } else {

@@ -39,6 +39,10 @@ const blockquoteStyle = css`
 
 export interface MdastProps {
   mdast: RootContent[]
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -83,10 +87,15 @@ const mdastToString = (nodes: PhrasingContent[]): string => {
   return results.join('')
 }
 
-const renderMdast = (
-  mdastNodes: RootContent[],
+const renderMdast = ({
+  mdastNodes,
+  definitions,
+  isDark
+}: {
+  mdastNodes: RootContent[]
   definitions: Definition[]
-): { reactNodes: ReactNode[]; definitions: Definition[] } => {
+  isDark: boolean
+}): { reactNodes: ReactNode[]; definitions: Definition[] } => {
   const reactNodes: ReactNode[] = []
 
   for (const node of mdastNodes) {
@@ -109,21 +118,36 @@ const renderMdast = (
 
       case 'strong': {
         reactNodes.push(
-          <strong>{renderMdast(node.children, definitions).reactNodes}</strong>
+          <strong>
+            {
+              renderMdast({ mdastNodes: node.children, definitions, isDark })
+                .reactNodes
+            }
+          </strong>
         )
         break
       }
 
       case 'emphasis': {
         reactNodes.push(
-          <em>{renderMdast(node.children, definitions).reactNodes}</em>
+          <em>
+            {
+              renderMdast({ mdastNodes: node.children, definitions, isDark })
+                .reactNodes
+            }
+          </em>
         )
         break
       }
 
       case 'delete': {
         reactNodes.push(
-          <del>{renderMdast(node.children, definitions).reactNodes}</del>
+          <del>
+            {
+              renderMdast({ mdastNodes: node.children, definitions, isDark })
+                .reactNodes
+            }
+          </del>
         )
         break
       }
@@ -148,7 +172,12 @@ const renderMdast = (
 
       case 'paragraph': {
         reactNodes.push(
-          <p>{renderMdast(node.children, definitions).reactNodes}</p>
+          <p>
+            {
+              renderMdast({ mdastNodes: node.children, definitions, isDark })
+                .reactNodes
+            }
+          </p>
         )
         break
       }
@@ -201,7 +230,13 @@ const renderMdast = (
 
               reactNodes.push(
                 <Alert type={alertType}>
-                  {renderMdast(newChildren, definitions).reactNodes}
+                  {
+                    renderMdast({
+                      mdastNodes: newChildren,
+                      definitions,
+                      isDark
+                    }).reactNodes
+                  }
                 </Alert>
               )
               break
@@ -211,7 +246,10 @@ const renderMdast = (
 
         reactNodes.push(
           <blockquote css={blockquoteStyle}>
-            {renderMdast(node.children, definitions).reactNodes}
+            {
+              renderMdast({ mdastNodes: node.children, definitions, isDark })
+                .reactNodes
+            }
           </blockquote>
         )
 
@@ -267,7 +305,13 @@ const renderMdast = (
                 <tr>
                   {tableRow.children.map((tableCell) => (
                     <th>
-                      {renderMdast(tableCell.children, definitions).reactNodes}
+                      {
+                        renderMdast({
+                          mdastNodes: tableCell.children,
+                          definitions,
+                          isDark
+                        }).reactNodes
+                      }
                     </th>
                   ))}
                 </tr>
@@ -278,7 +322,13 @@ const renderMdast = (
               <tr>
                 {tableRow.children.map((tableCell) => (
                   <td>
-                    {renderMdast(tableCell.children, definitions).reactNodes}
+                    {
+                      renderMdast({
+                        mdastNodes: tableCell.children,
+                        definitions,
+                        isDark
+                      }).reactNodes
+                    }
                   </td>
                 ))}
               </tr>
@@ -304,9 +354,19 @@ const renderMdast = (
       case 'list': {
         reactNodes.push(
           node.ordered ? (
-            <ol>{renderMdast(node.children, definitions).reactNodes}</ol>
+            <ol>
+              {
+                renderMdast({ mdastNodes: node.children, definitions, isDark })
+                  .reactNodes
+              }
+            </ol>
           ) : (
-            <ul>{renderMdast(node.children, definitions).reactNodes}</ul>
+            <ul>
+              {
+                renderMdast({ mdastNodes: node.children, definitions, isDark })
+                  .reactNodes
+              }
+            </ul>
           )
         )
         break
@@ -314,7 +374,12 @@ const renderMdast = (
 
       case 'listItem': {
         reactNodes.push(
-          <li>{renderMdast(node.children, definitions).reactNodes}</li>
+          <li>
+            {
+              renderMdast({ mdastNodes: node.children, definitions, isDark })
+                .reactNodes
+            }
+          </li>
         )
         break
       }
@@ -368,7 +433,10 @@ const renderMdast = (
             >
               {node.identifier}
             </a>
-            {renderMdast(node.children, definitions).reactNodes}
+            {
+              renderMdast({ mdastNodes: node.children, definitions, isDark })
+                .reactNodes
+            }
           </div>
         )
         break
@@ -403,7 +471,7 @@ const renderMdast = (
 //
 // # --------------------------------------------------------------------------------
 
-const MdastComponent = ({ mdast }: MdastProps) => {
+const MdastComponent = ({ mdast, isDark = false }: MdastProps) => {
   const [components, setComponents] = useState<ReactNode[]>([<>LOADING</>])
 
   useEffect(() => {
@@ -415,10 +483,14 @@ const MdastComponent = ({ mdast }: MdastProps) => {
       })
     }
 
-    const mdastComponents = renderMdast(mdast, definitions).reactNodes
+    const mdastComponents = renderMdast({
+      mdastNodes: mdast,
+      definitions,
+      isDark
+    }).reactNodes
 
     setComponents(mdastComponents)
-  }, [mdast])
+  }, [isDark, mdast])
 
   return <>{components}</>
 }
