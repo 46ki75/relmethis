@@ -203,13 +203,13 @@ export const CodeBlockComponent = ({
     if (language === 'katex') {
       return (
         <div css={codeStyle}>
-          <KaTex equation={code} />
+          <KaTex equation={code} isDark={isDark} />
         </div>
       )
     } else {
       return <></>
     }
-  }, [code, language])
+  }, [code, isDark, language])
 
   return (
     <div css={wrapperStyle({ isDark })}>
