@@ -24,11 +24,20 @@ import { Alert } from '../typography/Alert'
 //
 // # --------------------------------------------------------------------------------
 
-const blockquoteStyle = css`
+const blockquoteStyle = ({ isDark }: { isDark: boolean }) => css`
+  color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
   box-sizing: border-box;
   margin-left: 0;
   padding: 0.25rem 1rem;
   border-left: solid 4px rgba(128, 128, 128, 0.4);
+`
+
+const tableStyle = ({ isDark }: { isDark: boolean }) => css`
+  color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
+`
+
+const supStyle = ({ isDark }: { isDark: boolean }) => css`
+  color: ${isDark ? '#6987b8' : '#4c6da2'};
 `
 
 // # --------------------------------------------------------------------------------
@@ -98,6 +107,8 @@ const renderMdast = ({
 }): { reactNodes: ReactNode[]; definitions: Definition[] } => {
   const reactNodes: ReactNode[] = []
 
+  const color = isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'
+
   for (const node of mdastNodes) {
     switch (node.type) {
       // # --------------------------------------------------------------------------------
@@ -112,13 +123,13 @@ const renderMdast = ({
       }
 
       case 'inlineCode': {
-        reactNodes.push(<InlineCode text={node.value} />)
+        reactNodes.push(<InlineCode text={node.value} isDark={isDark} />)
         break
       }
 
       case 'strong': {
         reactNodes.push(
-          <strong>
+          <strong style={{ color }}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
                 .reactNodes
@@ -130,7 +141,7 @@ const renderMdast = ({
 
       case 'emphasis': {
         reactNodes.push(
-          <em>
+          <em style={{ color }}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
                 .reactNodes
@@ -142,7 +153,7 @@ const renderMdast = ({
 
       case 'delete': {
         reactNodes.push(
-          <del>
+          <del style={{ color }}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
                 .reactNodes
@@ -172,7 +183,7 @@ const renderMdast = ({
 
       case 'paragraph': {
         reactNodes.push(
-          <p>
+          <p style={{ color }}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
                 .reactNodes
@@ -245,7 +256,7 @@ const renderMdast = ({
         }
 
         reactNodes.push(
-          <blockquote css={blockquoteStyle}>
+          <blockquote css={blockquoteStyle({ isDark })}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
                 .reactNodes
@@ -263,24 +274,41 @@ const renderMdast = ({
 
       case 'code': {
         reactNodes.push(
-          <CodeBlock code={node.value} language={node.lang ?? 'txt'} />
+          <CodeBlock
+            code={node.value}
+            language={node.lang ?? 'txt'}
+            isDark={isDark}
+            caption={node.meta ?? node.lang ?? 'txt'}
+          />
         )
         break
       }
 
       case 'heading': {
         if (node.depth === 1) {
-          reactNodes.push(<Heading1 text={mdastToString(node.children)} />)
+          reactNodes.push(
+            <Heading1 text={mdastToString(node.children)} isDark={isDark} />
+          )
         } else if (node.depth === 2) {
-          reactNodes.push(<Heading2 text={mdastToString(node.children)} />)
+          reactNodes.push(
+            <Heading2 text={mdastToString(node.children)} isDark={isDark} />
+          )
         } else if (node.depth === 3) {
-          reactNodes.push(<Heading3 text={mdastToString(node.children)} />)
+          reactNodes.push(
+            <Heading3 text={mdastToString(node.children)} isDark={isDark} />
+          )
         } else if (node.depth === 4) {
-          reactNodes.push(<h4>{mdastToString(node.children)}</h4>)
+          reactNodes.push(
+            <h4 style={{ color }}>{mdastToString(node.children)}</h4>
+          )
         } else if (node.depth === 5) {
-          reactNodes.push(<h5>{mdastToString(node.children)}</h5>)
+          reactNodes.push(
+            <h5 style={{ color }}>{mdastToString(node.children)}</h5>
+          )
         } else if (node.depth === 6) {
-          reactNodes.push(<h6>{mdastToString(node.children)}</h6>)
+          reactNodes.push(
+            <h6 style={{ color }}>{mdastToString(node.children)}</h6>
+          )
         }
         break
       }
@@ -337,7 +365,7 @@ const renderMdast = ({
         }
 
         reactNodes.push(
-          <table>
+          <table css={tableStyle({ isDark })}>
             {thead}
             <tbody>{tbodyTrArray}</tbody>
           </table>
@@ -374,7 +402,7 @@ const renderMdast = ({
 
       case 'listItem': {
         reactNodes.push(
-          <li>
+          <li style={{ color }}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
                 .reactNodes
@@ -428,10 +456,11 @@ const renderMdast = ({
             }}
           >
             <a
+              css={supStyle({ isDark })}
               href={`#footnote-reference-${node.identifier}`}
               id={`footnote-definition-${node.identifier}`}
             >
-              {node.identifier}
+              <sup>{node.identifier}</sup>
             </a>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
@@ -445,6 +474,7 @@ const renderMdast = ({
       case 'footnoteReference': {
         reactNodes.push(
           <a
+            css={supStyle({ isDark })}
             href={`#footnote-definition-${node.identifier}`}
             id={`footnote-reference-${node.identifier}`}
           >
