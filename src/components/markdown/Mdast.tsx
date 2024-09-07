@@ -168,7 +168,11 @@ const renderMdast = ({
 
       case 'link': {
         reactNodes.push(
-          <InlineLink text={mdastToString(node.children)} href={node.url} />
+          <InlineLink
+            text={mdastToString(node.children)}
+            href={node.url}
+            isDark={isDark}
+          />
         )
         break
       }

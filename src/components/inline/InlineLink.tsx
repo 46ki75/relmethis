@@ -14,7 +14,7 @@ import {
 //
 // # --------------------------------------------------------------------------------
 
-const style = css`
+const style = ({ isDark }: { isDark: boolean }) => css`
   all: unset;
   display: inline;
   cursor: pointer;
@@ -30,6 +30,13 @@ const style = css`
   &:hover {
     background-color: ${rgba('#6987b8', 0.2)};
     border-bottom: dashed 0px rgba(0, 0, 0, 0);
+  }
+
+  span::selection {
+    background-color: ${isDark
+      ? 'rgba(255, 255, 255, 0.8)'
+      : 'rgba(0, 0, 0, 0.8)'};
+    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
   }
 `
 
@@ -65,6 +72,10 @@ export interface InlineLinkProps {
    * while links to different domains will open in a new tab.
    */
   href: string
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -73,7 +84,11 @@ export interface InlineLinkProps {
 //
 // # --------------------------------------------------------------------------------
 
-const InlineLinkComponent = ({ text, href }: InlineLinkProps) => {
+const InlineLinkComponent = ({
+  text,
+  href,
+  isDark = false
+}: InlineLinkProps) => {
   const currentHost = window.location.hostname
   const linkUrl = new URL(href, window.location.href)
   const isExternal = linkUrl.hostname !== currentHost
@@ -81,7 +96,7 @@ const InlineLinkComponent = ({ text, href }: InlineLinkProps) => {
   return (
     <a
       href={href}
-      css={style}
+      css={style({ isDark })}
       target={isExternal ? '_blank' : undefined}
       rel={isExternal ? 'noopener noreferrer' : undefined}
     >

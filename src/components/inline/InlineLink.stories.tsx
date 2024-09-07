@@ -13,7 +13,8 @@ type Story = StoryObj<typeof meta>
 export const Primary: Story = {
   args: {
     text: 'Link to Page',
-    href: 'https://example.com'
+    href: 'https://example.com',
+    isDark: false
   }
 }
 
