@@ -5,6 +5,8 @@ import { css } from '@emotion/react'
 
 import { Definition, PhrasingContent, RootContent } from 'mdast'
 
+import { visit } from 'unist-util-visit'
+
 // components
 import { InlineCode } from '../inline/InlineCode'
 import { InlineLink } from '../inline/InlineLink'
@@ -12,10 +14,11 @@ import { CodeBlock } from '../code/CodeBlock'
 import { Heading1 } from '../typography/Heading1'
 import { Heading2 } from '../typography/Heading2'
 import { Heading3 } from '../typography/Heading3'
+import { Heading4 } from '../typography/Heading4'
+import { Heading5 } from '../typography/Heading5'
+import { Heading6 } from '../typography/Heading6'
 import { ImageWithModal } from '../image/ImageWithModal'
 import { Divider } from '../typography/Divider'
-
-import { visit } from 'unist-util-visit'
 import { Alert } from '../typography/Alert'
 
 // # --------------------------------------------------------------------------------
@@ -299,15 +302,15 @@ const renderMdast = ({
           )
         } else if (node.depth === 4) {
           reactNodes.push(
-            <h4 style={{ color }}>{mdastToString(node.children)}</h4>
+            <Heading4 text={mdastToString(node.children)} isDark={isDark} />
           )
         } else if (node.depth === 5) {
           reactNodes.push(
-            <h5 style={{ color }}>{mdastToString(node.children)}</h5>
+            <Heading5 text={mdastToString(node.children)} isDark={isDark} />
           )
         } else if (node.depth === 6) {
           reactNodes.push(
-            <h6 style={{ color }}>{mdastToString(node.children)}</h6>
+            <Heading6 text={mdastToString(node.children)} isDark={isDark} />
           )
         }
         break
