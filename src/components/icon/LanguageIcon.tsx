@@ -3,7 +3,7 @@
 import { css, keyframes } from '@emotion/react'
 import React, { Suspense } from 'react'
 import { type LanguageIconSvgProps } from './language/Props'
-import { CodeBracketIcon } from '@heroicons/react/24/outline'
+import { CommandLineIcon } from '@heroicons/react/24/outline'
 
 // # --------------------------------------------------------------------------------
 //
@@ -20,6 +20,8 @@ const iconStyle = ({ size, isDark }: { size: string; isDark: boolean }) => css`
   color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
   width: ${size};
   height: ${size};
+  margin: 0;
+  padding: 0;
   animation-name: ${fade};
   animation-duration: 300ms;
   animation-fill-mode: both;
@@ -134,7 +136,7 @@ const LanguageIconComponent = ({
 
     default:
       return (
-        <CodeBracketIcon
+        <CommandLineIcon
           style={{ width: size, height: size, color }}
           css={iconStyle({ size, isDark })}
         />
