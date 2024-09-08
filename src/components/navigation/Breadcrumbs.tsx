@@ -160,14 +160,13 @@ const BreadcrumbsComponent = ({
   )
 
   const Links = links.map((link, index) => (
-    <>
+    <React.Fragment key={`${index}-${link.label}-${link.href}`}>
       {/* linktext */}
 
       <a
         href={link.href}
         target={isExternal(link.href) ? '_blank' : undefined}
         rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
-        key={`${index}-${link.label}-${link.href}`}
         css={linkStyle({ inView, delay: `${200 * index}ms` })}
       >
         {index === 0
@@ -200,14 +199,13 @@ const BreadcrumbsComponent = ({
 
       {index + 1 !== links.length && (
         <ChevronRightIcon
-          key={`${index}-${link.label}-${link.href}`}
           css={animationIconStyle({
             inView,
             delay: `${200 * (index * 1) + 100}ms`
           })}
         />
       )}
-    </>
+    </React.Fragment>
   ))
 
   return (
