@@ -35,6 +35,16 @@ const style = ({ isDark }: { isDark: boolean }) => css`
     border-bottom: dashed 0px rgba(0, 0, 0, 0);
   }
 
+  &:visited {
+    color: ${isDark ? lighten(0.1, '#9771bd') : darken(0.1, '#9771bd')};
+    &:hover {
+      background-color: ${rgba(
+        isDark ? lighten(0.1, '#9771bd') : darken(0.1, '#9771bd'),
+        0.2
+      )};
+    }
+  }
+
   span::selection {
     background-color: ${isDark
       ? 'rgba(255, 255, 255, 0.8)'
