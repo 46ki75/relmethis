@@ -58,9 +58,7 @@ export const Heading3Component = ({
 }: Heading3Props) => {
   return (
     <section id={identifier}>
-      <h3 id={identifier} css={headingStyle({ isDark })}>
-        {text}
-      </h3>
+      <h3 css={headingStyle({ isDark })}>{text}</h3>
       <FragmentIdentifier identifier={identifier} />
     </section>
   )

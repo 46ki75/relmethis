@@ -104,7 +104,7 @@ export const Heading1Component = ({
 
   return (
     <section id={identifier}>
-      <h1 id={identifier} css={h1Style({ inView, isDark })} ref={ref}>
+      <h1 css={h1Style({ inView, isDark })} ref={ref}>
         {text}
       </h1>
       <FragmentIdentifier identifier={identifier} />

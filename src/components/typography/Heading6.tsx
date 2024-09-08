@@ -51,9 +51,7 @@ const Heading6Component = ({
 }: Heading6Props) => {
   return (
     <section id={identifier}>
-      <h6 id={identifier} css={style({ isDark })}>
-        {text}
-      </h6>
+      <h6 css={style({ isDark })}>{text}</h6>
       <FragmentIdentifier identifier={identifier} />
     </section>
   )
