@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { ReactNode, useCallback, useMemo } from 'react'
+import React, { ReactNode, useMemo } from 'react'
 import { css } from '@emotion/react'
 import {
   ChevronRightIcon,
@@ -157,59 +157,54 @@ const BreadcrumbsComponent = ({
     [isDark]
   )
 
-  const Links = useCallback(
-    (inView: boolean) => {
-      return links.map((link, index) => (
-        <>
-          {/* linktext */}
+  const Links = links.map((link, index) => (
+    <>
+      {/* linktext */}
 
-          <a
-            href={link.href}
-            target={isExternal(link.href) ? '_blank' : undefined}
-            rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
-            key={link.label + link.href}
-            css={linkStyle({ inView, delay: `${200 * index}ms` })}
-          >
-            {index === 0
-              ? (link.icon ?? (
-                  <HomeIcon
-                    css={iconStyle({ color: link.color ?? defaultColor })}
-                  />
-                ))
-              : index + 1 !== links.length
-                ? (link.icon ?? (
-                    <FolderOpenIcon
-                      css={iconStyle({ color: link.color ?? defaultColor })}
-                    />
-                  ))
-                : (link.icon ?? (
-                    <DocumentIcon
-                      css={iconStyle({ color: link.color ?? defaultColor })}
-                    />
-                  ))}
+      <a
+        href={link.href}
+        target={isExternal(link.href) ? '_blank' : undefined}
+        rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
+        key={link.label + link.href}
+        css={linkStyle({ inView, delay: `${200 * index}ms` })}
+      >
+        {index === 0
+          ? (link.icon ?? (
+              <HomeIcon
+                css={iconStyle({ color: link.color ?? defaultColor })}
+              />
+            ))
+          : index + 1 !== links.length
+            ? (link.icon ?? (
+                <FolderOpenIcon
+                  css={iconStyle({ color: link.color ?? defaultColor })}
+                />
+              ))
+            : (link.icon ?? (
+                <DocumentIcon
+                  css={iconStyle({ color: link.color ?? defaultColor })}
+                />
+              ))}
 
-            <span>{link.label}</span>
-          </a>
+        <span>{link.label}</span>
+      </a>
 
-          {/* chevron */}
+      {/* chevron */}
 
-          {index + 1 !== links.length && (
-            <ChevronRightIcon
-              css={animationIconStyle({
-                inView,
-                delay: `${200 * (index * 1) + 100}ms`
-              })}
-            />
-          )}
-        </>
-      ))
-    },
-    [defaultColor, links]
-  )
+      {index + 1 !== links.length && (
+        <ChevronRightIcon
+          css={animationIconStyle({
+            inView,
+            delay: `${200 * (index * 1) + 100}ms`
+          })}
+        />
+      )}
+    </>
+  ))
 
   return (
     <div css={wrapperStyle({ isDark, align })} style={style} ref={ref}>
-      {Links(inView)}
+      {Links}
     </div>
   )
 }
