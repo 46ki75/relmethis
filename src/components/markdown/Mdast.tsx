@@ -103,15 +103,11 @@ const renderMdast = ({
   definitions: Definition[]
   isDark: boolean
 }): {
-  reactNodes: ReactNode[]
+  markdownComponent: ReactNode[]
   definitions: Definition[]
-  headings: Array<{
-    text: string
-    level: 1 | 2 | 3 | 4 | 5 | 6
-    identifier?: string
-  }>
+  tableOfContentsComponent: ReactNode
 } => {
-  const reactNodes: ReactNode[] = []
+  const markdownComponent: ReactNode[] = []
 
   const color = isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'
 
@@ -130,21 +126,21 @@ const renderMdast = ({
       // # --------------------------------------------------------------------------------
 
       case 'text': {
-        reactNodes.push(<>{node.value}</>)
+        markdownComponent.push(<>{node.value}</>)
         break
       }
 
       case 'inlineCode': {
-        reactNodes.push(<InlineCode text={node.value} isDark={isDark} />)
+        markdownComponent.push(<InlineCode text={node.value} isDark={isDark} />)
         break
       }
 
       case 'strong': {
-        reactNodes.push(
+        markdownComponent.push(
           <strong style={{ color }}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
-                .reactNodes
+                .markdownComponent
             }
           </strong>
         )
@@ -152,11 +148,11 @@ const renderMdast = ({
       }
 
       case 'emphasis': {
-        reactNodes.push(
+        markdownComponent.push(
           <em style={{ color }}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
-                .reactNodes
+                .markdownComponent
             }
           </em>
         )
@@ -164,11 +160,11 @@ const renderMdast = ({
       }
 
       case 'delete': {
-        reactNodes.push(
+        markdownComponent.push(
           <del style={{ color }}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
-                .reactNodes
+                .markdownComponent
             }
           </del>
         )
@@ -176,7 +172,7 @@ const renderMdast = ({
       }
 
       case 'link': {
-        reactNodes.push(
+        markdownComponent.push(
           <InlineLink
             text={mdastToString(node.children)}
             href={node.url}
@@ -187,7 +183,7 @@ const renderMdast = ({
       }
 
       case 'break': {
-        reactNodes.push(<br />)
+        markdownComponent.push(<br />)
         break
       }
 
@@ -198,11 +194,11 @@ const renderMdast = ({
       // # --------------------------------------------------------------------------------
 
       case 'paragraph': {
-        reactNodes.push(
+        markdownComponent.push(
           <p style={{ color }}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
-                .reactNodes
+                .markdownComponent
             }
           </p>
         )
@@ -259,14 +255,14 @@ const renderMdast = ({
                 }
               })
 
-              reactNodes.push(
+              markdownComponent.push(
                 <Alert type={alertType}>
                   {
                     renderMdast({
                       mdastNodes: newChildren,
                       definitions,
                       isDark
-                    }).reactNodes
+                    }).markdownComponent
                   }
                 </Alert>
               )
@@ -275,11 +271,11 @@ const renderMdast = ({
           }
         }
 
-        reactNodes.push(
+        markdownComponent.push(
           <Blockquote isDark={isDark}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
-                .reactNodes
+                .markdownComponent
             }
           </Blockquote>
         )
@@ -288,12 +284,12 @@ const renderMdast = ({
       }
 
       case 'thematicBreak': {
-        reactNodes.push(<Divider />)
+        markdownComponent.push(<Divider />)
         break
       }
 
       case 'code': {
-        reactNodes.push(
+        markdownComponent.push(
           <Suspense fallback={<BlockFallback />}>
             <CodeBlock
               code={node.value}
@@ -312,23 +308,23 @@ const renderMdast = ({
         headings.push({ level: node.depth, text })
 
         if (node.depth === 1) {
-          reactNodes.push(<Heading1 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading1 text={text} isDark={isDark} />)
         } else if (node.depth === 2) {
-          reactNodes.push(<Heading2 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading2 text={text} isDark={isDark} />)
         } else if (node.depth === 3) {
-          reactNodes.push(<Heading3 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading3 text={text} isDark={isDark} />)
         } else if (node.depth === 4) {
-          reactNodes.push(<Heading4 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading4 text={text} isDark={isDark} />)
         } else if (node.depth === 5) {
-          reactNodes.push(<Heading5 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading5 text={text} isDark={isDark} />)
         } else if (node.depth === 6) {
-          reactNodes.push(<Heading6 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading6 text={text} isDark={isDark} />)
         }
         break
       }
 
       case 'image': {
-        reactNodes.push(
+        markdownComponent.push(
           <Suspense fallback={<BlockFallback />}>
             <ImageWithModal
               src={node.url}
@@ -354,7 +350,7 @@ const renderMdast = ({
                           mdastNodes: tableCell.children,
                           definitions,
                           isDark
-                        }).reactNodes
+                        }).markdownComponent
                       }
                     </th>
                   ))}
@@ -371,7 +367,7 @@ const renderMdast = ({
                         mdastNodes: tableCell.children,
                         definitions,
                         isDark
-                      }).reactNodes
+                      }).markdownComponent
                     }
                   </td>
                 ))}
@@ -380,7 +376,7 @@ const renderMdast = ({
           }
         }
 
-        reactNodes.push(
+        markdownComponent.push(
           <table css={tableStyle({ isDark })}>
             {thead}
             <tbody>{tbodyTrArray}</tbody>
@@ -396,19 +392,19 @@ const renderMdast = ({
       }
 
       case 'list': {
-        reactNodes.push(
+        markdownComponent.push(
           node.ordered ? (
             <NumberedList isDark={isDark}>
               {
                 renderMdast({ mdastNodes: node.children, definitions, isDark })
-                  .reactNodes
+                  .markdownComponent
               }
             </NumberedList>
           ) : (
             <BulletedList isDark={isDark}>
               {
                 renderMdast({ mdastNodes: node.children, definitions, isDark })
-                  .reactNodes
+                  .markdownComponent
               }
             </BulletedList>
           )
@@ -417,11 +413,11 @@ const renderMdast = ({
       }
 
       case 'listItem': {
-        reactNodes.push(
+        markdownComponent.push(
           <>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
-                .reactNodes
+                .markdownComponent
             }
           </>
         )
@@ -434,7 +430,7 @@ const renderMdast = ({
         )
 
         if (linkDefinition != null) {
-          reactNodes.push(
+          markdownComponent.push(
             <InlineLink
               text={linkDefinition.title ?? linkDefinition.url}
               href={linkDefinition.url}
@@ -451,7 +447,7 @@ const renderMdast = ({
         )
 
         if (imageDefinition != null) {
-          reactNodes.push(
+          markdownComponent.push(
             <Suspense fallback={<BlockFallback />}>
               <ImageWithModal
                 src={imageDefinition.url}
@@ -465,7 +461,7 @@ const renderMdast = ({
       }
 
       case 'footnoteDefinition': {
-        reactNodes.push(
+        markdownComponent.push(
           <div
             style={{
               display: 'flex',
@@ -482,7 +478,7 @@ const renderMdast = ({
             </a>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
-                .reactNodes
+                .markdownComponent
             }
           </div>
         )
@@ -490,7 +486,7 @@ const renderMdast = ({
       }
 
       case 'footnoteReference': {
-        reactNodes.push(
+        markdownComponent.push(
           <a
             css={supStyle({ isDark })}
             href={`#footnote-definition-${node.identifier}`}
@@ -510,7 +506,13 @@ const renderMdast = ({
     }
   }
 
-  return { reactNodes, definitions, headings }
+  return {
+    markdownComponent: markdownComponent,
+    definitions,
+    tableOfContentsComponent: (
+      <TableOfContents headings={headings} isDark={isDark} />
+    )
+  }
 }
 
 // # --------------------------------------------------------------------------------
@@ -543,13 +545,6 @@ const MdastComponent = ({
   enableTableOfContents = true
 }: MdastProps) => {
   const [components, setComponents] = useState<ReactNode[]>([<BlockFallback />])
-  const [headings, setHeadings] = useState<
-    Array<{
-      text: string
-      level: 1 | 2 | 3 | 4 | 5 | 6
-      identifier?: string
-    }>
-  >([])
 
   useEffect(() => {
     const definitions: Definition[] = []
@@ -560,24 +555,20 @@ const MdastComponent = ({
       })
     }
 
-    const { reactNodes, headings: h } = renderMdast({
+    const { markdownComponent, tableOfContentsComponent } = renderMdast({
       mdastNodes: mdast,
       definitions,
       isDark
     })
 
-    setComponents(reactNodes)
-    setHeadings(h)
-  }, [isDark, mdast])
+    setComponents(
+      enableTableOfContents
+        ? [tableOfContentsComponent, ...markdownComponent]
+        : markdownComponent
+    )
+  }, [enableTableOfContents, isDark, mdast])
 
-  return (
-    <>
-      {enableTableOfContents && (
-        <TableOfContents headings={headings} isDark={isDark} />
-      )}
-      {components}
-    </>
-  )
+  return <>{components}</>
 }
 
 // # --------------------------------------------------------------------------------
