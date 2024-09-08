@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, Suspense, useState } from 'react'
 import { css } from '@emotion/react'
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
+import { BlockFallback } from '../fallback/BlockFallback'
 
 // # --------------------------------------------------------------------------------
 //
@@ -75,7 +76,7 @@ export interface ToggleProps {
 // # --------------------------------------------------------------------------------
 
 const ToggleComponent = ({ children, summary }: ToggleProps) => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
 
   return (
     <div css={wrapperStyle}>
@@ -88,7 +89,9 @@ const ToggleComponent = ({ children, summary }: ToggleProps) => {
         <ChevronRightIcon css={iconStyle({ isVisible })} />
         <span>{summary}</span>
       </div>
-      <div css={foldedStyle({ isVisible })}>{children}</div>
+      <div css={foldedStyle({ isVisible })}>
+        <Suspense fallback={<BlockFallback />}>{children}</Suspense>
+      </div>
     </div>
   )
 }
