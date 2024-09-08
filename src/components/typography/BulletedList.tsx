@@ -48,7 +48,7 @@ const style = ({ isDark }: { isDark: boolean }) => css`
   li {
     box-sizing: border-box;
     padding-left: 0.5rem;
-    margin: 0.75rem auto;
+    margin-block: 0.75rem;
 
     &::marker {
       content: url(${svgToBase64(bulletedListIcon1)});
