@@ -68,7 +68,7 @@ const MdastComponent = ({
     )
   }, [enableTableOfContents, isDark, mdast])
 
-  return <>{components}</>
+  return <article>{components}</article>
 }
 
 // # --------------------------------------------------------------------------------
