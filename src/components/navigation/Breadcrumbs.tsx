@@ -13,6 +13,8 @@ import { useInView } from 'react-intersection-observer'
 import { rgba } from 'polished'
 import { isEqual } from 'lodash'
 
+import type { Property } from 'csstype'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -21,10 +23,12 @@ import { isEqual } from 'lodash'
 
 const wrapperStyle = ({
   isDark,
-  align
+  align,
+  gap
 }: {
   isDark: boolean
   align?: 'center' | 'left' | 'right'
+  gap: Property.Gap<string | number>
 }) => css`
   color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
 
@@ -35,7 +39,7 @@ const wrapperStyle = ({
       ? 'flex-start'
       : 'flex-end'};
   align-items: center;
-  gap: 0.25rem;
+  gap: ${gap};
   flex-wrap: wrap;
 `
 
@@ -142,6 +146,10 @@ export interface BreadcrumbsProps {
    * Time for the breadcrumb list to be fully displayed [ms]
    */
   animationDuration?: number
+  /**
+   * Spacing between items in the breadcrumb list
+   */
+  gap?: Property.Gap<string | number>
 }
 
 // # --------------------------------------------------------------------------------
@@ -157,7 +165,8 @@ const BreadcrumbsComponent = ({
   links,
   isDark = false,
   align = 'center',
-  animationDuration = 1000
+  animationDuration = 1000,
+  gap = 0
 }: BreadcrumbsProps) => {
   const { ref, inView } = useInView()
 
@@ -218,7 +227,7 @@ const BreadcrumbsComponent = ({
   ))
 
   return (
-    <div css={wrapperStyle({ isDark, align })} style={style} ref={ref}>
+    <div css={wrapperStyle({ isDark, align, gap })} style={style} ref={ref}>
       {Links}
     </div>
   )
@@ -236,6 +245,8 @@ export const Breadcrumbs = React.memo(
     return (
       prevProps.isDark === nextProps.isDark &&
       prevProps.align === nextProps.align &&
+      prevProps.animationDuration === nextProps.animationDuration &&
+      isEqual(prevProps.gap, nextProps.gap) &&
       isEqual(prevProps.links, nextProps.links) &&
       isEqual(prevProps.style, nextProps.style)
     )
