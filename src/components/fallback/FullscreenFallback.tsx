@@ -48,7 +48,7 @@ export interface FullscreenFallbackProps {
 const FullscreenFallbackComponent = ({ style }: FullscreenFallbackProps) => {
   return createPortal(
     <div css={wrapperStyle} style={style}>
-      <RectangleWave />
+      <RectangleWave color='rgba(128,128,128,0.8)' />
       <DotLoadingIcon size={64} color='rgba(128,128,128,0.8)' />
     </div>,
     document.body
