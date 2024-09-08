@@ -12,7 +12,7 @@ import { useInView } from 'react-intersection-observer'
 
 const containerStyle = css`
   width: 100%;
-  margin: 1rem 0;
+  margin-block: 1rem;
 
   display: flex;
   flex-direction: row;
