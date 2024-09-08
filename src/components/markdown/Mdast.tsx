@@ -503,6 +503,36 @@ const renderMdast = ({
 
 // # --------------------------------------------------------------------------------
 //
+// component
+//
+// # --------------------------------------------------------------------------------
+
+const MdastComponent = ({ mdast, isDark = false }: MdastProps) => {
+  const [components, setComponents] = useState<ReactNode[]>([<>LOADING</>])
+
+  useEffect(() => {
+    const definitions: Definition[] = []
+
+    for (const node of mdast) {
+      visit(node, 'definition', (definition) => {
+        definitions.push(definition)
+      })
+    }
+
+    const mdastComponents = renderMdast({
+      mdastNodes: mdast,
+      definitions,
+      isDark
+    }).reactNodes
+
+    setComponents(mdastComponents)
+  }, [isDark, mdast])
+
+  return <>{components}</>
+}
+
+// # --------------------------------------------------------------------------------
+//
 // memoize
 //
 // # --------------------------------------------------------------------------------
