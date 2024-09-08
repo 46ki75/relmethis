@@ -60,6 +60,7 @@ const wrapperStyle = ({ isDark }: { isDark: boolean }) => css`
   background-color: ${isDark ? 'rgb(40, 44, 52)' : 'rgb(250, 250, 250)'};
   border-radius: 0.25rem;
   box-shadow: 0 0 0.25rem rgba(128, 128, 128, 0.4);
+  margin-block: 2rem;
 
   *::selection {
     background-color: ${isDark
