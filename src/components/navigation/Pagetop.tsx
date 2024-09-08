@@ -133,7 +133,7 @@ export const PagetopComponent = ({ position }: PagetopProps): JSX.Element => {
 
   return createPortal(
     <>
-      <div
+      <nav
         css={css`
           ${containerStyle};
           ${position}: 8px;
@@ -146,7 +146,7 @@ export const PagetopComponent = ({ position }: PagetopProps): JSX.Element => {
         <div css={chevronStyle}></div>
         <div css={chevronStyle}></div>
         <div css={chevronStyle}></div>
-      </div>
+      </nav>
       <span css={textStyle({ position, isVisible })}>Back to Top</span>
     </>,
     document.body
