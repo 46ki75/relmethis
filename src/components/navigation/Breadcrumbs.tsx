@@ -166,7 +166,7 @@ const BreadcrumbsComponent = ({
         href={link.href}
         target={isExternal(link.href) ? '_blank' : undefined}
         rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
-        key={link.label + link.href}
+        key={index + link.label + link.href}
         css={linkStyle({ inView, delay: `${200 * index}ms` })}
       >
         {index === 0
