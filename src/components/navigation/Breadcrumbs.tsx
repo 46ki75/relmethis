@@ -166,7 +166,7 @@ const BreadcrumbsComponent = ({
   isDark = false,
   align = 'center',
   animationDuration = 1000,
-  gap = 0
+  gap = '0.25rem'
 }: BreadcrumbsProps) => {
   const { ref, inView } = useInView()
 
