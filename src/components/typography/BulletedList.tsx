@@ -2,6 +2,7 @@
 
 import React, { ReactNode } from 'react'
 import { css } from '@emotion/react'
+import { useInView } from 'react-intersection-observer'
 
 const bulletedListIcon1 = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12px" height="12px">
@@ -40,8 +41,10 @@ function svgToBase64(svg: string): string {
 //
 // # --------------------------------------------------------------------------------
 
-const style = ({ isDark }: { isDark: boolean }) => css`
+const style = ({ isDark, inView }: { isDark: boolean; inView: boolean }) => css`
   color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
+  opacity: ${inView ? 1 : 0};
+  transition: opacity 800ms;
   box-sizing: border-box;
   padding-left: 1.25rem;
 
@@ -102,8 +105,10 @@ const BulletedListComponent: React.FC<BulletedListProps> = ({
   children,
   isDark = false
 }) => {
+  const { ref, inView } = useInView()
+
   return (
-    <ul css={style({ isDark })}>
+    <ul css={style({ isDark, inView })} ref={ref}>
       {React.Children.map(children, (child, index) => (
         <li key={index}>{child}</li>
       ))}
