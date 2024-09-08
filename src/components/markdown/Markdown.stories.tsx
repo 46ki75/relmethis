@@ -25,7 +25,7 @@ export const Paragraph: Story = {
   }
 }
 
-const footernoteMarkdown = `
+const footnoteMarkdown = `
 This is part of the main text[^1].
 
 This is part of the main text[^2].
@@ -35,9 +35,9 @@ This is part of the main text[^2].
 [^2]: This is the definition of a footnote. A detailed explanation is written here.
 `
 
-export const Footernote: Story = {
+export const Footnote: Story = {
   args: {
-    markdown: footernoteMarkdown
+    markdown: footnoteMarkdown
   }
 }
 
