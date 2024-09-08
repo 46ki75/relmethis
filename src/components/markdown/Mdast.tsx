@@ -11,6 +11,7 @@ import { BlockFallback } from '../fallback/BlockFallback'
 
 import { RenderMdast } from './RenderMdast'
 import { TableOfContents } from '../navigation/TableOfContents'
+import { Divider } from '../typography/Divider'
 
 // # --------------------------------------------------------------------------------
 //
@@ -52,19 +53,26 @@ const MdastComponent = ({
       })
     }
 
-    const { markdownComponent, headings } = RenderMdast({
+    const { markdownComponent, headings, footnoteComponent } = RenderMdast({
       mdastNodes: mdast,
       definitions,
-      isDark
+      isDark,
+      footnoteComponent: []
     })
 
     setComponents(
       enableTableOfContents
         ? [
             <TableOfContents headings={headings} isDark={isDark} />,
-            ...markdownComponent
+            markdownComponent,
+            footnoteComponent.length > 0 ? <Divider /> : <></>,
+            footnoteComponent
           ]
-        : markdownComponent
+        : [
+            markdownComponent,
+            footnoteComponent.length > 0 ? <Divider /> : <></>,
+            footnoteComponent
+          ]
     )
   }, [enableTableOfContents, isDark, mdast])
 

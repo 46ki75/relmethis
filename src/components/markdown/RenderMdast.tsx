@@ -58,14 +58,17 @@ const supStyle = ({ isDark }: { isDark: boolean }) => css`
 
 export const RenderMdast = ({
   mdastNodes,
+  footnoteComponent,
   definitions,
   isDark
 }: {
   mdastNodes: RootContent[]
+  footnoteComponent: ReactNode[]
   definitions: Definition[]
   isDark: boolean
 }): {
   markdownComponent: ReactNode[]
+  footnoteComponent: ReactNode[]
   definitions: Definition[]
   headings: Array<{
     text: string
@@ -105,8 +108,12 @@ export const RenderMdast = ({
         markdownComponent.push(
           <strong style={{ color }}>
             {
-              RenderMdast({ mdastNodes: node.children, definitions, isDark })
-                .markdownComponent
+              RenderMdast({
+                mdastNodes: node.children,
+                definitions,
+                isDark,
+                footnoteComponent
+              }).markdownComponent
             }
           </strong>
         )
@@ -117,8 +124,12 @@ export const RenderMdast = ({
         markdownComponent.push(
           <em style={{ color }}>
             {
-              RenderMdast({ mdastNodes: node.children, definitions, isDark })
-                .markdownComponent
+              RenderMdast({
+                mdastNodes: node.children,
+                definitions,
+                isDark,
+                footnoteComponent
+              }).markdownComponent
             }
           </em>
         )
@@ -129,8 +140,12 @@ export const RenderMdast = ({
         markdownComponent.push(
           <del style={{ color }}>
             {
-              RenderMdast({ mdastNodes: node.children, definitions, isDark })
-                .markdownComponent
+              RenderMdast({
+                mdastNodes: node.children,
+                definitions,
+                isDark,
+                footnoteComponent
+              }).markdownComponent
             }
           </del>
         )
@@ -163,8 +178,12 @@ export const RenderMdast = ({
         markdownComponent.push(
           <p style={{ color }}>
             {
-              RenderMdast({ mdastNodes: node.children, definitions, isDark })
-                .markdownComponent
+              RenderMdast({
+                mdastNodes: node.children,
+                definitions,
+                isDark,
+                footnoteComponent
+              }).markdownComponent
             }
           </p>
         )
@@ -227,7 +246,8 @@ export const RenderMdast = ({
                     RenderMdast({
                       mdastNodes: newChildren,
                       definitions,
-                      isDark
+                      isDark,
+                      footnoteComponent
                     }).markdownComponent
                   }
                 </Alert>
@@ -240,8 +260,12 @@ export const RenderMdast = ({
         markdownComponent.push(
           <Blockquote isDark={isDark}>
             {
-              RenderMdast({ mdastNodes: node.children, definitions, isDark })
-                .markdownComponent
+              RenderMdast({
+                mdastNodes: node.children,
+                definitions,
+                isDark,
+                footnoteComponent
+              }).markdownComponent
             }
           </Blockquote>
         )
@@ -315,7 +339,8 @@ export const RenderMdast = ({
                         RenderMdast({
                           mdastNodes: tableCell.children,
                           definitions,
-                          isDark
+                          isDark,
+                          footnoteComponent
                         }).markdownComponent
                       }
                     </th>
@@ -332,7 +357,8 @@ export const RenderMdast = ({
                       RenderMdast({
                         mdastNodes: tableCell.children,
                         definitions,
-                        isDark
+                        isDark,
+                        footnoteComponent
                       }).markdownComponent
                     }
                   </td>
@@ -362,15 +388,23 @@ export const RenderMdast = ({
           node.ordered ? (
             <NumberedList isDark={isDark}>
               {
-                RenderMdast({ mdastNodes: node.children, definitions, isDark })
-                  .markdownComponent
+                RenderMdast({
+                  mdastNodes: node.children,
+                  definitions,
+                  isDark,
+                  footnoteComponent
+                }).markdownComponent
               }
             </NumberedList>
           ) : (
             <BulletedList isDark={isDark}>
               {
-                RenderMdast({ mdastNodes: node.children, definitions, isDark })
-                  .markdownComponent
+                RenderMdast({
+                  mdastNodes: node.children,
+                  definitions,
+                  isDark,
+                  footnoteComponent
+                }).markdownComponent
               }
             </BulletedList>
           )
@@ -382,8 +416,12 @@ export const RenderMdast = ({
         markdownComponent.push(
           <>
             {
-              RenderMdast({ mdastNodes: node.children, definitions, isDark })
-                .markdownComponent
+              RenderMdast({
+                mdastNodes: node.children,
+                definitions,
+                isDark,
+                footnoteComponent
+              }).markdownComponent
             }
           </>
         )
@@ -427,7 +465,7 @@ export const RenderMdast = ({
       }
 
       case 'footnoteDefinition': {
-        markdownComponent.push(
+        footnoteComponent.push(
           <div
             style={{
               display: 'flex',
@@ -443,8 +481,12 @@ export const RenderMdast = ({
               <sup>{node.identifier}</sup>
             </a>
             {
-              RenderMdast({ mdastNodes: node.children, definitions, isDark })
-                .markdownComponent
+              RenderMdast({
+                mdastNodes: node.children,
+                definitions,
+                isDark,
+                footnoteComponent
+              }).markdownComponent
             }
           </div>
         )
@@ -473,7 +515,8 @@ export const RenderMdast = ({
   }
 
   return {
-    markdownComponent: markdownComponent,
+    markdownComponent,
+    footnoteComponent,
     definitions,
     headings
   }
