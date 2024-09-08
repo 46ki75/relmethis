@@ -107,7 +107,7 @@ export interface ImageWithModalProps {
    * { aspectRatio: `${width} / ${height}` }
    * ```
    */
-  width: number
+  width?: number
   /**
    * **optional?**
    *
@@ -116,13 +116,13 @@ export interface ImageWithModalProps {
    * { aspectRatio: `${width} / ${height}` }
    * ```
    */
-  height: number
+  height?: number
   /**
    * **optional**
    *
    * Language for displaying flavor text or guide text
    */
-  lang: 'en' | 'ja'
+  lang?: 'en' | 'ja'
 }
 
 // # --------------------------------------------------------------------------------
@@ -133,9 +133,9 @@ export interface ImageWithModalProps {
 
 const ImageWithModalComponent = ({
   src,
-  width,
-  height,
-  lang
+  width = 1200,
+  height = 630,
+  lang = 'ja'
 }: ImageWithModalProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true)
   const [isModalShow, setIsModalShow] = useState(false)
@@ -203,12 +203,6 @@ const ImageWithModalComponent = ({
 // default props
 //
 // # --------------------------------------------------------------------------------
-
-ImageWithModalComponent.defaultProps = {
-  width: 1200,
-  height: 630,
-  lang: 'ja'
-}
 
 // # --------------------------------------------------------------------------------
 //
