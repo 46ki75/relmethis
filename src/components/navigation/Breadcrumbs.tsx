@@ -225,9 +225,9 @@ const BreadcrumbsComponent = ({
   ))
 
   return (
-    <div css={wrapperStyle({ isDark, align, gap })} style={style} ref={ref}>
+    <nav css={wrapperStyle({ isDark, align, gap })} style={style} ref={ref}>
       {Links}
-    </div>
+    </nav>
   )
 }
 
