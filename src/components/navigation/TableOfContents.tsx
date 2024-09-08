@@ -128,48 +128,48 @@ const TableOfContentsComponent = ({
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
-      root: null, // Use the viewport
+      root: null,
       rootMargin: '0px',
-      threshold: 0.5 // 50% of the element must be visible
+      threshold: 0.5
     })
 
-    // Observe all sections and headings (h1-h6) with ids in the document
     const elements = document.querySelectorAll('section[id]')
     elements.forEach((element) => {
       observer.observe(element)
     })
 
-    // Cleanup function
     return () => {
       observer.disconnect()
     }
   }, [handleIntersection])
 
   return (
-    <nav css={wrapperStyle}>
-      {headings.map((heading, index) => (
-        <React.Fragment key={`${index}-${heading.level}`}>
-          <a
-            css={headingStyle({
-              level: heading.level,
-              isDark,
-              inSection:
-                (heading.identifier ?? heading.text) === activeElementId,
-              fontSizeRatio
-            })}
-            href={`#${heading.identifier ?? heading.text}`}
-          >
-            <sup>
-              H<sub>{heading.level}</sub>
-            </sup>
-            <span>
-              {heading.text}
-              <BarsArrowDownIcon css={iconStyle} />
-            </span>
-          </a>
-        </React.Fragment>
-      ))}
-    </nav>
+    headings.length > 0 && (
+      <nav css={wrapperStyle}>
+        {headings.map((heading, index) => (
+          <React.Fragment key={`${index}-${heading.level}`}>
+            <a
+              css={headingStyle({
+                level: heading.level,
+                isDark,
+                inSection:
+                  (heading.identifier ?? heading.text) === activeElementId,
+                fontSizeRatio
+              })}
+              href={`#${heading.identifier ?? heading.text}`}
+            >
+              <sup>
+                H<sub>{heading.level}</sub>
+              </sup>
+              <span>
+                {heading.text}
+                <BarsArrowDownIcon css={iconStyle} />
+              </span>
+            </a>
+          </React.Fragment>
+        ))}
+      </nav>
+    )
   )
 }
 
