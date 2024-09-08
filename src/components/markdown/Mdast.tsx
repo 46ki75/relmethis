@@ -9,7 +9,7 @@ import { visit } from 'unist-util-visit'
 // components
 import { BlockFallback } from '../fallback/BlockFallback'
 
-import { RenderMdast } from './renderMdast'
+import { RenderMdast } from './RenderMdast'
 
 // # --------------------------------------------------------------------------------
 //
