@@ -158,8 +158,6 @@ export interface BreadcrumbsProps {
 //
 // # --------------------------------------------------------------------------------
 
-// const ANIMATION_SPEED = 150
-
 const BreadcrumbsComponent = ({
   style,
   links,
