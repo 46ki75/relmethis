@@ -28,6 +28,7 @@ const wrapperStyle = ({
   box-sizing: border-box;
   width: 100%;
   padding: 1rem;
+  margin-block: 2rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
