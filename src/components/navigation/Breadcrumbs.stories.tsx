@@ -64,3 +64,16 @@ export const AlignLeft: Story = {
     align: 'left'
   }
 }
+
+export const External: Story = {
+  args: {
+    links: [
+      { href: '/', label: 'Home' },
+      { href: '/blog', label: 'Blog' },
+      { href: 'https://example.com', label: 'External' },
+      { href: '/blog/article/1', label: 'Page' }
+    ],
+    isDark: false,
+    align: 'left'
+  }
+}

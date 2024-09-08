@@ -3,6 +3,7 @@
 import React, { ReactNode, useMemo } from 'react'
 import { css } from '@emotion/react'
 import {
+  ArrowTopRightOnSquareIcon,
   ChevronRightIcon,
   DocumentIcon,
   FolderOpenIcon,
@@ -187,6 +188,11 @@ const BreadcrumbsComponent = ({
               ))}
 
         <span>{link.label}</span>
+        {isExternal(link.href) && (
+          <ArrowTopRightOnSquareIcon
+            css={iconStyle({ color: link.color ?? defaultColor })}
+          />
+        )}
       </a>
 
       {/* chevron */}
