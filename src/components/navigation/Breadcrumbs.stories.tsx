@@ -77,3 +77,25 @@ export const External: Story = {
     align: 'left'
   }
 }
+
+export const Long: Story = {
+  args: {
+    links: [
+      { href: '/', label: 'Home' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/blog/article/1', label: 'Page' }
+    ],
+    isDark: false,
+    align: 'left'
+  }
+}

@@ -36,6 +36,7 @@ const wrapperStyle = ({
       : 'flex-end'};
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 `
 
 const linkStyle = ({
@@ -199,6 +200,7 @@ const BreadcrumbsComponent = ({
 
       {index + 1 !== links.length && (
         <ChevronRightIcon
+          key={`${index}-${link.label}-${link.href}`}
           css={animationIconStyle({
             inView,
             delay: `${200 * (index * 1) + 100}ms`
