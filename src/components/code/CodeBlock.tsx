@@ -5,6 +5,7 @@ import React, {
   ReactNode,
   Suspense,
   useCallback,
+  useDeferredValue,
   useEffect,
   useState
 } from 'react'
@@ -183,6 +184,9 @@ const CodeBlockComponent = ({
   isDark = false,
   enablePreview = true
 }: CodeBlockProps) => {
+  const deferredCode = useDeferredValue(code)
+  const deferredLanguage = useDeferredValue(language)
+
   const [isShowNumber, setIsShowNumber] = useState<boolean>(false)
 
   useEffect(() => {
@@ -200,29 +204,30 @@ const CodeBlockComponent = ({
 
   const previewAvailableLanguages = ['katex', 'mermaid', 'markdown', 'md']
 
-  const isAvailablePreview = previewAvailableLanguages.includes(language)
+  const isAvailablePreview =
+    previewAvailableLanguages.includes(deferredLanguage)
 
   const [showPreview, setShowPreview] = useState(
     enablePreview && isAvailablePreview
   )
 
   const renderPreviewComponent = useCallback((): ReactNode => {
-    if (language === 'katex') {
+    if (deferredLanguage === 'katex') {
       return (
         <div css={codeStyle}>
-          <KaTex equation={code} isDark={isDark} />
+          <KaTex equation={deferredCode} isDark={isDark} />
         </div>
       )
-    } else if (language === 'mermaid') {
+    } else if (deferredLanguage === 'mermaid') {
       return (
         <div css={codeStyle} style={{ margin: '2rem' }}>
-          <Mermaid code={code} isDark={isDark} />
+          <Mermaid code={deferredCode} isDark={isDark} />
         </div>
       )
-    } else if (language === 'markdown' || language === 'md') {
+    } else if (deferredLanguage === 'markdown' || deferredLanguage === 'md') {
       return (
         <div style={{ padding: '1rem' }}>
-          <Markdown markdown={code} isDark={isDark} />
+          <Markdown markdown={deferredCode} isDark={isDark} />
         </div>
       )
     } else {
@@ -238,7 +243,7 @@ const CodeBlockComponent = ({
         </div>
       )
     }
-  }, [code, isDark, language])
+  }, [deferredCode, deferredLanguage, isDark])
 
   return (
     <div css={wrapperStyle({ isDark })}>
@@ -247,7 +252,7 @@ const CodeBlockComponent = ({
       <div css={headerStyle}>
         <div>
           <LanguageIcon
-            language={language}
+            language={deferredLanguage}
             size={'20px'}
             color={undefined}
             isDark={isDark}
@@ -272,7 +277,7 @@ const CodeBlockComponent = ({
           <ClipboardDocumentIcon
             css={clickableIconStyle({ isDark })}
             onClick={() => {
-              copyToClipboard(code.trim())
+              copyToClipboard(deferredCode.trim())
             }}
           />
         </div>
@@ -294,20 +299,41 @@ const CodeBlockComponent = ({
         {showPreview ? (
           renderPreviewComponent()
         ) : (
-          <SyntaxHighlighter
-            language={language}
-            css={codeStyle}
-            style={isDark ? oneDark : oneLight}
-            showLineNumbers={isShowNumber}
-            customStyle={{ borderRadius: '0 0 0.25rem 0.25rem', margin: 0 }}
-          >
-            {code.trim()}
-          </SyntaxHighlighter>
+          <MemoizedSyntaxHighlighter
+            code={code}
+            language={deferredLanguage}
+            isDark={isDark}
+            isShowNumber={isShowNumber}
+          />
         )}
       </Suspense>
     </div>
   )
 }
+
+const MemoizedSyntaxHighlighter = React.memo(
+  ({
+    code,
+    language = 'txt',
+    isDark = false,
+    isShowNumber = true
+  }: {
+    code: string
+    language?: string
+    isDark?: boolean
+    isShowNumber?: boolean
+  }) => (
+    <SyntaxHighlighter
+      language={language}
+      css={codeStyle}
+      style={isDark ? oneDark : oneLight}
+      showLineNumbers={isShowNumber}
+      customStyle={{ borderRadius: '0 0 0.25rem 0.25rem', margin: 0 }}
+    >
+      {code.trim()}
+    </SyntaxHighlighter>
+  )
+)
 
 // # --------------------------------------------------------------------------------
 //
