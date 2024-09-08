@@ -35,7 +35,7 @@ const wrapperStyle = ({
       ? 'flex-start'
       : 'flex-end'};
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   flex-wrap: wrap;
 `
 
