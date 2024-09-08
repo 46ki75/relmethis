@@ -15,7 +15,6 @@ import { darken } from 'polished'
 const wrapperStyle = css`
   box-sizing: border-box;
   padding: 2rem;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
