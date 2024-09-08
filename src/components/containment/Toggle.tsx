@@ -76,7 +76,7 @@ export interface ToggleProps {
 // # --------------------------------------------------------------------------------
 
 const ToggleComponent = ({ children, summary }: ToggleProps) => {
-  const [isVisible, setIsVisible] = useState(true)
+  const [isVisible, setIsVisible] = useState(false)
 
   return (
     <div css={wrapperStyle}>
