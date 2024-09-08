@@ -2,7 +2,7 @@
 
 import { css } from '@emotion/react'
 import React, { useMemo, useState } from 'react'
-import { RectangleWave } from '../decoration/RectangleWave'
+import { RectangleWave } from '../fallback/RectangleWave'
 import { SquareLoadingIcon } from '../icon/SquareLoadingIcon'
 import { SpinText } from '../text/SpinText'
 import { createPortal } from 'react-dom'

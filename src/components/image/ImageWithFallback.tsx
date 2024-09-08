@@ -2,7 +2,7 @@
 
 import { css } from '@emotion/react'
 import React, { useState } from 'react'
-import { RectangleWave } from '../decoration/RectangleWave'
+import { RectangleWave } from '../fallback/RectangleWave'
 import { SquareLoadingIcon } from '../icon/SquareLoadingIcon'
 import { SpinText } from '../text/SpinText'
 
