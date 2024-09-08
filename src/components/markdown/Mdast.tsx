@@ -9,7 +9,7 @@ import { visit } from 'unist-util-visit'
 // components
 import { BlockFallback } from '../fallback/BlockFallback'
 
-import { renderMdast } from './renderMdast'
+import { RenderMdast } from './renderMdast'
 
 // # --------------------------------------------------------------------------------
 //
@@ -51,7 +51,7 @@ const MdastComponent = ({
       })
     }
 
-    const { markdownComponent, tableOfContentsComponent } = renderMdast({
+    const { markdownComponent, tableOfContentsComponent } = RenderMdast({
       mdastNodes: mdast,
       definitions,
       isDark

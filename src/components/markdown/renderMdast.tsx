@@ -23,7 +23,6 @@ import { Blockquote } from '../typography/Blockquote'
 import { TableOfContents } from '../navigation/TableOfContents'
 
 import type { CodeBlock as CodeBlockType } from '../code/CodeBlock'
-// eslint-disable-next-line react-refresh/only-export-components
 const CodeBlock = React.lazy(() =>
   import('../code/CodeBlock').then((module) => ({
     default: module.CodeBlock
@@ -31,7 +30,6 @@ const CodeBlock = React.lazy(() =>
 ) as React.ComponentType<React.ComponentProps<typeof CodeBlockType>>
 
 import type { ImageWithModal as ImageWithModalType } from '../image/ImageWithModal'
-// eslint-disable-next-line react-refresh/only-export-components
 const ImageWithModal = React.lazy(() =>
   import('../image/ImageWithModal').then((module) => ({
     default: module.ImageWithModal
@@ -94,7 +92,7 @@ const mdastToString = (nodes: PhrasingContent[]): string => {
   return results.join('')
 }
 
-export const renderMdast = ({
+export const RenderMdast = ({
   mdastNodes,
   definitions,
   isDark
@@ -139,7 +137,7 @@ export const renderMdast = ({
         markdownComponent.push(
           <strong style={{ color }}>
             {
-              renderMdast({ mdastNodes: node.children, definitions, isDark })
+              RenderMdast({ mdastNodes: node.children, definitions, isDark })
                 .markdownComponent
             }
           </strong>
@@ -151,7 +149,7 @@ export const renderMdast = ({
         markdownComponent.push(
           <em style={{ color }}>
             {
-              renderMdast({ mdastNodes: node.children, definitions, isDark })
+              RenderMdast({ mdastNodes: node.children, definitions, isDark })
                 .markdownComponent
             }
           </em>
@@ -163,7 +161,7 @@ export const renderMdast = ({
         markdownComponent.push(
           <del style={{ color }}>
             {
-              renderMdast({ mdastNodes: node.children, definitions, isDark })
+              RenderMdast({ mdastNodes: node.children, definitions, isDark })
                 .markdownComponent
             }
           </del>
@@ -197,7 +195,7 @@ export const renderMdast = ({
         markdownComponent.push(
           <p style={{ color }}>
             {
-              renderMdast({ mdastNodes: node.children, definitions, isDark })
+              RenderMdast({ mdastNodes: node.children, definitions, isDark })
                 .markdownComponent
             }
           </p>
@@ -258,7 +256,7 @@ export const renderMdast = ({
               markdownComponent.push(
                 <Alert type={alertType}>
                   {
-                    renderMdast({
+                    RenderMdast({
                       mdastNodes: newChildren,
                       definitions,
                       isDark
@@ -274,7 +272,7 @@ export const renderMdast = ({
         markdownComponent.push(
           <Blockquote isDark={isDark}>
             {
-              renderMdast({ mdastNodes: node.children, definitions, isDark })
+              RenderMdast({ mdastNodes: node.children, definitions, isDark })
                 .markdownComponent
             }
           </Blockquote>
@@ -346,7 +344,7 @@ export const renderMdast = ({
                   {tableRow.children.map((tableCell) => (
                     <th>
                       {
-                        renderMdast({
+                        RenderMdast({
                           mdastNodes: tableCell.children,
                           definitions,
                           isDark
@@ -363,7 +361,7 @@ export const renderMdast = ({
                 {tableRow.children.map((tableCell) => (
                   <td>
                     {
-                      renderMdast({
+                      RenderMdast({
                         mdastNodes: tableCell.children,
                         definitions,
                         isDark
@@ -396,14 +394,14 @@ export const renderMdast = ({
           node.ordered ? (
             <NumberedList isDark={isDark}>
               {
-                renderMdast({ mdastNodes: node.children, definitions, isDark })
+                RenderMdast({ mdastNodes: node.children, definitions, isDark })
                   .markdownComponent
               }
             </NumberedList>
           ) : (
             <BulletedList isDark={isDark}>
               {
-                renderMdast({ mdastNodes: node.children, definitions, isDark })
+                RenderMdast({ mdastNodes: node.children, definitions, isDark })
                   .markdownComponent
               }
             </BulletedList>
@@ -416,7 +414,7 @@ export const renderMdast = ({
         markdownComponent.push(
           <>
             {
-              renderMdast({ mdastNodes: node.children, definitions, isDark })
+              RenderMdast({ mdastNodes: node.children, definitions, isDark })
                 .markdownComponent
             }
           </>
@@ -477,7 +475,7 @@ export const renderMdast = ({
               <sup>{node.identifier}</sup>
             </a>
             {
-              renderMdast({ mdastNodes: node.children, definitions, isDark })
+              RenderMdast({ mdastNodes: node.children, definitions, isDark })
                 .markdownComponent
             }
           </div>
