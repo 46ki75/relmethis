@@ -31,6 +31,7 @@ const CodeBlock = React.lazy(() =>
 ) as React.ComponentType<React.ComponentProps<typeof CodeBlockType>>
 
 import type { ImageWithModal as ImageWithModalType } from '../image/ImageWithModal'
+import { TableOfContents } from '../navigation/TableOfContents'
 const ImageWithModal = React.lazy(() =>
   import('../image/ImageWithModal').then((module) => ({
     default: module.ImageWithModal
@@ -50,20 +51,6 @@ const tableStyle = ({ isDark }: { isDark: boolean }) => css`
 const supStyle = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? '#6987b8' : '#4c6da2'};
 `
-
-// # --------------------------------------------------------------------------------
-//
-// props
-//
-// # --------------------------------------------------------------------------------
-
-export interface MdastProps {
-  mdast: RootContent[]
-  /**
-   * Whether or not to use the dark theme
-   */
-  isDark?: boolean
-}
 
 // # --------------------------------------------------------------------------------
 //
@@ -115,10 +102,24 @@ const renderMdast = ({
   mdastNodes: RootContent[]
   definitions: Definition[]
   isDark: boolean
-}): { reactNodes: ReactNode[]; definitions: Definition[] } => {
+}): {
+  reactNodes: ReactNode[]
+  definitions: Definition[]
+  headings: Array<{
+    text: string
+    level: 1 | 2 | 3 | 4 | 5 | 6
+    identifier?: string
+  }>
+} => {
   const reactNodes: ReactNode[] = []
 
   const color = isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'
+
+  const headings: Array<{
+    text: string
+    level: 1 | 2 | 3 | 4 | 5 | 6
+    identifier?: string
+  }> = []
 
   for (const node of mdastNodes) {
     switch (node.type) {
@@ -306,30 +307,22 @@ const renderMdast = ({
       }
 
       case 'heading': {
+        const text = mdastToString(node.children)
+
+        headings.push({ level: node.depth, text })
+
         if (node.depth === 1) {
-          reactNodes.push(
-            <Heading1 text={mdastToString(node.children)} isDark={isDark} />
-          )
+          reactNodes.push(<Heading1 text={text} isDark={isDark} />)
         } else if (node.depth === 2) {
-          reactNodes.push(
-            <Heading2 text={mdastToString(node.children)} isDark={isDark} />
-          )
+          reactNodes.push(<Heading2 text={text} isDark={isDark} />)
         } else if (node.depth === 3) {
-          reactNodes.push(
-            <Heading3 text={mdastToString(node.children)} isDark={isDark} />
-          )
+          reactNodes.push(<Heading3 text={text} isDark={isDark} />)
         } else if (node.depth === 4) {
-          reactNodes.push(
-            <Heading4 text={mdastToString(node.children)} isDark={isDark} />
-          )
+          reactNodes.push(<Heading4 text={text} isDark={isDark} />)
         } else if (node.depth === 5) {
-          reactNodes.push(
-            <Heading5 text={mdastToString(node.children)} isDark={isDark} />
-          )
+          reactNodes.push(<Heading5 text={text} isDark={isDark} />)
         } else if (node.depth === 6) {
-          reactNodes.push(
-            <Heading6 text={mdastToString(node.children)} isDark={isDark} />
-          )
+          reactNodes.push(<Heading6 text={text} isDark={isDark} />)
         }
         break
       }
@@ -517,7 +510,25 @@ const renderMdast = ({
     }
   }
 
-  return { reactNodes, definitions }
+  return { reactNodes, definitions, headings }
+}
+
+// # --------------------------------------------------------------------------------
+//
+// props
+//
+// # --------------------------------------------------------------------------------
+
+export interface MdastProps {
+  mdast: RootContent[]
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
+  /**
+   * Determines whether to display the table of contents
+   */
+  enableTableOfContents?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -526,8 +537,19 @@ const renderMdast = ({
 //
 // # --------------------------------------------------------------------------------
 
-const MdastComponent = ({ mdast, isDark = false }: MdastProps) => {
+const MdastComponent = ({
+  mdast,
+  isDark = false,
+  enableTableOfContents = true
+}: MdastProps) => {
   const [components, setComponents] = useState<ReactNode[]>([<BlockFallback />])
+  const [headings, setHeadings] = useState<
+    Array<{
+      text: string
+      level: 1 | 2 | 3 | 4 | 5 | 6
+      identifier?: string
+    }>
+  >([])
 
   useEffect(() => {
     const definitions: Definition[] = []
@@ -538,16 +560,24 @@ const MdastComponent = ({ mdast, isDark = false }: MdastProps) => {
       })
     }
 
-    const mdastComponents = renderMdast({
+    const { reactNodes, headings: h } = renderMdast({
       mdastNodes: mdast,
       definitions,
       isDark
-    }).reactNodes
+    })
 
-    setComponents(mdastComponents)
+    setComponents(reactNodes)
+    setHeadings(h)
   }, [isDark, mdast])
 
-  return <>{components}</>
+  return (
+    <>
+      {enableTableOfContents && (
+        <TableOfContents headings={headings} isDark={isDark} />
+      )}
+      {components}
+    </>
+  )
 }
 
 // # --------------------------------------------------------------------------------

@@ -24,6 +24,10 @@ export interface MarkdownProps {
    * Whether or not to use the dark theme
    */
   isDark?: boolean
+  /**
+   * Determines whether to display the table of contents
+   */
+  enableTableOfContents?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -37,12 +41,20 @@ const parseMarkdownToMdast = (markdown: string) => {
   return processor
 }
 
-const MarkdownComponent = ({ markdown, isDark }: MarkdownProps) => {
+const MarkdownComponent = ({
+  markdown,
+  isDark,
+  enableTableOfContents = true
+}: MarkdownProps) => {
   const mdast = useMemo(() => parseMarkdownToMdast(markdown), [markdown])
 
   return (
     <>
-      <Mdast mdast={mdast.children} isDark={isDark} />
+      <Mdast
+        mdast={mdast.children}
+        isDark={isDark}
+        enableTableOfContents={enableTableOfContents}
+      />
     </>
   )
 }
