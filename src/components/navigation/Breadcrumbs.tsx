@@ -146,6 +146,8 @@ export interface BreadcrumbsProps {
 //
 // # --------------------------------------------------------------------------------
 
+const ANIMATION_SPEED = 150
+
 const BreadcrumbsComponent = ({
   style,
   links,
@@ -167,7 +169,7 @@ const BreadcrumbsComponent = ({
         href={link.href}
         target={isExternal(link.href) ? '_blank' : undefined}
         rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
-        css={linkStyle({ inView, delay: `${200 * index}ms` })}
+        css={linkStyle({ inView, delay: `${ANIMATION_SPEED * index}ms` })}
       >
         {index === 0
           ? (link.icon ?? (
@@ -201,7 +203,7 @@ const BreadcrumbsComponent = ({
         <ChevronRightIcon
           css={animationIconStyle({
             inView,
-            delay: `${200 * (index * 1) + 100}ms`
+            delay: `${ANIMATION_SPEED * (index * 1) + ANIMATION_SPEED / 2}ms`
           })}
         />
       )}
