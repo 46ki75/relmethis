@@ -138,6 +138,10 @@ export interface BreadcrumbsProps {
    * Position of the breadcrumb. Default is `center`.
    */
   align?: 'center' | 'left' | 'right'
+  /**
+   * Time for the breadcrumb list to be fully displayed [ms]
+   */
+  animationDuration?: number
 }
 
 // # --------------------------------------------------------------------------------
@@ -146,13 +150,14 @@ export interface BreadcrumbsProps {
 //
 // # --------------------------------------------------------------------------------
 
-const ANIMATION_SPEED = 150
+// const ANIMATION_SPEED = 150
 
 const BreadcrumbsComponent = ({
   style,
   links,
   isDark = false,
-  align = 'center'
+  align = 'center',
+  animationDuration = 1000
 }: BreadcrumbsProps) => {
   const { ref, inView } = useInView()
 
@@ -160,6 +165,8 @@ const BreadcrumbsComponent = ({
     () => (isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'),
     [isDark]
   )
+
+  const ANIMATION_SPEED = ((animationDuration / 3) * 2) / links.length
 
   const Links = links.map((link, index) => (
     <React.Fragment key={`${index}-${link.label}-${link.href}`}>
