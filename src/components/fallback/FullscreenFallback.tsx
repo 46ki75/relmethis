@@ -5,6 +5,7 @@ import { css } from '@emotion/react'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 import { createPortal } from 'react-dom'
 import { darken } from 'polished'
+import { RectangleWave } from './RectangleWave'
 
 // # --------------------------------------------------------------------------------
 //
@@ -47,6 +48,7 @@ export interface FullscreenFallbackProps {
 const FullscreenFallbackComponent = ({ style }: FullscreenFallbackProps) => {
   return createPortal(
     <div css={wrapperStyle} style={style}>
+      <RectangleWave />
       <DotLoadingIcon size={64} color='rgba(128,128,128,0.8)' />
     </div>,
     document.body
