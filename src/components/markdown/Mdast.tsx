@@ -10,6 +10,7 @@ import { visit } from 'unist-util-visit'
 import { BlockFallback } from '../fallback/BlockFallback'
 
 import { RenderMdast } from './RenderMdast'
+import { TableOfContents } from '../navigation/TableOfContents'
 
 // # --------------------------------------------------------------------------------
 //
@@ -51,7 +52,7 @@ const MdastComponent = ({
       })
     }
 
-    const { markdownComponent, tableOfContentsComponent } = RenderMdast({
+    const { markdownComponent, headings } = RenderMdast({
       mdastNodes: mdast,
       definitions,
       isDark
@@ -59,7 +60,10 @@ const MdastComponent = ({
 
     setComponents(
       enableTableOfContents
-        ? [tableOfContentsComponent, ...markdownComponent]
+        ? [
+            <TableOfContents headings={headings} isDark={isDark} />,
+            ...markdownComponent
+          ]
         : markdownComponent
     )
   }, [enableTableOfContents, isDark, mdast])

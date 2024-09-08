@@ -3,7 +3,7 @@
 import React, { ReactNode, Suspense } from 'react'
 import { css } from '@emotion/react'
 
-import { Definition, PhrasingContent, RootContent } from 'mdast'
+import type { Definition, RootContent } from 'mdast'
 
 // components
 import { BlockFallback } from '../fallback/BlockFallback'
@@ -20,7 +20,6 @@ import { Alert } from '../typography/Alert'
 import { NumberedList } from '../typography/NumberedList'
 import { BulletedList } from '../typography/BulletedList'
 import { Blockquote } from '../typography/Blockquote'
-import { TableOfContents } from '../navigation/TableOfContents'
 
 import type { CodeBlock as CodeBlockType } from '../code/CodeBlock'
 const CodeBlock = React.lazy(() =>
@@ -30,6 +29,7 @@ const CodeBlock = React.lazy(() =>
 ) as React.ComponentType<React.ComponentProps<typeof CodeBlockType>>
 
 import type { ImageWithModal as ImageWithModalType } from '../image/ImageWithModal'
+import { mdastToString } from './mdastToString'
 const ImageWithModal = React.lazy(() =>
   import('../image/ImageWithModal').then((module) => ({
     default: module.ImageWithModal
@@ -56,42 +56,6 @@ const supStyle = ({ isDark }: { isDark: boolean }) => css`
 //
 // # --------------------------------------------------------------------------------
 
-const mdastToString = (nodes: PhrasingContent[]): string => {
-  const results: string[] = []
-  for (const node of nodes) {
-    switch (node.type) {
-      case 'text':
-      case 'inlineCode': {
-        results.push(node.value)
-        break
-      }
-
-      case 'delete':
-      case 'emphasis':
-      case 'link':
-      case 'strong':
-      case 'linkReference': {
-        results.push(mdastToString(node.children))
-        break
-      }
-
-      case 'break': {
-        results.push('  \n')
-        break
-      }
-
-      case 'footnoteReference':
-      case 'html':
-      case 'image':
-      case 'imageReference': {
-        break
-      }
-    }
-  }
-
-  return results.join('')
-}
-
 export const RenderMdast = ({
   mdastNodes,
   definitions,
@@ -103,7 +67,11 @@ export const RenderMdast = ({
 }): {
   markdownComponent: ReactNode[]
   definitions: Definition[]
-  tableOfContentsComponent: ReactNode
+  headings: Array<{
+    text: string
+    level: 1 | 2 | 3 | 4 | 5 | 6
+    identifier?: string
+  }>
 } => {
   const markdownComponent: ReactNode[] = []
 
@@ -507,8 +475,6 @@ export const RenderMdast = ({
   return {
     markdownComponent: markdownComponent,
     definitions,
-    tableOfContentsComponent: (
-      <TableOfContents headings={headings} isDark={isDark} />
-    )
+    headings
   }
 }
