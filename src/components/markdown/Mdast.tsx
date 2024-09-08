@@ -22,20 +22,13 @@ import { Divider } from '../typography/Divider'
 import { Alert } from '../typography/Alert'
 import { NumberedList } from '../typography/NumberedList'
 import { BulletedList } from '../typography/BulletedList'
+import { Blockquote } from '../typography/Blockquote'
 
 // # --------------------------------------------------------------------------------
 //
 // styles
 //
 // # --------------------------------------------------------------------------------
-
-const blockquoteStyle = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-  box-sizing: border-box;
-  margin-left: 0;
-  padding: 0.25rem 1rem;
-  border-left: solid 4px rgba(128, 128, 128, 0.4);
-`
 
 const tableStyle = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
@@ -212,7 +205,11 @@ const renderMdast = ({
           firstChild.type === 'paragraph' &&
           firstChild.children[0] != null &&
           firstChild.children[0].type === 'text' &&
-          firstChild.children[0].value.trim().toUpperCase().match(regex)
+          firstChild.children[0].value
+            .trim()
+            .substring(0, 12)
+            .toUpperCase()
+            .match(regex)
         ) {
           const matches = firstChild.children[0].value
             .trim()
@@ -265,12 +262,12 @@ const renderMdast = ({
         }
 
         reactNodes.push(
-          <blockquote css={blockquoteStyle({ isDark })}>
+          <Blockquote isDark={isDark}>
             {
               renderMdast({ mdastNodes: node.children, definitions, isDark })
                 .reactNodes
             }
-          </blockquote>
+          </Blockquote>
         )
 
         break
@@ -502,36 +499,6 @@ const renderMdast = ({
   }
 
   return { reactNodes, definitions }
-}
-
-// # --------------------------------------------------------------------------------
-//
-// component
-//
-// # --------------------------------------------------------------------------------
-
-const MdastComponent = ({ mdast, isDark = false }: MdastProps) => {
-  const [components, setComponents] = useState<ReactNode[]>([<>LOADING</>])
-
-  useEffect(() => {
-    const definitions: Definition[] = []
-
-    for (const node of mdast) {
-      visit(node, 'definition', (definition) => {
-        definitions.push(definition)
-      })
-    }
-
-    const mdastComponents = renderMdast({
-      mdastNodes: mdast,
-      definitions,
-      isDark
-    }).reactNodes
-
-    setComponents(mdastComponents)
-  }, [isDark, mdast])
-
-  return <>{components}</>
 }
 
 // # --------------------------------------------------------------------------------
