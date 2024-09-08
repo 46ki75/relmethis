@@ -14,7 +14,7 @@ const headingStyle = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
   padding: 0 0 0.25rem 0.5rem;
   font-size: 1.4rem;
-  margin-top: 2rem;
+  margin-block-start: 2rem;
 
   position: relative;
 

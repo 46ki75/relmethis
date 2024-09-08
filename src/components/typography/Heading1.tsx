@@ -18,7 +18,7 @@ const h1Style = ({
   inView: boolean
   isDark: boolean
 }) => css`
-  margin-top: 1rem;
+  margin-block-start: 1rem;
   box-sizing: border-box;
   padding: 0.5rem 1rem;
   color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};

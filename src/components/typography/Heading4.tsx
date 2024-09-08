@@ -13,8 +13,8 @@ import { FragmentIdentifier } from './FragmentIdentifier'
 const style = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
   font-size: 1.3rem;
-  margin-top: 2rem;
-  margin-bottom: 0;
+  margin-block-start: 2rem;
+  margin-block-end: 0;
 `
 
 // # --------------------------------------------------------------------------------

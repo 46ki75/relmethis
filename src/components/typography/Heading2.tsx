@@ -12,7 +12,7 @@ import { FragmentIdentifier } from './FragmentIdentifier'
 // # --------------------------------------------------------------------------------
 
 const topStyle = ({ isDark }: { isDark: boolean }) => css`
-  margin-top: 2rem;
+  margin-block-start: 2rem;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
