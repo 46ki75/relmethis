@@ -22,6 +22,7 @@ import { Alert } from '../typography/Alert'
 import { NumberedList } from '../typography/NumberedList'
 import { BulletedList } from '../typography/BulletedList'
 import { Blockquote } from '../typography/Blockquote'
+import { TableOfContents } from '../navigation/TableOfContents'
 
 import type { CodeBlock as CodeBlockType } from '../code/CodeBlock'
 const CodeBlock = React.lazy(() =>
@@ -31,7 +32,6 @@ const CodeBlock = React.lazy(() =>
 ) as React.ComponentType<React.ComponentProps<typeof CodeBlockType>>
 
 import type { ImageWithModal as ImageWithModalType } from '../image/ImageWithModal'
-import { TableOfContents } from '../navigation/TableOfContents'
 const ImageWithModal = React.lazy(() =>
   import('../image/ImageWithModal').then((module) => ({
     default: module.ImageWithModal

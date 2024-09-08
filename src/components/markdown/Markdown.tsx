@@ -1,10 +1,18 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useMemo } from 'react'
+import React, { Suspense, useMemo } from 'react'
 
 import { remark } from 'remark'
 import gfm from 'remark-gfm'
-import { Mdast } from './Mdast'
+
+import type { Mdast as MdastType } from './Mdast'
+import { BlockFallback } from '../fallback/BlockFallback'
+
+const Mdast = React.lazy(() =>
+  import('./Mdast').then((module) => ({
+    default: module.Mdast
+  }))
+) as React.ComponentType<React.ComponentProps<typeof MdastType>>
 
 // # --------------------------------------------------------------------------------
 //
@@ -49,13 +57,13 @@ const MarkdownComponent = ({
   const mdast = useMemo(() => parseMarkdownToMdast(markdown), [markdown])
 
   return (
-    <>
+    <Suspense fallback={<BlockFallback />}>
       <Mdast
         mdast={mdast.children}
         isDark={isDark}
         enableTableOfContents={enableTableOfContents}
       />
-    </>
+    </Suspense>
   )
 }
 
