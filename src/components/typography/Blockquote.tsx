@@ -14,7 +14,7 @@ import { useInView } from 'react-intersection-observer'
 
 const style = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-  margin-block: 2rem;
+  margin: 2rem auto;
   box-sizing: border-box;
   padding: 0.5rem 0.5rem 0.5rem 1.5rem;
   border-left: solid 4px rgba(128, 128, 128, 0.5);
