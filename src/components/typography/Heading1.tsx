@@ -103,12 +103,12 @@ export const Heading1Component = ({
   const { ref, inView } = useInView()
 
   return (
-    <>
+    <section id={identifier}>
       <h1 id={identifier} css={h1Style({ inView, isDark })} ref={ref}>
         {text}
       </h1>
       <FragmentIdentifier identifier={identifier} />
-    </>
+    </section>
   )
 }
 

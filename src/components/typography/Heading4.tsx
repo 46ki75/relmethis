@@ -50,12 +50,12 @@ const Heading4Component = ({
   isDark = false
 }: Heading4Props) => {
   return (
-    <>
+    <section id={identifier}>
       <h4 id={identifier} css={style({ isDark })}>
         {text}
       </h4>
       <FragmentIdentifier identifier={identifier} />
-    </>
+    </section>
   )
 }
 

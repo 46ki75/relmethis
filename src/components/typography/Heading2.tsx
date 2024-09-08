@@ -139,7 +139,7 @@ const Heading2Component = ({
   const { ref, inView } = useInView()
 
   return (
-    <>
+    <section id={identifier}>
       <div css={topStyle({ isDark })}>
         <div></div>
         <div></div>
@@ -149,7 +149,7 @@ const Heading2Component = ({
       </h2>
       <div css={bottomStyle({ inView, isDark })}></div>
       <FragmentIdentifier identifier={identifier} />
-    </>
+    </section>
   )
 }
 

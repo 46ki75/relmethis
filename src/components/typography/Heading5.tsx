@@ -50,12 +50,12 @@ const Heading5Component = ({
   isDark = false
 }: Heading5Props) => {
   return (
-    <>
+    <section id={identifier}>
       <h5 id={identifier} css={style({ isDark })}>
         {text}
       </h5>
       <FragmentIdentifier identifier={identifier} />
-    </>
+    </section>
   )
 }
 
