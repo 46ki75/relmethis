@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, Suspense, useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 
 import { Definition, PhrasingContent, RootContent } from 'mdast'
@@ -8,21 +8,34 @@ import { Definition, PhrasingContent, RootContent } from 'mdast'
 import { visit } from 'unist-util-visit'
 
 // components
+import { BlockFallback } from '../fallback/BlockFallback'
 import { InlineCode } from '../inline/InlineCode'
 import { InlineLink } from '../inline/InlineLink'
-import { CodeBlock } from '../code/CodeBlock'
 import { Heading1 } from '../typography/Heading1'
 import { Heading2 } from '../typography/Heading2'
 import { Heading3 } from '../typography/Heading3'
 import { Heading4 } from '../typography/Heading4'
 import { Heading5 } from '../typography/Heading5'
 import { Heading6 } from '../typography/Heading6'
-import { ImageWithModal } from '../image/ImageWithModal'
 import { Divider } from '../typography/Divider'
 import { Alert } from '../typography/Alert'
 import { NumberedList } from '../typography/NumberedList'
 import { BulletedList } from '../typography/BulletedList'
 import { Blockquote } from '../typography/Blockquote'
+
+import type { CodeBlock as CodeBlockType } from '../code/CodeBlock'
+const CodeBlock = React.lazy(() =>
+  import('../code/CodeBlock').then((module) => ({
+    default: module.CodeBlock
+  }))
+) as React.ComponentType<React.ComponentProps<typeof CodeBlockType>>
+
+import type { ImageWithModal as ImageWithModalType } from '../image/ImageWithModal'
+const ImageWithModal = React.lazy(() =>
+  import('../image/ImageWithModal').then((module) => ({
+    default: module.ImageWithModal
+  }))
+) as React.ComponentType<React.ComponentProps<typeof ImageWithModalType>>
 
 // # --------------------------------------------------------------------------------
 //
@@ -280,12 +293,14 @@ const renderMdast = ({
 
       case 'code': {
         reactNodes.push(
-          <CodeBlock
-            code={node.value}
-            language={node.lang ?? 'txt'}
-            isDark={isDark}
-            caption={node.meta ?? node.lang ?? 'txt'}
-          />
+          <Suspense fallback={<BlockFallback />}>
+            <CodeBlock
+              code={node.value}
+              language={node.lang ?? 'txt'}
+              isDark={isDark}
+              caption={node.meta ?? node.lang ?? 'txt'}
+            />
+          </Suspense>
         )
         break
       }
@@ -321,10 +336,12 @@ const renderMdast = ({
 
       case 'image': {
         reactNodes.push(
-          <ImageWithModal
-            src={node.url}
-            alt={node.alt ?? node.title ?? 'image'}
-          />
+          <Suspense fallback={<BlockFallback />}>
+            <ImageWithModal
+              src={node.url}
+              alt={node.alt ?? node.title ?? 'image'}
+            />
+          </Suspense>
         )
         break
       }
@@ -442,10 +459,12 @@ const renderMdast = ({
 
         if (imageDefinition != null) {
           reactNodes.push(
-            <ImageWithModal
-              src={imageDefinition.url}
-              alt={imageDefinition.title ?? imageDefinition.url}
-            />
+            <Suspense fallback={<BlockFallback />}>
+              <ImageWithModal
+                src={imageDefinition.url}
+                alt={imageDefinition.title ?? imageDefinition.url}
+              />
+            </Suspense>
           )
         }
 
@@ -508,7 +527,7 @@ const renderMdast = ({
 // # --------------------------------------------------------------------------------
 
 const MdastComponent = ({ mdast, isDark = false }: MdastProps) => {
-  const [components, setComponents] = useState<ReactNode[]>([<>LOADING</>])
+  const [components, setComponents] = useState<ReactNode[]>([<BlockFallback />])
 
   useEffect(() => {
     const definitions: Definition[] = []
