@@ -17,6 +17,11 @@ import { useCarousel } from './useCarousel'
 
 export interface CarouselProps {
   children: ReactNode[]
+  /**
+   * - `true`: The container size automatically adjusts to the size of the displayed page
+   * - `false`: The container size is fixed to the largest size
+   */
+  autoResize?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -25,9 +30,10 @@ export interface CarouselProps {
 //
 // # --------------------------------------------------------------------------------
 
-const CarouselComponent = ({ children }: CarouselProps) => {
+const CarouselComponent = ({ children, autoResize }: CarouselProps) => {
   const { currentPage, end, next, prev, start, renderCarousel } = useCarousel({
-    children
+    children,
+    autoResize
   })
 
   return (

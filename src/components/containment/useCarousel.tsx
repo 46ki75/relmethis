@@ -21,6 +21,7 @@ const wrapperStyle = css`
   width: 100%;
   box-sizing: border-box;
   overflow-x: auto;
+  overflow-y: auto;
   scroll-snap-type: x mandatory;
 
   scrollbar-width: none; /* Firefox */
@@ -31,11 +32,20 @@ const wrapperStyle = css`
   }
 `
 
-const containerStyle = ({ length }: { length: number }) => css`
+const containerStyle = ({
+  length,
+  height
+}: {
+  length: number
+  height: number | 'auto'
+}) => css`
+  height: ${height === 'auto' ? 'auto' : `${height}px`};
   width: ${100 * length}%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  transition: height 200ms;
 `
 
 const childrenContainerStyle = css`
@@ -52,6 +62,11 @@ const childrenContainerStyle = css`
 
 export interface UseCarouselProps {
   children: ReactNode[]
+  /**
+   * - `true`: The container size automatically adjusts to the size of the displayed page
+   * - `false`: The container size is fixed to the largest size
+   */
+  autoResize?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -61,9 +76,13 @@ export interface UseCarouselProps {
 // # --------------------------------------------------------------------------------
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const useCarousel = ({ children }: UseCarouselProps) => {
+export const useCarousel = ({
+  children,
+  autoResize = true
+}: UseCarouselProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const [currentHeight, setCurrentHeight] = useState<number | null>(null)
 
   const start = useCallback(() => {
     if (scrollContainerRef.current)
@@ -118,7 +137,7 @@ export const useCarousel = ({ children }: UseCarouselProps) => {
     const options = {
       root: scrollContainer,
       rootMargin: '0px',
-      threshold: 0.5
+      threshold: 0.1
     }
 
     const callback: IntersectionObserverCallback = (entries) => {
@@ -127,6 +146,13 @@ export const useCarousel = ({ children }: UseCarouselProps) => {
           const targetElement = entry.target as HTMLElement
           const index = parseInt(targetElement.dataset.index || '0', 10)
           setCurrentPage(index + 1)
+
+          if (autoResize) {
+            const height = targetElement.offsetHeight
+            setCurrentHeight(height)
+          } else {
+            setCurrentHeight(null)
+          }
         }
       })
     }
@@ -143,20 +169,28 @@ export const useCarousel = ({ children }: UseCarouselProps) => {
         observer.unobserve(child)
       })
     }
-  }, [])
+  }, [autoResize])
 
   const renderCarousel = () => (
-    <div css={wrapperStyle} ref={scrollContainerRef}>
-      <div css={containerStyle({ length: children.length })}>
-        {children.map((child, index) => (
-          <Suspense key={index} fallback={<BlockFallback />}>
-            <div css={childrenContainerStyle} data-index={index}>
-              {child}
-            </div>
-          </Suspense>
-        ))}
+    <>
+      {currentHeight}
+      <div css={wrapperStyle} ref={scrollContainerRef}>
+        <div
+          css={containerStyle({
+            length: children.length,
+            height: currentHeight ?? 'auto'
+          })}
+        >
+          {children.map((child, index) => (
+            <Suspense key={index} fallback={<BlockFallback />}>
+              <div css={childrenContainerStyle} data-index={index}>
+                {child}
+              </div>
+            </Suspense>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 
   return { renderCarousel, prev, next, start, end, currentPage }
