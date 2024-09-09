@@ -59,7 +59,7 @@ const imageStyle = (isLoading: boolean) => css`
 
 export interface ImageWithFallbackProps {
   src: string
-  alt: string
+  alt?: string
   /**
    * **optional?**
    *
@@ -68,7 +68,7 @@ export interface ImageWithFallbackProps {
    * { aspectRatio: `${width} / ${height}` }
    * ```
    */
-  width: number
+  width?: number
   /**
    * **optional?**
    *
@@ -77,7 +77,7 @@ export interface ImageWithFallbackProps {
    * { aspectRatio: `${width} / ${height}` }
    * ```
    */
-  height: number
+  height?: number
 }
 
 // # --------------------------------------------------------------------------------
@@ -88,8 +88,9 @@ export interface ImageWithFallbackProps {
 
 const ImageWithFallbackComponent = ({
   src,
-  width,
-  height
+  alt = src,
+  width = 1200,
+  height = 630
 }: ImageWithFallbackProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true)
 
@@ -108,7 +109,7 @@ const ImageWithFallbackComponent = ({
       )}
       <img
         css={imageStyle(isLoading)}
-        alt=''
+        alt={alt}
         src={src}
         onLoad={() => {
           setIsLoading(false)
@@ -116,17 +117,6 @@ const ImageWithFallbackComponent = ({
       />
     </>
   )
-}
-
-// # --------------------------------------------------------------------------------
-//
-// default props
-//
-// # --------------------------------------------------------------------------------
-
-ImageWithFallbackComponent.defaultProps = {
-  width: 1200,
-  height: 630
 }
 
 // # --------------------------------------------------------------------------------
