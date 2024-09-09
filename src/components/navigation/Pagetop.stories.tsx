@@ -11,27 +11,23 @@ const meta: Meta<typeof Pagetop> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
-  args: {}
-}
-
 export const Left: Story = {
-  args: { position: 'left' },
-  render: ({ position }) => {
+  args: { position: 'left', isDark: false },
+  render: (args) => {
     return (
       <div style={{ height: '2000px' }}>
-        <Pagetop position={position} />
+        <Pagetop {...args} />
       </div>
     )
   }
 }
 
 export const Right: Story = {
-  args: {},
-  render: () => {
+  args: { position: 'right', isDark: false },
+  render: (args) => {
     return (
       <div style={{ height: '2000px' }}>
-        <Pagetop />
+        <Pagetop {...args} />
       </div>
     )
   }

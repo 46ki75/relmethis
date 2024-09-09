@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useWindowScroll } from 'react-use'
 import React from 'react'
 import { createPortal } from 'react-dom'
+import { darken, lighten } from 'polished'
 
 // # --------------------------------------------------------------------------------
 //
@@ -40,7 +41,7 @@ const containerStyle = css`
   transform-origin: center;
 `
 
-const chevronStyle = css`
+const chevronStyle = ({ isDark }: { isDark: boolean }) => css`
   position: absolute;
   width: 56px;
   height: 16px;
@@ -63,7 +64,9 @@ const chevronStyle = css`
     top: 0;
     height: 100%;
     width: 51%;
-    background: rgb(31, 89, 122);
+    background: ${isDark
+      ? lighten(0.1, 'rgb(128, 128, 128)')
+      : darken(0.1, 'rgb(128, 128, 128)')};
   }
 
   &:before {
@@ -82,17 +85,21 @@ const chevronStyle = css`
 
 const textStyle = ({
   position,
-  isVisible
+  isVisible,
+  isDark
 }: {
   position: 'right' | 'left'
   isVisible: boolean
+  isDark: boolean
 }) => css`
   font-family: sans-serif;
   position: fixed;
   z-index: 50;
   bottom: 1px;
   font-size: 11px;
-  color: rgba(0, 0, 0, 0.6);
+  color: ${isDark
+    ? lighten(0.1, 'rgb(128, 128, 128)')
+    : darken(0.1, 'rgb(128, 128, 128)')};
   transition: all 0.2s ease-out 0.5s;
   user-select: none;
   ${position}: 8px;
@@ -106,7 +113,12 @@ const textStyle = ({
 // # --------------------------------------------------------------------------------
 
 export interface PagetopProps {
-  position: 'left' | 'right'
+  position?: 'left' | 'right'
+
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -115,7 +127,10 @@ export interface PagetopProps {
 //
 // # --------------------------------------------------------------------------------
 
-export const PagetopComponent = ({ position }: PagetopProps): JSX.Element => {
+export const PagetopComponent = ({
+  position = 'right',
+  isDark = false
+}: PagetopProps): JSX.Element => {
   const [isVisible, setIsVisible] = useState(true)
   const { y } = useWindowScroll()
 
@@ -143,11 +158,11 @@ export const PagetopComponent = ({ position }: PagetopProps): JSX.Element => {
         `}
         onClick={toTop}
       >
-        <div css={chevronStyle}></div>
-        <div css={chevronStyle}></div>
-        <div css={chevronStyle}></div>
+        <div css={chevronStyle({ isDark })}></div>
+        <div css={chevronStyle({ isDark })}></div>
+        <div css={chevronStyle({ isDark })}></div>
       </nav>
-      <span css={textStyle({ position, isVisible })}>Back to Top</span>
+      <span css={textStyle({ position, isVisible, isDark })}>Back to Top</span>
     </>,
     document.body
   )
