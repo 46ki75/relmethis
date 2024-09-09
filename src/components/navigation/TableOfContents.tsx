@@ -92,6 +92,7 @@ export interface TableOfContentsProps {
    */
   isDark?: boolean
   fontSizeRatio?: number
+  maxLevel?: 1 | 2 | 3 | 4 | 5 | 6
   headings: Array<{
     /**
      * The text content to be displayed
@@ -118,6 +119,7 @@ export interface TableOfContentsProps {
 const TableOfContentsComponent = ({
   isDark = false,
   fontSizeRatio = 1,
+  maxLevel = 3,
   headings
 }: TableOfContentsProps) => {
   const [activeElementId, setActiveElementId] = useState('')
@@ -153,28 +155,31 @@ const TableOfContentsComponent = ({
   return (
     headings.length > 0 && (
       <nav css={wrapperStyle}>
-        {headings.map((heading, index) => (
-          <React.Fragment key={`${index}-${heading.level}`}>
-            <a
-              css={headingStyle({
-                level: heading.level,
-                isDark,
-                inSection:
-                  (heading.identifier ?? heading.text) === activeElementId,
-                fontSizeRatio
-              })}
-              href={`#${heading.identifier ?? heading.text}`}
-            >
-              <sup>
-                H<sub>{heading.level}</sub>
-              </sup>
-              <span>
-                {heading.text}
-                <BarsArrowDownIcon css={iconStyle} />
-              </span>
-            </a>
-          </React.Fragment>
-        ))}
+        {headings.map(
+          (heading, index) =>
+            heading.level <= maxLevel && (
+              <React.Fragment key={`${index}-${heading.level}`}>
+                <a
+                  css={headingStyle({
+                    level: heading.level,
+                    isDark,
+                    inSection:
+                      (heading.identifier ?? heading.text) === activeElementId,
+                    fontSizeRatio
+                  })}
+                  href={`#${heading.identifier ?? heading.text}`}
+                >
+                  <sup>
+                    H<sub>{heading.level}</sub>
+                  </sup>
+                  <span>
+                    {heading.text}
+                    <BarsArrowDownIcon css={iconStyle} />
+                  </span>
+                </a>
+              </React.Fragment>
+            )
+        )}
       </nav>
     )
   )
@@ -192,6 +197,7 @@ export const TableOfContents = React.memo(
     return (
       prevProps.isDark === nextProps.isDark &&
       prevProps.fontSizeRatio === nextProps.fontSizeRatio &&
+      prevProps.maxLevel === nextProps.maxLevel &&
       isEqual(prevProps.headings, nextProps.headings)
     )
   }
