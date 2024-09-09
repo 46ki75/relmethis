@@ -24,15 +24,23 @@ const controlContainere = css`
   gap: 0.5rem;
 `
 
-const iconStyle = ({ isDark }: { isDark: boolean }) => css`
+const iconStyle = ({
+  isDark,
+  isDisable
+}: {
+  isDark: boolean
+  isDisable: boolean
+}) => css`
   color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
   padding: 0.25rem;
   width: 20px;
   height: 20px;
   border-radius: 50%;
   cursor: pointer;
+  opacity: ${isDisable ? 0.2 : 1};
   transition:
     background-color 200ms,
+    opacity 200ms,
     color 200ms;
 
   &:hover {
@@ -169,15 +177,27 @@ const DotPaginationComponent = ({
 
   return (
     <nav css={controlContainere}>
-      <ChevronDoubleLeftIcon css={iconStyle({ isDark })} onClick={start} />
-      <ChevronLeftIcon css={iconStyle({ isDark })} onClick={prev} />
+      <ChevronDoubleLeftIcon
+        css={iconStyle({ isDark, isDisable: currentPage === 1 })}
+        onClick={start}
+      />
+      <ChevronLeftIcon
+        css={iconStyle({ isDark, isDisable: currentPage === 1 })}
+        onClick={prev}
+      />
 
       <div css={controlIndicatorStyle({ isDark })}>
         {length <= threshold ? renderDotIndicator() : renderNumberIndicator()}
       </div>
 
-      <ChevronRightIcon css={iconStyle({ isDark })} onClick={next} />
-      <ChevronDoubleRightIcon css={iconStyle({ isDark })} onClick={end} />
+      <ChevronRightIcon
+        css={iconStyle({ isDark, isDisable: currentPage === length })}
+        onClick={next}
+      />
+      <ChevronDoubleRightIcon
+        css={iconStyle({ isDark, isDisable: currentPage === length })}
+        onClick={end}
+      />
     </nav>
   )
 }
