@@ -151,6 +151,14 @@ export interface CarouselProps extends UseCarouselProps {
    * Whether or not to use the dark theme
    */
   isDark?: boolean
+  /**
+   * Whether to display indicators showing the current position
+   */
+  bar?: boolean
+  /**
+   * Whether to display controls at the bottom of the carousel
+   */
+  control?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -162,7 +170,9 @@ export interface CarouselProps extends UseCarouselProps {
 const CarouselComponent = ({
   children,
   autoResize,
-  isDark = false
+  isDark = false,
+  bar = true,
+  control = true
 }: CarouselProps) => {
   const { currentPage, scrollToPage, end, next, prev, start, renderCarousel } =
     useCarousel({
@@ -209,15 +219,17 @@ const CarouselComponent = ({
 
   return (
     <>
+      {bar && renderBarindicator()}
       {renderCarousel()}
-      {renderBarindicator()}
-      <div css={controlContainere}>
-        <ChevronDoubleLeftIcon css={iconStyle({ isDark })} onClick={start} />
-        <ChevronLeftIcon css={iconStyle({ isDark })} onClick={prev} />
-        {renderIndicator()}
-        <ChevronRightIcon css={iconStyle({ isDark })} onClick={next} />
-        <ChevronDoubleRightIcon css={iconStyle({ isDark })} onClick={end} />
-      </div>
+      {control && (
+        <div css={controlContainere}>
+          <ChevronDoubleLeftIcon css={iconStyle({ isDark })} onClick={start} />
+          <ChevronLeftIcon css={iconStyle({ isDark })} onClick={prev} />
+          {renderIndicator()}
+          <ChevronRightIcon css={iconStyle({ isDark })} onClick={next} />
+          <ChevronDoubleRightIcon css={iconStyle({ isDark })} onClick={end} />
+        </div>
+      )}
     </>
   )
 }
