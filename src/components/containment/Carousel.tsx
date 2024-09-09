@@ -131,11 +131,18 @@ const CarouselComponent = ({
   bar = true,
   control = true
 }: CarouselProps) => {
-  const { currentPage, scrollToPage, end, next, prev, start, renderCarousel } =
-    useCarousel({
-      children,
-      autoResize
-    })
+  const {
+    currentPage,
+    setCurrentPage,
+    end,
+    next,
+    prev,
+    start,
+    renderCarousel
+  } = useCarousel({
+    children,
+    autoResize
+  })
 
   const renderIndicator = () => (
     <div css={controlIndicatorStyle({ isDark })}>
@@ -144,7 +151,7 @@ const CarouselComponent = ({
           <span
             css={dot({ isDark, isActive: index + 1 === currentPage })}
             onClick={() => {
-              scrollToPage(index + 1)
+              setCurrentPage(index + 1)
             }}
           ></span>
         ))
@@ -166,7 +173,7 @@ const CarouselComponent = ({
           isDark={isDark}
           active={currentPage - 1}
           onBarClick={(index) => {
-            scrollToPage(index + 1)
+            setCurrentPage(index + 1)
           }}
         />
       )}

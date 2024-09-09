@@ -239,5 +239,13 @@ export const useCarousel = ({
     </div>
   )
 
-  return { renderCarousel, prev, next, start, end, currentPage, scrollToPage }
+  return {
+    renderCarousel,
+    prev,
+    next,
+    start,
+    end,
+    currentPage,
+    setCurrentPage: scrollToPage
+  }
 }
