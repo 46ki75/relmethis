@@ -83,6 +83,7 @@ export const useCarousel = ({
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [currentHeight, setCurrentHeight] = useState<number | null>(null)
+  const [currentWidth, setCurrentWidth] = useState<number | '100%'>('100%')
   const childRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const start = useCallback(() => {
@@ -151,8 +152,11 @@ export const useCarousel = ({
           if (autoResize) {
             const height = targetElement.offsetHeight
             setCurrentHeight(height)
+            const width = targetElement.offsetWidth
+            setCurrentWidth(width)
           } else {
             setCurrentHeight(null)
+            setCurrentWidth('100%')
           }
         }
       })
@@ -182,6 +186,7 @@ export const useCarousel = ({
           for (const entry of entries) {
             if (index + 1 === currentPage && autoResize) {
               setCurrentHeight(entry.contentRect.height)
+              setCurrentWidth(entry.contentRect.width)
             }
           }
         })
@@ -213,6 +218,7 @@ export const useCarousel = ({
               css={childrenContainerStyle}
               data-index={index}
               ref={(el) => (childRefs.current[index] = el)}
+              style={{ width: currentWidth }}
             >
               {child}
             </div>
