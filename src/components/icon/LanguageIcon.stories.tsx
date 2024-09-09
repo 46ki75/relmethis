@@ -22,7 +22,8 @@ const meta: Meta<typeof LanguageIcon> = {
         'bash',
         'tex',
         'katex',
-        'latex'
+        'latex',
+        'go'
       ]
     }
   }

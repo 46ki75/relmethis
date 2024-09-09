@@ -134,6 +134,14 @@ const LanguageIconComponent = ({
       )
       break
 
+    case 'go':
+      IconComponent = React.lazy(() =>
+        import('./language/Go').then((module) => ({
+          default: module.Go
+        }))
+      )
+      break
+
     default:
       return (
         <CommandLineIcon
