@@ -9,7 +9,6 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import { useCopyToClipboard } from 'react-use'
 
 // highlight
 import type { Prism as SyntaxHighlighterType } from 'react-syntax-highlighter'
@@ -52,6 +51,7 @@ import { Markdown } from '../markdown/Markdown'
 import { Tooltip } from 'react-tooltip'
 import { createPortal } from 'react-dom'
 import { darken, lighten } from 'polished'
+import { useCopy } from '../../hooks/useCopy'
 
 // # --------------------------------------------------------------------------------
 //
@@ -224,22 +224,7 @@ const CodeBlockComponent = ({
     setIsShowNumber(media.matches)
   }, [])
 
-  // COPY # -------------------- #
-
-  const [, copyToClipboard] = useCopyToClipboard()
-  const [copied, setCopied] = useState(false)
-
-  const handleCopy = () => {
-    setCopied(true)
-    copyToClipboard(deferredCode.trim())
-  }
-
-  useEffect(() => {
-    const id = setTimeout(() => {
-      setCopied(false)
-    }, 3000)
-    return () => clearTimeout(id)
-  }, [copied])
+  const { copy, isCopied } = useCopy()
 
   // # --------------------------------------------------------------------------------
   //
@@ -305,7 +290,7 @@ const CodeBlockComponent = ({
           <span css={captionStyle({ isDark })}>{caption}</span>
         </div>
         <div>
-          {<span css={copiedtextStyle({ isShow: copied })}>copied!</span>}
+          {<span css={copiedtextStyle({ isShow: isCopied })}>copied!</span>}
 
           {isAvailablePreview && (
             <ArrowsRightLeftIcon
@@ -328,7 +313,9 @@ const CodeBlockComponent = ({
           <ClipboardDocumentIcon
             id='copy'
             css={clickableIconStyle({ isDark })}
-            onClick={handleCopy}
+            onClick={() => {
+              copy(deferredCode.trim())
+            }}
           />
 
           {createPortal(
