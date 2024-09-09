@@ -31,16 +31,43 @@ const contentTemplate = (children: ReactNode, height?: string) => (
 
 export const Primary: Story = {
   args: {
-    children: ['Page 1', 'Page 2', 'Page 3', 'Page 4'].map((c) =>
-      contentTemplate(c)
-    )
+    isDark: false,
+    children: [
+      'Page 1',
+      'Page 2',
+      'Page 3',
+      'Page 4',
+      'Page 5',
+      'Page 6',
+      'Page 7',
+      'Page 8'
+    ].map((c) => contentTemplate(c))
+  }
+}
+
+export const Long: Story = {
+  args: {
+    isDark: false,
+    children: [
+      'Page 1',
+      'Page 2',
+      'Page 3',
+      'Page 4',
+      'Page 5',
+      'Page 6',
+      'Page 7',
+      'Page 8',
+      'Page 10',
+      'Page 11',
+      'Page 12'
+    ].map((c) => contentTemplate(c))
   }
 }
 
 export const DifferentSizes: Story = {
   args: {
     children: [
-      ...['Page 1', 'Page 2', 'Page 3', 'Page 4'].map((c, i) =>
+      ...['Page 1', 'Page 2', 'Page 3'].map((c, i) =>
         contentTemplate(c, `${10 * i + 5}rem`)
       )
     ],
