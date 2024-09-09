@@ -90,6 +90,7 @@ export const Logs: Story = {
 export const Align: Story = {
   args: {
     isDark: false,
-    rows: SEED_ROWS
+    rows: SEED_ROWS,
+    align: ['left', 'center', 'right']
   }
 }

@@ -140,13 +140,13 @@ export interface TableProps {
    */
   isDark?: boolean
   rows: ReactNode[][]
-  align?: 'left' | 'center' | 'right'
+  align?: Array<'left' | 'center' | 'right'>
 }
 
 interface TableRow {
   row: ReactNode[]
   isHeader: boolean
-  align?: 'left' | 'center' | 'right'
+  align?: Array<'left' | 'center' | 'right'>
 }
 
 // # --------------------------------------------------------------------------------
@@ -156,17 +156,16 @@ interface TableRow {
 // # --------------------------------------------------------------------------------
 
 const MemoizedTableRow = React.memo(
-  ({ row, isHeader = false, align = 'left' }: TableRow) => {
-    const style = { textAlign: align }
+  ({ row, isHeader = false, align = [] }: TableRow) => {
     return (
       <tr css={trStyle}>
         {row.map((cell, index) =>
           isHeader ? (
-            <th key={index} style={style}>
+            <th key={index} style={{ textAlign: align[index] }}>
               {cell}
             </th>
           ) : (
-            <td key={index} style={style}>
+            <td key={index} style={{ textAlign: align[index] }}>
               {cell}
             </td>
           )
@@ -178,11 +177,7 @@ const MemoizedTableRow = React.memo(
     p.align === n.align && p.isHeader === n.isHeader && isEqual(p.row, n.row)
 )
 
-const TableComponent = ({
-  isDark = false,
-  rows,
-  align = 'left'
-}: TableProps) => {
+const TableComponent = ({ isDark = false, rows, align = [] }: TableProps) => {
   const [headerRow, ...bodyRows] = useDeferredValue(rows)
 
   return (
