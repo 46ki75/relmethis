@@ -111,7 +111,7 @@ export interface DotPaginationProps {
    * @param page The page to navigate to
    * @returns {void}
    */
-  setCurrentPaget: (page: number) => void
+  setCurrentPage: (page: number) => void
   /**
    * The total number of pages
    */
@@ -133,7 +133,7 @@ const DotPaginationComponent = ({
   isDark = false,
   currentPage,
   length,
-  setCurrentPaget,
+  setCurrentPage: setCurrentPaget,
   threshold = 8
 }: DotPaginationProps) => {
   const renderDotIndicator = () =>

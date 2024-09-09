@@ -22,7 +22,7 @@ export const Primary: Story = {
         isDark={args.isDark}
         length={8}
         currentPage={currentPage}
-        setCurrentPaget={setCurrentPage}
+        setCurrentPage={setCurrentPage}
       />
     )
   }
@@ -39,7 +39,7 @@ export const GraterThan8: Story = {
         isDark={args.isDark}
         length={12}
         currentPage={currentPage}
-        setCurrentPaget={setCurrentPage}
+        setCurrentPage={setCurrentPage}
       />
     )
   }

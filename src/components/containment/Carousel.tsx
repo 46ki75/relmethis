@@ -56,18 +56,16 @@ const CarouselComponent = ({
         <BarPagination
           length={children.length}
           isDark={isDark}
-          active={currentPage - 1}
-          onBarClick={(index) => {
-            setCurrentPage(index + 1)
-          }}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       )}
       {render()}
       {control && (
         <DotPagination
           isDark={isDark}
-          setCurrentPaget={setCurrentPage}
           currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
           length={children.length}
         />
       )}

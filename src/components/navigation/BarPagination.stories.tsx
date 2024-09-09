@@ -17,14 +17,14 @@ export const Primary: Story = {
     length: 5
   },
   render: (args) => {
-    const [activePage, setActivePage] = useState(0)
-
-    const onBarClick = (index: number) => {
-      setActivePage(index)
-    }
+    const [currentPage, setCurrentPage] = useState(3)
 
     return (
-      <BarPagination {...args} active={activePage} onBarClick={onBarClick} />
+      <BarPagination
+        {...args}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     )
   }
 }

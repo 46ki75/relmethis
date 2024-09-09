@@ -71,16 +71,9 @@ export interface BarPaginationProps {
    * Total number of pages
    */
   length: number
-  /**
-   * The index of the active page, starting from 0
-   */
-  active: number
-  /**
-   * Function called when a bar is clicked.
-   * @param index The index of the clicked bar, starting from 0
-   * @returns {void}
-   */
-  onBarClick: (index: number) => void
+
+  currentPage: number
+  setCurrentPage: (page: number) => void
 }
 
 // # --------------------------------------------------------------------------------
@@ -92,16 +85,17 @@ export interface BarPaginationProps {
 const BarPaginationComponent = ({
   length,
   isDark = false,
-  active,
-  onBarClick: onClickCallback
+  currentPage,
+  setCurrentPage
 }: BarPaginationProps) => {
   return (
     <nav css={wrapperStyle}>
       {new Array(length).fill(null).map((_, index) => (
         <div
-          css={barStyle({ isDark, isActive: active === index })}
+          key={index}
+          css={barStyle({ isDark, isActive: currentPage === index + 1 })}
           onClick={() => {
-            onClickCallback(index)
+            setCurrentPage(index + 1)
           }}
         ></div>
       ))}
