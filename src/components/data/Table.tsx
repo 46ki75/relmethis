@@ -140,13 +140,13 @@ export interface TableProps {
    */
   isDark?: boolean
   rows: ReactNode[][]
-  align: 'left' | 'center' | 'right'
+  align?: 'left' | 'center' | 'right'
 }
 
 interface TableRow {
   row: ReactNode[]
   isHeader: boolean
-  align: 'left' | 'center' | 'right'
+  align?: 'left' | 'center' | 'right'
 }
 
 // # --------------------------------------------------------------------------------
