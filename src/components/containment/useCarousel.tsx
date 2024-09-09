@@ -50,10 +50,6 @@ const childrenContainerStyle = css`
 //
 // # --------------------------------------------------------------------------------
 
-export interface CarouselProps {
-  children: ReactNode[]
-}
-
 export interface UseCarouselProps {
   children: ReactNode[]
 }
