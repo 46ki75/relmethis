@@ -71,8 +71,15 @@ export interface BarPaginationProps {
    * Total number of pages
    */
   length: number
-
+  /**
+   * The current page. Provide a reactive value. `page` starts from 1.
+   */
   currentPage: number
+  /**
+   * A function to navigate to the specified `page`. `page` starts from 1.
+   * @param page The page to navigate to
+   * @returns {void}
+   */
   setCurrentPage: (page: number) => void
 }
 

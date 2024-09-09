@@ -133,7 +133,7 @@ const DotPaginationComponent = ({
   isDark = false,
   currentPage,
   length,
-  setCurrentPage: setCurrentPaget,
+  setCurrentPage,
   threshold = 8
 }: DotPaginationProps) => {
   const renderDotIndicator = () =>
@@ -141,7 +141,7 @@ const DotPaginationComponent = ({
       <span
         css={dot({ isDark, isActive: index + 1 === currentPage })}
         onClick={() => {
-          setCurrentPaget(index + 1)
+          setCurrentPage(index + 1)
         }}
       ></span>
     ))
@@ -154,16 +154,16 @@ const DotPaginationComponent = ({
     </>
   )
 
-  const end = () => setCurrentPaget(length)
-  const start = () => setCurrentPaget(1)
+  const end = () => setCurrentPage(length)
+  const start = () => setCurrentPage(1)
   const prev = () => {
     if (currentPage >= 2) {
-      setCurrentPaget(currentPage - 1)
+      setCurrentPage(currentPage - 1)
     }
   }
   const next = () => {
     if (currentPage < length) {
-      setCurrentPaget(currentPage + 1)
+      setCurrentPage(currentPage + 1)
     }
   }
 
