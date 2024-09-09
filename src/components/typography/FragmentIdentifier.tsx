@@ -5,7 +5,11 @@ import { css } from '@emotion/react'
 
 // icons
 import { HashtagIcon, LinkIcon } from '@heroicons/react/24/outline'
-import { useCopyToClipboard } from 'react-use'
+
+import { createPortal } from 'react-dom'
+import { Tooltip } from 'react-tooltip'
+import { darken, lighten } from 'polished'
+import { useCopy } from '../../hooks/useCopy'
 
 // # --------------------------------------------------------------------------------
 //
@@ -39,6 +43,32 @@ const iconStyle = css`
   }
 `
 
+const copiedtextStyle = ({ isShow }: { isShow: boolean }) => css`
+  color: #59b57c;
+  opacity: ${isShow ? 1 : 0};
+  transition: opacity 400ms;
+  user-select: none;
+`
+
+// # --------------------------------------------------------------------------------
+//
+// inline styles
+//
+// # --------------------------------------------------------------------------------
+
+const tooltipInlineStyle = ({
+  isDark
+}: {
+  isDark: boolean
+}): React.CSSProperties => ({
+  background: isDark
+    ? lighten(0.3, 'rgb(128,128,128)')
+    : darken(0.3, 'rgb(128,128,128)'),
+  color: isDark
+    ? darken(0.3, 'rgb(128,128,128)')
+    : lighten(0.3, 'rgb(128,128,128)')
+})
+
 // # --------------------------------------------------------------------------------
 //
 // props
@@ -47,6 +77,11 @@ const iconStyle = css`
 
 export interface FragmentIdentifierProps {
   identifier: string
+
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -56,10 +91,9 @@ export interface FragmentIdentifierProps {
 // # --------------------------------------------------------------------------------
 
 const FragmentIdentifierComponent = ({
-  identifier
+  identifier,
+  isDark = false
 }: FragmentIdentifierProps) => {
-  const [, copy] = useCopyToClipboard()
-
   const scrollToIdentifier = () => {
     const element = document.getElementById(identifier)
     if (element) {
@@ -68,15 +102,40 @@ const FragmentIdentifierComponent = ({
     }
   }
 
-  const handleCopy = () => {
-    const fullUrl = `${window.location.href.split('#')[0]}#${identifier}`
-    copy(fullUrl)
-  }
+  const { copy, isCopied } = useCopy()
 
   return (
     <div css={wrapperStyle}>
-      <HashtagIcon css={iconStyle} onClick={scrollToIdentifier} />
-      <LinkIcon css={iconStyle} onClick={handleCopy} />
+      <span css={copiedtextStyle({ isShow: isCopied })}>
+        Link has been copied!
+      </span>
+      <HashtagIcon id='jump' css={iconStyle} onClick={scrollToIdentifier} />
+      <LinkIcon
+        id='copy'
+        css={iconStyle}
+        onClick={() => {
+          copy(`${window.location.href.split('#')[0]}#${identifier}`)
+        }}
+      />
+
+      {createPortal(
+        <>
+          <Tooltip
+            style={tooltipInlineStyle({ isDark })}
+            anchorSelect='#jump'
+            content={'Jump to a link with a fragment modifier'}
+            place={'bottom-end'}
+          />
+
+          <Tooltip
+            style={tooltipInlineStyle({ isDark })}
+            anchorSelect='#copy'
+            content={'Copy a link with a fragment modifier'}
+            place={'bottom-end'}
+          />
+        </>,
+        document.body
+      )}
     </div>
   )
 }

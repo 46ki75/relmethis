@@ -148,7 +148,7 @@ const Heading2Component = ({
         {text}
       </h2>
       <div css={bottomStyle({ inView, isDark })}></div>
-      <FragmentIdentifier identifier={identifier} />
+      <FragmentIdentifier identifier={identifier} isDark={isDark} />
     </section>
   )
 }

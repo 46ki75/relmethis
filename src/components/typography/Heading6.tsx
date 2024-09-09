@@ -59,7 +59,7 @@ const Heading6Component = ({
   return (
     <section id={identifier}>
       <h6 css={style({ isDark })}>{text}</h6>
-      <FragmentIdentifier identifier={identifier} />
+      <FragmentIdentifier identifier={identifier} isDark={isDark} />
     </section>
   )
 }

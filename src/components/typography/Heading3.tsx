@@ -66,7 +66,7 @@ export const Heading3Component = ({
   return (
     <section id={identifier}>
       <h3 css={headingStyle({ isDark })}>{text}</h3>
-      <FragmentIdentifier identifier={identifier} />
+      <FragmentIdentifier identifier={identifier} isDark={isDark} />
     </section>
   )
 }

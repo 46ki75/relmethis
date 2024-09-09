@@ -107,7 +107,7 @@ export const Heading1Component = ({
       <h1 css={h1Style({ inView, isDark })} ref={ref}>
         {text}
       </h1>
-      <FragmentIdentifier identifier={identifier} />
+      <FragmentIdentifier identifier={identifier} isDark={isDark} />
     </section>
   )
 }
