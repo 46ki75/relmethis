@@ -215,7 +215,7 @@ export const useCarousel = ({
     }
   }, [currentPage, autoResize])
 
-  const renderCarousel = () => (
+  const render = () => (
     <div css={wrapperStyle} ref={scrollContainerRef}>
       <div
         css={containerStyle({
@@ -240,7 +240,7 @@ export const useCarousel = ({
   )
 
   return {
-    renderCarousel,
+    render,
     prev,
     next,
     start,

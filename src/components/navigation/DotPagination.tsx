@@ -168,7 +168,7 @@ const DotPaginationComponent = ({
   }
 
   return (
-    <div css={controlContainere}>
+    <nav css={controlContainere}>
       <ChevronDoubleLeftIcon css={iconStyle({ isDark })} onClick={start} />
       <ChevronLeftIcon css={iconStyle({ isDark })} onClick={prev} />
 
@@ -178,7 +178,7 @@ const DotPaginationComponent = ({
 
       <ChevronRightIcon css={iconStyle({ isDark })} onClick={next} />
       <ChevronDoubleRightIcon css={iconStyle({ isDark })} onClick={end} />
-    </div>
+    </nav>
   )
 }
 
