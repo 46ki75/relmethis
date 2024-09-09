@@ -9,6 +9,7 @@ import {
   ChevronRightIcon
 } from '@heroicons/react/20/solid'
 import { css } from '@emotion/react'
+import { BarPagination } from '../navigation/BarPagination'
 
 // # --------------------------------------------------------------------------------
 //
@@ -90,50 +91,6 @@ const dot = ({
   }
 `
 
-const barIndicatorStyle = css`
-  margin: 2px 0;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  flex-wrap: nowrap;
-  gap: 2px;
-`
-
-const barIndicatorChildStyle = ({
-  isDark,
-  isActive
-}: {
-  isDark: boolean
-  isActive: boolean
-}) => css`
-  width: 100%;
-  padding: 6px 0;
-  border-top: solid 6px
-    ${isDark ? `rgba(255, 255, 255, 0.7)` : 'rgba(0, 0, 0, 0.7)'};
-
-  cursor: pointer;
-
-  opacity: ${isActive ? 0.9 : 0.2};
-
-  transition:
-    opacity 150ms,
-    transform 200ms,
-    border-top-color 200ms;
-
-  position: relative;
-
-  &:hover {
-    border-top-color: #6987b8;
-    opacity: 1;
-  }
-
-  &:active {
-    border-top-color: #59b57c;
-    opacity: 1;
-  }
-`
-
 // # --------------------------------------------------------------------------------
 //
 // props
@@ -201,25 +158,18 @@ const CarouselComponent = ({
     </div>
   )
 
-  const renderBarindicator = () => (
-    <div css={barIndicatorStyle}>
-      {new Array(children.length).fill(null).map((_, index) => (
-        <div
-          css={barIndicatorChildStyle({
-            isActive: index + 1 === currentPage,
-            isDark
-          })}
-          onClick={() => {
-            scrollToPage(index + 1)
-          }}
-        ></div>
-      ))}
-    </div>
-  )
-
   return (
     <>
-      {bar && renderBarindicator()}
+      {bar && (
+        <BarPagination
+          length={children.length}
+          isDark={isDark}
+          active={currentPage - 1}
+          onBarClick={(index) => {
+            scrollToPage(index + 1)
+          }}
+        />
+      )}
       {renderCarousel()}
       {control && (
         <div css={controlContainere}>
