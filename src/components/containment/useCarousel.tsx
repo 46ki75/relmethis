@@ -126,6 +126,17 @@ export const useCarousel = ({
     }
   }, [])
 
+  const scrollToPage = useCallback((page: number) => {
+    if (scrollContainerRef.current) {
+      const containerWidth = scrollContainerRef.current.clientWidth
+
+      scrollContainerRef.current.scrollTo({
+        left: containerWidth * (page - 1),
+        behavior: 'smooth'
+      })
+    }
+  }, [])
+
   // # --------------------------------------------------------------------------------
   //
   // side effects
@@ -228,5 +239,5 @@ export const useCarousel = ({
     </div>
   )
 
-  return { renderCarousel, prev, next, start, end, currentPage }
+  return { renderCarousel, prev, next, start, end, currentPage, scrollToPage }
 }
