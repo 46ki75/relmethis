@@ -159,9 +159,11 @@ const EditComponent = ({
           setRemoteValue(localValue)
         } else {
           setInputStatus('error')
+          if (inputRef.current !== null) inputRef.current.focus()
         }
       } catch {
         setInputStatus('error')
+        if (inputRef.current !== null) inputRef.current.focus()
       }
     }
   }
@@ -184,11 +186,7 @@ const EditComponent = ({
   }
 
   const actionIcon = () => {
-    if (
-      inputStatus === 'display' ||
-      inputStatus === 'error' ||
-      inputStatus === 'success'
-    ) {
+    if (inputStatus === 'display' || inputStatus === 'success') {
       return (
         <>
           <PencilSquareIcon
@@ -206,7 +204,7 @@ const EditComponent = ({
           )}
         </>
       )
-    } else if (inputStatus === 'edit') {
+    } else if (inputStatus === 'edit' || inputStatus === 'error') {
       return (
         <>
           <XMarkIcon
@@ -231,8 +229,11 @@ const EditComponent = ({
       {statusIcon()}
       <input
         ref={inputRef}
-        css={inputStyle({ isEditable: inputStatus === 'edit', isDark })}
-        readOnly={inputStatus !== 'edit'}
+        css={inputStyle({
+          isEditable: inputStatus === 'edit' || inputStatus === 'error',
+          isDark
+        })}
+        readOnly={inputStatus !== 'edit' && inputStatus !== 'error'}
         value={localValue}
         onChange={(event) => {
           setLocalValue(event.target.value)
