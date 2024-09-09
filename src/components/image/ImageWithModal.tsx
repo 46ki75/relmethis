@@ -43,7 +43,13 @@ const fallbackInnerStyle = css`
   user-select: none;
 `
 
-const imageStyle = (isLoading: boolean) => css`
+const imageStyle = ({
+  isLoading,
+  isModalShow
+}: {
+  isLoading: boolean
+  isModalShow: boolean
+}) => css`
   width: ${isLoading ? '0px' : '100%'};
   height: ${isLoading ? '0px' : 'auto'};
 
@@ -52,11 +58,13 @@ const imageStyle = (isLoading: boolean) => css`
 
   cursor: zoom-in;
   user-select: none;
+
+  pointer-events: ${isModalShow ? 'all' : 'none'};
 `
 
-const modalStyle = (isModalShow: boolean) => css`
+const modalStyle = ({ isModalShow }: { isModalShow: boolean }) => css`
   position: fixed;
-  z-index: 50;
+  z-index: ${isModalShow ? 50 : -10};
   top: 0;
   left: 0;
   width: 100%;
@@ -74,6 +82,10 @@ const modalStyle = (isModalShow: boolean) => css`
   cursor: zoom-out;
 
   transition: all 300ms;
+
+  * {
+    pointer-events: ${isModalShow ? 'all' : 'none'};
+  }
 `
 
 const modalImageStyle = css`
@@ -158,7 +170,7 @@ const ImageWithModalComponent = ({
       {/* Modal */}
       {createPortal(
         <div
-          css={modalStyle(isModalShow)}
+          css={modalStyle({ isModalShow })}
           onClick={() => {
             setIsModalShow(false)
           }}
@@ -184,7 +196,7 @@ const ImageWithModalComponent = ({
 
       {/* Image */}
       <img
-        css={imageStyle(isLoading)}
+        css={imageStyle({ isLoading, isModalShow })}
         alt=''
         src={src}
         onLoad={() => {
