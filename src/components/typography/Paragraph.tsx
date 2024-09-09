@@ -23,7 +23,7 @@ const pStyle = ({
   transition: opacity 800ms;
   margin-block: 1.5rem;
 
-  *::selection {
+  &::selection {
     background-color: ${isDark
       ? 'rgba(255, 255, 255, 0.8)'
       : 'rgba(0, 0, 0, 0.8)'};
