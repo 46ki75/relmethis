@@ -13,17 +13,18 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    isDark: false
+    isDark: false,
+    length: 5
   },
   render: (args) => {
-    const [currentPage, setCurrentPage] = useState(1)
-    const pages = new Array(5).fill(null).map((_, index) => ({
-      onClick: () => {
-        setCurrentPage(index + 1)
-      },
-      isActive: currentPage === index + 1
-    }))
+    const [activePage, setActivePage] = useState(0)
 
-    return <BarPagination {...args} pages={pages} />
+    const onBarClick = (index: number) => {
+      setActivePage(index)
+    }
+
+    return (
+      <BarPagination {...args} active={activePage} onBarClick={onBarClick} />
+    )
   }
 }

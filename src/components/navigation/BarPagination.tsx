@@ -56,23 +56,31 @@ const barStyle = ({
     );
     opacity: 1;
   }
-`
-
-// # --------------------------------------------------------------------------------
+` // # --------------------------------------------------------------------------------
 //
 // props
 //
 // # --------------------------------------------------------------------------------
 
 export interface BarPaginationProps {
-  pages: Array<{
-    isActive?: boolean
-    onClick?: React.MouseEventHandler<HTMLSpanElement>
-  }>
   /**
    * Whether or not to use the dark theme
    */
   isDark?: boolean
+  /**
+   * Total number of pages
+   */
+  length: number
+  /**
+   * The index of the active page, starting from 0
+   */
+  active: number
+  /**
+   * Function called when a bar is clicked.
+   * @param index The index of the clicked bar, starting from 0
+   * @returns {void}
+   */
+  onBarClick: (index: number) => void
 }
 
 // # --------------------------------------------------------------------------------
@@ -82,15 +90,19 @@ export interface BarPaginationProps {
 // # --------------------------------------------------------------------------------
 
 const BarPaginationComponent = ({
-  pages,
-  isDark = false
+  length,
+  isDark = false,
+  active,
+  onBarClick: onClickCallback
 }: BarPaginationProps) => {
   return (
     <nav css={wrapperStyle}>
-      {pages.map((page) => (
+      {new Array(length).fill(null).map((_, index) => (
         <div
-          css={barStyle({ isDark, isActive: page.isActive ?? false })}
-          onClick={page.onClick}
+          css={barStyle({ isDark, isActive: active === index })}
+          onClick={() => {
+            onClickCallback(index)
+          }}
         ></div>
       ))}
     </nav>
