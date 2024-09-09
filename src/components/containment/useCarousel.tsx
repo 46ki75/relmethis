@@ -21,7 +21,7 @@ const wrapperStyle = css`
   width: 100%;
   box-sizing: border-box;
   overflow-x: auto;
-  overflow-y: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
 
   scrollbar-width: none; /* Firefox */
