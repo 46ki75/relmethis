@@ -10,96 +10,179 @@ const meta: Meta<typeof Markdown> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const blockquoteMarkdown =
+  '> This is a blockquote, used for quoting external content or highlighting important sections in your document.'
+
 export const Blockquote: Story = {
-  args: { markdown: '> this is blockquote' }
+  args: {
+    isDark: false,
+    enableTableOfContents: true,
+    markdown: blockquoteMarkdown
+  }
 }
 
 export const Divider: Story = {
-  args: { markdown: '---' }
+  args: {
+    isDark: false,
+    enableTableOfContents: true,
+    markdown: '---'
+  }
 }
+
+const paragraphMarkdown =
+  "This text features ~~strikethrough~~, **bold**, *italic*, and __underline__ formatting. There's also `inline code`. [Here is a link](https://example.com)."
 
 export const Paragraph: Story = {
   args: {
-    markdown:
-      "This text features ~~strikethrough~~, **bold**, *italic*, and __underline__ formatting. There's also `inline code`. [Here is a link](https://example.com)."
+    isDark: false,
+    enableTableOfContents: true,
+    markdown: paragraphMarkdown
   }
 }
 
 const footnoteMarkdown = `
+Sometimes, you may want to add extra details without cluttering the main text. This is where footnotes come in handy.
+
 This is part of the main text[^1].
 
-This is part of the main text[^2].
+This is another part of the main text[^2].
 
-[^1]: This is the definition of a footnote. A detailed explanation is written here.
-
-[^2]: This is the definition of a footnote. A detailed explanation is written here.
+[^1]: Footnote one with additional details goes here.
+[^2]: Footnote two with more explanation is included here.
 `
 
 export const Footnote: Story = {
   args: {
+    isDark: false,
+    enableTableOfContents: true,
     markdown: footnoteMarkdown
   }
 }
 
+const code = `
+use reqwest::Error;
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Post {
+    #[serde(rename = "userId")]
+    user_id: u32,
+    id: u32,
+    title: String,
+    body: String,
+}
+
+#[tokio::main]
+async fn main() -> Result<(), Error> {
+    let url = "https://jsonplaceholder.typicode.com/posts";
+    let response = reqwest::get(url).await?;
+    let posts: Vec<Post> = response.json().await?;
+
+    for post in posts.iter().take(5) {
+        println!("ID: {}, Title: {}", post.id, post.title);
+    }
+
+    Ok(())
+}
+`
+
+const codeMarkdown = `
+\`\`\`rust src/main.rs
+${code}
+\`\`\`
+`
+
 export const Code: Story = {
   args: {
-    markdown: '```ts\nconsole.log()\n```\n'
+    isDark: false,
+    enableTableOfContents: true,
+    markdown: codeMarkdown
   }
 }
 
+const headingMarkdown = new Array(6)
+  .fill(null)
+  .map((_, index) => '#'.repeat(index + 1) + ' Heading' + (index + 1))
+  .join('\n\n')
+
 export const Headings: Story = {
   args: {
-    markdown: new Array(6)
-      .fill(null)
-      .map((_, index) => '#'.repeat(index + 1) + ' Heading' + (index + 1))
-      .join('\n\n')
+    isDark: false,
+    enableTableOfContents: true,
+    markdown: headingMarkdown
   }
 }
 
 export const Image: Story = {
   args: {
+    isDark: false,
+    enableTableOfContents: true,
     markdown:
       '![unsplash image](https://images.unsplash.com/photo-1556983703-27576e5afa24?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb)'
   }
 }
 
+const tablemarkdwon = `
+| Name          | Department  | Position          |
+| ------------- | ----------- | ----------------- |
+| John Doe      | Engineering | Software Engineer |
+| Jane Smith    | Marketing   | Marketing Manager |
+| Emily Johnson | Finance     | Financial Analyst |
+
+|     Name      | Department  |          Position |
+| :-----------: | :---------- | ----------------: |
+|   John Doe    | Engineering | Software Engineer |
+|  Jane Smith   | Marketing   | Marketing Manager |
+| Emily Johnson | Finance     | Financial Analyst |
+`
+
 export const Table: Story = {
   args: {
-    markdown: ['|A|B|', '|-|-|', '|A1|B1|', '|A2|B2|'].join('\n')
+    isDark: false,
+    enableTableOfContents: true,
+    markdown: tablemarkdwon
   }
 }
 
+const listMarkdown = `
+- Bulleted 1
+- Bulleted 2
+1. Numbered 1
+2. Numbered 2
+   1. Numbered 12a
+   2. Numbered 2-b
+- Bulleted 1
+- Bulleted 2
+- - Bulleted 2-a
+- - Bulleted 2-b
+`
+
 export const List: Story = {
   args: {
-    markdown: [
-      '- Bulleted 1',
-      '- Bulleted 2',
-      '1. Numbered 1',
-      '2. Numbered 2',
-      '   1. Numbered 12a',
-      '   2. Numbered 2-b',
-      '- Bulleted 1',
-      '- Bulleted 2',
-      '- - Bulleted 2-a',
-      '- - Bulleted 2-b'
-    ].join('\n')
+    isDark: false,
+    enableTableOfContents: true,
+    markdown: listMarkdown
   }
 }
 
 const definitionMarkdown = `
+You can use reference-style links for cleaner markdown syntax:
+
 Here is a link to [GitHub][GitHub Home Page].
 
-Also, here is a link to [Google][Google Home Page].
+Here is another link to [Google][Google Home Page].
 
-![unsplash image][unsplash-image]
+![Unsplash image][Unsplash Image]
 
-[GitHub Home Page]: https://github.com "GitHub Home Page"
-[Google Home Page]: https://www.google.com "Google Home Page"
-[unsplash-image]: https://images.unsplash.com/photo-1556983703-27576e5afa24?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb
+[GitHub Home Page]: https://github.com "GitHub"
+[Google Home Page]: https://www.google.com "Google"
+[Unsplash Image]: https://images.unsplash.com/photo-1556983703-27576e5afa24?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb "Nature"
 `
 
 export const Definition: Story = {
   args: {
+    isDark: false,
+    enableTableOfContents: true,
     markdown: definitionMarkdown
   }
 }
@@ -123,6 +206,8 @@ const GfmAlertMarkdown = `
 
 export const GfmAlert: Story = {
   args: {
+    isDark: false,
+    enableTableOfContents: true,
     markdown: GfmAlertMarkdown
   }
 }
@@ -130,11 +215,11 @@ export const GfmAlert: Story = {
 const longMarkdown = `
 # Markdown Components Showcase
 
-In this document, you'll find examples of different markdown components that can be rendered using our custom \`Markdown\` component. Below are examples of blockquote, headings, lists, tables, and more.
+${paragraphMarkdown}
 
 ## Blockquote
 
-> This is a blockquote, used for quoting external content or highlighting important sections in your document.
+${blockquoteMarkdown}
 
 ---
 
@@ -148,24 +233,15 @@ Additionally, here's an example of \`inline code\`. [You can also include links]
 
 ## Code Example
 
-Below is a code snippet demonstrating simple TypeScript code:
+Below is a code snippet demonstrating simple Rust code:
 
-\`\`\`ts
-console.log('Hello, world!');
-\`\`\`
+${codeMarkdown}
 
 ---
 
 ## Footnotes
 
-Sometimes, you may want to add extra details without cluttering the main text. This is where footnotes come in handy.
-
-This is part of the main text[^1].
-
-This is another part of the main text[^2].
-
-[^1]: Footnote one with additional details goes here.
-[^2]: Footnote two with more explanation is included here.
+${footnoteMarkdown}
 
 ---
 
@@ -173,12 +249,7 @@ This is another part of the main text[^2].
 
 You can create hierarchical structures in your document using headings of different levels:
 
-# Heading 1
-## Heading 2
-### Heading 3
-#### Heading 4
-##### Heading 5
-###### Heading 6
+${headingMarkdown}
 
 ---
 
@@ -192,11 +263,7 @@ You can create hierarchical structures in your document using headings of differ
 
 Here are some bulleted and numbered lists for organizing information:
 
-- Bullet 1
-- Bullet 2
-
-1. Number 1
-2. Number 2
+${listMarkdown}
 
 ---
 
@@ -204,45 +271,19 @@ Here are some bulleted and numbered lists for organizing information:
 
 Tables can be used to represent structured data:
 
-| A  | B  |
-|----|----|
-| A1 | B1 |
-| A2 | B2 |
+${tablemarkdwon}
 
 ---
 
 ## Definition Links
 
-You can use reference-style links for cleaner markdown syntax:
-
-Here is a link to [GitHub][GitHub Home Page].
-
-Here is another link to [Google][Google Home Page].
-
-![Unsplash image][Unsplash Image]
-
-[GitHub Home Page]: https://github.com "GitHub"
-[Google Home Page]: https://www.google.com "Google"
-[Unsplash Image]: https://images.unsplash.com/photo-1556983703-27576e5afa24?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb "Nature"
+${definitionMarkdown}
 
 ---
 
 ## GFM Alerts
 
-> [!NOTE]
-> Here's a note to keep in mind while reading this section.
-
-> [!TIP]
-> A useful tip for improving productivity!
-
-> [!IMPORTANT]
-> Don't forget this crucial piece of information.
-
-> [!WARNING]
-> Pay attention to this warning to avoid issues.
-
-> [!CAUTION]
-> Be cautious when performing certain actions to prevent problems.
+${GfmAlertMarkdown}
 `
 
 export const Full: Story = {

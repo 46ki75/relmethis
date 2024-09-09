@@ -22,8 +22,6 @@ import { BulletedList } from '../typography/BulletedList'
 import { Blockquote } from '../typography/Blockquote'
 import { Paragraph } from '../typography/Paragraph'
 
-import { darken, lighten } from 'polished'
-
 import type { CodeBlock as CodeBlockType } from '../code/CodeBlock'
 const CodeBlock = React.lazy(() =>
   import('../code/CodeBlock').then((module) => ({
@@ -33,6 +31,7 @@ const CodeBlock = React.lazy(() =>
 
 import type { ImageWithModal as ImageWithModalType } from '../image/ImageWithModal'
 import { mdastToString } from './mdastToString'
+import { Table } from '../data/Table'
 const ImageWithModal = React.lazy(() =>
   import('../image/ImageWithModal').then((module) => ({
     default: module.ImageWithModal
@@ -44,108 +43,6 @@ const ImageWithModal = React.lazy(() =>
 // styles
 //
 // # --------------------------------------------------------------------------------
-
-const tableStyle = ({ isDark }: { isDark: boolean }) => css`
-  width: fit-content;
-  max-width: 100%;
-  display: block;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
-
-  &::-webkit-scrollbar {
-    height: 6px;
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: rgb(138, 148, 191, 0.8);
-    border-radius: 3px;
-    opacity: 0.6;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: #f3f3f3;
-  }
-
-  th,
-  td {
-    padding: 12px 15px;
-    white-space: nowrap;
-  }
-
-  thead {
-    tr {
-      background-color: ${isDark
-        ? 'rgba(255, 255, 255, 0.8)'
-        : 'rgba(0, 0, 0, 0.8)'};
-
-      text-align: left;
-
-      th {
-        border-right: 1px dashed rgba(128, 128, 128, 0.4);
-
-        * {
-          color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-
-          &::selection {
-            background-color: ${!isDark
-              ? 'rgba(255, 255, 255, 0.8)'
-              : 'rgba(0, 0, 0, 0.8)'};
-            color: ${!isDark
-              ? 'rgba(0, 0, 0, 0.8)'
-              : 'rgba(255, 255, 255, 0.8)'};
-          }
-        }
-
-        &:last-child {
-          border-right: none;
-        }
-      }
-    }
-  }
-
-  tbody {
-    tr {
-      border-bottom: 1px solid rgba(128, 128, 128, 0.4);
-
-      transition: background-color 300ms;
-
-      &:nth-of-type(odd) {
-        background-color: ${isDark ? 'rgb(40,40,40)' : 'rgb(240,240,240)'};
-      }
-
-      &:nth-of-type(even) {
-        background-color: ${isDark ? 'rgb(60,60,60)' : 'rgb(250,250,250)'};
-      }
-
-      &:hover {
-        background-color: ${isDark
-          ? darken(0.35, '#6987b8')
-          : lighten(0.35, '#6987b8')};
-      }
-
-      td {
-        border-right: 1px dashed rgba(128, 128, 128, 0.4);
-
-        &:last-child {
-          border-right: none;
-        }
-
-        *::selection {
-          background-color: ${isDark
-            ? 'rgba(255, 255, 255, 0.8)'
-            : 'rgba(0, 0, 0, 0.8)'};
-          color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-        }
-      }
-    }
-  }
-`
 
 const supStyle = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? '#6987b8' : '#4c6da2'};
@@ -438,53 +335,41 @@ export const RenderMdast = ({
       }
 
       case 'table': {
-        let thead: ReactNode
-        const tbodyTrArray: ReactNode[] = []
-        for (const [index, tableRow] of node.children.entries()) {
-          if (index === 0) {
-            thead = (
-              <thead>
-                <tr>
-                  {tableRow.children.map((tableCell) => (
-                    <th>
-                      {
-                        RenderMdast({
-                          mdastNodes: tableCell.children,
-                          definitions,
-                          isDark,
-                          footnoteComponent
-                        }).markdownComponent
-                      }
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-            )
-          } else {
-            tbodyTrArray.push(
-              <tr>
-                {tableRow.children.map((tableCell) => (
-                  <td>
-                    {
-                      RenderMdast({
-                        mdastNodes: tableCell.children,
-                        definitions,
-                        isDark,
-                        footnoteComponent
-                      }).markdownComponent
-                    }
-                  </td>
-                ))}
-              </tr>
-            )
-          }
+        const [tableHeaderRow, ...tableBodyRows] = node.children
+
+        const rowNodes: ReactNode[][] = []
+
+        rowNodes.push(
+          tableHeaderRow.children.map((tableCell) => {
+            return RenderMdast({
+              mdastNodes: tableCell.children,
+              definitions,
+              isDark,
+              footnoteComponent
+            }).markdownComponent
+          })
+        )
+
+        for (const tableBodyRow of tableBodyRows) {
+          rowNodes.push(
+            tableBodyRow.children.map((tableCell) => {
+              return RenderMdast({
+                mdastNodes: tableCell.children,
+                definitions,
+                isDark,
+                footnoteComponent
+              }).markdownComponent
+            })
+          )
         }
 
+        const align =
+          node.align != null
+            ? node.align.map((a) => (a != null ? a : 'left'))
+            : []
+
         markdownComponent.push(
-          <table css={tableStyle({ isDark })}>
-            {thead}
-            <tbody>{tbodyTrArray}</tbody>
-          </table>
+          <Table rows={rowNodes} isDark={isDark} align={align} />
         )
 
         break
