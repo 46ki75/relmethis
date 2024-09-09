@@ -20,6 +20,7 @@ import { Alert } from '../typography/Alert'
 import { NumberedList } from '../typography/NumberedList'
 import { BulletedList } from '../typography/BulletedList'
 import { Blockquote } from '../typography/Blockquote'
+import { Paragraph } from '../typography/Paragraph'
 
 import type { CodeBlock as CodeBlockType } from '../code/CodeBlock'
 const CodeBlock = React.lazy(() =>
@@ -50,6 +51,17 @@ const supStyle = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? '#6987b8' : '#4c6da2'};
 `
 
+const inlineStyle = ({ isDark }: { isDark: boolean }) => css`
+  color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
+
+  *::selection {
+    background-color: ${isDark
+      ? 'rgba(255, 255, 255, 0.8)'
+      : 'rgba(0, 0, 0, 0.8)'};
+    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
+  }
+`
+
 // # --------------------------------------------------------------------------------
 //
 // utils
@@ -78,8 +90,6 @@ export const RenderMdast = ({
 } => {
   const markdownComponent: ReactNode[] = []
 
-  const color = isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'
-
   const headings: Array<{
     text: string
     level: 1 | 2 | 3 | 4 | 5 | 6
@@ -95,7 +105,9 @@ export const RenderMdast = ({
       // # --------------------------------------------------------------------------------
 
       case 'text': {
-        markdownComponent.push(<>{node.value}</>)
+        markdownComponent.push(
+          <span css={inlineStyle({ isDark })}>{node.value}</span>
+        )
         break
       }
 
@@ -106,7 +118,7 @@ export const RenderMdast = ({
 
       case 'strong': {
         markdownComponent.push(
-          <strong style={{ color }}>
+          <strong css={inlineStyle({ isDark })}>
             {
               RenderMdast({
                 mdastNodes: node.children,
@@ -122,7 +134,7 @@ export const RenderMdast = ({
 
       case 'emphasis': {
         markdownComponent.push(
-          <em style={{ color }}>
+          <em css={inlineStyle({ isDark })}>
             {
               RenderMdast({
                 mdastNodes: node.children,
@@ -138,7 +150,7 @@ export const RenderMdast = ({
 
       case 'delete': {
         markdownComponent.push(
-          <del style={{ color }}>
+          <del css={inlineStyle({ isDark })}>
             {
               RenderMdast({
                 mdastNodes: node.children,
@@ -176,7 +188,7 @@ export const RenderMdast = ({
 
       case 'paragraph': {
         markdownComponent.push(
-          <p style={{ color }}>
+          <Paragraph isDark={isDark}>
             {
               RenderMdast({
                 mdastNodes: node.children,
@@ -185,7 +197,7 @@ export const RenderMdast = ({
                 footnoteComponent
               }).markdownComponent
             }
-          </p>
+          </Paragraph>
         )
         break
       }
