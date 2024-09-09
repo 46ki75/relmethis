@@ -23,27 +23,37 @@ const barStyle = ({
   isActive: boolean
 }) => css`
   width: 100%;
-  padding: 8px 0;
+  height: 24px;
 
   opacity: ${isActive ? 1 : 0.2};
   cursor: pointer;
 
-  border-top: solid 4px
-    ${isDark ? `rgba(255, 255, 255, 0.7)` : 'rgba(0, 0, 0, 0.7)'};
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0% 40%,
+    ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'} 40% 60%,
+    rgba(0, 0, 0, 0) 60% 100%
+  );
 
-  transition:
-    border-top-color 400ms,
-    opacity 400ms;
-
-  position: relative;
+  transition: opacity 400ms;
 
   &:hover {
-    border-top-color: #6987b8;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0% 40%,
+      ${isActive ? '' : '#6987b8'} 40% 60%,
+      rgba(0, 0, 0, 0) 60% 100%
+    );
     opacity: 1;
   }
 
   &:active {
-    border-top-color: #59b57c;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0% 40%,
+      ${isActive ? '' : '#59b57c'} 40% 60%,
+      rgba(0, 0, 0, 0) 60% 100%
+    );
     opacity: 1;
   }
 `
