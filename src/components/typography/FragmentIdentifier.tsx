@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { css } from '@emotion/react'
 
 // icons
@@ -10,6 +10,9 @@ import { createPortal } from 'react-dom'
 import { Tooltip } from 'react-tooltip'
 import { darken, lighten } from 'polished'
 import { useCopy } from '../../hooks/useCopy'
+
+import murmurhash from 'murmurhash'
+import { isEqual } from 'lodash'
 
 // # --------------------------------------------------------------------------------
 //
@@ -62,10 +65,10 @@ const tooltipInlineStyle = ({
   isDark: boolean
 }): React.CSSProperties => ({
   background: isDark
-    ? lighten(0.3, 'rgb(128,128,128)')
+    ? lighten(0.4, 'rgb(128,128,128)')
     : darken(0.3, 'rgb(128,128,128)'),
   color: isDark
-    ? darken(0.3, 'rgb(128,128,128)')
+    ? darken(0.4, 'rgb(128,128,128)')
     : lighten(0.3, 'rgb(128,128,128)')
 })
 
@@ -94,6 +97,11 @@ const FragmentIdentifierComponent = ({
   identifier,
   isDark = false
 }: FragmentIdentifierProps) => {
+  const hash = useMemo(
+    () => murmurhash.v3(['FragmentIdentifier', identifier, isDark].join('-')),
+    [identifier, isDark]
+  )
+
   const scrollToIdentifier = () => {
     const element = document.getElementById(identifier)
     if (element) {
@@ -110,15 +118,15 @@ const FragmentIdentifierComponent = ({
         Link has been copied!
       </span>
       <HashtagIcon
-        id={`FragmentIdentifier-HashtagIcon-${identifier}-${String(isDark)}`}
+        id={`HashtagIcon-${hash}`}
         css={iconStyle}
         onClick={scrollToIdentifier}
       />
       <LinkIcon
-        id={`FragmentIdentifier-LinkIcon-${identifier}-${String(isDark)}`}
+        id={`LinkIcon-${hash}`}
         css={iconStyle}
         onClick={() => {
-          copy(`${window.location.href.split('#')[0]}#${identifier}`)
+          copy(`${window.location.href.split('#')[0]}#${hash}`)
         }}
       />
 
@@ -126,14 +134,14 @@ const FragmentIdentifierComponent = ({
         <>
           <Tooltip
             style={tooltipInlineStyle({ isDark })}
-            anchorSelect={`#FragmentIdentifier-HashtagIcon-${identifier}-${String(isDark)}`}
+            anchorSelect={`#HashtagIcon-${hash}`}
             content={'Jump to a link with a fragment modifier'}
             place={'bottom-end'}
           />
 
           <Tooltip
             style={tooltipInlineStyle({ isDark })}
-            anchorSelect={`#FragmentIdentifier-LinkIcon-${identifier}-${String(isDark)}`}
+            anchorSelect={`#LinkIcon-${hash}`}
             content={'Copy a link with a fragment modifier'}
             place={'bottom-end'}
           />
@@ -150,4 +158,7 @@ const FragmentIdentifierComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const FragmentIdentifier = React.memo(FragmentIdentifierComponent)
+export const FragmentIdentifier = React.memo(
+  FragmentIdentifierComponent,
+  isEqual
+)

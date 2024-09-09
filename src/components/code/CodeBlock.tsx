@@ -54,6 +54,7 @@ import { darken, lighten } from 'polished'
 import { useCopy } from '../../hooks/useCopy'
 
 import murmurhash from 'murmurhash'
+import { isEqual } from 'lodash'
 
 // # --------------------------------------------------------------------------------
 //
@@ -166,10 +167,10 @@ const tooltipInlineStyle = ({
   isDark: boolean
 }): React.CSSProperties => ({
   background: isDark
-    ? lighten(0.3, 'rgb(128,128,128)')
+    ? lighten(0.4, 'rgb(128,128,128)')
     : darken(0.3, 'rgb(128,128,128)'),
   color: isDark
-    ? darken(0.3, 'rgb(128,128,128)')
+    ? darken(0.4, 'rgb(128,128,128)')
     : lighten(0.3, 'rgb(128,128,128)')
 })
 
@@ -216,7 +217,11 @@ const CodeBlockComponent = ({
   isDark = false,
   enablePreview = true
 }: CodeBlockProps) => {
-  const hash = murmurhash.v3(code + language + caption + isDark + enablePreview)
+  const hash = React.useMemo(() => {
+    return murmurhash.v3(
+      ['CodeBlock', code, language, caption, isDark].join('-')
+    )
+  }, [code, language, caption, isDark])
 
   const deferredCode = useDeferredValue(code)
   const deferredLanguage = useDeferredValue(language)
@@ -298,7 +303,7 @@ const CodeBlockComponent = ({
 
           {isAvailablePreview && (
             <ArrowsRightLeftIcon
-              id={`CodeBlock-ArrowsRightLeftIcon-${hash}`}
+              id={`ArrowsRightLeftIcon-${hash}`}
               css={clickableIconStyle({ isDark })}
               onClick={() => {
                 setShowPreview(!showPreview)
@@ -307,7 +312,7 @@ const CodeBlockComponent = ({
           )}
 
           <NumberedListIcon
-            id={`CodeBlock-NumberedListIcon-${hash}`}
+            id={`NumberedListIcon-${hash}`}
             css={clickableIconStyle({ isDark })}
             onClick={() => {
               setIsShowNumber(!isShowNumber)
@@ -315,7 +320,7 @@ const CodeBlockComponent = ({
           />
 
           <ClipboardDocumentIcon
-            id={`CodeBlock-ClipboardDocumentIcon-${hash}`}
+            id={`ClipboardDocumentIcon-${hash}`}
             css={clickableIconStyle({ isDark })}
             onClick={() => {
               copy(deferredCode.trim())
@@ -326,19 +331,19 @@ const CodeBlockComponent = ({
             <>
               <Tooltip
                 style={tooltipInlineStyle({ isDark })}
-                anchorSelect={`#CodeBlock-ArrowsRightLeftIcon-${hash}`}
+                anchorSelect={`#ArrowsRightLeftIcon-${hash}`}
                 content={'Toggle Code Preview'}
                 place={'top-end'}
               />
               <Tooltip
                 style={tooltipInlineStyle({ isDark })}
-                anchorSelect={`#CodeBlock-NumberedListIcon-${hash}`}
+                anchorSelect={`#NumberedListIcon-${hash}`}
                 content='Toggle Line Numbers'
                 place={'top-end'}
               />
               <Tooltip
                 style={tooltipInlineStyle({ isDark })}
-                anchorSelect={`#CodeBlock-ClipboardDocumentIcon-${hash}`}
+                anchorSelect={`#ClipboardDocumentIcon-${hash}`}
                 content={'Copy Code to Clipboard'}
                 place={'top-end'}
               />
@@ -406,4 +411,4 @@ const MemoizedSyntaxHighlighter = React.memo(
 //
 // # --------------------------------------------------------------------------------
 
-export const CodeBlock = React.memo(CodeBlockComponent)
+export const CodeBlock = React.memo(CodeBlockComponent, isEqual)
