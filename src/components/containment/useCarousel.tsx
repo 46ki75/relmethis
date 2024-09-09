@@ -45,7 +45,7 @@ const containerStyle = ({
   justify-content: flex-start;
   align-items: center;
 
-  transition: height 200ms;
+  transition: height 200ms ease 400ms;
 `
 
 const childrenContainerStyle = css`
@@ -83,6 +83,7 @@ export const useCarousel = ({
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [currentHeight, setCurrentHeight] = useState<number | null>(null)
+  const childRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const start = useCallback(() => {
     if (scrollContainerRef.current)
@@ -171,26 +172,54 @@ export const useCarousel = ({
     }
   }, [autoResize])
 
+  useEffect(() => {
+    const currentRefs = childRefs.current
+    const resizeObservers: ResizeObserver[] = []
+
+    currentRefs.forEach((ref, index) => {
+      if (ref) {
+        const observer = new ResizeObserver((entries) => {
+          for (const entry of entries) {
+            if (index + 1 === currentPage && autoResize) {
+              setCurrentHeight(entry.contentRect.height)
+            }
+          }
+        })
+        observer.observe(ref)
+        resizeObservers.push(observer)
+      }
+    })
+
+    return () => {
+      resizeObservers.forEach((observer, index) => {
+        if (currentRefs[index]) {
+          observer.unobserve(currentRefs[index]!)
+        }
+      })
+    }
+  }, [currentPage, autoResize])
+
   const renderCarousel = () => (
-    <>
-      {currentHeight}
-      <div css={wrapperStyle} ref={scrollContainerRef}>
-        <div
-          css={containerStyle({
-            length: children.length,
-            height: currentHeight ?? 'auto'
-          })}
-        >
-          {children.map((child, index) => (
-            <Suspense key={index} fallback={<BlockFallback />}>
-              <div css={childrenContainerStyle} data-index={index}>
-                {child}
-              </div>
-            </Suspense>
-          ))}
-        </div>
+    <div css={wrapperStyle} ref={scrollContainerRef}>
+      <div
+        css={containerStyle({
+          length: children.length,
+          height: currentHeight ?? 'auto'
+        })}
+      >
+        {children.map((child, index) => (
+          <Suspense key={index} fallback={<BlockFallback />}>
+            <div
+              css={childrenContainerStyle}
+              data-index={index}
+              ref={(el) => (childRefs.current[index] = el)}
+            >
+              {child}
+            </div>
+          </Suspense>
+        ))}
       </div>
-    </>
+    </div>
   )
 
   return { renderCarousel, prev, next, start, end, currentPage }
