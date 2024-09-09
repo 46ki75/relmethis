@@ -12,6 +12,7 @@ import { BlockFallback } from '../fallback/BlockFallback'
 import { RenderMdast } from './RenderMdast'
 import { TableOfContents } from '../navigation/TableOfContents'
 import { Divider } from '../typography/Divider'
+import { isEqual } from 'lodash'
 
 // # --------------------------------------------------------------------------------
 //
@@ -85,4 +86,10 @@ const MdastComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Mdast = React.memo(MdastComponent)
+export const Mdast = React.memo(MdastComponent, (prevProps, nextProps) => {
+  return (
+    prevProps.isDark === nextProps.isDark &&
+    prevProps.enableTableOfContents === nextProps.enableTableOfContents &&
+    isEqual(prevProps.mdast, nextProps.mdast)
+  )
+})
