@@ -49,6 +49,9 @@ import {
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 import { LanguageIcon } from '../icon/LanguageIcon'
 import { Markdown } from '../markdown/Markdown'
+import { Tooltip } from 'react-tooltip'
+import { createPortal } from 'react-dom'
+import { darken, lighten } from 'polished'
 
 // # --------------------------------------------------------------------------------
 //
@@ -113,6 +116,13 @@ const clickableIconStyle = ({ isDark }: { isDark: boolean }) => css`
   }
 `
 
+const copiedtextStyle = ({ isShow }: { isShow: boolean }) => css`
+  color: #59b57c;
+  opacity: ${isShow ? 1 : 0};
+  transition: opacity 400ms;
+  user-select: none;
+`
+
 const hrStyle = ({ isDark }: { isDark: boolean }) => css`
   width: calc(100% - 1rem);
   margin: 0 0.5rem;
@@ -141,6 +151,25 @@ const codeStyle = css`
   animation-duration: 800ms;
   animation-fill-mode: both;
 `
+
+// # --------------------------------------------------------------------------------
+//
+// inline styles
+//
+// # --------------------------------------------------------------------------------
+
+const tooltipInlineStyle = ({
+  isDark
+}: {
+  isDark: boolean
+}): React.CSSProperties => ({
+  background: isDark
+    ? lighten(0.3, 'rgb(128,128,128)')
+    : darken(0.3, 'rgb(128,128,128)'),
+  color: isDark
+    ? darken(0.3, 'rgb(128,128,128)')
+    : lighten(0.3, 'rgb(128,128,128)')
+})
 
 // # --------------------------------------------------------------------------------
 //
@@ -195,7 +224,22 @@ const CodeBlockComponent = ({
     setIsShowNumber(media.matches)
   }, [])
 
+  // COPY # -------------------- #
+
   const [, copyToClipboard] = useCopyToClipboard()
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = () => {
+    setCopied(true)
+    copyToClipboard(deferredCode.trim())
+  }
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setCopied(false)
+    }, 3000)
+    return () => clearTimeout(id)
+  }, [copied])
 
   // # --------------------------------------------------------------------------------
   //
@@ -261,26 +305,55 @@ const CodeBlockComponent = ({
           <span css={captionStyle({ isDark })}>{caption}</span>
         </div>
         <div>
+          {<span css={copiedtextStyle({ isShow: copied })}>copied!</span>}
+
           {isAvailablePreview && (
             <ArrowsRightLeftIcon
+              id='preview'
               css={clickableIconStyle({ isDark })}
               onClick={() => {
                 setShowPreview(!showPreview)
               }}
             />
           )}
+
           <NumberedListIcon
+            id='line-number'
             css={clickableIconStyle({ isDark })}
             onClick={() => {
               setIsShowNumber(!isShowNumber)
             }}
           />
+
           <ClipboardDocumentIcon
+            id='copy'
             css={clickableIconStyle({ isDark })}
-            onClick={() => {
-              copyToClipboard(deferredCode.trim())
-            }}
+            onClick={handleCopy}
           />
+
+          {createPortal(
+            <>
+              <Tooltip
+                style={tooltipInlineStyle({ isDark })}
+                anchorSelect='#preview'
+                content={'Toggle Code Preview'}
+                place={'top-end'}
+              />
+              <Tooltip
+                style={tooltipInlineStyle({ isDark })}
+                anchorSelect='#line-number'
+                content='Toggle Line Numbers'
+                place={'top-end'}
+              />
+              <Tooltip
+                style={tooltipInlineStyle({ isDark })}
+                anchorSelect='#copy'
+                content={'Copy Code to Clipboard'}
+                place={'top-end'}
+              />
+            </>,
+            document.body
+          )}
         </div>
       </div>
 
