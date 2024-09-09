@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Carousel } from './Carousel'
 import { ReactNode } from 'react'
 import { CodeBlock } from '../code/CodeBlock'
+import { ImageWithModal } from '../image/ImageWithModal'
 
 const meta: Meta<typeof Carousel> = {
   title: 'Components/Containment/Carousel',
@@ -114,6 +115,20 @@ export const Code: Story = {
       <div style={{ margin: 'auto 0.25rem' }}>
         <CodeBlock code={goCode} language='go' />
       </div>
+    ],
+    autoResize: true
+  }
+}
+
+const src =
+  'https://images.unsplash.com/photo-1556983703-27576e5afa24?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb'
+
+export const Image: Story = {
+  args: {
+    children: [
+      <ImageWithModal src={src} />,
+      <ImageWithModal src={src} />,
+      <ImageWithModal src={src} />
     ],
     autoResize: true
   }
