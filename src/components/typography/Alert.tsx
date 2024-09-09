@@ -8,6 +8,7 @@ import {
   ShieldCheckIcon,
   XCircleIcon
 } from '@heroicons/react/24/outline'
+import { isEqual } from 'lodash'
 import { darken, lighten, rgba } from 'polished'
 import React, { useMemo } from 'react'
 import { useInView } from 'react-intersection-observer'
@@ -45,12 +46,23 @@ const wrapperStyle = ({
   transition: background-position 600ms;
 `
 
-const headerStyle = ({ color }: { color: string }) => css`
+const headerStyle = ({
+  isDark,
+  color
+}: {
+  isDark: boolean
+  color: string
+}) => css`
   color: ${darken(0.05, color)};
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+
+  *::selection {
+    background-color: ${isDark ? lighten(0.1, color) : darken(0.1, color)};
+    color: ${!isDark ? lighten(0.3, color) : darken(0.3, color)};
+  }
 `
 
 // # --------------------------------------------------------------------------------
@@ -70,6 +82,10 @@ export interface AlertProps {
    * Type of alert
    */
   type: AlertType
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
 }
 
 const colors: Record<AlertType, string> = {
@@ -86,7 +102,11 @@ const colors: Record<AlertType, string> = {
 //
 // # --------------------------------------------------------------------------------
 
-export const AlertComponent = ({ children, type }: AlertProps) => {
+export const AlertComponent = ({
+  children,
+  type,
+  isDark = false
+}: AlertProps) => {
   const color = useMemo(() => colors[type], [type])
 
   const icon = useMemo(() => {
@@ -110,7 +130,7 @@ export const AlertComponent = ({ children, type }: AlertProps) => {
 
   return (
     <div css={wrapperStyle({ color, inView })} ref={ref}>
-      <div css={headerStyle({ color })}>
+      <div css={headerStyle({ color, isDark })}>
         {icon}
         <div>{type.toUpperCase()}</div>
       </div>
@@ -125,4 +145,10 @@ export const AlertComponent = ({ children, type }: AlertProps) => {
 //
 // # --------------------------------------------------------------------------------
 
-export const Alert = React.memo(AlertComponent)
+export const Alert = React.memo(AlertComponent, (prevProps, nextProps) => {
+  return (
+    prevProps.isDark === nextProps.isDark &&
+    prevProps.type === nextProps.type &&
+    isEqual(prevProps.children, nextProps.children)
+  )
+})
