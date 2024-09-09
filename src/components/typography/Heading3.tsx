@@ -22,6 +22,13 @@ const headingStyle = ({ isDark }: { isDark: boolean }) => css`
     ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
   border-bottom: dotted 1px
     ${isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'};
+
+  &::selection {
+    background-color: ${isDark
+      ? 'rgba(255, 255, 255, 0.8)'
+      : 'rgba(0, 0, 0, 0.8)'};
+    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
+  }
 `
 
 // # --------------------------------------------------------------------------------
