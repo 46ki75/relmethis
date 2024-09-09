@@ -54,6 +54,13 @@ const headingStyle = ({
     border-left: solid 4px ${inSection ? rgba('#6987b8', 0.8) : 'transparent'};
   }
 
+  *::selection {
+    background-color: ${isDark
+      ? 'rgba(255, 255, 255, 0.8)'
+      : 'rgba(0, 0, 0, 0.8)'};
+    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
+  }
+
   &:hover {
     background-color: ${rgba('#6987b8', 0.15)};
   }
