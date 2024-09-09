@@ -43,13 +43,7 @@ const fallbackInnerStyle = css`
   user-select: none;
 `
 
-const imageStyle = ({
-  isLoading,
-  isModalShow
-}: {
-  isLoading: boolean
-  isModalShow: boolean
-}) => css`
+const imageStyle = ({ isLoading }: { isLoading: boolean }) => css`
   width: ${isLoading ? '0px' : '100%'};
   height: ${isLoading ? '0px' : 'auto'};
 
@@ -58,8 +52,6 @@ const imageStyle = ({
 
   cursor: zoom-in;
   user-select: none;
-
-  pointer-events: ${isModalShow ? 'all' : 'none'};
 `
 
 const modalStyle = ({ isModalShow }: { isModalShow: boolean }) => css`
@@ -110,7 +102,7 @@ const guideTextStyle = css`
 
 export interface ImageWithModalProps {
   src: string
-  alt: string
+  alt?: string
   /**
    * **optional?**
    *
@@ -145,6 +137,7 @@ export interface ImageWithModalProps {
 
 const ImageWithModalComponent = ({
   src,
+  alt = src,
   width = 1200,
   height = 630,
   lang = 'ja'
@@ -175,7 +168,7 @@ const ImageWithModalComponent = ({
             setIsModalShow(false)
           }}
         >
-          <img css={modalImageStyle} alt='' src={src} />
+          <img css={modalImageStyle} alt={alt} src={src} />
           <span css={guideTextStyle}>{guideText}</span>
         </div>,
         document.body
@@ -196,8 +189,8 @@ const ImageWithModalComponent = ({
 
       {/* Image */}
       <img
-        css={imageStyle({ isLoading, isModalShow })}
-        alt=''
+        css={imageStyle({ isLoading })}
+        alt={alt}
         src={src}
         onLoad={() => {
           setIsLoading(false)
@@ -209,12 +202,6 @@ const ImageWithModalComponent = ({
     </>
   )
 }
-
-// # --------------------------------------------------------------------------------
-//
-// default props
-//
-// # --------------------------------------------------------------------------------
 
 // # --------------------------------------------------------------------------------
 //
