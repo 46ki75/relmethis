@@ -119,7 +119,7 @@ export interface TableOfContentsProps {
 const TableOfContentsComponent = ({
   isDark = false,
   fontSizeRatio = 1,
-  maxLevel = 3,
+  maxLevel = 6,
   headings
 }: TableOfContentsProps) => {
   const [activeElementId, setActiveElementId] = useState('')

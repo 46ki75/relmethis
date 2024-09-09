@@ -66,7 +66,6 @@ export const Section: Story = {
 export const DeepLevel: Story = {
   args: {
     isDark: false,
-    maxLevel: 6,
     headings: [
       {
         level: 1,
