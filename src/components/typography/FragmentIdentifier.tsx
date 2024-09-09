@@ -109,9 +109,13 @@ const FragmentIdentifierComponent = ({
       <span css={copiedtextStyle({ isShow: isCopied })}>
         Link has been copied!
       </span>
-      <HashtagIcon id='jump' css={iconStyle} onClick={scrollToIdentifier} />
+      <HashtagIcon
+        id={`FragmentIdentifier-HashtagIcon-${identifier}-${String(isDark)}`}
+        css={iconStyle}
+        onClick={scrollToIdentifier}
+      />
       <LinkIcon
-        id='copy'
+        id={`FragmentIdentifier-LinkIcon-${identifier}-${String(isDark)}`}
         css={iconStyle}
         onClick={() => {
           copy(`${window.location.href.split('#')[0]}#${identifier}`)
@@ -122,14 +126,14 @@ const FragmentIdentifierComponent = ({
         <>
           <Tooltip
             style={tooltipInlineStyle({ isDark })}
-            anchorSelect='#jump'
+            anchorSelect={`#FragmentIdentifier-HashtagIcon-${identifier}-${String(isDark)}`}
             content={'Jump to a link with a fragment modifier'}
             place={'bottom-end'}
           />
 
           <Tooltip
             style={tooltipInlineStyle({ isDark })}
-            anchorSelect='#copy'
+            anchorSelect={`#FragmentIdentifier-LinkIcon-${identifier}-${String(isDark)}`}
             content={'Copy a link with a fragment modifier'}
             place={'bottom-end'}
           />

@@ -53,6 +53,8 @@ import { createPortal } from 'react-dom'
 import { darken, lighten } from 'polished'
 import { useCopy } from '../../hooks/useCopy'
 
+import murmurhash from 'murmurhash'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -214,6 +216,8 @@ const CodeBlockComponent = ({
   isDark = false,
   enablePreview = true
 }: CodeBlockProps) => {
+  const hash = murmurhash.v3(code + language + caption + isDark + enablePreview)
+
   const deferredCode = useDeferredValue(code)
   const deferredLanguage = useDeferredValue(language)
 
@@ -294,7 +298,7 @@ const CodeBlockComponent = ({
 
           {isAvailablePreview && (
             <ArrowsRightLeftIcon
-              id='preview'
+              id={`CodeBlock-ArrowsRightLeftIcon-${hash}`}
               css={clickableIconStyle({ isDark })}
               onClick={() => {
                 setShowPreview(!showPreview)
@@ -303,7 +307,7 @@ const CodeBlockComponent = ({
           )}
 
           <NumberedListIcon
-            id='line-number'
+            id={`CodeBlock-NumberedListIcon-${hash}`}
             css={clickableIconStyle({ isDark })}
             onClick={() => {
               setIsShowNumber(!isShowNumber)
@@ -311,7 +315,7 @@ const CodeBlockComponent = ({
           />
 
           <ClipboardDocumentIcon
-            id='copy'
+            id={`CodeBlock-ClipboardDocumentIcon-${hash}`}
             css={clickableIconStyle({ isDark })}
             onClick={() => {
               copy(deferredCode.trim())
@@ -322,19 +326,19 @@ const CodeBlockComponent = ({
             <>
               <Tooltip
                 style={tooltipInlineStyle({ isDark })}
-                anchorSelect='#preview'
+                anchorSelect={`#CodeBlock-ArrowsRightLeftIcon-${hash}`}
                 content={'Toggle Code Preview'}
                 place={'top-end'}
               />
               <Tooltip
                 style={tooltipInlineStyle({ isDark })}
-                anchorSelect='#line-number'
+                anchorSelect={`#CodeBlock-NumberedListIcon-${hash}`}
                 content='Toggle Line Numbers'
                 place={'top-end'}
               />
               <Tooltip
                 style={tooltipInlineStyle({ isDark })}
-                anchorSelect='#copy'
+                anchorSelect={`#CodeBlock-ClipboardDocumentIcon-${hash}`}
                 content={'Copy Code to Clipboard'}
                 place={'top-end'}
               />
