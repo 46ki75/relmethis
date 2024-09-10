@@ -26,8 +26,18 @@ export const WithHook: Story = {
   }
 }
 
-export const Small: Story = {
-  args: { mainKey: 'k', isDark: false, size: 20, bigKey: true }
+export const Inline: Story = {
+  args: { mainKey: 'k', isDark: false, bigKey: true, size: 20 },
+  render: (args) => {
+    const [isPressed] = useKeyPress(args.mainKey)
+
+    return (
+      <p>
+        Please try pressing the <Kbd {...args} isPressed={isPressed} /> key on
+        the keyboard.
+      </p>
+    )
+  }
 }
 
 export const Progress: Story = {
