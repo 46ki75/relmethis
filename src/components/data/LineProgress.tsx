@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css, keyframes } from '@emotion/react'
+import { isEqual } from 'lodash'
 import { rgba } from 'polished'
 import React from 'react'
 import { useInView } from 'react-intersection-observer'
@@ -98,6 +99,10 @@ const lineStyle = ({
 
 export interface LineProgressProps {
   /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
+  /**
    * **optional** default: 6
    *
    * Specify the thickness of the progress bar in pixels.
@@ -132,10 +137,11 @@ export interface LineProgressProps {
 // # --------------------------------------------------------------------------------
 
 const LineProgressComponent = ({
-  weight,
-  color,
+  isDark = false,
+  weight = 6,
+  color = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
   percent,
-  isLoading
+  isLoading = false
 }: LineProgressProps) => {
   const { ref, inView } = useInView({
     threshold: 0
@@ -146,12 +152,12 @@ const LineProgressComponent = ({
         role='progressbar'
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-valuenow={inView ? percent : 0}
+        aria-valuenow={percent}
         ref={ref}
         css={lineStyle({
           weight,
           color,
-          percent: inView ? percent : 0,
+          percent: inView && !isLoading ? percent : 0,
           isLoading
         })}
       />
@@ -162,20 +168,8 @@ const LineProgressComponent = ({
 
 // # --------------------------------------------------------------------------------
 //
-// default props
-//
-// # --------------------------------------------------------------------------------
-
-LineProgressComponent.defaultProps = {
-  weight: 6,
-  color: 'rgb(22, 22, 22)',
-  isLoading: false
-}
-
-// # --------------------------------------------------------------------------------
-//
 // memoize
 //
 // # --------------------------------------------------------------------------------
 
-export const LineProgress = React.memo(LineProgressComponent)
+export const LineProgress = React.memo(LineProgressComponent, isEqual)
