@@ -38,6 +38,14 @@ export const Underline: Story = {
   args: { text: 'Inline Text', isDark: false, underline: true }
 }
 
+export const InlineQuote: Story = {
+  args: { text: 'Inline Text', isDark: false, quote: true }
+}
+
+export const Cite: Story = {
+  args: { text: 'Inline Text', isDark: false, cite: true }
+}
+
 export const All: Story = {
   args: {
     text: 'Inline Text',

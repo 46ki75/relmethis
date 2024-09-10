@@ -12,7 +12,13 @@ import { Property } from 'csstype'
 //
 // # --------------------------------------------------------------------------------
 
-const inlineTextStyle = ({ color }: { color: string }) => css`
+const inlineTextStyle = ({
+  color,
+  isDark
+}: {
+  color: string
+  isDark: boolean
+}) => css`
   color: ${rgba(color, 0.7)};
 
   &::selection,
@@ -30,6 +36,11 @@ const inlineTextStyle = ({ color }: { color: string }) => css`
   del {
     color: ${rgba(color, 0.5)};
     text-decoration-color: ${rgba(color, 0.4)};
+  }
+
+  &::before,
+  &::after {
+    color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
   }
 `
 
@@ -74,32 +85,44 @@ export interface InlineTextProps {
   isDark?: boolean
 
   /**
-   * Make the text bold. Uses the `strong` tag for markup.
+   * Make the text bold using the `<strong></strong>` tag for markup.
    */
   bold?: boolean
 
   /**
-   * Make the text italic. Uses the `em` tag for markup.
+   * Make the text italic using the `<em></em>` tag for markup.
    */
   italic?: boolean
 
   /**
-   * Add a strikethrough to the text. Uses the `del` tag for markup.
+   * Add a strikethrough to the text using the `<del></del>` tag for markup.
    */
   strikethrough?: boolean
 
   /**
-   * Underline the text. Uses the `ins` tag for markup.
+   * Underline the text using the `<ins></ins>` tag for markup.
    */
   underline?: boolean
 
   /**
-   * テキストの色
+   * Render the text as a citation using the `<cite></cite>` tag.
+   * If set to `true`, options for bold, italic, strikethrough, and underline will be ignored.
+   */
+  cite?: boolean
+
+  /**
+   * Render the text as a quote using the `<q></q>` tag.
+   * If set to `true`, options for bold, italic, strikethrough, and underline will be ignored.
+   */
+  quote?: boolean
+
+  /**
+   * The color of the text
    */
   color?: Property.Color
 
   /**
-   * プリセットの色。`color` が設定されている場合はそちらが優先される。
+   * Preset color. This takes precedence if `color` is also set.
    */
   presetColorName?: ColorPresetName
 }
@@ -119,20 +142,11 @@ const InlineTextComponent = ({
   strikethrough = false,
   underline = false,
   color,
-  presetColorName
+  presetColorName,
+  cite = false,
+  quote = false
 }: InlineTextProps) => {
-  const content = useMemo(() => {
-    let result: ReactNode = <>{text}</>
-
-    if (italic) result = <em>{result}</em>
-    if (bold) result = <strong>{result}</strong>
-    if (underline) result = <ins>{result}</ins>
-    if (strikethrough) result = <del>{result}</del>
-
-    return result
-  }, [text, bold, italic, underline, strikethrough])
-
-  const c = useMemo(
+  const fgColor = useMemo(
     () =>
       color != null
         ? color
@@ -144,9 +158,40 @@ const InlineTextComponent = ({
     [color, isDark, presetColorName]
   )
 
+  if (cite)
+    return (
+      <cite
+        css={inlineTextStyle({ color: fgColor, isDark })}
+        style={{ marginInline: '0.5rem', paddingInline: '0.5rem', ...style }}
+      >
+        {text}
+      </cite>
+    )
+
+  if (quote)
+    return (
+      <q
+        css={inlineTextStyle({ color: fgColor, isDark })}
+        style={{ marginInline: '0.5rem', paddingInline: '0.5rem', ...style }}
+      >
+        {text}
+      </q>
+    )
+
+  const renderInnerContent = () => {
+    let result: ReactNode = <>{text}</>
+
+    if (italic) result = <em>{result}</em>
+    if (bold) result = <strong>{result}</strong>
+    if (underline) result = <ins>{result}</ins>
+    if (strikethrough) result = <del>{result}</del>
+
+    return result
+  }
+
   return (
-    <span css={inlineTextStyle({ color: c })} style={style}>
-      {content}
+    <span css={inlineTextStyle({ color: fgColor, isDark })} style={style}>
+      {renderInnerContent()}
     </span>
   )
 }
