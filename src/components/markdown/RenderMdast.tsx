@@ -49,17 +49,6 @@ const supStyle = ({ isDark }: { isDark: boolean }) => css`
   color: ${isDark ? '#6987b8' : '#4c6da2'};
 `
 
-const inlineStyle = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-
-  *::selection {
-    background-color: ${isDark
-      ? 'rgba(255, 255, 255, 0.8)'
-      : 'rgba(0, 0, 0, 0.8)'};
-    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-  }
-`
-
 // # --------------------------------------------------------------------------------
 //
 // utils
