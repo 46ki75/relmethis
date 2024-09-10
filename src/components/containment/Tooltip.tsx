@@ -42,6 +42,11 @@ const tooltipStyle = ({
 // # --------------------------------------------------------------------------------
 
 export interface TooltipProps {
+  /**
+   * The element that will trigger the tooltip when hovered over.
+   * This must be a DOM element and cannot be something
+   * like a `React.Fragment` that doesn't have its own DOM representation.
+   */
   children: ReactNode
   /**
    * The component to be displayed as a tooltip.
