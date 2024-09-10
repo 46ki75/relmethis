@@ -30,31 +30,32 @@ const lineStyle = ({
   color: string
   percent: number
   isLoading: boolean
-}) =>
-  isLoading
+}) => css`
+  position: relative;
+  width: 100%;
+  height: ${weight}px;
+  background-color: rgb(222, 222, 222);
+  border-radius: 2px;
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: ${weight}px;
+    border-radius: ${weight / 2}px;
+  }
+
+  ${isLoading
     ? css`
-        position: relative;
-        width: 100%;
-        height: ${weight}px;
-        background-color: rgb(222, 222, 222);
-        border-radius: 2px;
-
         &::after {
-          position: absolute;
-          content: '';
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: ${weight}px;
-          border-radius: ${weight / 2}px;
-
           background: linear-gradient(
             to right,
             ${color} 0% 50%,
             ${rgba(color, 0.25)} 50% 100%
           );
           background-size: 200% 100%;
-
           animation-name: ${loadingAnimation};
           animation-duration: 1200ms;
           animation-iteration-count: infinite;
@@ -62,26 +63,10 @@ const lineStyle = ({
         }
       `
     : css`
-        position: relative;
-        width: 100%;
-        height: ${weight}px;
-        background: rgb(222, 222, 222);
-        border-radius: 2px;
-
-        /* BUFFER */
         &::after {
-          position: absolute;
-          content: '';
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: ${weight}px;
           background: ${color};
-          border-radius: ${weight / 2}px;
           opacity: 0.25;
-
           transition: all 400ms;
-
           transform-origin: 0 0;
           transform: scaleX(${percent}%);
         }
@@ -102,7 +87,8 @@ const lineStyle = ({
           transform-origin: 0 0;
           transform: scaleX(${percent}%);
         }
-      `
+      `}
+`
 
 // # --------------------------------------------------------------------------------
 //
@@ -163,7 +149,7 @@ const LineProgressComponent = ({
         percent: inView ? percent : 0,
         isLoading
       })}
-    ></div>
+    />
   )
 }
 
