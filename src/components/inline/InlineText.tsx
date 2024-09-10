@@ -14,7 +14,6 @@ import { Property } from 'csstype'
 
 const inlineTextStyle = ({ color }: { color: string }) => css`
   color: ${rgba(color, 0.7)};
-  padding: 0.25rem 0.5rem;
 
   &::selection,
   *::selection {
