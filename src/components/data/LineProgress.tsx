@@ -104,7 +104,7 @@ const loadingStyle = ({
   background-size: 200% 100%;
   animation-name: ${loadingAnimation};
   animation-duration: 1200ms;
-  animation-iteration-count: ${isLoading ? 'infinite' : 0};
+  animation-iteration-count: infinite;
   animation-fill-mode: both;
 
   opacity: ${isLoading ? 1 : 0};
