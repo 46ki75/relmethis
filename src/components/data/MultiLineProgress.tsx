@@ -123,6 +123,10 @@ const indicatorStyle = (color: string) => css`
 
 export interface MultiLineProgressProps {
   /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
+  /**
    * **optional** default: 6
    *
    * Specify the thickness of the progress bar in pixels.
@@ -143,7 +147,7 @@ export interface MultiLineProgressProps {
    * Boolean value indicating whether it is in the process of loading.
    * During loading, the progress bar animates.
    */
-  isLoading: boolean
+  isLoading?: boolean
   /**
    * **required**
    *
@@ -170,7 +174,7 @@ export interface MultiLineProgressProps {
    *
    * The unit displayed after the numerical value of the indicator.
    */
-  unit: string
+  unit?: string
 }
 
 // # --------------------------------------------------------------------------------
@@ -180,9 +184,10 @@ export interface MultiLineProgressProps {
 // # --------------------------------------------------------------------------------
 
 const MultiLineProgressComponent = ({
-  weight,
-  color,
-  isLoading,
+  isDark = false,
+  weight = 6,
+  color = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
+  isLoading = false,
   data,
   unit
 }: MultiLineProgressProps) => {
@@ -231,18 +236,6 @@ const MultiLineProgressComponent = ({
       {!isLoading && <div css={indicatorContainerStyle}>{renderNumber}</div>}
     </>
   )
-}
-
-// # --------------------------------------------------------------------------------
-//
-// default props
-//
-// # --------------------------------------------------------------------------------
-
-MultiLineProgressComponent.defaultProps = {
-  weight: 6,
-  color: 'rgb(22, 22, 22)',
-  isLoading: false
 }
 
 // # --------------------------------------------------------------------------------
