@@ -21,7 +21,15 @@ const loadingAnimation = keyframes`
   }
 `
 
-const lineStyle = ({
+const lineStyle = ({ weight }: { weight: number }) => css`
+  position: relative;
+  width: 100%;
+  height: ${weight}px;
+  background-color: rgb(222, 222, 222);
+  border-radius: ${weight / 2}px;
+`
+
+const progressStyle = ({
   weight,
   color,
   percent,
@@ -32,63 +40,75 @@ const lineStyle = ({
   percent: number
   isLoading: boolean
 }) => css`
-  position: relative;
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
   width: 100%;
   height: ${weight}px;
-  background-color: rgb(222, 222, 222);
+  background: ${color};
   border-radius: ${weight / 2}px;
 
-  &::after {
-    position: absolute;
-    content: '';
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: ${weight}px;
-    border-radius: ${weight / 2}px;
-  }
+  transition: transform ${isLoading ? 400 : 1600}ms;
 
-  ${isLoading
-    ? css`
-        &::after {
-          background: linear-gradient(
-            to right,
-            ${color} 0% 50%,
-            ${rgba(color, 0.25)} 50% 100%
-          );
-          background-size: 200% 100%;
-          animation-name: ${loadingAnimation};
-          animation-duration: 1200ms;
-          animation-iteration-count: infinite;
-          animation-fill-mode: both;
-        }
-      `
-    : css`
-        &::after {
-          background: ${color};
-          opacity: 0.25;
-          transition: transform 400ms;
-          transform-origin: 0 0;
-          transform: scaleX(${percent}%);
-        }
+  transform-origin: 0 0;
+  transform: scaleX(${percent}%);
+`
 
-        /* PERCENT */
-        &::before {
-          position: absolute;
-          content: '';
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: ${weight}px;
-          background: ${color};
-          border-radius: ${weight / 2}px;
+const bufferStyle = ({
+  weight,
+  color,
+  percent,
+  isLoading
+}: {
+  weight: number
+  color: string
+  percent: number
+  isLoading: boolean
+}) => css`
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: ${weight}px;
+  border-radius: ${weight / 2}px;
+  background: ${color};
+  opacity: 0.25;
+  transition: transform ${isLoading ? 400 : 400}ms;
+  transform-origin: 0 0;
+  transform: scaleX(${percent}%);
+`
 
-          transition: transform 1600ms;
+const loadingStyle = ({
+  weight,
+  color,
+  isLoading
+}: {
+  weight: number
+  color: string
+  isLoading: boolean
+}) => css`
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: ${weight}px;
+  border-radius: ${weight / 2}px;
+  background: linear-gradient(
+    to right,
+    ${color} 0% 50%,
+    ${rgba(color, 0.25)} 50% 100%
+  );
+  background-size: 200% 100%;
+  animation-name: ${loadingAnimation};
+  animation-duration: 1200ms;
+  animation-iteration-count: ${isLoading ? 'infinite' : 0};
+  animation-fill-mode: both;
 
-          transform-origin: 0 0;
-          transform: scaleX(${percent}%);
-        }
-      `}
+  opacity: ${isLoading ? 1 : 0};
+  transition: opacity 800ms ease 400ms;
 `
 
 // # --------------------------------------------------------------------------------
@@ -154,13 +174,28 @@ const LineProgressComponent = ({
         aria-valuemax={100}
         aria-valuenow={percent}
         ref={ref}
-        css={lineStyle({
-          weight,
-          color,
-          percent: inView && !isLoading ? percent : 0,
-          isLoading
-        })}
-      />
+        css={lineStyle({ weight })}
+      >
+        <div
+          css={progressStyle({
+            color,
+            percent: inView && !isLoading ? percent : 0,
+            weight,
+            isLoading
+          })}
+        ></div>
+
+        <div
+          css={bufferStyle({
+            color,
+            percent: inView && !isLoading ? percent : 0,
+            weight,
+            isLoading
+          })}
+        ></div>
+
+        <div css={loadingStyle({ color, weight, isLoading })}></div>
+      </div>
       <progress max={100} value={percent} style={{ display: 'none' }} />
     </>
   )
