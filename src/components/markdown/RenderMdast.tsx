@@ -21,6 +21,7 @@ import { NumberedList } from '../typography/NumberedList'
 import { BulletedList } from '../typography/BulletedList'
 import { Blockquote } from '../typography/Blockquote'
 import { Paragraph } from '../typography/Paragraph'
+import { InlineText } from '../inline/InlineText'
 
 import type { CodeBlock as CodeBlockType } from '../code/CodeBlock'
 const CodeBlock = React.lazy(() =>
@@ -102,9 +103,7 @@ export const RenderMdast = ({
       // # --------------------------------------------------------------------------------
 
       case 'text': {
-        markdownComponent.push(
-          <span css={inlineStyle({ isDark })}>{node.value}</span>
-        )
+        markdownComponent.push(<InlineText text={node.value} isDark={isDark} />)
         break
       }
 
@@ -115,7 +114,7 @@ export const RenderMdast = ({
 
       case 'strong': {
         markdownComponent.push(
-          <strong css={inlineStyle({ isDark })}>
+          <strong>
             {
               RenderMdast({
                 mdastNodes: node.children,
@@ -131,7 +130,7 @@ export const RenderMdast = ({
 
       case 'emphasis': {
         markdownComponent.push(
-          <em css={inlineStyle({ isDark })}>
+          <em>
             {
               RenderMdast({
                 mdastNodes: node.children,
@@ -147,7 +146,7 @@ export const RenderMdast = ({
 
       case 'delete': {
         markdownComponent.push(
-          <del css={inlineStyle({ isDark })}>
+          <del>
             {
               RenderMdast({
                 mdastNodes: node.children,
