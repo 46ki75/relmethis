@@ -47,14 +47,12 @@ import {
 } from '@heroicons/react/24/outline'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 import { LanguageIcon } from '../icon/LanguageIcon'
-import { Markdown } from '../markdown/Markdown'
-import { Tooltip } from 'react-tooltip'
-import { createPortal } from 'react-dom'
-import { darken, lighten } from 'polished'
+
 import { useCopy } from '../../hooks/useCopy'
 
-import murmurhash from 'murmurhash'
 import { isEqual } from 'lodash'
+import { SimpleTooltip } from '../containment/SimpleTooltip'
+import { Markdown } from '../markdown/Markdown'
 
 // # --------------------------------------------------------------------------------
 //
@@ -157,25 +155,6 @@ const codeStyle = css`
 
 // # --------------------------------------------------------------------------------
 //
-// inline styles
-//
-// # --------------------------------------------------------------------------------
-
-const tooltipInlineStyle = ({
-  isDark
-}: {
-  isDark: boolean
-}): React.CSSProperties => ({
-  background: isDark
-    ? lighten(0.4, 'rgb(128,128,128)')
-    : darken(0.3, 'rgb(128,128,128)'),
-  color: isDark
-    ? darken(0.4, 'rgb(128,128,128)')
-    : lighten(0.3, 'rgb(128,128,128)')
-})
-
-// # --------------------------------------------------------------------------------
-//
 // Props Interface
 //
 // # --------------------------------------------------------------------------------
@@ -217,12 +196,6 @@ const CodeBlockComponent = ({
   isDark = false,
   enablePreview = true
 }: CodeBlockProps) => {
-  const hash = React.useMemo(() => {
-    return murmurhash.v3(
-      ['CodeBlock', code, language, caption, isDark].join('-')
-    )
-  }, [code, language, caption, isDark])
-
   const deferredCode = useDeferredValue(code)
   const deferredLanguage = useDeferredValue(language)
 
@@ -302,54 +275,47 @@ const CodeBlockComponent = ({
           {<span css={copiedtextStyle({ isShow: isCopied })}>copied!</span>}
 
           {isAvailablePreview && (
-            <ArrowsRightLeftIcon
-              id={`ArrowsRightLeftIcon-${hash}`}
+            <SimpleTooltip
+              content={'Toggle Code Preview'}
+              isDark={isDark}
+              place='top'
+              margin={16}
+            >
+              <ArrowsRightLeftIcon
+                css={clickableIconStyle({ isDark })}
+                onClick={() => {
+                  setShowPreview(!showPreview)
+                }}
+              />
+            </SimpleTooltip>
+          )}
+          <SimpleTooltip
+            content={'Toggle Line Numbers'}
+            isDark={isDark}
+            place='top'
+            margin={16}
+          >
+            <NumberedListIcon
               css={clickableIconStyle({ isDark })}
               onClick={() => {
-                setShowPreview(!showPreview)
+                setIsShowNumber(!isShowNumber)
               }}
             />
-          )}
+          </SimpleTooltip>
 
-          <NumberedListIcon
-            id={`NumberedListIcon-${hash}`}
-            css={clickableIconStyle({ isDark })}
-            onClick={() => {
-              setIsShowNumber(!isShowNumber)
-            }}
-          />
-
-          <ClipboardDocumentIcon
-            id={`ClipboardDocumentIcon-${hash}`}
-            css={clickableIconStyle({ isDark })}
-            onClick={() => {
-              copy(deferredCode.trim())
-            }}
-          />
-
-          {createPortal(
-            <>
-              <Tooltip
-                style={tooltipInlineStyle({ isDark })}
-                anchorSelect={`#ArrowsRightLeftIcon-${hash}`}
-                content={'Toggle Code Preview'}
-                place={'top-end'}
-              />
-              <Tooltip
-                style={tooltipInlineStyle({ isDark })}
-                anchorSelect={`#NumberedListIcon-${hash}`}
-                content='Toggle Line Numbers'
-                place={'top-end'}
-              />
-              <Tooltip
-                style={tooltipInlineStyle({ isDark })}
-                anchorSelect={`#ClipboardDocumentIcon-${hash}`}
-                content={'Copy Code to Clipboard'}
-                place={'top-end'}
-              />
-            </>,
-            document.body
-          )}
+          <SimpleTooltip
+            content={'Copy Code to Clipboard'}
+            isDark={isDark}
+            place='top'
+            margin={16}
+          >
+            <ClipboardDocumentIcon
+              css={clickableIconStyle({ isDark })}
+              onClick={() => {
+                copy(deferredCode.trim())
+              }}
+            />
+          </SimpleTooltip>
         </div>
       </div>
 
