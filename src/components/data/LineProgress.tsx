@@ -35,7 +35,7 @@ const lineStyle = ({
   width: 100%;
   height: ${weight}px;
   background-color: rgb(222, 222, 222);
-  border-radius: 2px;
+  border-radius: ${weight / 2}px;
 
   &::after {
     position: absolute;
@@ -66,7 +66,7 @@ const lineStyle = ({
         &::after {
           background: ${color};
           opacity: 0.25;
-          transition: all 400ms;
+          transition: transform 400ms;
           transform-origin: 0 0;
           transform: scaleX(${percent}%);
         }
@@ -82,7 +82,7 @@ const lineStyle = ({
           background: ${color};
           border-radius: ${weight / 2}px;
 
-          transition: all 1600ms;
+          transition: transform 1600ms;
 
           transform-origin: 0 0;
           transform: scaleX(${percent}%);
@@ -141,15 +141,22 @@ const LineProgressComponent = ({
     threshold: 0
   })
   return (
-    <div
-      ref={ref}
-      css={lineStyle({
-        weight,
-        color,
-        percent: inView ? percent : 0,
-        isLoading
-      })}
-    />
+    <>
+      <div
+        role='progressbar'
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={inView ? percent : 0}
+        ref={ref}
+        css={lineStyle({
+          weight,
+          color,
+          percent: inView ? percent : 0,
+          isLoading
+        })}
+      />
+      <progress max={100} value={percent} style={{ display: 'none' }} />
+    </>
   )
 }
 
