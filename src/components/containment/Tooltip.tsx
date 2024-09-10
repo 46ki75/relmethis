@@ -30,7 +30,7 @@ const tooltipStyle = ({
   max-height: calc(100vh - ${margin * 2}px);
   position: fixed;
   opacity: ${visible ? 1 : 0};
-  transition: opacity ${animationDuration}ms;
+  transition: opacity ${animationDuration}ms ease 50ms;
   user-select: ${visible ? 'all' : 'none'};
   pointer-events: ${visible ? 'all' : 'none'};
 `
@@ -84,8 +84,8 @@ const TooltipComponent = ({
   animationDuration = 100
 }: TooltipProps) => {
   const [visible, setVisible] = useState(false)
-
   const ref = useRef<HTMLElement>(null)
+  const tooltipRef = useRef<HTMLDivElement>(null)
 
   const [position, setPosition] = useState({
     top: 0,
@@ -96,13 +96,45 @@ const TooltipComponent = ({
     right: 0
   })
 
+  const [adjustedLeftPosition, setAdjustedLeftPosition] = useState(0)
+
   useLayoutEffect(() => {
-    if (ref.current) {
+    if (ref.current && tooltipRef.current) {
       const { top, left, bottom, height, width, right } =
         ref.current.getBoundingClientRect()
       setPosition({ top, left, bottom, height, width, right })
+
+      // Get the tooltip's width
+      const tooltipWidth = tooltipRef.current.offsetWidth
+
+      // Width of the viewable area (excluding the scrollbar)
+      const clientWidth = document.documentElement.clientWidth
+
+      // 1. Position the tooltip at the center of the hovered component
+      const tooltipLeftPositionBasedOnHoverElement =
+        position.left + position.width / 2 - tooltipWidth / 2
+
+      // 2. Handle the case where the tooltip overflows to the left
+      const overflowLeft = tooltipLeftPositionBasedOnHoverElement < margin
+
+      // 3. Handle the case where the tooltip overflows to the right (considering the scrollbar)
+      const overflowRight =
+        tooltipLeftPositionBasedOnHoverElement + tooltipWidth >
+        clientWidth - margin
+
+      // Determine the final left position of the tooltip
+      const finalLeftPosition = overflowRight
+        ? // If it overflows to the right, align it with a margin from the right edge
+          clientWidth - tooltipWidth - margin
+        : overflowLeft
+          ? // If it overflows to the left, apply the margin to the left edge
+            margin
+          : // Otherwise, center it
+            tooltipLeftPositionBasedOnHoverElement
+
+      setAdjustedLeftPosition(finalLeftPosition)
     }
-  }, [children, visible])
+  }, [children, margin, position.left, position.width, visible])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -124,20 +156,6 @@ const TooltipComponent = ({
       })
     : children
 
-  // Calculate the left position for the Tooltip
-  const tooltipLeftPositionBasedOnHoverElement =
-    position.left - position.width / 2
-
-  const adjustedLeftPosition =
-    tooltipLeftPositionBasedOnHoverElement < 0
-      ? 0
-      : tooltipLeftPositionBasedOnHoverElement + margin
-
-  const adjustedRightPosition =
-    tooltipLeftPositionBasedOnHoverElement + position.width > window.innerWidth
-      ? window.innerWidth - position.width
-      : adjustedLeftPosition + margin // Adjust to fit within the screen if it overflows on the right
-
   // Calculate the position for the bottom placement
   const tooltipTopPositionForBottomPlacement =
     position.top + position.height + margin
@@ -155,22 +173,19 @@ const TooltipComponent = ({
   // Determine the final top position for the tooltip
   let tooltipFinalTopPosition
   if (place === 'bottom') {
-    // If it doesn't fit at the bottom, fallback to the top
     tooltipFinalTopPosition = canTooltipFitInBottomPlacement
       ? tooltipTopPositionForBottomPlacement
       : tooltipTopPositionForTopPlacement
   } else {
-    // If it doesn't fit at the top, fallback to the bottom
     tooltipFinalTopPosition = canTooltipFitInTopPlacement
       ? tooltipTopPositionForTopPlacement
       : tooltipTopPositionForBottomPlacement
   }
 
-  // Handle edge cases where the fallback still doesn't fit within the screen
   tooltipFinalTopPosition =
-    tooltipFinalTopPosition < 0 ? margin : tooltipFinalTopPosition
+    tooltipFinalTopPosition < margin ? margin : tooltipFinalTopPosition
   tooltipFinalTopPosition =
-    tooltipFinalTopPosition + position.height > window.innerHeight
+    tooltipFinalTopPosition + position.height > window.innerHeight - margin
       ? window.innerHeight - position.height - margin
       : tooltipFinalTopPosition
 
@@ -179,11 +194,12 @@ const TooltipComponent = ({
       {clonedChildren}
       {createPortal(
         <div
+          ref={tooltipRef}
           css={tooltipStyle({ visible, margin, animationDuration })}
           style={{
             position: 'fixed',
             top: tooltipFinalTopPosition,
-            left: adjustedRightPosition
+            left: adjustedLeftPosition
           }}
         >
           {tooltipComponent}
