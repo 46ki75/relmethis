@@ -3,6 +3,7 @@
 import React, { ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { darken, rgba } from 'polished'
+import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 
 // # --------------------------------------------------------------------------------
 //
@@ -96,6 +97,7 @@ export interface ItemProps {
   progress?: number
   stackCount?: number
   focus?: boolean
+  isLoading?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -110,19 +112,28 @@ const ItemComponent = ({
   cooldown = 0,
   progress = 0,
   stackCount = 0,
-  focus = false
+  focus = false,
+  isLoading = false
 }: ItemProps) => {
   return (
     <>
       <div css={wrapperStyle({ isDark, cooldown, focus })}>
-        {children}
-        {progress > 0 && (
-          <div css={progressContainerStyle}>
-            <div css={progressStyle({ progress })}></div>
-          </div>
-        )}
+        {isLoading ? (
+          <>
+            <DotLoadingIcon size={32} color='rgb(128,128,128)' />
+          </>
+        ) : (
+          <>
+            {children}
+            {progress > 0 && (
+              <div css={progressContainerStyle}>
+                <div css={progressStyle({ progress })}></div>
+              </div>
+            )}
 
-        {stackCount > 0 && <div css={stackCountStyle}>{stackCount}</div>}
+            {stackCount > 0 && <div css={stackCountStyle}>{stackCount}</div>}
+          </>
+        )}
       </div>
     </>
   )

@@ -17,7 +17,8 @@ export const Primary: Story = {
     cooldown: 10,
     progress: 50,
     stackCount: 64,
-    focus: false
+    focus: false,
+    isLoading: false
   },
   render: (args) => {
     return (
