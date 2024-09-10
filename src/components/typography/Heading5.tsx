@@ -3,6 +3,7 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import { FragmentIdentifier } from './FragmentIdentifier'
+import { useScrollToHash } from '../../hooks/useScrollToHash'
 
 // # --------------------------------------------------------------------------------
 //
@@ -56,6 +57,8 @@ const Heading5Component = ({
   identifier = text,
   isDark = false
 }: Heading5Props) => {
+  useScrollToHash(identifier, 500)
+
   return (
     <section id={identifier}>
       <h5 css={style({ isDark })}>{text}</h5>

@@ -3,6 +3,7 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import { FragmentIdentifier } from './FragmentIdentifier'
+import { useScrollToHash } from '../../hooks/useScrollToHash'
 
 // # --------------------------------------------------------------------------------
 //
@@ -63,6 +64,8 @@ export const Heading3Component = ({
   identifier = text,
   isDark = false
 }: Heading3Props) => {
+  useScrollToHash(identifier, 300)
+
   return (
     <section id={identifier}>
       <h3 css={headingStyle({ isDark })}>{text}</h3>

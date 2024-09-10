@@ -4,6 +4,7 @@ import { css } from '@emotion/react'
 import React from 'react'
 import { useInView } from 'react-intersection-observer'
 import { FragmentIdentifier } from './FragmentIdentifier'
+import { useScrollToHash } from '../../hooks/useScrollToHash'
 
 // # --------------------------------------------------------------------------------
 //
@@ -137,6 +138,8 @@ const Heading2Component = ({
   isDark = false
 }: Heading2Props) => {
   const { ref, inView } = useInView()
+
+  useScrollToHash(identifier, 200)
 
   return (
     <section id={identifier}>
