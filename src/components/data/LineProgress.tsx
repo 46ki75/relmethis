@@ -27,6 +27,7 @@ const lineStyle = ({ weight }: { weight: number }) => css`
   height: ${weight}px;
   background-color: rgb(222, 222, 222);
   border-radius: ${weight / 2}px;
+  overflow: hidden;
 `
 
 const progressStyle = ({
@@ -47,7 +48,6 @@ const progressStyle = ({
   width: 100%;
   height: ${weight}px;
   background: ${color};
-  border-radius: ${weight / 2}px;
 
   transition: transform ${isLoading ? 400 : 1600}ms;
 
@@ -72,7 +72,6 @@ const bufferStyle = ({
   left: 0;
   width: 100%;
   height: ${weight}px;
-  border-radius: ${weight / 2}px;
   background: ${color};
   opacity: 0.25;
   transition: transform ${isLoading ? 400 : 400}ms;
@@ -95,7 +94,6 @@ const loadingStyle = ({
   left: 0;
   width: 100%;
   height: ${weight}px;
-  border-radius: ${weight / 2}px;
   background: linear-gradient(
     to right,
     ${color} 0% 50%,
