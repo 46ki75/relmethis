@@ -52,12 +52,12 @@ const style = ({
   overflow: hidden;
 
   font-size: ${hasSubKey
-    ? size / (bigKey ? 3 : 3.5)
-    : size / (bigKey ? 2 : 2.5)}px;
+    ? size / (bigKey ? 2.5 : 3.5)
+    : size / (bigKey ? 1.5 : 2.5)}px;
   height: ${size}px;
   aspect-ratio: ${widthRatio} / 1;
 
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
@@ -90,7 +90,7 @@ const style = ({
 //
 // # --------------------------------------------------------------------------------
 
-export interface KeyProps {
+export interface KbdProps {
   /**
    * The main key to display
    */
@@ -139,7 +139,7 @@ export interface KeyProps {
 //
 // # --------------------------------------------------------------------------------
 
-const KeyComponent = ({
+const KbdComponent = ({
   mainKey,
   subKey,
   isPressed = false,
@@ -150,7 +150,7 @@ const KeyComponent = ({
   bigKey = false,
   progress,
   isDark = false
-}: KeyProps) => {
+}: KbdProps) => {
   const icon = (): { p?: ReactNode; s?: ReactNode } => {
     switch (mainKey) {
       case 'Shift':
@@ -163,7 +163,7 @@ const KeyComponent = ({
   }
 
   return (
-    <div
+    <kbd
       css={style({
         isDark,
         hasSubKey: subKey != null,
@@ -183,7 +183,7 @@ const KeyComponent = ({
         {toUpperCase ? mainKey.toUpperCase() : mainKey}
         {icon().s}
       </span>
-    </div>
+    </kbd>
   )
 }
 
@@ -193,7 +193,7 @@ const KeyComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Key = React.memo(KeyComponent, isEqual)
+export const Kbd = React.memo(KbdComponent, isEqual)
 
 // # --------------------------------------------------------------------------------
 //

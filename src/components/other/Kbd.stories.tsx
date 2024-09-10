@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Key } from './Key'
+import { Kbd } from './Kbd'
 import { useKeyPress } from 'react-use'
 
-const meta: Meta<typeof Key> = {
-  title: 'Components/Other/Key',
-  component: Key,
+const meta: Meta<typeof Kbd> = {
+  title: 'Components/Other/Kbd',
+  component: Kbd,
   tags: ['autodocs']
 }
 
@@ -20,14 +20,14 @@ export const WithHook: Story = {
       <>
         <p>Please try pressing the `k` key.</p>
 
-        <Key {...args} isPressed={isPressed} />
+        <Kbd {...args} isPressed={isPressed} />
       </>
     )
   }
 }
 
-export const LongPress: Story = {
-  args: { mainKey: 'k', isDark: false, progress: 50 }
+export const Small: Story = {
+  args: { mainKey: 'k', isDark: false, size: 20, bigKey: true }
 }
 
 export const Progress: Story = {

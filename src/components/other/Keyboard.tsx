@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { css } from '@emotion/react'
-import { Key, KeyboardKey } from './Key'
+import { Kbd, KeyboardKey } from './Kbd'
 
 // # --------------------------------------------------------------------------------
 //
@@ -43,7 +43,7 @@ const KeyboardComponent = ({ text, isDark = false }: KeyboardProps) => {
       {text}
       <div css={style}>
         {keys.map((key) => (
-          <Key key={key} mainKey={key} isDark={isDark} />
+          <Kbd key={key} mainKey={key} isDark={isDark} />
         ))}
       </div>
     </>
