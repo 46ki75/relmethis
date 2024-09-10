@@ -74,6 +74,7 @@ const wrapperStyle = ({ isDark }: { isDark: boolean }) => css`
 `
 
 const headerStyle = css`
+  position: sticky;
   box-sizing: border-box;
   padding: 0.75rem;
   width: 100%;
@@ -278,8 +279,8 @@ const CodeBlockComponent = ({
             <SimpleTooltip
               content={'Toggle Code Preview'}
               isDark={isDark}
-              place='top'
-              margin={16}
+              place='bottom'
+              margin={24}
             >
               <ArrowsRightLeftIcon
                 css={clickableIconStyle({ isDark })}
@@ -292,8 +293,8 @@ const CodeBlockComponent = ({
           <SimpleTooltip
             content={'Toggle Line Numbers'}
             isDark={isDark}
-            place='top'
-            margin={16}
+            place='bottom'
+            margin={24}
           >
             <NumberedListIcon
               css={clickableIconStyle({ isDark })}
@@ -306,8 +307,8 @@ const CodeBlockComponent = ({
           <SimpleTooltip
             content={'Copy Code to Clipboard'}
             isDark={isDark}
-            place='top'
-            margin={16}
+            place='bottom'
+            margin={24}
           >
             <ClipboardDocumentIcon
               css={clickableIconStyle({ isDark })}
