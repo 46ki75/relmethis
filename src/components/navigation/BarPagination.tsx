@@ -3,6 +3,8 @@
 import React from 'react'
 import { css } from '@emotion/react'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -116,4 +118,4 @@ const BarPaginationComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const BarPagination = React.memo(BarPaginationComponent)
+export const BarPagination = React.memo(BarPaginationComponent, isEqual)

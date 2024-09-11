@@ -4,6 +4,8 @@ import React, { ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { useInView } from 'react-intersection-observer'
 
+import isEqual from 'react-fast-compare'
+
 const bulletedListIcon1 = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12px" height="12px">
     <path
@@ -121,4 +123,4 @@ const BulletedListComponent: React.FC<BulletedListProps> = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const BulletedList = React.memo(BulletedListComponent)
+export const BulletedList = React.memo(BulletedListComponent, isEqual)

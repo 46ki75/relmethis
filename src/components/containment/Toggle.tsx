@@ -5,6 +5,8 @@ import { css } from '@emotion/react'
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import { BlockFallback } from '../fallback/BlockFallback'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -102,4 +104,4 @@ const ToggleComponent = ({ children, summary }: ToggleProps) => {
 //
 // # --------------------------------------------------------------------------------
 
-export const Toggle = React.memo(ToggleComponent)
+export const Toggle = React.memo(ToggleComponent, isEqual)

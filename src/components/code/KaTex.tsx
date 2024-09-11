@@ -6,6 +6,7 @@ import { css } from '@emotion/react'
 import katex from 'katex'
 import 'katex/dist/katex.min.css'
 import { rgba } from 'polished'
+import isEqual from 'react-fast-compare'
 
 // # --------------------------------------------------------------------------------
 //
@@ -118,4 +119,4 @@ const KaTexComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const KaTex = React.memo(KaTexComponent)
+export const KaTex = React.memo(KaTexComponent, isEqual)

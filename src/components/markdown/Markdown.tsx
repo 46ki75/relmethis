@@ -14,6 +14,8 @@ const Mdast = React.lazy(() =>
   }))
 ) as React.ComponentType<React.ComponentProps<typeof MdastType>>
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -73,4 +75,4 @@ const MarkdownComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Markdown = React.memo(MarkdownComponent)
+export const Markdown = React.memo(MarkdownComponent, isEqual)

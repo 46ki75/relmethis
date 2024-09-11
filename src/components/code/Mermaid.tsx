@@ -7,6 +7,8 @@ import mermaid from 'mermaid'
 import { ImageWithModal } from '../image/ImageWithModal'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -121,4 +123,4 @@ const MermaidComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Mermaid = React.memo(MermaidComponent)
+export const Mermaid = React.memo(MermaidComponent, isEqual)

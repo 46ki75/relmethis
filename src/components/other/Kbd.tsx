@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react'
 import { css } from '@emotion/react'
 
 import { rgba } from 'polished'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 import {
   ArrowsRightLeftIcon,
   ArrowTurnRightUpIcon

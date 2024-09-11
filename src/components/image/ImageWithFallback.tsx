@@ -5,6 +5,8 @@ import React, { useState } from 'react'
 import { RectangleWave } from '../fallback/RectangleWave'
 import { SquareLoadingIcon } from '../icon/SquareLoadingIcon'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -134,4 +136,4 @@ const ImageWithFallbackComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const ImageWithFallback = React.memo(ImageWithFallbackComponent)
+export const ImageWithFallback = React.memo(ImageWithFallbackComponent, isEqual)

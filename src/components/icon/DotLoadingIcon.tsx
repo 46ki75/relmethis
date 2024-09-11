@@ -3,6 +3,8 @@
 import { css, keyframes } from '@emotion/react'
 import React from 'react'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -109,4 +111,4 @@ DotLoadingIconComponent.defaultProps = {
 //
 // # --------------------------------------------------------------------------------
 
-export const DotLoadingIcon = React.memo(DotLoadingIconComponent)
+export const DotLoadingIcon = React.memo(DotLoadingIconComponent, isEqual)

@@ -5,6 +5,8 @@ import React, { Suspense } from 'react'
 import { type LanguageIconSvgProps } from './language/Props'
 import { CommandLineIcon } from '@heroicons/react/24/outline'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -168,4 +170,4 @@ const LanguageIconComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const LanguageIcon = React.memo(LanguageIconComponent)
+export const LanguageIcon = React.memo(LanguageIconComponent, isEqual)

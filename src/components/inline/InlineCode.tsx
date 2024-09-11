@@ -5,6 +5,8 @@ import { type Property } from 'csstype'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { getLuminance } from 'polished'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // props
@@ -57,4 +59,4 @@ const InlineCodeComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const InlineCode = React.memo(InlineCodeComponent)
+export const InlineCode = React.memo(InlineCodeComponent, isEqual)

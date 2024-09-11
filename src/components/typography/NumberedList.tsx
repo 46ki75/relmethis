@@ -4,6 +4,8 @@ import React, { ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { useInView } from 'react-intersection-observer'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -93,4 +95,4 @@ const NumberedListComponent: React.FC<NumberedListProps> = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const NumberedList = React.memo(NumberedListComponent)
+export const NumberedList = React.memo(NumberedListComponent, isEqual)

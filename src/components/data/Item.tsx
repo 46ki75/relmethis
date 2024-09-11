@@ -5,6 +5,8 @@ import { css } from '@emotion/react'
 import { darken, rgba } from 'polished'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -145,4 +147,4 @@ const ItemComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Item = React.memo(ItemComponent)
+export const Item = React.memo(ItemComponent, isEqual)

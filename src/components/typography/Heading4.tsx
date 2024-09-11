@@ -5,6 +5,8 @@ import { css } from '@emotion/react'
 import { FragmentIdentifier } from './FragmentIdentifier'
 import { useScrollToHash } from '../../hooks/useScrollToHash'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -73,4 +75,4 @@ const Heading4Component = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Heading4 = React.memo(Heading4Component)
+export const Heading4 = React.memo(Heading4Component, isEqual)

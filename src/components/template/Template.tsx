@@ -3,6 +3,8 @@
 import React from 'react'
 import { css } from '@emotion/react'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -37,4 +39,4 @@ const TemplateComponent = ({ text }: TemplateProps) => {
 //
 // # --------------------------------------------------------------------------------
 
-export const Template = React.memo(TemplateComponent)
+export const Template = React.memo(TemplateComponent, isEqual)

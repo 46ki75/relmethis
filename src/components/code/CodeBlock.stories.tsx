@@ -75,7 +75,7 @@ import {
   ShieldCheckIcon,
   XCircleIcon
 } from '@heroicons/react/24/outline'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 import { darken, lighten, rgba } from 'polished'
 import React, { useMemo } from 'react'
 import { useInView } from 'react-intersection-observer'

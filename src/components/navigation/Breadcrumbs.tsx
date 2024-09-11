@@ -11,7 +11,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { useInView } from 'react-intersection-observer'
 import { rgba } from 'polished'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 
 import type { Property } from 'csstype'
 

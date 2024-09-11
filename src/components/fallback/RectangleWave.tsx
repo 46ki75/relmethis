@@ -3,6 +3,8 @@
 import { css, keyframes } from '@emotion/react'
 import React from 'react'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -93,4 +95,4 @@ RectangleWaveComponent.defaultProps = {
  * </div>
  * ```
  */
-export const RectangleWave = React.memo(RectangleWaveComponent)
+export const RectangleWave = React.memo(RectangleWaveComponent, isEqual)

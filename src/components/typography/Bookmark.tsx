@@ -6,6 +6,8 @@ import { css, keyframes } from '@emotion/react'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 import { LinkIcon } from '@heroicons/react/24/outline'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -170,4 +172,4 @@ const BookmarkComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Bookmark = React.memo(BookmarkComponent)
+export const Bookmark = React.memo(BookmarkComponent, isEqual)

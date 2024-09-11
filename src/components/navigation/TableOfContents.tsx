@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import { rgba } from 'polished'
 import { BarsArrowDownIcon } from '@heroicons/react/16/solid'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 
 // # --------------------------------------------------------------------------------
 //

@@ -9,7 +9,7 @@ import React, {
 } from 'react'
 import { css } from '@emotion/react'
 import { createPortal } from 'react-dom'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 
 // # --------------------------------------------------------------------------------
 //

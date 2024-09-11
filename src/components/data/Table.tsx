@@ -3,7 +3,7 @@
 import React, { ReactNode, useDeferredValue } from 'react'
 import { css, keyframes } from '@emotion/react'
 import { darken, lighten } from 'polished'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 
 // # --------------------------------------------------------------------------------
 //

@@ -6,6 +6,8 @@ import React from 'react'
 import { createPortal } from 'react-dom'
 import { darken, lighten } from 'polished'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -184,4 +186,4 @@ PagetopComponent.defaultProps = {
 //
 // # --------------------------------------------------------------------------------
 
-export const Pagetop = React.memo(PagetopComponent)
+export const Pagetop = React.memo(PagetopComponent, isEqual)

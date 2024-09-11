@@ -4,6 +4,8 @@ import React from 'react'
 import { css } from '@emotion/react'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -49,4 +51,4 @@ const BlockFallbackComponent = ({ style }: BlockFallbackProps) => {
 //
 // # --------------------------------------------------------------------------------
 
-export const BlockFallback = React.memo(BlockFallbackComponent)
+export const BlockFallback = React.memo(BlockFallbackComponent, isEqual)

@@ -5,10 +5,11 @@ import { css } from '@emotion/react'
 
 // icons
 import { HashtagIcon, LinkIcon } from '@heroicons/react/24/outline'
+import { SimpleTooltip } from '../containment/SimpleTooltip'
 
 import { useCopy } from '../../hooks/useCopy'
 
-import { SimpleTooltip } from '../containment/SimpleTooltip'
+import isEqual from 'react-fast-compare'
 
 // # --------------------------------------------------------------------------------
 //
@@ -118,4 +119,7 @@ const FragmentIdentifierComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const FragmentIdentifier = React.memo(FragmentIdentifierComponent)
+export const FragmentIdentifier = React.memo(
+  FragmentIdentifierComponent,
+  isEqual
+)

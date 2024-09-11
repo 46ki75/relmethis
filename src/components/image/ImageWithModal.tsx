@@ -7,6 +7,8 @@ import { SquareLoadingIcon } from '../icon/SquareLoadingIcon'
 import { createPortal } from 'react-dom'
 import { useKey } from 'react-use'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -218,4 +220,4 @@ const ImageWithModalComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const ImageWithModal = React.memo(ImageWithModalComponent)
+export const ImageWithModal = React.memo(ImageWithModalComponent, isEqual)

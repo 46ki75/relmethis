@@ -3,7 +3,7 @@
 import React, { ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { useInView } from 'react-intersection-observer'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 
 // # --------------------------------------------------------------------------------
 //

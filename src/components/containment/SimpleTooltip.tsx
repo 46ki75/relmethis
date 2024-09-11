@@ -3,7 +3,7 @@
 import React, { ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { Tooltip } from './Tooltip'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 
 // # --------------------------------------------------------------------------------
 //

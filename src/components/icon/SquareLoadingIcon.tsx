@@ -3,6 +3,8 @@
 import { css, keyframes } from '@emotion/react'
 import React from 'react'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // Styles
@@ -106,4 +108,4 @@ SquareLoadingIconComponent.defaultProps = {
 //
 // # --------------------------------------------------------------------------------
 
-export const SquareLoadingIcon = React.memo(SquareLoadingIconComponent)
+export const SquareLoadingIcon = React.memo(SquareLoadingIconComponent, isEqual)

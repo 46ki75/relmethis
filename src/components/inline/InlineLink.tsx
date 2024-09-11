@@ -8,6 +8,8 @@ import {
   ChevronRightIcon
 } from '@heroicons/react/24/outline'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -129,4 +131,4 @@ const InlineLinkComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const InlineLink = React.memo(InlineLinkComponent)
+export const InlineLink = React.memo(InlineLinkComponent, isEqual)

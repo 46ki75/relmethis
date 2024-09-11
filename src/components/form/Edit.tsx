@@ -13,7 +13,7 @@ import {
   XMarkIcon
 } from '@heroicons/react/16/solid'
 import { rgba } from 'polished'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 
 // # --------------------------------------------------------------------------------
 //

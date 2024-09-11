@@ -8,7 +8,7 @@ import {
   ChevronRightIcon
 } from '@heroicons/react/20/solid'
 import { css } from '@emotion/react'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 
 // # --------------------------------------------------------------------------------
 //

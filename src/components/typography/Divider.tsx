@@ -4,6 +4,8 @@ import { css } from '@emotion/react'
 import React from 'react'
 import { useInView } from 'react-intersection-observer'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // Styles
@@ -114,4 +116,4 @@ const DividerComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Divider = React.memo(DividerComponent)
+export const Divider = React.memo(DividerComponent, isEqual)

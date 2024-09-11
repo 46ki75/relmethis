@@ -7,6 +7,8 @@ import { createPortal } from 'react-dom'
 import { darken } from 'polished'
 import { RectangleWave } from './RectangleWave'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -61,4 +63,7 @@ const FullscreenFallbackComponent = ({ style }: FullscreenFallbackProps) => {
 //
 // # --------------------------------------------------------------------------------
 
-export const FullscreenFallback = React.memo(FullscreenFallbackComponent)
+export const FullscreenFallback = React.memo(
+  FullscreenFallbackComponent,
+  isEqual
+)

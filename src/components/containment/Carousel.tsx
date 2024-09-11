@@ -5,6 +5,8 @@ import { useCarousel, UseCarouselProps } from './useCarousel'
 import { BarPagination } from '../navigation/BarPagination'
 import { DotPagination } from '../navigation/DotPagination'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // props
@@ -79,4 +81,4 @@ const CarouselComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Carousel = React.memo(CarouselComponent)
+export const Carousel = React.memo(CarouselComponent, isEqual)

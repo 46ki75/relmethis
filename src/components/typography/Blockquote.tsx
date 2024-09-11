@@ -6,6 +6,8 @@ import { LinkIcon } from '@heroicons/react/16/solid'
 import { rgba } from 'polished'
 import { useInView } from 'react-intersection-observer'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -122,4 +124,4 @@ const BlockquoteComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Blockquote = React.memo(BlockquoteComponent)
+export const Blockquote = React.memo(BlockquoteComponent, isEqual)

@@ -4,6 +4,8 @@ import React from 'react'
 import { css } from '@emotion/react'
 import { Kbd, KeyboardKey } from './Kbd'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -56,4 +58,4 @@ const KeyboardComponent = ({ text, isDark = false }: KeyboardProps) => {
 //
 // # --------------------------------------------------------------------------------
 
-export const Keyboard = React.memo(KeyboardComponent)
+export const Keyboard = React.memo(KeyboardComponent, isEqual)

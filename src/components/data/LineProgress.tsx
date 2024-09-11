@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css, keyframes } from '@emotion/react'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 import { rgba } from 'polished'
 import React from 'react'
 import { useInView } from 'react-intersection-observer'

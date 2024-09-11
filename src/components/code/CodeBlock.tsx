@@ -50,9 +50,10 @@ import { LanguageIcon } from '../icon/LanguageIcon'
 
 import { useCopy } from '../../hooks/useCopy'
 
-import { isEqual } from 'lodash'
 import { SimpleTooltip } from '../containment/SimpleTooltip'
 import { Markdown } from '../markdown/Markdown'
+
+import isEqual from 'react-fast-compare'
 
 // # --------------------------------------------------------------------------------
 //

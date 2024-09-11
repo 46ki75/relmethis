@@ -6,6 +6,8 @@ import { useInView } from 'react-intersection-observer'
 import { FragmentIdentifier } from './FragmentIdentifier'
 import { useScrollToHash } from '../../hooks/useScrollToHash'
 
+import isEqual from 'react-fast-compare'
+
 // # --------------------------------------------------------------------------------
 //
 // styles
@@ -121,4 +123,4 @@ export const Heading1Component = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Heading1 = React.memo(Heading1Component)
+export const Heading1 = React.memo(Heading1Component, isEqual)

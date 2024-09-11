@@ -2,7 +2,7 @@
 
 import React, { CSSProperties, ReactNode, useMemo } from 'react'
 import { css } from '@emotion/react'
-import { isEqual } from 'lodash'
+import isEqual from 'react-fast-compare'
 import { getLuminance, rgba } from 'polished'
 import { Property } from 'csstype'
 
