@@ -11,7 +11,9 @@ export const useCSSVariable = (initialVariables: CSSVariables) => {
     const element = ref.current
     if (element) {
       Object.entries(initialVariables).forEach(([key, value]) => {
-        element.style.setProperty(key, String(value))
+        if (element.style.getPropertyValue(key) !== String(value)) {
+          element.style.setProperty(key, String(value))
+        }
       })
     }
   }, [initialVariables])
