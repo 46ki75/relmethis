@@ -81,7 +81,7 @@ export interface AlertProps {
   /**
    * Type of alert
    */
-  type: AlertType
+  type?: AlertType
   /**
    * Whether or not to use the dark theme
    */
@@ -104,7 +104,7 @@ const colors: Record<AlertType, string> = {
 
 export const AlertComponent = ({
   children,
-  type,
+  type = 'note',
   isDark = false
 }: AlertProps) => {
   const color = useMemo(() => colors[type], [type])
