@@ -1,0 +1,83 @@
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+.wrapper {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.25rem;
+
+  svg {
+    color: var(--react-color-fg);
+    padding: 4px;
+    width: 16px;
+    height: 16px;
+
+    animation-name: fade;
+    animation-duration: 200ms;
+    animation-fill-mode: both;
+
+    &.clickable {
+      color: var(--react-color-fg);
+      padding: 4px;
+      width: 16px;
+      height: 16px;
+
+      animation-name: fade;
+      animation-duration: 200ms;
+      animation-fill-mode: both;
+
+      border-radius: 50%;
+
+      cursor: pointer;
+      transition: background-color 200ms;
+
+      &:hover {
+        background-color: rgba(128, 128, 128, 0.2);
+      }
+    }
+
+    &.load {
+      color: var(--react-color-fg);
+      padding: 4px;
+      width: 16px;
+      height: 16px;
+      animation-name: rotate;
+      animation-duration: 600ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+    }
+  }
+
+  input {
+    all: unset;
+    color: var(--react-color-fg);
+    width: auto;
+    min-width: 32px;
+    padding: 0.25rem;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--react-editable-border-color);
+
+    transition: border-color 200ms;
+
+    &:focus {
+      border-color: var(--react-focus-border-color);
+    }
+  }
+}

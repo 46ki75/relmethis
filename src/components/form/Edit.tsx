@@ -1,7 +1,4 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { useRef, useState } from 'react'
-import { css, keyframes } from '@emotion/react'
 import {
   ArrowPathIcon,
   ArrowUturnLeftIcon,
@@ -15,93 +12,8 @@ import {
 import { rgba } from 'polished'
 import isEqual from 'react-fast-compare'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const fade = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`
-
-const wrapperStyle = css`
-  display: inline-flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0.25rem;
-`
-
-const inputStyle = ({
-  isEditable,
-  isDark
-}: {
-  isEditable: boolean
-  isDark: boolean
-}) => css`
-  all: unset;
-  color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-  width: auto;
-  min-width: 32px;
-  padding: 0.25rem;
-  border-style: solid;
-  border-width: 1px;
-  border-color: ${isEditable
-    ? rgba('#5879b0', 0.8)
-    : 'rgba(128, 128, 128, 0.1)'};
-
-  transition: border-color 200ms;
-
-  &:focus {
-    border-color: ${isEditable ? rgba('#59b57c', 0.8) : 'rgba(2, 0, 0, 0.1)'};
-  }
-`
-
-const iconStyle = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-  padding: 4px;
-  width: 16px;
-  height: 16px;
-
-  animation-name: ${fade};
-  animation-duration: 200ms;
-  animation-fill-mode: both;
-`
-
-const clickableIconStyle = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-  padding: 4px;
-  width: 16px;
-  height: 16px;
-
-  animation-name: ${fade};
-  animation-duration: 200ms;
-  animation-fill-mode: both;
-
-  border-radius: 50%;
-
-  cursor: pointer;
-  transition: background-color 200ms;
-
-  &:hover {
-    background-color: rgba(128, 128, 128, 0.2);
-  }
-`
-
-const loadIconStyle = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-  padding: 4px;
-  width: 16px;
-  height: 16px;
-  animation-name: ${keyframes`
-    from { transform: rotateZ(0deg) }
-    to { transform: rotateZ(360deg) }
-  `};
-  animation-duration: 600ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-`
+import styles from './Edit.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 // # --------------------------------------------------------------------------------
 //
@@ -175,13 +87,13 @@ const EditComponent = ({
 
   const statusIcon = () => {
     if (inputStatus === 'error') {
-      return <ExclamationTriangleIcon css={iconStyle({ isDark })} />
+      return <ExclamationTriangleIcon />
     } else if (inputStatus === 'pending') {
-      return <ArrowPathIcon css={loadIconStyle({ isDark })} />
+      return <ArrowPathIcon className={styles.load} />
     } else if (localValue === remoteValue) {
-      return <CheckIcon css={iconStyle({ isDark })} />
+      return <CheckIcon />
     } else {
-      return <EllipsisHorizontalIcon css={iconStyle({ isDark })} />
+      return <EllipsisHorizontalIcon />
     }
   }
 
@@ -190,7 +102,7 @@ const EditComponent = ({
       return (
         <>
           <PencilSquareIcon
-            css={clickableIconStyle({ isDark })}
+            className={styles.clickable}
             onClick={() => {
               setInputStatus('edit')
               if (inputRef.current !== null) inputRef.current.focus()
@@ -198,7 +110,7 @@ const EditComponent = ({
           />
           {localValue !== remoteValue && (
             <ArrowUturnLeftIcon
-              css={clickableIconStyle({ isDark })}
+              className={styles.clickable}
               onClick={handleRevert}
             />
           )}
@@ -208,13 +120,13 @@ const EditComponent = ({
       return (
         <>
           <XMarkIcon
-            css={clickableIconStyle({ isDark })}
+            className={styles.clickable}
             onClick={() => {
               setInputStatus('display')
             }}
           />
           <PaperAirplaneIcon
-            css={clickableIconStyle({ isDark })}
+            className={styles.clickable}
             onClick={handleSubmit}
           />
         </>
@@ -224,15 +136,23 @@ const EditComponent = ({
     }
   }
 
+  const { ref } = useCSSVariable({
+    '--react-color': isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
+    '--react-editable-border-color':
+      inputStatus === 'edit' || inputStatus === 'error'
+        ? rgba('#5879b0', 0.8)
+        : 'rgba(128, 128, 128, 0.1)',
+    '--react-focus-border-color':
+      inputStatus === 'edit' || inputStatus === 'error'
+        ? rgba('#59b57c', 0.8)
+        : 'rgba(2, 0, 0, 0.1)'
+  })
+
   return (
-    <span css={wrapperStyle}>
+    <span ref={ref} className={styles.wrapper}>
       {statusIcon()}
       <input
         ref={inputRef}
-        css={inputStyle({
-          isEditable: inputStatus === 'edit' || inputStatus === 'error',
-          isDark
-        })}
         readOnly={inputStatus !== 'edit' && inputStatus !== 'error'}
         value={localValue}
         onChange={(event) => {
