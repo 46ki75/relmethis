@@ -1,48 +1,9 @@
-/** @jsxImportSource @emotion/react */
-
-import { css, keyframes } from '@emotion/react'
 import React from 'react'
 
 import isEqual from 'react-fast-compare'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const bounceAnimation = keyframes`
-  0% {
-    transform: translateY(0%) scaleY(0.3) scaleX(1.5);
-  }
-
-  10% {
-    transform: scaleY(0.8) scaleX(1.2);
-  }
-
-  100% {
-    transform: translateY(-400%) scaleY(1.1);
-  }
-`
-
-const containerStyle = css`
-  position: relative;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-`
-
-const dotStyle = css`
-  width: 20%;
-  height: 20%;
-  border-radius: 50%;
-
-  animation-name: ${bounceAnimation};
-  animation-duration: 0.4s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  animation-timing-function: ease-out;
-`
+import styles from './DotLoadingIcon.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 // # --------------------------------------------------------------------------------
 //
@@ -52,18 +13,22 @@ const dotStyle = css`
 
 export interface DotLoadingIconProps {
   /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
+  /**
    * **optional**
    *
    * Icon size. Specify the length of both the vertical and horizontal sides.
    * The vertical and horizontal sides should be of the same length.
    */
-  size: number
+  size?: number
   /**
    * **optional
    *
    * Specify the color of the icon.
    */
-  color: string
+  color?: string
 }
 
 // # --------------------------------------------------------------------------------
@@ -73,36 +38,22 @@ export interface DotLoadingIconProps {
 // # --------------------------------------------------------------------------------
 
 export const DotLoadingIconComponent = ({
-  color,
-  size
+  isDark = false,
+  color = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
+  size = 64
 }: DotLoadingIconProps) => {
+  const { ref } = useCSSVariable({
+    '--react-color': color,
+    '--react-size': size + 'px'
+  })
+
   return (
-    <div css={containerStyle} style={{ width: size, height: size }}>
-      <div
-        css={dotStyle}
-        style={{ background: color, animationDelay: '-100ms' }}
-      ></div>
-      <div
-        css={dotStyle}
-        style={{ background: color, animationDelay: '0ms' }}
-      ></div>
-      <div
-        css={dotStyle}
-        style={{ background: color, animationDelay: '100ms' }}
-      ></div>
+    <div className={styles.wrapper} ref={ref}>
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
   )
-}
-
-// # --------------------------------------------------------------------------------
-//
-// default props
-//
-// # --------------------------------------------------------------------------------
-
-DotLoadingIconComponent.defaultProps = {
-  size: 64,
-  color: 'black'
 }
 
 // # --------------------------------------------------------------------------------
