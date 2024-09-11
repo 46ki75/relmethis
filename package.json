@@ -1,6 +1,6 @@
 {
   "name": "relmethis",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "engines": {
     "node": "20"
   },
@@ -16,7 +16,8 @@
   "exports": {
     ".": {
       "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js"
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/src/index.d.ts"
     },
     "./dist/style.css": {
       "import": "./dist/style.css",
