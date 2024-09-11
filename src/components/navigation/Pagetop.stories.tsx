@@ -5,7 +5,8 @@ const meta: Meta<typeof Pagetop> = {
   title: 'Components/Navigation/Pagetop',
   component: Pagetop,
   parameters: {},
-  tags: ['autodocs']
+  tags: ['autodocs'],
+  argTypes: { position: { control: 'radio', options: ['left', 'right'] } }
 }
 
 export default meta
