@@ -1,11 +1,13 @@
 .code-block {
   background-color: var(--react-color-bg);
+  transition: background-color 750ms ease 50ms;
+
   border-radius: 0.25rem;
   box-shadow: 0 0 0.25rem rgba(128, 128, 128, 0.4);
   margin-block: 2rem;
 
   *::selection {
-    background-color: var(--react-color-bg);
+    background-color: rgba(128, 128, 128, 0.2);
   }
 
   .header {
@@ -90,11 +92,8 @@
 }
 
 .syntax-highlighter {
-  border-radius: 0 0 0.25rem 0.25rem;
-  margin: 0;
-
   &,
   * {
-    transition: background 400ms;
+    transition: background-color 600ms ease 200ms;
   }
 }

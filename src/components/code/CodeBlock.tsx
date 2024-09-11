@@ -3,6 +3,7 @@ import React, {
   Suspense,
   useCallback,
   useDeferredValue,
+  useEffect,
   useLayoutEffect,
   useState
 } from 'react'
@@ -40,7 +41,9 @@ import {
 import {
   NumberedListIcon,
   ClipboardDocumentIcon,
-  ArrowsRightLeftIcon
+  ArrowsRightLeftIcon,
+  MoonIcon,
+  SunIcon
 } from '@heroicons/react/24/outline'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
 import { LanguageIcon } from '../icon/LanguageIcon'
@@ -99,6 +102,12 @@ const CodeBlockComponent = ({
   isDark = false,
   enablePreview = true
 }: CodeBlockProps) => {
+  const [isDarkLocal, setIsDarkLocal] = useState(isDark)
+
+  useEffect(() => {
+    setIsDarkLocal(isDark)
+  }, [isDark])
+
   const deferredCode = useDeferredValue(code)
   const deferredLanguage = useDeferredValue(language)
 
@@ -132,19 +141,19 @@ const CodeBlockComponent = ({
     if (deferredLanguage === 'katex') {
       return (
         <div className={styles['fade-in']}>
-          <KaTex equation={deferredCode} isDark={isDark} />
+          <KaTex equation={deferredCode} isDark={isDarkLocal} />
         </div>
       )
     } else if (deferredLanguage === 'mermaid') {
       return (
         <div className={styles['fade-in']} style={{ margin: '2rem' }}>
-          <Mermaid code={deferredCode} isDark={isDark} />
+          <Mermaid code={deferredCode} isDark={isDarkLocal} />
         </div>
       )
     } else if (deferredLanguage === 'markdown' || deferredLanguage === 'md') {
       return (
         <div style={{ padding: '1rem' }}>
-          <Markdown markdown={deferredCode} isDark={isDark} />
+          <Markdown markdown={deferredCode} isDark={isDarkLocal} />
         </div>
       )
     } else {
@@ -160,7 +169,7 @@ const CodeBlockComponent = ({
         </div>
       )
     }
-  }, [deferredCode, deferredLanguage, isDark])
+  }, [deferredCode, deferredLanguage, isDarkLocal])
 
   // # --------------------------------------------------------------------------------
   //
@@ -172,10 +181,10 @@ const CodeBlockComponent = ({
   const COLOR_DARK = 'rgb(40, 44, 52)'
 
   const { ref } = useCSSVariable({
-    '--react-color-fg': isDark
+    '--react-color-fg': isDarkLocal
       ? darken(0.15, COLOR_LIGHT)
       : lighten(0.15, COLOR_DARK),
-    '--react-color-bg': isDark ? COLOR_DARK : COLOR_LIGHT,
+    '--react-color-bg': isDarkLocal ? COLOR_DARK : COLOR_LIGHT,
     '--react-copy-text-opacity': isCopied ? 0.8 : 0
   })
 
@@ -195,7 +204,7 @@ const CodeBlockComponent = ({
             language={deferredLanguage}
             size={'20px'}
             color={undefined}
-            isDark={isDark}
+            isDark={isDarkLocal}
           />
           <span className={styles.caption}>{caption}</span>
         </div>
@@ -205,7 +214,7 @@ const CodeBlockComponent = ({
           {isAvailablePreview && (
             <SimpleTooltip
               content={'Toggle Code Preview'}
-              isDark={isDark}
+              isDark={isDarkLocal}
               place='bottom'
               margin={24}
             >
@@ -219,7 +228,7 @@ const CodeBlockComponent = ({
           )}
           <SimpleTooltip
             content={'Toggle Line Numbers'}
-            isDark={isDark}
+            isDark={isDarkLocal}
             place='bottom'
             margin={24}
           >
@@ -233,7 +242,7 @@ const CodeBlockComponent = ({
 
           <SimpleTooltip
             content={'Copy Code to Clipboard'}
-            isDark={isDark}
+            isDark={isDarkLocal}
             place='bottom'
             margin={24}
           >
@@ -243,6 +252,29 @@ const CodeBlockComponent = ({
                 copy(deferredCode.trim())
               }}
             />
+          </SimpleTooltip>
+
+          <SimpleTooltip
+            content={'Toggle Theme'}
+            isDark={isDarkLocal}
+            place='bottom'
+            margin={24}
+          >
+            {isDarkLocal ? (
+              <MoonIcon
+                className={styles.icon}
+                onClick={() => {
+                  setIsDarkLocal(false)
+                }}
+              />
+            ) : (
+              <SunIcon
+                className={styles.icon}
+                onClick={() => {
+                  setIsDarkLocal(true)
+                }}
+              />
+            )}
           </SimpleTooltip>
         </div>
       </div>
@@ -266,7 +298,7 @@ const CodeBlockComponent = ({
           <MemoizedSyntaxHighlighter
             code={code}
             language={deferredLanguage}
-            isDark={isDark}
+            isDark={isDarkLocal}
             isShowNumber={isShowNumber}
           />
         )}
@@ -292,6 +324,7 @@ const MemoizedSyntaxHighlighter = React.memo(
       className={`${styles['fade-in']} ${styles['syntax-highlighter']}`}
       style={isDark ? oneDark : oneLight}
       showLineNumbers={isShowNumber}
+      customStyle={{ margin: 0, borderRadius: '0 0 0.25rem 0.25rem' }}
     >
       {code.trim()}
     </SyntaxHighlighter>
