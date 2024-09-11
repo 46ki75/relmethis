@@ -1,49 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import { css, keyframes } from '@emotion/react'
 import React from 'react'
 
 import isEqual from 'react-fast-compare'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const wave = keyframes`
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-
-  30% {
-    opacity: 0;
-  }
-
-  40% {
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
-`
-
-const style = (color: string) => css`
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  border: solid 1px ${color};
-
-  animation-name: ${wave};
-  animation-duration: 1200ms;
-  animation-iteration-count: infinite;
-  animation-fill-mode: both;
-`
+import styles from './RectangleWave.module.scss'
 
 // # --------------------------------------------------------------------------------
 //
@@ -64,18 +26,12 @@ export interface RectangleWaveProps {
 //
 // # --------------------------------------------------------------------------------
 
-const RectangleWaveComponent = ({ color }: RectangleWaveProps): JSX.Element => {
-  return <div css={style(color)}></div>
-}
+const RectangleWaveComponent = ({
+  color = 'rgba(0,0,0,0.7)'
+}: RectangleWaveProps): JSX.Element => {
+  const { ref } = useCSSVariable<HTMLDivElement>({ '--react-color': color })
 
-// # --------------------------------------------------------------------------------
-//
-// default props
-//
-// # --------------------------------------------------------------------------------
-
-RectangleWaveComponent.defaultProps = {
-  color: 'rgb(0, 0, 0)'
+  return <div ref={ref} className={styles.wrapper}></div>
 }
 
 // # --------------------------------------------------------------------------------
