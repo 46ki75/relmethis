@@ -32,7 +32,6 @@ export * from './components/icon/DotLoadingIcon'
 export * from './components/icon/LanguageIcon'
 export * from './components/icon/SquareLoadingIcon'
 
-export * from './components/image/ImageWithFallback'
 export * from './components/image/ImageWithModal'
 
 export * from './components/inline/InlineCode'
