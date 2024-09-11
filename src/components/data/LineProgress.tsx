@@ -1,113 +1,10 @@
-/** @jsxImportSource @emotion/react */
-
-import { css, keyframes } from '@emotion/react'
-import isEqual from 'react-fast-compare'
-import { rgba } from 'polished'
 import React from 'react'
 import { useInView } from 'react-intersection-observer'
+import isEqual from 'react-fast-compare'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const loadingAnimation = keyframes`
-  0% {
-    background-position: 0% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-`
-
-const lineStyle = ({ weight }: { weight: number }) => css`
-  position: relative;
-  width: 100%;
-  height: ${weight}px;
-  background-color: rgb(222, 222, 222);
-  border-radius: ${weight / 2}px;
-  overflow: hidden;
-`
-
-const progressStyle = ({
-  weight,
-  color,
-  percent,
-  isLoading
-}: {
-  weight: number
-  color: string
-  percent: number
-  isLoading: boolean
-}) => css`
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: ${weight}px;
-  background: ${color};
-
-  transition: transform ${isLoading ? 400 : 1600}ms;
-
-  transform-origin: 0 0;
-  transform: scaleX(${percent}%);
-`
-
-const bufferStyle = ({
-  weight,
-  color,
-  percent,
-  isLoading
-}: {
-  weight: number
-  color: string
-  percent: number
-  isLoading: boolean
-}) => css`
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: ${weight}px;
-  background: ${color};
-  opacity: 0.25;
-  transition: transform ${isLoading ? 400 : 400}ms;
-  transform-origin: 0 0;
-  transform: scaleX(${percent}%);
-`
-
-const loadingStyle = ({
-  weight,
-  color,
-  isLoading
-}: {
-  weight: number
-  color: string
-  isLoading: boolean
-}) => css`
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: ${weight}px;
-  background: linear-gradient(
-    to right,
-    ${color} 0% 50%,
-    ${rgba(color, 0.25)} 50% 100%
-  );
-  background-size: 200% 100%;
-  animation-name: ${loadingAnimation};
-  animation-duration: 1200ms;
-  animation-iteration-count: infinite;
-  animation-fill-mode: both;
-
-  opacity: ${isLoading ? 1 : 0};
-  transition: opacity 800ms ease 400ms;
-`
+import styles from './LineProgress.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
 
 // # --------------------------------------------------------------------------------
 //
@@ -161,38 +58,35 @@ const LineProgressComponent = ({
   percent,
   isLoading = false
 }: LineProgressProps) => {
-  const { ref, inView } = useInView({
+  const { ref: a, inView } = useInView({
     threshold: 0
   })
+
+  const { ref: b } = useCSSVariable({
+    '--react-weight': `${weight}px`,
+    '--react-percent': `scaleX(${inView && !isLoading ? percent : 0}%)`,
+    '--react-color': color,
+    '--react-opacity': isLoading ? 1 : 0,
+    '--react-transition-duration': `${isLoading ? 400 : 1600}ms`
+  })
+
+  const ref = useMergeRefs(a, b)
+
   return (
     <>
       <div
+        className={styles.wrapper}
         role='progressbar'
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={percent}
         ref={ref}
-        css={lineStyle({ weight })}
       >
-        <div
-          css={progressStyle({
-            color,
-            percent: inView && !isLoading ? percent : 0,
-            weight,
-            isLoading
-          })}
-        ></div>
+        <div className={styles.progress}></div>
 
-        <div
-          css={bufferStyle({
-            color,
-            percent: inView && !isLoading ? percent : 0,
-            weight,
-            isLoading
-          })}
-        ></div>
+        <div className={styles.buffer}></div>
 
-        <div css={loadingStyle({ color, weight, isLoading })}></div>
+        <div className={styles.loading}></div>
       </div>
       <progress max={100} value={percent} style={{ display: 'none' }} />
     </>

@@ -1,0 +1,68 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: var(--react-weight);
+  background-color: rgb(222, 222, 222);
+  border-radius: calc(var(--react-weight) / 2);
+  overflow: hidden;
+
+  .progress {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--react-weight);
+    background: var(--react-color);
+
+    transition: transform var(--react-transition-duration);
+
+    transform-origin: 0 0;
+    transform: var(--react-percent);
+  }
+
+  .buffer {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--react-weight);
+    background: var(--react-color);
+    opacity: 0.25;
+    transition: transform 400ms;
+    transform-origin: 0 0;
+    transform: var(--react-percent);
+  }
+
+  @keyframes loading {
+    0% {
+      background-position: 0% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  .loading {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--react-weight);
+    background: linear-gradient(
+      to right,
+      var(--react-color) 0% 50%,
+      transparent 50% 100%
+    );
+    background-size: 200% 100%;
+    animation-name: loading;
+    animation-duration: 1200ms;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+
+    opacity: var(--react-opacity);
+    transition: opacity 800ms ease 400ms;
+  }
+}
