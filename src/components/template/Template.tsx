@@ -1,17 +1,6 @@
-/** @jsxImportSource @emotion/react */
-
 import React from 'react'
-import { css } from '@emotion/react'
-
 import isEqual from 'react-fast-compare'
-
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const style = css``
+import styles from './Template.module.scss'
 
 // # --------------------------------------------------------------------------------
 //
@@ -20,7 +9,7 @@ const style = css``
 // # --------------------------------------------------------------------------------
 
 export interface TemplateProps {
-  text: string
+  style: React.CSSProperties
 }
 
 // # --------------------------------------------------------------------------------
@@ -29,8 +18,12 @@ export interface TemplateProps {
 //
 // # --------------------------------------------------------------------------------
 
-const TemplateComponent = ({ text }: TemplateProps) => {
-  return <span css={style}>{text}</span>
+const TemplateComponent = ({ style }: TemplateProps) => {
+  return (
+    <span className={styles.wrapper} style={style}>
+      Template
+    </span>
+  )
 }
 
 // # --------------------------------------------------------------------------------
