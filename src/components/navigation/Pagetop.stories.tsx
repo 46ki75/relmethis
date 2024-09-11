@@ -33,3 +33,25 @@ export const Right: Story = {
     )
   }
 }
+
+export const Big: Story = {
+  args: { size: 128 },
+  render: (args) => {
+    return (
+      <div style={{ height: '2000px' }}>
+        <Pagetop {...args} />
+      </div>
+    )
+  }
+}
+
+export const Small: Story = {
+  args: { size: 48 },
+  render: (args) => {
+    return (
+      <div style={{ height: '2000px' }}>
+        <Pagetop {...args} />
+      </div>
+    )
+  }
+}

@@ -1,90 +1,101 @@
 .wrapper {
-  -webkit-tap-highlight-color: transparent;
-  position: fixed;
-  bottom: 8px;
-  width: 56px;
-  height: 56px;
-  cursor: pointer;
-  transition: transform 0.7s;
-  transform-origin: center;
+  --const-margin: 8px;
 
+  position: fixed;
+  bottom: 0;
+  margin: var(--const-margin);
+  width: var(--react-size);
+  height: var(--react-size);
   left: var(--react-position-left, auto);
   right: var(--react-position-right, auto);
+  opacity: var(--react-position-opacity, 0);
 
-  transform: translateY(100px) rotate(-180deg);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    transform 700ms,
+    opacity 400ms;
+  transform-origin: 50% 50%;
+
+  transform: translateY(200%) rotate(180deg);
 
   &.react-is-visible {
-    transform: translateY(0px) rotate(180deg);
+    transform: translateY(0%) rotate(0deg);
   }
 
   @keyframes move {
+    0% {
+      opacity: 0;
+      transform: translateY(600%);
+    }
     25% {
       opacity: 1;
+      transform: translateY(220%);
     }
     33% {
       opacity: 1;
-      transform: translateY(20px);
+      transform: translateY(220%);
     }
     67% {
       opacity: 1;
-      transform: translateY(50px);
+      transform: translateY(0%);
     }
     100% {
       opacity: 0;
-      transform: translateY(65px) scale3d(0.5, 0.5, 0.5);
+      transform: translateY(-50%) scale(0.5);
     }
   }
 
   div {
     position: absolute;
-    width: 56px;
-    height: 16px;
+    width: var(--react-size);
+    height: var(--react-chevron-height);
     opacity: 0;
     transform: scale3d(0.5, 0.5, 0.5);
-    animation: move 3s ease-out infinite;
+    animation: move 3000ms ease-out infinite;
 
     &:nth-of-type(1) {
-      animation: move 3s ease-out 1s infinite;
+      animation: move 3000ms ease-out 1000ms infinite;
     }
 
     &:nth-of-type(2) {
-      animation: move 3s ease-out 2s infinite;
+      animation: move 3000ms ease-out 2000ms infinite;
     }
 
     &:before,
     &:after {
-      content: ' ';
+      content: '';
       position: absolute;
       top: 0;
       height: 100%;
-      width: 51%;
+      width: 50%;
       background: var(--react-color-fg);
     }
 
     &:before {
-      border-radius: 0 0 3px 0;
-      left: 0px;
-      transform: skew(0deg, 30deg);
+      left: 0;
+      transform: skew(0deg, -30deg);
     }
 
     &:after {
-      border-radius: 0 0 0 3px;
-      right: 0px;
-      width: 51%;
-      transform: skew(0deg, -30deg);
+      right: 0;
+      transform: skew(0deg, 30deg);
     }
   }
 
   span {
     opacity: var(--react-position-opacity, 0);
     color: var(--react-color-fg);
-
+    transition: opacity 200ms ease 400ms;
+    width: 100%;
+    text-align: center;
     font-family: sans-serif;
     position: absolute;
     z-index: 50;
-    bottom: 4px;
-    font-size: 10px;
-    transition: all 0.2s ease-out 0.5s;
+    bottom: calc(0px - var(--const-margin));
+    font-size: var(--react-font-size);
+    white-space: nowrap;
     user-select: none;
   }
 }

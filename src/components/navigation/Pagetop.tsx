@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react'
-import { useWindowScroll } from 'react-use'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { darken, lighten } from 'polished'
-
-import isEqual from 'react-fast-compare'
 
 // scss modules
 import styles from './Pagetop.module.scss'
-import { useCSSVariable } from '../../hooks/useCSSVariable'
 
+import { useWindowScroll } from 'react-use'
+import { darken, lighten } from 'polished'
+import isEqual from 'react-fast-compare'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
 import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
@@ -19,12 +17,20 @@ import classNames from 'classnames'
 // # --------------------------------------------------------------------------------
 
 export interface PagetopProps {
+  /**
+   * Displayed on the bottom left or bottom right
+   */
   position?: 'left' | 'right'
 
   /**
    * Whether or not to use the dark theme
    */
   isDark?: boolean
+
+  /**
+   * The height and width size. Default is 64[px]
+   */
+  size?: number
 }
 
 // # --------------------------------------------------------------------------------
@@ -35,7 +41,8 @@ export interface PagetopProps {
 
 export const PagetopComponent = ({
   position = 'right',
-  isDark = false
+  isDark = false,
+  size = 64
 }: PagetopProps): JSX.Element => {
   const [isVisible, setIsVisible] = useState(true)
   const { y } = useWindowScroll()
@@ -50,27 +57,28 @@ export const PagetopComponent = ({
 
   const { ref } = useCSSVariable({
     '--react-color-fg': isDark ? lighten(0.7, 'black') : darken(0.7, 'white'),
-    '--react-position-left': position === 'left' ? '8px' : 'auto',
-    '--react-position-right': position === 'right' ? '8px' : 'auto',
-    '--react-position-opacity': isVisible ? 1 : 0
+    '--react-position-left': position === 'left' ? '0' : 'auto',
+    '--react-position-right': position === 'right' ? '0' : 'auto',
+    '--react-position-opacity': isVisible ? 1 : 0,
+    '--react-size': `${size}px`,
+    '--react-chevron-height': `${size / 4}px`,
+    '--react-font-size': `${size / 6}px`
   })
 
   return createPortal(
-    <>
-      <nav
-        ref={ref}
-        onClick={toTop}
-        className={classNames(styles.wrapper, {
-          [styles['react-is-visible']]: isVisible
-        })}
-      >
-        <div></div>
-        <div></div>
-        <div></div>
+    <nav
+      ref={ref}
+      onClick={toTop}
+      className={classNames(styles.wrapper, {
+        [styles['react-is-visible']]: isVisible
+      })}
+    >
+      <div></div>
+      <div></div>
+      <div></div>
 
-        <span>Back to Top</span>
-      </nav>
-    </>,
+      <span>Back to Top</span>
+    </nav>,
     document.body
   )
 }
