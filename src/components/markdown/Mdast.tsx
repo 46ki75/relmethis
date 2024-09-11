@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { ReactNode, useEffect, useState } from 'react'
 
 import { Definition, RootContent } from 'mdast'

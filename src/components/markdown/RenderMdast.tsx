@@ -1,7 +1,4 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { ReactNode, Suspense } from 'react'
-import { css } from '@emotion/react'
 
 import type { Definition, RootContent } from 'mdast'
 
@@ -38,16 +35,6 @@ const ImageWithModal = React.lazy(() =>
     default: module.ImageWithModal
   }))
 ) as React.ComponentType<React.ComponentProps<typeof ImageWithModalType>>
-
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const supStyle = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? '#6987b8' : '#4c6da2'};
-`
 
 // # --------------------------------------------------------------------------------
 //
@@ -459,7 +446,7 @@ export const RenderMdast = ({
             }}
           >
             <a
-              css={supStyle({ isDark })}
+              style={{ color: isDark ? '#6987b8' : '#4c6da2' }}
               href={`#footnote-reference-${node.identifier}`}
               id={`footnote-definition-${node.identifier}`}
             >
@@ -481,7 +468,7 @@ export const RenderMdast = ({
       case 'footnoteReference': {
         markdownComponent.push(
           <a
-            css={supStyle({ isDark })}
+            style={{ color: isDark ? '#6987b8' : '#4c6da2' }}
             href={`#footnote-definition-${node.identifier}`}
             id={`footnote-reference-${node.identifier}`}
           >

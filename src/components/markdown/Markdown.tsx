@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { Suspense, useMemo } from 'react'
 
 import { remark } from 'remark'
