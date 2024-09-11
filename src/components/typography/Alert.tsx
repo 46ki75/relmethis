@@ -145,10 +145,4 @@ export const AlertComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const Alert = React.memo(AlertComponent, (prevProps, nextProps) => {
-  return (
-    prevProps.isDark === nextProps.isDark &&
-    prevProps.type === nextProps.type &&
-    isEqual(prevProps.children, nextProps.children)
-  )
-})
+export const Alert = React.memo(AlertComponent, isEqual)
