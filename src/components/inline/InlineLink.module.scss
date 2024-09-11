@@ -1,0 +1,50 @@
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.1;
+  }
+}
+
+.wrapper {
+  all: unset;
+  display: inline;
+  cursor: pointer;
+  padding: 0 0.25rem;
+
+  color: #6987b8;
+  border-bottom: dashed 1px #6987b8;
+  border-radius: 2px;
+  transition:
+    background-color 200ms,
+    border-bottom 200ms;
+
+  &:hover {
+    background-color: rgba(#6987b8, 0.2);
+    border-bottom: dashed 0px rgba(0, 0, 0, 0);
+  }
+
+  &:visited {
+    color: #9771bd;
+    &:hover {
+      background-color: rgba(#9771bd, 0.2);
+    }
+  }
+
+  span::selection {
+    background-color: var(--react-color-bg);
+    color: var(--react-color-fg);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    margin-left: 0.25rem;
+    animation-name: blink;
+    animation-direction: alternate;
+    animation-duration: 2s;
+    animation-timing-function: ease-in;
+    animation-iteration-count: infinite;
+  }
+}
