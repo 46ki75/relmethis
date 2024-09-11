@@ -40,7 +40,7 @@ const fallbackInnerStyle = css`
   user-select: none;
 `
 
-const imageStyle = (isLoading: boolean) => css`
+const imageStyle = ({ isLoading }: { isLoading: boolean }) => css`
   width: ${isLoading ? '0px' : '100%'};
   height: ${isLoading ? '0px' : 'auto'};
 
@@ -77,6 +77,15 @@ export interface ImageWithFallbackProps {
    * ```
    */
   height?: number
+  /**
+   * Manages the loading state of the image. For example,
+   * set it to `true` while asynchronously fetching the image URL.
+   */
+  isLoading: boolean
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -89,26 +98,30 @@ const ImageWithFallbackComponent = ({
   src,
   alt = src,
   width = 1200,
-  height = 630
+  height = 630,
+  isLoading = false,
+  isDark = false
 }: ImageWithFallbackProps): JSX.Element => {
-  const [isLoading, setIsLoading] = useState(true)
+  const color = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)'
+
+  const [isFetchingImage, setIsFetchingImage] = useState(true)
 
   return (
     <>
-      {isLoading && (
+      {(isLoading || isFetchingImage) && (
         <div css={fallbackStyle({ width, height })}>
-          <RectangleWave />
+          <RectangleWave color={color} />
           <div css={fallbackInnerStyle}>
-            <SquareLoadingIcon />
+            <SquareLoadingIcon color={color} />
           </div>
         </div>
       )}
       <img
-        css={imageStyle(isLoading)}
+        css={imageStyle({ isLoading: isLoading || isFetchingImage })}
         alt={alt}
         src={src}
         onLoad={() => {
-          setIsLoading(false)
+          setIsFetchingImage(false)
         }}
       />
     </>

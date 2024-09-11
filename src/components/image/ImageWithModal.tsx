@@ -24,7 +24,7 @@ const fallbackStyle = ({
   width: 100%;
   aspect-ratio: ${width} / ${height};
 
-  border: dashed 1px rgba(0, 0, 0, 0.2);
+  border: dashed 1px rgba(128, 128, 128, 0.2);
 
   display: flex;
   align-items: center;
@@ -126,6 +126,15 @@ export interface ImageWithModalProps {
    * Language for displaying flavor text or guide text
    */
   lang?: 'en' | 'ja'
+  /**
+   * Manages the loading state of the image. For example,
+   * set it to `true` while asynchronously fetching the image URL.
+   */
+  isLoading: boolean
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -139,9 +148,13 @@ const ImageWithModalComponent = ({
   alt = src,
   width = 1200,
   height = 630,
-  lang = 'ja'
+  lang = 'ja',
+  isLoading = false,
+  isDark = false
 }: ImageWithModalProps): JSX.Element => {
-  const [isLoading, setIsLoading] = useState(true)
+  const color = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)'
+
+  const [isFetchingImage, setIsFetchingImage] = useState(true)
   const [isModalShow, setIsModalShow] = useState(false)
 
   useKey('Escape', () => {
@@ -174,22 +187,22 @@ const ImageWithModalComponent = ({
       )}
 
       {/* Loading */}
-      {isLoading && (
+      {(isLoading || isFetchingImage) && (
         <div css={fallbackStyle({ width, height })}>
-          <RectangleWave />
+          <RectangleWave color={color} />
           <div css={fallbackInnerStyle}>
-            <SquareLoadingIcon />
+            <SquareLoadingIcon color={color} />
           </div>
         </div>
       )}
 
       {/* Image */}
       <img
-        css={imageStyle({ isLoading })}
+        css={imageStyle({ isLoading: isLoading || isFetchingImage })}
         alt={alt}
         src={src}
         onLoad={() => {
-          setIsLoading(false)
+          setIsFetchingImage(false)
         }}
         onClick={() => {
           setIsModalShow(true)
