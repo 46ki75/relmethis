@@ -76,16 +76,16 @@
   color: rgba(128, 128, 128, 0.5);
 }
 
-.fade-in {
-  @keyframes fade {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+@keyframes fade {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
 
+.fade-in {
   animation-name: fade;
   animation-duration: 800ms;
   animation-fill-mode: both;
