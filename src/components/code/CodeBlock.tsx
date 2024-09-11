@@ -202,7 +202,7 @@ const CodeBlockComponent = ({
         <div>
           <LanguageIcon
             language={deferredLanguage}
-            size={'20px'}
+            size={20}
             color={undefined}
             isDark={isDarkLocal}
           />

@@ -1,11 +1,11 @@
-/** @jsxImportSource @emotion/react */
-
-import { css, keyframes } from '@emotion/react'
 import React, { Suspense } from 'react'
 import { type LanguageIconSvgProps } from './language/Props'
 import { CommandLineIcon } from '@heroicons/react/24/outline'
 
 import isEqual from 'react-fast-compare'
+
+import styles from './LanguageIcon.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 // # --------------------------------------------------------------------------------
 //
@@ -13,35 +13,24 @@ import isEqual from 'react-fast-compare'
 //
 // # --------------------------------------------------------------------------------
 
-const fade = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`
-
-const iconStyle = ({ size, isDark }: { size: string; isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-  width: ${size};
-  height: ${size};
-  margin: 0;
-  padding: 0;
-  animation-name: ${fade};
-  animation-duration: 300ms;
-  animation-fill-mode: both;
-`
-
 interface LanguageIconProps {
-  size?: string
+  size?: number
   color?: string
   language: string
   isDark?: boolean
 }
 
 const LanguageIconComponent = ({
-  size = '20px',
+  size = 20,
   color,
   language,
   isDark = false
 }: LanguageIconProps) => {
+  const { ref } = useCSSVariable({
+    '--react-color': isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
+    '--react-size': size + 'px'
+  })
+
   let IconComponent: React.LazyExoticComponent<
     React.ComponentType<LanguageIconSvgProps>
   > | null = null
@@ -145,19 +134,14 @@ const LanguageIconComponent = ({
       break
 
     default:
-      return (
-        <CommandLineIcon
-          style={{ width: size, height: size, color }}
-          css={iconStyle({ size, isDark })}
-        />
-      )
+      return <CommandLineIcon style={{ width: size, height: size, color }} />
   }
 
   return (
     <Suspense fallback={<div style={{ width: size, height: size, color }} />}>
-      <div css={iconStyle({ size, isDark })}>
+      <div ref={ref} className={styles.wrapper}>
         {IconComponent && (
-          <IconComponent size={size} color={color} isDark={isDark} />
+          <IconComponent size={size + 'px'} color={color} isDark={isDark} />
         )}
       </div>
     </Suspense>
