@@ -6,19 +6,26 @@
 
   transition: color 400ms;
 
-  &.react-light {
-    color: rgba(0, 0, 0, 0.8);
-    &::selection {
-      color: rgba(255, 255, 255, 0.8);
-      background-color: rgba(0, 0, 0, 0.8);
-    }
+  color: var(--react-color-fg);
+
+  &::selection {
+    color: var(--react-color-fg-selection);
+    background-color: var(--react-color-bg);
   }
 
-  &.react-dark {
-    color: rgba(255, 255, 255, 0.8);
-    &::selection {
-      color: rgba(0, 0, 0, 0.8);
-      background-color: rgba(255, 255, 255, 0.8);
-    }
-  }
+  // &.react-light {
+  //   color: var(--react-color-fg);
+  //   &::selection {
+  //     color: rgba(255, 255, 255, 0.8);
+  //     background-color: rgba(0, 0, 0, 0.8);
+  //   }
+  // }
+
+  // &.react-dark {
+  //   color: var(--react-color-fg);
+  //   &::selection {
+  //     color: rgba(0, 0, 0, 0.8);
+  //     background-color: rgba(255, 255, 255, 0.8);
+  //   }
+  // }
 }
