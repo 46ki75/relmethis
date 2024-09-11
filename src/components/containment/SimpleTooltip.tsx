@@ -1,23 +1,16 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { ReactNode } from 'react'
-import { css } from '@emotion/react'
+
 import { Tooltip } from './Tooltip'
 import isEqual from 'react-fast-compare'
+
+import styles from './SimpleTooltip.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 // # --------------------------------------------------------------------------------
 //
 // styles
 //
 // # --------------------------------------------------------------------------------
-
-const style = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.7)'};
-  background-color: ${isDark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)'};
-  box-sizing: border-box;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-`
 
 // # --------------------------------------------------------------------------------
 //
@@ -64,9 +57,18 @@ const SimpleTooltipComponent = ({
   margin = 8,
   isDark = false
 }: SimpleTooltipProps) => {
+  const { ref } = useCSSVariable({
+    '--react-color-fg': isDark ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.7)',
+    '--react-color-bg': isDark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)'
+  })
+
   return (
     <Tooltip
-      tooltipComponent={<div css={style({ isDark })}>{content}</div>}
+      tooltipComponent={
+        <div ref={ref} className={styles.tooltip}>
+          {content}
+        </div>
+      }
       place={place}
       margin={margin}
     >
