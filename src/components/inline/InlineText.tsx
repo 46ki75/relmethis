@@ -1,48 +1,11 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { CSSProperties, ReactNode, useMemo } from 'react'
-import { css } from '@emotion/react'
+
 import isEqual from 'react-fast-compare'
 import { getLuminance, rgba } from 'polished'
 import { Property } from 'csstype'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const inlineTextStyle = ({
-  color,
-  isDark
-}: {
-  color: string
-  isDark: boolean
-}) => css`
-  color: ${rgba(color, 0.7)};
-
-  &::selection,
-  *::selection {
-    background-color: ${rgba(color, 0.8)};
-    color: ${getLuminance(color) < 0.5
-      ? 'rgba(255, 255, 255, 0.7)'
-      : 'rgba(0, 0, 0, 0.7)'};
-  }
-
-  strong {
-    color: ${rgba(color, 0.8)};
-  }
-
-  del {
-    color: ${rgba(color, 0.5)};
-    text-decoration-color: ${rgba(color, 0.4)};
-  }
-
-  &::before,
-  &::after {
-    color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-  }
-`
+import styles from './InlineText.module.scss'
 
 // # --------------------------------------------------------------------------------
 //
@@ -158,10 +121,20 @@ const InlineTextComponent = ({
     [color, isDark, presetColorName]
   )
 
+  const { ref } = useCSSVariable({
+    '--react-color-fg': rgba(fgColor, 0.7),
+    '--react-color-strong': rgba(fgColor, 0.8),
+    '--react-color-del': rgba(fgColor, 0.5),
+    '--react-selection-color-fg':
+      getLuminance(fgColor) < 0.5
+        ? 'rgba(255, 255, 255, 0.7)'
+        : 'rgba(0, 0, 0, 0.7)',
+    '--react-selection-color-bg': rgba(fgColor, 0.7)
+  })
+
   if (cite)
     return (
       <cite
-        css={inlineTextStyle({ color: fgColor, isDark })}
         style={{ marginInline: '0.5rem', paddingInline: '0.5rem', ...style }}
       >
         {text}
@@ -170,10 +143,7 @@ const InlineTextComponent = ({
 
   if (quote)
     return (
-      <q
-        css={inlineTextStyle({ color: fgColor, isDark })}
-        style={{ marginInline: '0.5rem', paddingInline: '0.5rem', ...style }}
-      >
+      <q style={{ marginInline: '0.5rem', paddingInline: '0.5rem', ...style }}>
         {text}
       </q>
     )
@@ -190,7 +160,7 @@ const InlineTextComponent = ({
   }
 
   return (
-    <span css={inlineTextStyle({ color: fgColor, isDark })} style={style}>
+    <span ref={ref} className={styles.wrapper} style={style}>
       {renderInnerContent()}
     </span>
   )

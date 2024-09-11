@@ -1,0 +1,23 @@
+.text {
+  color: var(--react-color-fg);
+
+  &::selection,
+  *::selection {
+    color: var(--react-selection-color-fg);
+    background-color: var(--react-selection-color-bg);
+  }
+
+  strong {
+    color: var(--react-color-strong);
+  }
+
+  del {
+    color: var(--react-color-del);
+    text-decoration-color: var(--react-color-del);
+  }
+
+  &::before,
+  &::after {
+    color: var(--react-color-fg);
+  }
+}
