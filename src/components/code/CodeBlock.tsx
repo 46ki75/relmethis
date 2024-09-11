@@ -1,12 +1,9 @@
-/** @jsxImportSource @emotion/react */
-
-import { css, keyframes } from '@emotion/react'
 import React, {
   ReactNode,
   Suspense,
   useCallback,
   useDeferredValue,
-  useEffect,
+  useLayoutEffect,
   useState
 } from 'react'
 
@@ -54,106 +51,10 @@ import { SimpleTooltip } from '../containment/SimpleTooltip'
 import { Markdown } from '../markdown/Markdown'
 
 import isEqual from 'react-fast-compare'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const wrapperStyle = ({ isDark }: { isDark: boolean }) => css`
-  background-color: ${isDark ? 'rgb(40, 44, 52)' : 'rgb(250, 250, 250)'};
-  border-radius: 0.25rem;
-  box-shadow: 0 0 0.25rem rgba(128, 128, 128, 0.4);
-  margin-block: 2rem;
-
-  *::selection {
-    background-color: ${isDark
-      ? 'rgba(198, 222, 211, 0.2)'
-      : 'rgba(138, 181, 159, 0.2)'};
-  }
-`
-
-const headerStyle = css`
-  position: sticky;
-  box-sizing: border-box;
-  padding: 0.75rem;
-  width: 100%;
-  font-family: 'Fira Code', 'Fira Mono', Menlo, Consolas, 'DejaVu Sans Mono',
-    monospace;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-
-  div {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-`
-
-const captionStyle = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(250, 250, 250, 0.8)' : 'rgba(40, 44, 52, 0.8)'};
-`
-
-const iconStyle = ({ isDark }: { isDark: boolean }) => css`
-  width: 20px;
-  height: 20px;
-  padding: 2px;
-  border-radius: 2px;
-  color: ${isDark ? 'rgba(250, 250, 250, 0.8)' : 'rgba(40, 44, 52, 0.8)'};
-`
-
-const clickableIconStyle = ({ isDark }: { isDark: boolean }) => css`
-  ${iconStyle({ isDark })};
-  transition: background-color 200ms;
-
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${isDark
-      ? 'rgba(250, 250, 250, 0.2)'
-      : 'rgba(40, 44, 52, 0.2)'};
-  }
-`
-
-const copiedtextStyle = ({ isShow }: { isShow: boolean }) => css`
-  color: #59b57c;
-  opacity: ${isShow ? 1 : 0};
-  transition: opacity 400ms;
-  user-select: none;
-`
-
-const hrStyle = ({ isDark }: { isDark: boolean }) => css`
-  width: calc(100% - 1rem);
-  margin: 0 0.5rem;
-  padding: 0;
-  border: none;
-  border-bottom: solid 1px
-    ${isDark ? 'rgba(250, 250, 250, 0.2)' : 'rgba(40, 44, 52, 0.2)'};
-`
-
-const fallbackStyle = css`
-  box-sizing: border-box;
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgba(128, 128, 128, 0.5);
-`
-
-const fade = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`
-
-const codeStyle = css`
-  animation-name: ${fade};
-  animation-duration: 800ms;
-  animation-fill-mode: both;
-`
+import styles from './CodeBlock.module.scss'
+import { darken, lighten } from 'polished'
 
 // # --------------------------------------------------------------------------------
 //
@@ -201,9 +102,11 @@ const CodeBlockComponent = ({
   const deferredCode = useDeferredValue(code)
   const deferredLanguage = useDeferredValue(language)
 
+  // Determine whether to show or hide the number based on the screen size once
+
   const [isShowNumber, setIsShowNumber] = useState<boolean>(false)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const media = window.matchMedia('(min-width: 480px)')
     setIsShowNumber(media.matches)
   }, [])
@@ -228,13 +131,13 @@ const CodeBlockComponent = ({
   const renderPreviewComponent = useCallback((): ReactNode => {
     if (deferredLanguage === 'katex') {
       return (
-        <div css={codeStyle}>
+        <div className={styles['fade-in']}>
           <KaTex equation={deferredCode} isDark={isDark} />
         </div>
       )
     } else if (deferredLanguage === 'mermaid') {
       return (
-        <div css={codeStyle} style={{ margin: '2rem' }}>
+        <div className={styles['fade-in']} style={{ margin: '2rem' }}>
           <Mermaid code={deferredCode} isDark={isDark} />
         </div>
       )
@@ -259,11 +162,34 @@ const CodeBlockComponent = ({
     }
   }, [deferredCode, deferredLanguage, isDark])
 
+  // # --------------------------------------------------------------------------------
+  //
+  // CSS Variables
+  //
+  // # --------------------------------------------------------------------------------
+
+  const COLOR_LIGHT = 'rgb(250, 250, 250)'
+  const COLOR_DARK = 'rgb(40, 44, 52)'
+
+  const { ref } = useCSSVariable({
+    '--react-color-fg': isDark
+      ? darken(0.15, COLOR_LIGHT)
+      : lighten(0.15, COLOR_DARK),
+    '--react-color-bg': isDark ? COLOR_DARK : COLOR_LIGHT,
+    '--react-copy-text-opacity': isCopied ? 0.8 : 0
+  })
+
+  // # --------------------------------------------------------------------------------
+  //
+  // render
+  //
+  // # --------------------------------------------------------------------------------
+
   return (
-    <div css={wrapperStyle({ isDark })}>
+    <div ref={ref} className={styles['code-block']}>
       {/* header */}
 
-      <div css={headerStyle}>
+      <div className={styles.header}>
         <div>
           <LanguageIcon
             language={deferredLanguage}
@@ -271,10 +197,10 @@ const CodeBlockComponent = ({
             color={undefined}
             isDark={isDark}
           />
-          <span css={captionStyle({ isDark })}>{caption}</span>
+          <span className={styles.caption}>{caption}</span>
         </div>
         <div>
-          {<span css={copiedtextStyle({ isShow: isCopied })}>copied!</span>}
+          {<span className={styles['copy-text']}>copied!</span>}
 
           {isAvailablePreview && (
             <SimpleTooltip
@@ -284,7 +210,7 @@ const CodeBlockComponent = ({
               margin={24}
             >
               <ArrowsRightLeftIcon
-                css={clickableIconStyle({ isDark })}
+                className={styles.icon}
                 onClick={() => {
                   setShowPreview(!showPreview)
                 }}
@@ -298,7 +224,7 @@ const CodeBlockComponent = ({
             margin={24}
           >
             <NumberedListIcon
-              css={clickableIconStyle({ isDark })}
+              className={styles.icon}
               onClick={() => {
                 setIsShowNumber(!isShowNumber)
               }}
@@ -312,7 +238,7 @@ const CodeBlockComponent = ({
             margin={24}
           >
             <ClipboardDocumentIcon
-              css={clickableIconStyle({ isDark })}
+              className={styles.icon}
               onClick={() => {
                 copy(deferredCode.trim())
               }}
@@ -323,13 +249,13 @@ const CodeBlockComponent = ({
 
       {/* divider */}
 
-      <hr css={hrStyle({ isDark })} />
+      <hr className={styles.hr} />
 
       {/* code */}
 
       <Suspense
         fallback={
-          <div css={fallbackStyle}>
+          <div className={styles.fallback}>
             <DotLoadingIcon size={32} color='rgba(128,128,128,0.8)' />
           </div>
         }
@@ -363,14 +289,14 @@ const MemoizedSyntaxHighlighter = React.memo(
   }) => (
     <SyntaxHighlighter
       language={language}
-      css={codeStyle}
+      className={`${styles['fade-in']} ${styles['syntax-highlighter']}`}
       style={isDark ? oneDark : oneLight}
       showLineNumbers={isShowNumber}
-      customStyle={{ borderRadius: '0 0 0.25rem 0.25rem', margin: 0 }}
     >
       {code.trim()}
     </SyntaxHighlighter>
-  )
+  ),
+  isEqual
 )
 
 // # --------------------------------------------------------------------------------

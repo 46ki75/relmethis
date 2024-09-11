@@ -1,0 +1,100 @@
+.code-block {
+  background-color: var(--react-color-bg);
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0.25rem rgba(128, 128, 128, 0.4);
+  margin-block: 2rem;
+
+  *::selection {
+    background-color: var(--react-color-bg);
+  }
+
+  .header {
+    position: sticky;
+    box-sizing: border-box;
+    padding: 0.75rem;
+    width: 100%;
+    font-family: 'Fira Code', 'Fira Mono', Menlo, Consolas, 'DejaVu Sans Mono',
+      monospace;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .caption {
+        color: var(--react-color-fg);
+      }
+
+      .icon {
+        width: 20px;
+        height: 20px;
+        padding: 2px;
+        border-radius: 2px;
+        color: var(--react-color-fg);
+
+        transition: background-color 200ms;
+
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(128, 128, 128, 0.4);
+        }
+      }
+
+      .copy-text {
+        color: var(--react-color-fg);
+        opacity: var(--react-copy-text-opacity, 0);
+        transition: opacity 300ms;
+        user-select: none;
+      }
+    }
+  }
+
+  hr.hr {
+    width: calc(100% - 1rem);
+    margin: 0 0.5rem;
+    padding: 0;
+    border: none;
+    border-bottom: solid 1px var(--react-color-fg);
+    opacity: 0.2;
+  }
+}
+
+.fallback {
+  box-sizing: border-box;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(128, 128, 128, 0.5);
+}
+
+.fade-in {
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  animation-name: fade;
+  animation-duration: 800ms;
+  animation-fill-mode: both;
+}
+
+.syntax-highlighter {
+  border-radius: 0 0 0.25rem 0.25rem;
+  margin: 0;
+
+  &,
+  * {
+    transition: background 400ms;
+  }
+}
