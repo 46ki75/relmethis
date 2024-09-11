@@ -1,7 +1,15 @@
 {
   "name": "relmethis",
-  "version": "0.1.1",
-  "main": "dist/index.js",
+  "version": "0.1.3",
+  "engines": {
+    "node": "20"
+  },
+  "author": "Chomolungma Shirayuki",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:46ki75/relmethis.git"
+  },
+  "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/src/index.d.ts",
   "type": "module",
