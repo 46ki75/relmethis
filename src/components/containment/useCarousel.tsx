@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import {
   ReactNode,
   Suspense,
@@ -8,51 +6,12 @@ import {
   useRef,
   useState
 } from 'react'
-import { css } from '@emotion/react'
+
 import { BlockFallback } from '../fallback/BlockFallback'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const wrapperStyle = css`
-  width: 100%;
-  box-sizing: border-box;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE */
-  &::-webkit-scrollbar {
-    width: 0; /* Chrome, Safari */
-    height: 0;
-  }
-`
-
-const containerStyle = ({
-  length,
-  height
-}: {
-  length: number
-  height: number | 'auto'
-}) => css`
-  height: ${height === 'auto' ? 'auto' : `${height}px`};
-  width: ${100 * length}%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-
-  transition: height 200ms ease 400ms;
-`
-
-const childrenContainerStyle = css`
-  scroll-snap-align: center;
-  width: 100%;
-  flex-basis: 100%;
-`
+import styles from './useCarousel.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
 
 // # --------------------------------------------------------------------------------
 //
@@ -215,18 +174,20 @@ export const useCarousel = ({
     }
   }, [currentPage, autoResize])
 
+  const { ref: cssVariableRef } = useCSSVariable({
+    '--react-height': currentHeight != null ? `${currentHeight}px` : 'auto',
+    '--react-width': `${100 * children.length}%`
+  })
+
+  const ref = useMergeRefs(scrollContainerRef, cssVariableRef)
+
   const render = () => (
-    <div css={wrapperStyle} ref={scrollContainerRef}>
-      <div
-        css={containerStyle({
-          length: children.length,
-          height: currentHeight ?? 'auto'
-        })}
-      >
+    <div ref={ref} className={styles.wrapper}>
+      <div className={styles['carousel-container']}>
         {children.map((child, index) => (
           <Suspense key={index} fallback={<BlockFallback />}>
             <div
-              css={childrenContainerStyle}
+              className={styles['children-container']}
               data-index={index}
               ref={(el) => (childRefs.current[index] = el)}
               style={{ width: currentWidth }}

@@ -1,0 +1,30 @@
+.wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
+  &::-webkit-scrollbar {
+    width: 0; /* Chrome, Safari */
+    height: 0;
+  }
+
+  .carousel-container {
+    height: var(--react-height);
+    width: var(--react-width);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    transition: height 200ms ease 400ms;
+  }
+}
+
+.children-container {
+  scroll-snap-align: center;
+  width: 100%;
+  flex-basis: 100%;
+}
