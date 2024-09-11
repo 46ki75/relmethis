@@ -1,6 +1,7 @@
 .wrapper {
   --const-margin: 8px;
 
+  display: block;
   position: fixed;
   bottom: 0;
   margin: var(--const-margin);
@@ -21,7 +22,18 @@
   transform: translateY(200%) rotate(180deg);
 
   &.react-is-visible {
+    transition:
+      transform 700ms,
+      opacity 200ms;
     transform: translateY(0%) rotate(0deg);
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 0.4;
   }
 
   @keyframes move {
@@ -33,9 +45,9 @@
       opacity: 1;
       transform: translateY(220%);
     }
-    33% {
+    42% {
       opacity: 1;
-      transform: translateY(220%);
+      transform: translateY(200%);
     }
     67% {
       opacity: 1;
