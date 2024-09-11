@@ -26,7 +26,7 @@
   transition: opacity 300ms;
   opacity: var(--react-image-opacity, 0);
 
-  cursor: zoom-in;
+  cursor: var(--react-image-cursor);
   user-select: none;
 }
 

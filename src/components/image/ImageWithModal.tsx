@@ -96,7 +96,8 @@ const ImageWithModalComponent = ({
   const { ref: imageRef } = useCSSVariable<HTMLImageElement>({
     '--react-image-width': isLoading || isFetchingImage ? '0px' : '100%',
     '--react-image-height': isLoading || isFetchingImage ? '0px' : 'auto',
-    '--react-image-opacity': isLoading || isFetchingImage ? 0 : 1
+    '--react-image-opacity': isLoading || isFetchingImage ? 0 : 1,
+    '--react-image-cursor': disableModal ? 'initial' : 'zoom-in'
   })
 
   return (
