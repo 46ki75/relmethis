@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import React, {
   ReactNode,
   useEffect,
@@ -7,33 +5,13 @@ import React, {
   useRef,
   useState
 } from 'react'
-import { css } from '@emotion/react'
+
 import { createPortal } from 'react-dom'
 import isEqual from 'react-fast-compare'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const tooltipStyle = ({
-  visible,
-  margin,
-  animationDuration
-}: {
-  visible: boolean
-  margin: number
-  animationDuration: number
-}) => css`
-  max-width: calc(100vw - ${margin * 2}px);
-  max-height: calc(100vh - ${margin * 2}px);
-  position: fixed;
-  opacity: ${visible ? 1 : 0};
-  transition: opacity ${animationDuration}ms ease 50ms;
-  user-select: ${visible ? 'all' : 'none'};
-  pointer-events: ${visible ? 'all' : 'none'};
-`
+import styles from './Tooltip.module.scss'
 
 // # --------------------------------------------------------------------------------
 //
@@ -189,13 +167,22 @@ const TooltipComponent = ({
       ? window.innerHeight - position.height - margin
       : tooltipFinalTopPosition
 
+  const { ref: CSSVariableRef } = useCSSVariable({
+    '--react-margin-double': margin * 2 + 'px',
+    '--react-opacity': visible ? 1 : 0,
+    '--react-animation-duration': animationDuration + 'ms',
+    '--react-event': visible ? 'all' : 'none'
+  })
+
+  const mergedRef = useMergeRefs(tooltipRef, CSSVariableRef)
+
   return (
     <>
       {clonedChildren}
       {createPortal(
         <div
-          ref={tooltipRef}
-          css={tooltipStyle({ visible, margin, animationDuration })}
+          ref={mergedRef}
+          className={styles.tooltip}
           style={{
             position: 'fixed',
             top: tooltipFinalTopPosition,

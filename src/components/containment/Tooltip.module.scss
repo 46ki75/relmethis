@@ -1,0 +1,9 @@
+.tooltip {
+  max-width: calc(100vw - var(--react-margin-double));
+  max-height: calc(100vh - var(--react-margin-double) px);
+  position: fixed;
+  opacity: var(--react-opacity);
+  transition: opacity var(--react-animation-duration) ease 50ms;
+  user-select: var(--react-event);
+  pointer-events: var(--react-event);
+}
