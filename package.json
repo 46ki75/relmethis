@@ -1,12 +1,18 @@
 {
   "name": "relmethis",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/src/index.d.ts",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "exit 0",
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "prepublishOnly": "npm run build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
@@ -57,6 +63,7 @@
     "sass": "^1.78.0",
     "storybook": "^8.1.11",
     "typescript": "^5.6.2",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "vite-plugin-dts": "^4.2.1"
   }
 }
