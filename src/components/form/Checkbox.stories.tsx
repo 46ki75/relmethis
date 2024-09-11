@@ -17,11 +17,7 @@ export const Default: Story = {
   render: (args) => {
     const [isChecked, setIsChecked] = useState(false)
     return (
-      <Checkbox
-        label={args.label}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
-      />
+      <Checkbox {...args} isChecked={isChecked} setIsChecked={setIsChecked} />
     )
   }
 }
@@ -31,12 +27,7 @@ export const Colored: Story = {
   render: (args) => {
     const [isChecked, setIsChecked] = useState(false)
     return (
-      <Checkbox
-        label={args.label}
-        color={args.color}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
-      />
+      <Checkbox {...args} isChecked={isChecked} setIsChecked={setIsChecked} />
     )
   }
 }

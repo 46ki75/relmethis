@@ -1,0 +1,48 @@
+@keyframes check {
+  0% {
+    stroke-dashoffset: 100%;
+  }
+  100% {
+    stroke-dashoffset: 0%;
+  }
+}
+
+.wrapper {
+  width: fit-content;
+  * {
+    font-family: sans-serif;
+    user-select: none;
+  }
+
+  div {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  div {
+    svg {
+      polyline {
+        stroke: var(--react-polyline-color);
+        stroke-dasharray: 100%;
+        animation: check 200ms ease-in-out 100ms both;
+        transform-origin: center;
+      }
+
+      rect {
+        transition: all 0.2s;
+        stroke: var(--react-stroke-color);
+        fill: var(--react-fill-color);
+      }
+
+      line {
+        stroke: var(--react-stroke-color);
+      }
+    }
+
+    .label {
+      color: var(--react-stroke-color);
+    }
+  }
+}
