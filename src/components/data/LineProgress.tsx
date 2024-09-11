@@ -125,14 +125,14 @@ export interface LineProgressProps {
    *
    * Specify the thickness of the progress bar in pixels.
    */
-  weight: number
+  weight?: number
   /**
    * **optional** default: 'rgb(22, 22, 22)'
    *
    * Specify the color of the progress bar.
    * The color of the buffer will be calculated and diluted.
    */
-  color: string
+  color?: string
   /**
    * **requred**
    *
@@ -145,7 +145,7 @@ export interface LineProgressProps {
    * Boolean value indicating whether it is in the process of loading.
    * During loading, the progress bar animates.
    */
-  isLoading: boolean
+  isLoading?: boolean
 }
 
 // # --------------------------------------------------------------------------------
