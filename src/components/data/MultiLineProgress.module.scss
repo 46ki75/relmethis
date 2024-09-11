@@ -1,0 +1,83 @@
+.wrapper {
+  .progress-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--react-weight, 6px);
+    background-color: var(--react-background-color);
+
+    overflow: hidden;
+    border-radius: calc(var(--react-weight, 3px) / 2);
+    position: relative;
+
+    .progress {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--react-weight);
+      opacity: var(--react-not-loading-opacity);
+      transition:
+        transform 800ms,
+        opacity 800ms;
+      transform: scaleX(0%) translateX(0%);
+      transform-origin: left;
+    }
+
+    @keyframes loading {
+      0% {
+        background-position: 0% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    .loading {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--react-weight);
+      background: linear-gradient(
+        to right,
+        var(--react-loading-color, gray) 0% 50%,
+        transparent 50% 100%
+      );
+      background-size: 200% 100%;
+      animation-name: loading;
+      animation-duration: 1200ms;
+      animation-iteration-count: infinite;
+      animation-fill-mode: both;
+
+      opacity: var(--react-loading-opacity, 0);
+      transition: opacity 800ms ease 400ms;
+    }
+  }
+
+  .label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5rem;
+
+    div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      gap: 0.5rem;
+
+      div.marker {
+        width: 10px;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+      }
+
+      span.value {
+        color: var(--react-color);
+      }
+    }
+  }
+}

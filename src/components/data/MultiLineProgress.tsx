@@ -1,119 +1,10 @@
-/** @jsxImportSource @emotion/react */
-
-import { css, keyframes } from '@emotion/react'
-import { rgba } from 'polished'
-import React, { useMemo } from 'react'
+import React, { ReactNode } from 'react'
 import { useInView } from 'react-intersection-observer'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const loadingAnimation = keyframes`
-  0% {
-    background-position: 0% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-`
-
-const lineStyle = ({
-  weight,
-  color,
-  isLoading
-}: {
-  weight: number
-  color: string
-  isLoading: boolean
-}) =>
-  isLoading
-    ? css`
-        position: relative;
-        width: 100%;
-        height: ${weight}px;
-        background-color: rgb(222, 222, 222);
-        border-radius: 2px;
-
-        &::after {
-          position: absolute;
-          content: '';
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: ${weight}px;
-          border-radius: ${weight / 2}px;
-
-          background: linear-gradient(
-            to right,
-            ${color} 0% 50%,
-            ${rgba(color, 0.25)} 50% 100%
-          );
-          background-size: 200% 100%;
-
-          animation-name: ${loadingAnimation};
-          animation-duration: 1200ms;
-          animation-iteration-count: infinite;
-          animation-fill-mode: both;
-        }
-      `
-    : css`
-        position: relative;
-        width: 100%;
-        height: ${weight}px;
-        background: rgb(222, 222, 222);
-        border-radius: 2px;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        overflow: hidden;
-      `
-
-const childStyle = ({
-  weight,
-  color,
-  value
-}: {
-  weight: number
-  color: string
-  value: number
-}) => css`
-  height: ${weight}px;
-  background-color: ${color};
-  flex-grow: ${value};
-
-  transition: flex-grow 8000ms;
-  transition-timing-function: linear;
-`
-
-const indicatorContainerStyle = css`
-  margin-top: 0.25rem;
-  display: flex;
-  justify-content: flex-start;
-  gap: 0.25rem;
-`
-
-const indicatorStyle = (color: string) => css`
-  position: relative;
-  padding: 0 0.75rem;
-  color: ${color};
-  font-size: 0.75rem;
-
-  &:before {
-    position: absolute;
-    content: '';
-    width: 0.5rem;
-    height: 0.5rem;
-    top: 0.25rem;
-    left: 0;
-    background-color: ${color};
-    border-radius: 50%;
-  }
-`
+import styles from './MultiLineProgress.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
+import isEqual from 'react-fast-compare'
 
 // # --------------------------------------------------------------------------------
 //
@@ -191,50 +82,78 @@ const MultiLineProgressComponent = ({
   data,
   unit
 }: MultiLineProgressProps) => {
-  const { ref, inView } = useInView({
-    threshold: 0
+  const { ref: a, inView } = useInView()
+
+  const { ref: b } = useCSSVariable({
+    '--react-weight': `${weight}px`,
+    '--react-color': isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
+    '--react-background-color': isDark
+      ? 'rgba(255,255,255,0.15)'
+      : 'rgba(0,0,0,0.15)',
+    '--react-loading-color': color,
+    '--react-loading-opacity': isLoading ? 1 : 0,
+    '--react-not-loading-opacity': isLoading ? 0 : 1
   })
 
-  const renderProgress = useMemo(() => {
-    return data.map((d) => {
-      return (
+  const ref = useMergeRefs(a, b)
+
+  const SUM_VALUE = data.reduce((sum, d) => sum + d.value, 0)
+
+  const render = () => {
+    const nodes: ReactNode[] = []
+    let prevPercent = 0
+
+    for (const d of data) {
+      const currentPercent = (d.value / SUM_VALUE) * 100
+
+      nodes.push(
         <div
-          key={d.label}
-          css={childStyle({
-            weight,
-            color: d.color,
-            value: inView ? d.value : 1
-          })}
+          className={styles.progress}
+          style={{
+            backgroundColor: d.color,
+            transform:
+              `translateX(${inView ? prevPercent : 0}%)` +
+              ' ' +
+              `scaleX(${inView ? currentPercent : 0}%)`
+          }}
         ></div>
       )
-    })
-  }, [data, inView, weight])
 
-  const renderNumber = useMemo(() => {
-    return data.map((d) => {
-      return (
-        <div css={indicatorStyle(d.color)}>
-          {d.value}
-          {unit}
+      prevPercent = prevPercent + currentPercent
+    }
+
+    return nodes
+  }
+
+  const renderLabel = () => {
+    if (unit != null) {
+      return data.map((d) => (
+        <div>
+          <div
+            className={styles.marker}
+            style={{ backgroundColor: d.color }}
+          ></div>
+          <span className={styles.value}>{`${d.value} [${unit}]`}</span>
         </div>
-      )
-    })
-  }, [data, unit])
+      ))
+    } else {
+      return data.map((d) => (
+        <div>
+          <div className={styles.marker}></div>
+          <span className={styles.value}>{d.value}</span>
+        </div>
+      ))
+    }
+  }
 
   return (
-    <>
-      <div
-        ref={ref}
-        css={lineStyle({
-          weight,
-          color,
-          isLoading
-        })}
-      >
-        {renderProgress}
+    <div ref={ref} className={styles.wrapper}>
+      <div className={styles['progress-wrapper']}>
+        {render()}
+        <div className={styles.loading}></div>
       </div>
-      {!isLoading && <div css={indicatorContainerStyle}>{renderNumber}</div>}
-    </>
+      <div className={styles.label}>{renderLabel()}</div>
+    </div>
   )
 }
 
@@ -244,4 +163,4 @@ const MultiLineProgressComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const MultiLineProgress = React.memo(MultiLineProgressComponent)
+export const MultiLineProgress = React.memo(MultiLineProgressComponent, isEqual)
