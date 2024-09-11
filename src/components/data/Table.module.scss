@@ -1,0 +1,106 @@
+table.table {
+  width: fit-content;
+  max-width: 100%;
+  display: block;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+
+  &::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(138, 148, 191, 0.8);
+    border-radius: 3px;
+    opacity: 0.6;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f3f3f3;
+  }
+
+  th,
+  td {
+    padding: 12px 15px;
+    white-space: nowrap;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  tr {
+    animation-name: fade;
+    animation-duration: 400ms;
+    animation-fill-mode: both;
+  }
+
+  thead {
+    tr {
+      background-color: var(--react-color-fg);
+
+      text-align: left;
+
+      th {
+        color: var(--react-color-bg);
+        border-right: 1px dashed rgba(128, 128, 128, 0.4);
+
+        &::selection,
+        *::selection {
+          background-color: var(--react-color-bg);
+          color: var(--react-color-fg);
+        }
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+
+      transition: background-color 300ms;
+
+      &:nth-of-type(odd) {
+        background-color: var(--react-odd-color-bg);
+      }
+
+      &:nth-of-type(even) {
+        background-color: var(--react-even-color-bg);
+      }
+
+      &:hover {
+        background-color: var(--react-hover-color);
+      }
+
+      td {
+        color: var(--react-color-fg);
+        border-right: 1px dashed rgba(128, 128, 128, 0.4);
+
+        &:last-child {
+          border-right: none;
+        }
+
+        &::selection,
+        *::selection {
+          background-color: var(--react-color-fg);
+          color: var(--react-color-bg);
+        }
+      }
+    }
+  }
+}
