@@ -31,7 +31,7 @@ const RectangleWaveComponent = ({
   isDark = false,
   color = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)'
 }: RectangleWaveProps): JSX.Element => {
-  const { ref } = useCSSVariable<HTMLDivElement>({ '--react-color': color })
+  const { ref } = useCSSVariable({ '--react-color': color })
 
   return <div ref={ref} className={styles.wrapper}></div>
 }

@@ -4,7 +4,7 @@ interface CSSVariables {
   [key: string]: string | number
 }
 
-export const useCSSVariable = <T extends HTMLElement>(
+export const useCSSVariable = <T extends HTMLElement = HTMLDivElement>(
   initialVariables: CSSVariables
 ) => {
   const ref = useRef<T>(null)
