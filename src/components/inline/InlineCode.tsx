@@ -1,28 +1,6 @@
-/** @jsxImportSource @emotion/react */
-
 import React from 'react'
-import { css } from '@emotion/react'
-
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const style = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-  padding: 0.25rem 0.5rem;
-  background-color: rgba(128, 128, 128, 0.1);
-  border-radius: 0.25rem;
-  font-family: monospace;
-
-  &::selection {
-    background-color: ${isDark
-      ? 'rgba(255, 255, 255, 0.8)'
-      : 'rgba(0, 0, 0, 0.8)'};
-    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-  }
-`
+import styles from './InlineCode.module.scss'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
@@ -48,7 +26,16 @@ export interface InlineCodeProps {
 // # --------------------------------------------------------------------------------
 
 const InlineCodeComponent = ({ text, isDark = false }: InlineCodeProps) => {
-  return <code css={style({ isDark })}>{text}</code>
+  return (
+    <code
+      className={classNames(styles.code, {
+        [styles['react-dark']]: isDark,
+        [styles['react-light']]: !isDark
+      })}
+    >
+      {text}
+    </code>
+  )
 }
 
 // # --------------------------------------------------------------------------------
