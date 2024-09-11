@@ -4,18 +4,18 @@ import { RectangleWave } from './RectangleWave'
 const meta: Meta<typeof RectangleWave> = {
   title: 'Components/Fallback/RectangleWave',
   component: RectangleWave,
-  parameters: {}
+  args: { isDark: false }
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {},
-  render: () => {
+  args: { isDark: false },
+  render: (args) => {
     return (
       <div style={{ position: 'relative', width: '100%', height: 400 }}>
-        <RectangleWave />
+        <RectangleWave {...args} />
       </div>
     )
   }

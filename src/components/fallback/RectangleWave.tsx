@@ -15,9 +15,10 @@ import styles from './RectangleWave.module.scss'
 
 export interface RectangleWaveProps {
   /**
-   * **optional**
+   * Whether or not to use the dark theme
    */
-  color: string
+  isDark?: boolean
+  color?: string
 }
 
 // # --------------------------------------------------------------------------------
@@ -27,7 +28,8 @@ export interface RectangleWaveProps {
 // # --------------------------------------------------------------------------------
 
 const RectangleWaveComponent = ({
-  color = 'rgba(0,0,0,0.7)'
+  isDark = false,
+  color = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)'
 }: RectangleWaveProps): JSX.Element => {
   const { ref } = useCSSVariable<HTMLDivElement>({ '--react-color': color })
 
