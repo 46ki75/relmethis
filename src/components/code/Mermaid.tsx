@@ -1,32 +1,14 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { useEffect, useState } from 'react'
-import { css } from '@emotion/react'
+
 import mermaid from 'mermaid'
 
 import { ImageWithModal } from '../image/ImageWithModal'
-import { DotLoadingIcon } from '../icon/DotLoadingIcon'
+import { BlockFallback } from '../fallback/BlockFallback'
 
 import isEqual from 'react-fast-compare'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const fallbackStyle = css`
-  box-sizing: border-box;
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const mermaidStyle = ({ isLoading }: { isLoading: boolean }) => css`
-  opacity: ${isLoading ? 0 : 1};
-  transition: opacity 200ms ease-in-out 100ms;
-`
+import styles from './Mermaid.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 // # --------------------------------------------------------------------------------
 //
@@ -92,16 +74,14 @@ const MermaidComponent = ({
     renderChart()
   }, [code, isDark, securityLevel])
 
+  const { ref } = useCSSVariable({ '--react-opacity': isLoading ? 0 : 1 })
+
   if (isLoading) {
-    return (
-      <div css={fallbackStyle}>
-        <DotLoadingIcon size={32} color='rgba(128,128,128,0.5)' />
-      </div>
-    )
+    return <BlockFallback />
   }
 
   return svgBase64 ? (
-    <div css={mermaidStyle({ isLoading })}>
+    <div className={styles.mermaid} ref={ref}>
       <ImageWithModal src={svgBase64} alt='Mermaid Chart' />
     </div>
   ) : (
