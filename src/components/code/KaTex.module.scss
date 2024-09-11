@@ -1,0 +1,24 @@
+.error {
+  div {
+    .badge {
+      color: rgba(255, 255, 255, 0.8);
+      padding: 0 0.25rem;
+      border-radius: 0.25rem;
+      margin-right: 0.25rem;
+      background-color: #cd99a2;
+    }
+
+    .message {
+      color: #b36472;
+    }
+  }
+
+  code.code {
+    color: #b36472;
+  }
+}
+
+.katex {
+  margin: var(--react-margin);
+  color: var(--react-color);
+}

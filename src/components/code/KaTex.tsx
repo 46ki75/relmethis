@@ -1,43 +1,12 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { useEffect, useRef, useState } from 'react'
-import { css } from '@emotion/react'
 
 import katex from 'katex'
 import 'katex/dist/katex.min.css'
-import { rgba } from 'polished'
+
 import isEqual from 'react-fast-compare'
-
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const style = ({
-  display,
-  isDark
-}: {
-  display: boolean
-  isDark: boolean
-}) => css`
-  ${!display && 'margin-left: 0.5rem;'}
-  ${!display && 'margin-right: 0.5rem;'}
-  ${display && 'margin: 0.5rem;'}
-  color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-`
-
-const errorStyle = css`
-  color: rgba(255, 255, 255, 0.8);
-  padding: 0 0.25rem;
-  border-radius: 0.25rem;
-  margin-right: 0.25rem;
-  background-color: ${rgba('#b36472', 0.45)};
-`
-
-const errorMessageStyle = css`
-  color: #b36472;
-`
+import styles from './KaTex.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
 
 // # --------------------------------------------------------------------------------
 //
@@ -79,8 +48,16 @@ const KaTexComponent = ({
   isDark = false,
   throwOnError = display
 }: KaTexProps) => {
-  const targetRef = useRef<HTMLSpanElement>(null)
   const [error, setError] = useState<string | null>(null)
+
+  const targetRef = useRef<HTMLSpanElement>(null)
+
+  const { ref: cssVariableRef } = useCSSVariable({
+    '--react-margin': display ? '0.5rem' : '0rem 0.5rem 0rem 0.5rem',
+    '--react-color': isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'
+  })
+
+  const ref = useMergeRefs(targetRef, cssVariableRef)
 
   useEffect(() => {
     setError(null)
@@ -100,16 +77,16 @@ const KaTexComponent = ({
 
   return error ? (
     <>
-      <div>
-        <div title={error}>
-          <span css={errorStyle}>ERROR</span>
-          <span css={errorMessageStyle}>{error}</span>
+      <div className={styles.error}>
+        <div>
+          <span className={styles.badge}>ERROR</span>
+          <span className={styles.message}>{error}</span>
         </div>
-        <code>{equation}</code>
+        <code className={styles.code}>{equation}</code>
       </div>
     </>
   ) : (
-    <span ref={targetRef} css={style({ display, isDark })}></span>
+    <span ref={ref} className={styles.katex}></span>
   )
 }
 
