@@ -1,55 +1,9 @@
-/** @jsxImportSource @emotion/react */
-
-import { css, keyframes } from '@emotion/react'
 import React from 'react'
 
 import isEqual from 'react-fast-compare'
 
-// # --------------------------------------------------------------------------------
-//
-// Styles
-//
-// # --------------------------------------------------------------------------------
-
-const containerStyle = (size: number) => css`
-  position: relative;
-  width: ${size}px;
-  height: ${size}px;
-`
-
-const spin = keyframes`
-  0% {
-    transform: rotate(0deg) rotateY(0deg) scale(0);
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  80% {
-    opacity: 0;
-  }
-
-  100% {
-    transform: rotate(360deg) rotateY(400deg) scale(1);
-    opacity: 0;
-  }
-`
-
-const squareStyle = (color: string, delay: number) => css`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-
-  animation-name: ${spin};
-  animation-duration: 1.2s;
-  animation-iteration-count: infinite;
-  animation-fill-mode: both;
-  animation-delay: ${delay}ms;
-
-  border: solid 1px ${color};
-`
+import styles from './SquareLoadingIcon.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 // # --------------------------------------------------------------------------------
 //
@@ -59,18 +13,22 @@ const squareStyle = (color: string, delay: number) => css`
 
 interface SquareLoadingIconProps {
   /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
+  /**
    * **optional**
    *
    * Icon size. Specify the length of both the vertical and horizontal sides.
    * The vertical and horizontal sides should be of the same length.
    */
-  size: number
+  size?: number
   /**
    * **optional
    *
    * Specify the color of the icon.
    */
-  color: string
+  color?: string
 }
 
 // # --------------------------------------------------------------------------------
@@ -80,26 +38,21 @@ interface SquareLoadingIconProps {
 // # --------------------------------------------------------------------------------
 
 const SquareLoadingIconComponent = ({
-  size,
-  color
+  isDark = false,
+  color = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
+  size = 64
 }: SquareLoadingIconProps): JSX.Element => {
+  const { ref } = useCSSVariable({
+    '--react-size': size + 'px',
+    '--react-color': color
+  })
+
   return (
-    <div css={containerStyle(size)}>
-      <div css={squareStyle(color, 0)}></div>
-      <div css={squareStyle(color, 400)}></div>
+    <div ref={ref} className={styles.wrapper}>
+      <div></div>
+      <div></div>
     </div>
   )
-}
-
-// # --------------------------------------------------------------------------------
-//
-// Default Props
-//
-// # --------------------------------------------------------------------------------
-
-SquareLoadingIconComponent.defaultProps = {
-  size: 64,
-  color: 'rgb(22, 22, 22)'
 }
 
 // # --------------------------------------------------------------------------------
