@@ -1,15 +1,20 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
 
+import react from '@vitejs/plugin-react-swc'
 import dts from 'vite-plugin-dts'
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  plugins: [
+    react(),
+    dts({ tsconfigPath: './tsconfig.app.json' }),
+    cssInjectedByJsPlugin()
+  ],
   base: '/relmethis',
   build: {
-    cssCodeSplit: false, // Bundling CSS into JS
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'relmethis',
@@ -27,7 +32,6 @@ export default defineConfig({
       }
     }
   },
-  plugins: [react(), dts({ tsconfigPath: './tsconfig.app.json' })],
   css: {
     modules: {
       scopeBehaviour: 'local'
