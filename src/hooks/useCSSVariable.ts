@@ -4,8 +4,10 @@ interface CSSVariables {
   [key: string]: string | number
 }
 
-export const useCSSVariable = (initialVariables: CSSVariables) => {
-  const ref = useRef<HTMLElement>(null)
+export const useCSSVariable = <T extends HTMLElement>(
+  initialVariables: CSSVariables
+) => {
+  const ref = useRef<T>(null)
 
   useEffect(() => {
     const element = ref.current
