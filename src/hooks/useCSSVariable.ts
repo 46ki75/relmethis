@@ -5,7 +5,7 @@ interface CSSVariables {
 }
 
 export const useCSSVariable = (initialVariables: CSSVariables) => {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const element = ref.current
