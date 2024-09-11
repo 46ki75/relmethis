@@ -25,5 +25,10 @@ export default defineConfig({
       }
     }
   },
-  plugins: [react(), dts({ tsconfigPath: './tsconfig.app.json' })]
+  plugins: [react(), dts({ tsconfigPath: './tsconfig.app.json' })],
+  css: {
+    modules: {
+      scopeBehaviour: 'local'
+    }
+  }
 })
