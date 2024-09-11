@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './InlineCode.module.scss'
-import classNames from 'classnames'
+
 import { type Property } from 'csstype'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { getLuminance } from 'polished'
@@ -45,13 +45,7 @@ const InlineCodeComponent = ({
   })
 
   return (
-    <code
-      ref={ref}
-      className={classNames(styles.code, {
-        [styles['react-dark']]: isDark,
-        [styles['react-light']]: !isDark
-      })}
-    >
+    <code ref={ref} className={styles.code}>
       {text}
     </code>
   )
