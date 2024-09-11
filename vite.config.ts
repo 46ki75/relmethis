@@ -9,6 +9,7 @@ import path from 'path'
 export default defineConfig({
   base: '/relmethis',
   build: {
+    cssCodeSplit: false, // Bundling CSS into JS
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'relmethis',
@@ -22,7 +23,7 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'ReactDOM'
         },
-        assetFileNames: 'style.[ext]'
+        assetFileNames: `assets/[name].[ext]`
       }
     }
   },
