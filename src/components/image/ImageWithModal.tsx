@@ -130,7 +130,7 @@ export interface ImageWithModalProps {
    * Manages the loading state of the image. For example,
    * set it to `true` while asynchronously fetching the image URL.
    */
-  isLoading: boolean
+  isLoading?: boolean
   /**
    * Whether or not to use the dark theme
    */
