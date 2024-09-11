@@ -1,0 +1,44 @@
+.wrapper {
+  .summary {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    box-sizing: border-box;
+    padding: 0.75rem 1rem;
+    border: solid 1px rgba(128, 128, 128, 0.4);
+    border-radius: var(--react-border-radius, 0.25rem);
+
+    cursor: pointer;
+
+    transition: border-radius 400ms;
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      color: #59b57c;
+
+      transform: var(--react-icon-trandform, rotate(0deg));
+      transition: transform 100ms;
+    }
+  }
+
+  .details {
+    box-sizing: border-box;
+    padding: 0.75rem 1rem;
+    opacity: var(--react-details-opacity, 0);
+
+    border: solid 1px rgba(128, 128, 128, 0.4);
+    border-top: none;
+    border-radius: 0 0 0.25rem 0.25rem;
+
+    height: var(--react-details-height, 0px);
+    transform: var(--react-details-transform);
+    transform-origin: top;
+
+    transition:
+      opacity 400ms,
+      transform 400ms,
+      height 400ms;
+  }
+}
