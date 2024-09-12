@@ -1,4 +1,4 @@
-.wrapper {
+.alert {
   box-sizing: border-box;
   width: 100%;
   padding: 1rem;
@@ -14,7 +14,6 @@
   overflow: hidden;
 
   &::after {
-    z-index: -1;
     pointer-events: none;
     position: absolute;
     content: '';
@@ -27,7 +26,8 @@
     transform: translateX(var(--react-position));
   }
 
-  .header {
+  &__header {
+    z-index: 1;
     color: var(--react-selection-background-color);
     display: flex;
     flex-direction: row;
@@ -38,5 +38,9 @@
       color: var(--react-selection-color);
       background-color: var(--react-selection-background-color);
     }
+  }
+
+  &__children {
+    z-index: 1;
   }
 }

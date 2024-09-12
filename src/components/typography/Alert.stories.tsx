@@ -78,3 +78,19 @@ export const Nest: Story = {
     type: 'note'
   }
 }
+
+export const SelfNest: Story = {
+  args: {
+    children: (
+      <>
+        <div>Advises about risks or negative outcomes of certain actions.</div>
+        <Alert>
+          <div>
+            Advises about risks or negative outcomes of certain actions.
+          </div>
+        </Alert>
+      </>
+    ),
+    type: 'caution'
+  }
+}

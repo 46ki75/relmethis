@@ -92,12 +92,12 @@ export const AlertComponent = ({
   const ref = useMergeRefs(a, b)
 
   return (
-    <div className={styles.wrapper} ref={ref}>
-      <div className={styles.header}>
+    <div className={styles.alert} ref={ref}>
+      <div className={styles['alert__header']}>
         {icon}
         <div>{type.toUpperCase()}</div>
       </div>
-      <div>{children}</div>
+      <div className={styles['alert__children']}>{children}</div>
     </div>
   )
 }
