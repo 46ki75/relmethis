@@ -1,31 +1,16 @@
-/** @jsxImportSource @emotion/react */
-
 import React from 'react'
-import { css } from '@emotion/react'
+
 import { FragmentIdentifier } from './FragmentIdentifier'
-import { useScrollToHash } from '../../hooks/useScrollToHash'
 
 import isEqual from 'react-fast-compare'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
+import { useInView } from 'react-intersection-observer'
+import { useScrollToHash } from '../../hooks/useScrollToHash'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
 
-const style = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-  font-size: 1.3rem;
-  margin-block-start: 2rem;
-  margin-block-end: 0;
-
-  &::selection {
-    background-color: ${isDark
-      ? 'rgba(255, 255, 255, 0.8)'
-      : 'rgba(0, 0, 0, 0.8)'};
-    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-  }
-`
+import styles from './Heading4.module.scss'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
@@ -61,9 +46,26 @@ const Heading4Component = ({
 }: Heading4Props) => {
   useScrollToHash(identifier, 400)
 
+  const { ref: a, inView } = useInView()
+  const { ref: b } = useCSSVariable({
+    '--react-color-fg': isDark
+      ? 'rgba(255, 255, 255, 0.8)'
+      : 'rgba(0, 0, 0, 0.8)',
+    '--react-color-bg': isDark
+      ? 'rgba(0, 0, 0, 0.8)'
+      : 'rgba(255, 255, 255, 0.8)'
+  })
+  const ref = useMergeRefs(a, b)
+
   return (
-    <section id={identifier}>
-      <h4 css={style({ isDark })}>{text}</h4>
+    <section id={identifier} ref={ref} className={styles.section}>
+      <h4
+        className={classNames(styles['section__heading'], {
+          [styles['section__heading--visible']]: inView
+        })}
+      >
+        {text}
+      </h4>
       <FragmentIdentifier identifier={identifier} isDark={isDark} />
     </section>
   )
