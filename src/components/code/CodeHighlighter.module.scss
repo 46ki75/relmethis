@@ -1,5 +1,5 @@
 .code-highlighter {
-  all: initial;
+  opacity: 1;
 
   &__pre {
     transition: background-color var(--react-transition-duration, 400ms);
@@ -9,5 +9,9 @@
     transition:
       background-color var(--react-transition-duration, 400ms),
       color var(--react-transition-duration, 400ms);
+  }
+
+  &--loading {
+    opacity: 0;
   }
 }

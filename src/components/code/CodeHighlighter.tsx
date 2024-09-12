@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
 
 import Prism from 'prismjs'
@@ -8,6 +8,8 @@ import './prism-one-dark.scss'
 
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js'
+
+import 'prismjs/plugins/autoloader/prism-autoloader.js'
 
 import styles from './CodeHighlighter.module.scss'
 import classNames from 'classnames'
@@ -56,11 +58,13 @@ const CodeHighlighterComponent = ({
   isDark = typeof window !== 'undefined'
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false,
-  language = 'js',
+  language = 'ts',
   code,
   transitionDuration = 400,
   showNumber = false
 }: CodeHighlighterProps) => {
+  const [isLoading, setIsLoading] = useState(true)
+
   const { ref: cssRef } = useCSSVariable({
     '--react-transition-duration': transitionDuration + 'ms'
   })
@@ -68,9 +72,14 @@ const CodeHighlighterComponent = ({
   const codeRef = useRef(null)
 
   useEffect(() => {
+    setIsLoading(true)
+    Prism.plugins.autoloader.languages_path =
+      'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/'
+
     if (codeRef.current) {
       Prism.highlightElement(codeRef.current)
     }
+    setIsLoading(false)
   }, [code, showNumber])
 
   return (
@@ -78,7 +87,8 @@ const CodeHighlighterComponent = ({
       ref={cssRef}
       className={classNames(styles['code-highlighter'], {
         [`relmethis-codeblock-container-light`]: !isDark,
-        [`relmethis-codeblock-container-dark`]: isDark
+        [`relmethis-codeblock-container-dark`]: isDark,
+        [styles['code-highlighter--loading']]: isLoading
       })}
       style={style}
     >
@@ -94,7 +104,7 @@ const CodeHighlighterComponent = ({
             styles['code-highlighter__code']
           )}
         >
-          {code}
+          {code.trim()}
         </code>
       </pre>
     </div>
