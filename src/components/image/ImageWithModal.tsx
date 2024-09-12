@@ -9,6 +9,8 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 import styles from './ImageWithModal.module.scss'
 
+import { CSSTransition } from 'react-transition-group'
+
 // # --------------------------------------------------------------------------------
 //
 // props
@@ -90,12 +92,6 @@ const ImageWithModalComponent = ({
     }
   }, [lang])
 
-  const { ref: modalRef } = useCSSVariable({
-    '--react-modal-z-index': isModalShow ? 50 : -10,
-    '--react-modal-pointer-events': isModalShow ? 'all' : 'none',
-    '--react-modal-opacity': isModalShow ? 1 : 0
-  })
-
   const { ref: imageRef } = useCSSVariable<HTMLImageElement>({
     '--react-image-width': isLoading || isFetchingImage ? '0px' : '100%',
     '--react-image-height': isLoading || isFetchingImage ? '0px' : 'auto',
@@ -133,20 +129,37 @@ const ImageWithModalComponent = ({
         }}
       />
 
-      {/* Modal */}
-      {createPortal(
-        <div
-          ref={modalRef}
-          className={styles.modal}
-          onClick={() => {
-            setIsModalShow(false)
-          }}
-        >
-          <img alt={alt} src={src} />
-          <span>{guideText}</span>
-        </div>,
-        document.body
-      )}
+      <>
+        {createPortal(
+          <CSSTransition
+            in={isModalShow}
+            timeout={280}
+            classNames={{
+              enterActive: styles['modal__transition--enter-active'],
+              enterDone: styles['modal__transition--enter-done'],
+              exitActive: styles['modal__transition--exit-active']
+            }}
+            unmountOnExit
+          >
+            <div
+              className={styles.modal}
+              onClick={() => {
+                setIsModalShow(false)
+              }}
+            >
+              <img
+                alt={alt}
+                src={src}
+                className={styles['modal__modal-image']}
+              />
+              <span className={styles['modal__modal-guide-text']}>
+                {guideText}
+              </span>
+            </div>
+          </CSSTransition>,
+          document.body
+        )}
+      </>
     </>
   )
 }

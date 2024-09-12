@@ -42,28 +42,36 @@
   align-items: center;
 
   background-color: rgba(0, 0, 0, 0.8);
-
-  opacity: var(--react-modal-opacity, 0);
-  pointer-events: var(--react-modal-pointer-events, none);
   user-select: none;
   cursor: zoom-out;
 
-  transition: opacity 300ms;
+  transition: opacity 280ms;
+  opacity: 0;
 
-  * {
-    pointer-events: var(--react-modal-pointer-events, none);
-  }
-
-  img {
+  &__modal-image {
     max-width: 100%;
     max-height: 100%;
   }
 
-  span {
+  &__modal-guide-text {
     position: absolute;
     bottom: 0;
     right: 0;
     color: rgba(255, 255, 255, 0.6);
     font-size: 0.75rem;
+  }
+
+  // transition
+
+  &__transition--enter-active {
+    opacity: 1;
+  }
+
+  &__transition--enter-done {
+    opacity: 1;
+  }
+
+  &__transition--exit-active {
+    opacity: 0;
   }
 }
