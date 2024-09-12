@@ -17,6 +17,10 @@ import styles from './FullscreenFallback.module.scss'
 
 export interface FullscreenFallbackProps {
   style?: React.CSSProperties
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -25,9 +29,22 @@ export interface FullscreenFallbackProps {
 //
 // # --------------------------------------------------------------------------------
 
-const FullscreenFallbackComponent = ({ style }: FullscreenFallbackProps) => {
+const FullscreenFallbackComponent = ({
+  style,
+  isDark = typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-color-scheme: dark)').matches
+    : false
+}: FullscreenFallbackProps) => {
   return createPortal(
-    <div className={styles.wrapper} style={style}>
+    <div
+      className={styles['full-screen-fallback']}
+      style={{
+        backgroundColor: isDark
+          ? 'rgb(25.5, 25.5, 25.5)'
+          : 'rgb(229.5, 229.5, 229.5)',
+        ...style
+      }}
+    >
       <RectangleWave color='rgba(128,128,128,0.8)' />
       <DotLoadingIcon size={64} color='rgba(128,128,128,0.8)' />
     </div>,
