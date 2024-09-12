@@ -40,6 +40,38 @@ import 'prismjs/plugins/diff-highlight/prism-diff-highlight.js'
 
 // # --------------------------------------------------------------------------------
 //
+// utils
+//
+// # --------------------------------------------------------------------------------
+
+function generatePrismDiff(oldCode: string, newCode: string): string {
+  const oldLines = oldCode.split('\n')
+  const newLines = newCode.split('\n')
+  const maxLength = Math.max(oldLines.length, newLines.length)
+
+  let diffResult = ''
+
+  for (let i = 0; i < maxLength; i++) {
+    const oldLine = oldLines[i] || ''
+    const newLine = newLines[i] || ''
+
+    if (oldLine === newLine) {
+      diffResult += ` ${oldLine}\n`
+    } else {
+      if (oldLine) {
+        diffResult += `-${oldLine}\n`
+      }
+      if (newLine) {
+        diffResult += `+${newLine}\n`
+      }
+    }
+  }
+
+  return diffResult.trim()
+}
+
+// # --------------------------------------------------------------------------------
+//
 // props
 //
 // # --------------------------------------------------------------------------------
@@ -61,6 +93,12 @@ export interface CodeHighlighterProps {
    * The content of the code
    */
   code: string
+
+  /**
+   * Used for creating a diff. If this prop is provided, the language will be
+   * forced to `'diff'`.
+   */
+  oldCode?: string
 
   /**
    * Transition duration (in milliseconds) for theme changes
@@ -91,8 +129,9 @@ const CodeHighlighterComponent = ({
   isDark = typeof window !== 'undefined'
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false,
-  language = 'ts',
   code,
+  oldCode,
+  language = oldCode != null ? 'diff' : 'txt',
   transitionDuration = 400,
   showNumber = false,
   highlightLines = []
@@ -139,7 +178,9 @@ const CodeHighlighterComponent = ({
             styles['code-highlighter__code']
           )}
         >
-          {code.trim()}
+          {oldCode != null
+            ? generatePrismDiff(oldCode.trim(), code.trim())
+            : code.trim()}
         </code>
       </pre>
     </div>

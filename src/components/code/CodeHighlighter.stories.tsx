@@ -81,3 +81,15 @@ const diff = `
 export const Diff: Story = {
   args: { code: diff, language: 'diff' }
 }
+
+const oldCode = `const a = 10;
+const b = 20;
+console.log(a + b);`
+
+const newCode = `const a = 10;
+const b = 30;
+console.log(a + b);`
+
+export const DiffWithUtils: Story = {
+  args: { code: newCode, oldCode }
+}
