@@ -19,20 +19,22 @@ export const useWindowScroll = (options?: { throttle?: number }): State => {
     })
   }
 
-  const throttledHandleScroll = options?.throttle
-    ? throttle(handleScroll, options.throttle)
-    : null
-
   useEffect(() => {
-    const scrollHandler = throttledHandleScroll || handleScroll
+    // スロットリングされた関数を useEffect 内で定義
+    const scrollHandler = options?.throttle
+      ? throttle(handleScroll, options.throttle)
+      : handleScroll
+
     window.addEventListener('scroll', scrollHandler)
+
     return () => {
       window.removeEventListener('scroll', scrollHandler)
-      if (throttledHandleScroll) {
-        throttledHandleScroll.cancel()
+      if (options?.throttle) {
+        // eslint-disable-next-line no-extra-semi
+        ;(scrollHandler as ReturnType<typeof throttle>).cancel()
       }
     }
-  }, [throttledHandleScroll])
+  }, [options?.throttle])
 
   return scrollPosition
 }
