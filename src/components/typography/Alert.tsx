@@ -1,6 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
-import { css } from '@emotion/react'
 import {
   ChartBarSquareIcon,
   ExclamationTriangleIcon,
@@ -12,58 +9,10 @@ import isEqual from 'react-fast-compare'
 import { darken, lighten, rgba } from 'polished'
 import React, { useMemo } from 'react'
 import { useInView } from 'react-intersection-observer'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
 
-// # --------------------------------------------------------------------------------
-//
-// style
-//
-// # --------------------------------------------------------------------------------
-
-const wrapperStyle = ({
-  color,
-  inView
-}: {
-  color: string
-  inView: boolean
-}) => css`
-  box-sizing: border-box;
-  width: 100%;
-  padding: 1rem;
-  margin-block: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  border-left: solid 4px ${darken(0.1, color)};
-  background: linear-gradient(
-    to left,
-    rgba(0, 0, 0, 0) 0% 50%,
-    ${lighten(0.15, rgba(color, 0.2))} 50% 100%
-  );
-  background-size: 200% 100%;
-  background-position: ${inView ? 0 : 100}%;
-
-  transition: background-position 600ms;
-`
-
-const headerStyle = ({
-  isDark,
-  color
-}: {
-  isDark: boolean
-  color: string
-}) => css`
-  color: ${darken(0.05, color)};
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
-
-  *::selection {
-    background-color: ${isDark ? lighten(0.1, color) : darken(0.1, color)};
-    color: ${!isDark ? lighten(0.3, color) : darken(0.3, color)};
-  }
-`
+import styles from './Alert.module.scss'
 
 // # --------------------------------------------------------------------------------
 //
@@ -126,11 +75,25 @@ export const AlertComponent = ({
     }
   }, [type])
 
-  const { ref, inView } = useInView()
+  const { ref: a, inView } = useInView()
+
+  const { ref: b } = useCSSVariable({
+    '--react-background-color': lighten(0.15, rgba(color, 0.2)),
+    '--react-border-color': darken(0.1, color),
+    '--react-position': `${inView ? 0 : -100}%`,
+    '--react-selection-color': isDark
+      ? darken(0.3, color)
+      : lighten(0.3, color),
+    '--react-selection-background-color': isDark
+      ? lighten(0.1, color)
+      : darken(0.1, color)
+  })
+
+  const ref = useMergeRefs(a, b)
 
   return (
-    <div css={wrapperStyle({ color, inView })} ref={ref}>
-      <div css={headerStyle({ color, isDark })}>
+    <div className={styles.wrapper} ref={ref}>
+      <div className={styles.header}>
         {icon}
         <div>{type.toUpperCase()}</div>
       </div>
