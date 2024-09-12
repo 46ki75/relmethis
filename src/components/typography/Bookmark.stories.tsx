@@ -4,7 +4,8 @@ import { Bookmark } from './Bookmark'
 const meta: Meta<typeof Bookmark> = {
   title: 'Components/Typography/Bookmark',
   component: Bookmark,
-  tags: ['autodocs']
+  tags: ['autodocs'],
+  args: { isDark: false }
 }
 
 export default meta
