@@ -93,3 +93,18 @@ console.log(a + b);`
 export const DiffWithUtils: Story = {
   args: { code: newCode, oldCode }
 }
+
+const tree = `
+/home/shirayuki/sandbox/vite-project/src//
+├── App.css
+├── App.tsx
+├── assets/
+│   └── react.svg
+├── index.css
+├── main.tsx
+└── vite-env.d.ts
+`
+
+export const Tree: Story = {
+  args: { code: tree, language: 'treeview' }
+}

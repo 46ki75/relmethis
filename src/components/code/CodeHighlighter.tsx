@@ -35,8 +35,13 @@ import 'prismjs/plugins/autoloader/prism-autoloader.js'
 import 'prismjs/plugins/previewers/prism-previewers.css'
 import 'prismjs/plugins/previewers/prism-previewers.js'
 
+// diff-highlight
 import 'prismjs/plugins/diff-highlight/prism-diff-highlight.css'
 import 'prismjs/plugins/diff-highlight/prism-diff-highlight.js'
+
+// treeview
+import 'prismjs/plugins/treeview/prism-treeview.css'
+import 'prismjs/plugins/treeview/prism-treeview.js'
 
 // # --------------------------------------------------------------------------------
 //
@@ -86,6 +91,11 @@ export interface CodeHighlighterProps {
 
   /**
    * Programming language. Affects syntax highlighting.
+   *
+   * ## 特殊な言語
+   *
+   * - `treeview`: ファイルのツリービューを生成します。 `tree -F` コマンドで生成された出力が対象です。
+   * - `diff`: コードの差分をハイライトします。 `code` と `oldCode` に値を渡すと自動で diff を生成してハイライトします。
    */
   language?: string
 
