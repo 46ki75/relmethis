@@ -1,75 +1,20 @@
-/** @jsxImportSource @emotion/react */
-
-import { css } from '@emotion/react'
 import React from 'react'
 import { useInView } from 'react-intersection-observer'
 import { FragmentIdentifier } from './FragmentIdentifier'
 import { useScrollToHash } from '../../hooks/useScrollToHash'
 
 import isEqual from 'react-fast-compare'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
+
+import styles from './Heading1.module.scss'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
 // styles
 //
 // # --------------------------------------------------------------------------------
-
-const h1Style = ({
-  inView,
-  isDark
-}: {
-  inView: boolean
-  isDark: boolean
-}) => css`
-  margin-block-start: 1rem;
-  box-sizing: border-box;
-  padding: 0.5rem 1rem;
-  color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-  font-size: 1.6rem;
-
-  transition: opacity 400ms;
-
-  opacity: ${inView ? 1 : 0};
-
-  position: relative;
-
-  &::before {
-    position: absolute;
-    content: '';
-    bottom: 0;
-    left: ${inView ? '45%' : '50%'};
-    width: ${inView ? '10%' : '0%'};
-    height: 3px;
-    background-color: ${isDark
-      ? 'rgba(255, 255, 255, 0.8)'
-      : 'rgba(0, 0, 0, 0.8)'};
-
-    transition:
-      left 400ms ease-in-out 0ms,
-      height 400ms ease-in-out 0ms,
-      width 400ms ease-in-out 0ms;
-  }
-
-  &::after {
-    position: absolute;
-    content: '';
-    left: 0;
-    bottom: 0;
-    width: ${inView ? '100%' : '0%'};
-
-    border-bottom: solid 1px
-      ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-
-    transition: width 400ms ease-in-out 200ms;
-
-    pointer-events: none;
-  }
-
-  &::selection {
-    background: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-  }
-`
 
 // # --------------------------------------------------------------------------------
 //
@@ -103,13 +48,27 @@ export const Heading1Component = ({
   identifier = text,
   isDark = false
 }: Heading1Props) => {
-  const { ref, inView } = useInView()
+  const { ref: a, inView } = useInView()
+  const { ref: b } = useCSSVariable({
+    '--react-color-fg': isDark
+      ? 'rgba(255, 255, 255, 0.8)'
+      : 'rgba(0, 0, 0, 0.8)',
+    '--react-color-bg': isDark
+      ? 'rgba(0, 0, 0, 0.8)'
+      : 'rgba(255, 255, 255, 0.8)'
+  })
+  const ref = useMergeRefs(a, b)
 
   useScrollToHash(identifier, 100)
 
   return (
-    <section id={identifier}>
-      <h1 css={h1Style({ inView, isDark })} ref={ref}>
+    <section id={identifier} className={styles.section}>
+      <h1
+        ref={ref}
+        className={classNames(styles['section__heading'], {
+          [styles['section__heading--visible']]: inView
+        })}
+      >
         {text}
       </h1>
       <FragmentIdentifier identifier={identifier} isDark={isDark} />
