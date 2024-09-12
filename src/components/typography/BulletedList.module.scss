@@ -1,0 +1,37 @@
+.wrapper {
+  color: var(--react-color-fg);
+  opacity: var(--react-color);
+  transition: opacity 800ms;
+  box-sizing: border-box;
+  padding-left: 1.25rem;
+
+  li {
+    box-sizing: border-box;
+    padding-left: 0.5rem;
+    margin-block: 0.75rem;
+
+    &::marker {
+      content: var(--react-marker-1);
+    }
+
+    ul {
+      li {
+        &::marker {
+          content: var(--react-marker-2);
+        }
+        ul {
+          li {
+            &::marker {
+              content: var(--react-marker-3);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  *::selection {
+    background-color: var(--react-color-fg);
+    color: var(--react-color-bg);
+  }
+}
