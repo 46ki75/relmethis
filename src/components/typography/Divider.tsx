@@ -1,61 +1,12 @@
-/** @jsxImportSource @emotion/react */
-
-import { css } from '@emotion/react'
 import React from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import isEqual from 'react-fast-compare'
 
-// # --------------------------------------------------------------------------------
-//
-// Styles
-//
-// # --------------------------------------------------------------------------------
-
-const containerStyle = css`
-  width: 100%;
-  margin-block: 1rem;
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-`
-
-const dividerStyle = (flag: boolean, color: string, inView: boolean) => css`
-  position: relative;
-
-  height: 1px;
-  background-color: ${color};
-
-  width: ${inView ? (flag ? '46%' : '100%') : '0%'};
-
-  transition: width 1200ms;
-
-  &::before {
-    position: absolute;
-    content: '';
-    top: calc(50% - 2.5px);
-    left: 0;
-    height: 5px;
-    width: 5px;
-    background-color: ${color};
-    border-radius: 50%;
-  }
-
-  &::after {
-    position: absolute;
-    content: '';
-    top: calc(50% - 2.5px);
-    right: 0;
-    height: 5px;
-    width: 5px;
-    background-color: ${color};
-    border-radius: 50%;
-  }
-`
+import styles from './Divider.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
@@ -91,20 +42,44 @@ interface DividerProps {
 
 const DividerComponent = ({
   text,
-  color = 'rgba(128,128,128,0.4)'
+  color = 'gray'
 }: DividerProps): JSX.Element => {
-  const { ref, inView } = useInView()
+  const { ref: a, inView } = useInView()
+  const { ref: b } = useCSSVariable({
+    '--react-color': color,
+    '--react-transform': `scaleX(${inView ? 1 : 0})`
+  })
+  const ref = useMergeRefs(a, b)
 
   return (
-    <div css={containerStyle} ref={ref}>
+    <div className={styles.wrapper} ref={ref}>
       {text != null ? (
-        <>
-          <div css={dividerStyle(true, color, inView)}></div>
-          <div style={{ color }}>{text}</div>
-          <div css={dividerStyle(true, color, inView)}></div>
-        </>
+        <div className={styles['with-text-container']}>
+          <div
+            className={classNames(
+              styles['with-text'],
+              styles['with-text-left']
+            )}
+          >
+            <div className={classNames(styles.dot, styles.left)}></div>
+            <div className={classNames(styles.dot, styles.right)}></div>
+          </div>
+          <div>{text}</div>
+          <div
+            className={classNames(
+              styles['with-text'],
+              styles['with-text-right']
+            )}
+          >
+            <div className={classNames(styles.dot, styles.left)}></div>
+            <div className={classNames(styles.dot, styles.right)}></div>
+          </div>
+        </div>
       ) : (
-        <div css={dividerStyle(false, color, inView)}></div>
+        <div className={styles.simple}>
+          <div className={classNames(styles.dot, styles.left)}></div>
+          <div className={classNames(styles.dot, styles.right)}></div>
+        </div>
       )}
     </div>
   )
