@@ -1,59 +1,13 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { ReactNode } from 'react'
-import { css } from '@emotion/react'
+
 import { useInView } from 'react-intersection-observer'
 
 import isEqual from 'react-fast-compare'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const style = ({ isDark, inView }: { isDark: boolean; inView: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-  opacity: ${inView ? 1 : 0};
-  transition: opacity 800ms;
-  box-sizing: border-box;
-  padding-left: 1.25rem;
-
-  li {
-    box-sizing: border-box;
-    padding-left: 0.25rem;
-    margin-block: 0.75rem;
-    margin-left: 0.25rem;
-
-    list-style-type: decimal;
-    &::marker {
-      color: #9771bd;
-    }
-
-    ol {
-      li {
-        list-style-type: lower-alpha;
-        ol {
-          li {
-            list-style-type: lower-roman;
-            ol {
-              li {
-                list-style-type: lower-greek;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  *::selection {
-    background-color: ${isDark
-      ? 'rgba(255, 255, 255, 0.8)'
-      : 'rgba(0, 0, 0, 0.8)'};
-    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-  }
-`
+import styles from './NumberedList.module.scss'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
@@ -79,12 +33,28 @@ const NumberedListComponent: React.FC<NumberedListProps> = ({
   children,
   isDark = false
 }) => {
-  const { ref, inView } = useInView()
+  const { ref: a, inView } = useInView()
+  const { ref: b } = useCSSVariable({
+    '--react-color-fg': isDark
+      ? 'rgba(255, 255, 255, 0.7)'
+      : 'rgba(0, 0, 0, 0.7)',
+    '--react-color-bg': isDark
+      ? 'rgba(0, 0, 0, 0.7)'
+      : 'rgba(255, 255, 255, 0.7)'
+  })
+  const ref = useMergeRefs(a, b)
 
   return (
-    <ol css={style({ isDark, inView })} ref={ref}>
+    <ol
+      className={classNames(styles['numberedlist'], {
+        [styles['numberedlist--visible']]: inView
+      })}
+      ref={ref}
+    >
       {React.Children.map(children, (child, index) => (
-        <li key={index}>{child}</li>
+        <li key={index} className={styles['numberedlist__item']}>
+          {child}
+        </li>
       ))}
     </ol>
   )

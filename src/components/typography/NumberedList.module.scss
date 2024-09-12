@@ -1,0 +1,45 @@
+.numberedlist {
+  color: var(--react-color-fg);
+  transition: opacity 800ms;
+  box-sizing: border-box;
+  padding-left: 1.25rem;
+
+  opacity: 0;
+
+  &--visible {
+    opacity: 1;
+  }
+
+  .numberedlist__item {
+    box-sizing: border-box;
+    padding-left: 0.25rem;
+    margin-block: 0.75rem;
+    margin-left: 0.25rem;
+
+    list-style-type: decimal;
+    &::marker {
+      color: #9771bd;
+    }
+
+    .numberedlist {
+      .numberedlist__item {
+        list-style-type: lower-alpha;
+        .numberedlist {
+          .numberedlist__item {
+            list-style-type: lower-roman;
+            .numberedlist {
+              .numberedlist__item {
+                list-style-type: lower-greek;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  *::selection {
+    background-color: var(--react-color-fg);
+    color: var(--react-color-bg);
+  }
+}
