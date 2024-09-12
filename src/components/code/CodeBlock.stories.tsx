@@ -65,9 +65,6 @@ export const Katex: Story = {
 }
 
 const long = `
-/** @jsxImportSource @emotion/react */
-
-import { css } from '@emotion/react'
 import {
   ChartBarSquareIcon,
   ExclamationTriangleIcon,
