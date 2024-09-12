@@ -1,0 +1,37 @@
+.fragment-identifier {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 0.5rem;
+
+  &__copiedtext {
+    color: #59b57c;
+    transition: opacity 400ms;
+    user-select: none;
+
+    opacity: 0;
+
+    &--visible {
+      opacity: 1;
+    }
+  }
+
+  &__icon {
+    box-sizing: border-box;
+    padding: 2px;
+    border-radius: 2px;
+    width: 20px;
+    height: 20px;
+    color: #6987b8;
+
+    cursor: pointer;
+
+    transition: background-color 200ms;
+
+    &:hover {
+      background-color: rgba(128, 128, 128, 0.2);
+    }
+  }
+}

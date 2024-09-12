@@ -1,7 +1,4 @@
-/** @jsxImportSource @emotion/react */
-
 import React from 'react'
-import { css } from '@emotion/react'
 
 // icons
 import { HashtagIcon, LinkIcon } from '@heroicons/react/24/outline'
@@ -11,44 +8,8 @@ import { useCopy } from '../../hooks/useCopy'
 
 import isEqual from 'react-fast-compare'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const wrapperStyle = css`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
-  gap: 0.5rem;
-`
-
-const iconStyle = css`
-  box-sizing: border-box;
-  padding: 2px;
-  border-radius: 2px;
-  width: 20px;
-  height: 20px;
-  color: #6987b8;
-
-  cursor: pointer;
-
-  transition: background-color 200ms;
-
-  &:hover {
-    background-color: rgba(128, 128, 128, 0.2);
-  }
-`
-
-const copiedtextStyle = ({ isShow }: { isShow: boolean }) => css`
-  color: #59b57c;
-  opacity: ${isShow ? 1 : 0};
-  transition: opacity 400ms;
-  user-select: none;
-`
+import styles from './FragmentIdentifier.module.scss'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
@@ -86,24 +47,33 @@ const FragmentIdentifierComponent = ({
   const { copy, isCopied } = useCopy()
 
   return (
-    <div css={wrapperStyle}>
-      <span css={copiedtextStyle({ isShow: isCopied })}>
+    <div className={styles['fragment-identifier']}>
+      <span
+        className={classNames(styles['fragment-identifier__copiedtext'], {
+          [styles['fragment-identifier__copiedtext--visible']]: isCopied
+        })}
+      >
         Link has been copied!
       </span>
+
       <SimpleTooltip
         content='Jump to a link with a fragment modifier'
         place='bottom'
         isDark={isDark}
       >
-        <HashtagIcon css={iconStyle} onClick={scrollToIdentifier} />
+        <HashtagIcon
+          className={styles['fragment-identifier__icon']}
+          onClick={scrollToIdentifier}
+        />
       </SimpleTooltip>
+
       <SimpleTooltip
         content='Copy a link with a fragment modifier'
         place='bottom'
         isDark={isDark}
       >
         <LinkIcon
-          css={iconStyle}
+          className={styles['fragment-identifier__icon']}
           onClick={() => {
             copy(`${window.location.href.split('#')[0]}#${identifier}`)
           }}
