@@ -1,38 +1,20 @@
-/** @jsxImportSource @emotion/react */
-
 import React from 'react'
-import { css } from '@emotion/react'
 import { FragmentIdentifier } from './FragmentIdentifier'
 import { useScrollToHash } from '../../hooks/useScrollToHash'
 
 import isEqual from 'react-fast-compare'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+
+import styles from './Heading3.module.scss'
+import { useInView } from 'react-intersection-observer'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
 // styles
 //
 // # --------------------------------------------------------------------------------
-
-const headingStyle = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-  padding: 0 0 0.25rem 0.5rem;
-  font-size: 1.4rem;
-  margin-block-start: 2rem;
-
-  position: relative;
-
-  border-left: solid 3px
-    ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-  border-bottom: dotted 1px
-    ${isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'};
-
-  &::selection {
-    background-color: ${isDark
-      ? 'rgba(255, 255, 255, 0.8)'
-      : 'rgba(0, 0, 0, 0.8)'};
-    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-  }
-`
 
 // # --------------------------------------------------------------------------------
 //
@@ -68,9 +50,28 @@ export const Heading3Component = ({
 }: Heading3Props) => {
   useScrollToHash(identifier, 300)
 
+  const { ref: a, inView } = useInView()
+
+  const { ref: b } = useCSSVariable({
+    '--react-color-fg': isDark
+      ? 'rgba(255, 255, 255, 0.8)'
+      : 'rgba(0, 0, 0, 0.8)',
+    '--react-color-bg': isDark
+      ? 'rgba(0, 0, 0, 0.8)'
+      : 'rgba(255, 255, 255, 0.8)'
+  })
+
+  const ref = useMergeRefs(a, b)
+
   return (
-    <section id={identifier}>
-      <h3 css={headingStyle({ isDark })}>{text}</h3>
+    <section className={styles.section} id={identifier} ref={ref}>
+      <h3
+        className={classNames(styles['section__heading'], {
+          [styles['section__heading--visible']]: inView
+        })}
+      >
+        {text}
+      </h3>
       <FragmentIdentifier identifier={identifier} isDark={isDark} />
     </section>
   )
