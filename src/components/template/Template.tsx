@@ -9,7 +9,7 @@ import styles from './Template.module.scss'
 // # --------------------------------------------------------------------------------
 
 export interface TemplateProps {
-  style: React.CSSProperties
+  style?: React.CSSProperties
 
   /**
    * Whether or not to use the dark theme
