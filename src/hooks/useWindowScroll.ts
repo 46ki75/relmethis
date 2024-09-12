@@ -20,7 +20,6 @@ export const useWindowScroll = (options?: { throttle?: number }): State => {
   }
 
   useEffect(() => {
-    // スロットリングされた関数を useEffect 内で定義
     const scrollHandler = options?.throttle
       ? throttle(handleScroll, options.throttle)
       : handleScroll
