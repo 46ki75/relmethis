@@ -6,4 +6,7 @@
   transition: opacity var(--react-animation-duration) ease 50ms;
   user-select: var(--react-event);
   pointer-events: var(--react-event);
+
+  top: var(--react-position-top);
+  left: var(--react-position-left);
 }

@@ -171,7 +171,9 @@ const TooltipComponent = ({
     '--react-margin-double': margin * 2 + 'px',
     '--react-opacity': visible ? 1 : 0,
     '--react-animation-duration': animationDuration + 'ms',
-    '--react-event': visible ? 'all' : 'none'
+    '--react-event': visible ? 'all' : 'none',
+    '--react-position-top': `${tooltipFinalTopPosition}px`,
+    '--react-position-left': `${adjustedLeftPosition}px`
   })
 
   const mergedRef = useMergeRefs(tooltipRef, CSSVariableRef)
@@ -180,15 +182,7 @@ const TooltipComponent = ({
     <>
       {clonedChildren}
       {createPortal(
-        <div
-          ref={mergedRef}
-          className={styles.tooltip}
-          style={{
-            position: 'fixed',
-            top: tooltipFinalTopPosition,
-            left: adjustedLeftPosition
-          }}
-        >
+        <div ref={mergedRef} className={styles.tooltip}>
           {tooltipComponent}
         </div>,
         document.body
