@@ -3,9 +3,12 @@ import isEqual from 'react-fast-compare'
 
 import Prism from 'prismjs'
 
-import './prism-one-common.scss'
 import './prism-one-light.scss'
 import './prism-one-dark.scss'
+
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+import 'prismjs/plugins/line-numbers/prism-line-numbers.js'
+
 import styles from './CodeHighlighter.module.scss'
 import classNames from 'classnames'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
@@ -38,6 +41,8 @@ export interface CodeHighlighterProps {
    * Transition duration (in milliseconds) for theme changes
    */
   transitionDuration?: number
+
+  showNumber?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -53,7 +58,8 @@ const CodeHighlighterComponent = ({
     : false,
   language = 'js',
   code,
-  transitionDuration = 400
+  transitionDuration = 400,
+  showNumber = false
 }: CodeHighlighterProps) => {
   const { ref: cssRef } = useCSSVariable({
     '--react-transition-duration': transitionDuration + 'ms'
@@ -65,7 +71,7 @@ const CodeHighlighterComponent = ({
     if (codeRef.current) {
       Prism.highlightElement(codeRef.current)
     }
-  }, [code])
+  }, [code, showNumber])
 
   return (
     <div
@@ -76,7 +82,11 @@ const CodeHighlighterComponent = ({
       })}
       style={style}
     >
-      <pre className={styles['code-highlighter__pre']}>
+      <pre
+        className={classNames(styles['code-highlighter__pre'], {
+          ['line-numbers']: showNumber
+        })}
+      >
         <code
           ref={codeRef}
           className={classNames(
