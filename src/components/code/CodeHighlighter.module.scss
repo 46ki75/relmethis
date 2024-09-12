@@ -2,12 +2,12 @@
   all: initial;
 
   &__pre {
-    transition: background-color 400ms;
+    transition: background-color var(--react-transition-duration, 400ms);
   }
 
   &__code {
     transition:
-      background-color 400ms,
-      color 400ms;
+      background-color var(--react-transition-duration, 400ms),
+      color var(--react-transition-duration, 400ms);
   }
 }

@@ -8,6 +8,7 @@ import './prism-one-light.scss'
 import './prism-one-dark.scss'
 import styles from './CodeHighlighter.module.scss'
 import classNames from 'classnames'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 // # --------------------------------------------------------------------------------
 //
@@ -23,9 +24,20 @@ export interface CodeHighlighterProps {
    */
   isDark?: boolean
 
+  /**
+   * Programming language. Affects syntax highlighting.
+   */
   language?: string
 
+  /**
+   * The content of the code
+   */
   code: string
+
+  /**
+   * Transition duration (in milliseconds) for theme changes
+   */
+  transitionDuration?: number
 }
 
 // # --------------------------------------------------------------------------------
@@ -40,8 +52,13 @@ const CodeHighlighterComponent = ({
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false,
   language = 'js',
-  code
+  code,
+  transitionDuration = 400
 }: CodeHighlighterProps) => {
+  const { ref: cssRef } = useCSSVariable({
+    '--react-transition-duration': transitionDuration + 'ms'
+  })
+
   const codeRef = useRef(null)
 
   useEffect(() => {
@@ -52,6 +69,7 @@ const CodeHighlighterComponent = ({
 
   return (
     <div
+      ref={cssRef}
       className={classNames(styles['code-highlighter'], {
         [`relmethis-codeblock-container-light`]: !isDark,
         [`relmethis-codeblock-container-dark`]: isDark
