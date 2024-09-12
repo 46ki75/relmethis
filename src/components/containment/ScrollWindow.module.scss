@@ -1,0 +1,15 @@
+.scroll-window {
+  box-sizing: border-box;
+  padding: 1.5rem;
+  width: 400px;
+  height: 400px;
+  box-shadow: 0 0 2px gray;
+  overflow-x: scroll;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
+  &::-webkit-scrollbar {
+    width: 0; /* Chrome, Safari */
+    height: 0;
+  }
+}
