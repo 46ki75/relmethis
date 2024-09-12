@@ -63,9 +63,8 @@ export const Heading1Component = ({
   useScrollToHash(identifier, 100)
 
   return (
-    <section id={identifier} className={styles.section}>
+    <section ref={ref} id={identifier} className={styles.section}>
       <h1
-        ref={ref}
         className={classNames(styles['section__heading'], {
           [styles['section__heading--visible']]: inView
         })}
