@@ -67,8 +67,6 @@ export * from './components/typography/Heading6'
 export * from './components/typography/NumberedList'
 export * from './components/typography/Paragraph'
 
-export * from './components/template/Sample'
-
 // # --------------------------------------------------------------------------------
 //
 // hooks
