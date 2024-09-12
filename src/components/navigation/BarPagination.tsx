@@ -1,64 +1,11 @@
-/** @jsxImportSource @emotion/react */
-
 import React from 'react'
-import { css } from '@emotion/react'
 
 import isEqual from 'react-fast-compare'
 
+import styles from './BarPagination.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+
 // # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const wrapperStyle = css`
-  width: 100%;
-  display: flex;
-  gap: 2px;
-`
-
-const barStyle = ({
-  isDark,
-  isActive
-}: {
-  isDark: boolean
-  isActive: boolean
-}) => css`
-  width: 100%;
-  height: 24px;
-
-  opacity: ${isActive ? 1 : 0.2};
-  cursor: pointer;
-
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0% 40%,
-    ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'} 40% 60%,
-    rgba(0, 0, 0, 0) 60% 100%
-  );
-
-  transition: opacity 400ms;
-
-  &:hover {
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0% 40%,
-      ${isActive ? '' : '#6987b8'} 40% 60%,
-      rgba(0, 0, 0, 0) 60% 100%
-    );
-    opacity: 1;
-  }
-
-  &:active {
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0% 40%,
-      ${isActive ? '' : '#59b57c'} 40% 60%,
-      rgba(0, 0, 0, 0) 60% 100%
-    );
-    opacity: 1;
-  }
-` // # --------------------------------------------------------------------------------
 //
 // props
 //
@@ -97,12 +44,16 @@ const BarPaginationComponent = ({
   currentPage,
   setCurrentPage
 }: BarPaginationProps) => {
+  const { ref } = useCSSVariable({
+    '--react-color': isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'
+  })
+
   return (
-    <nav css={wrapperStyle}>
+    <nav className={styles.wrapper} ref={ref}>
       {new Array(length).fill(null).map((_, index) => (
         <div
           key={index}
-          css={barStyle({ isDark, isActive: currentPage === index + 1 })}
+          className={currentPage === index + 1 ? styles['current-page'] : ''}
           onClick={() => {
             setCurrentPage(index + 1)
           }}
