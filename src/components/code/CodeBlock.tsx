@@ -75,6 +75,12 @@ interface CodeBlockProps {
    * the preview is shown first; when set to `false`, the code is shown first.
    */
   enablePreview?: boolean
+  /**
+   * @see https://prismjs.com/plugins/line-highlight/
+   *
+   * Highlights specific lines. e.g., `['5', '14-17']`
+   */
+  highlightLines?: (string | number)[]
 }
 
 // # --------------------------------------------------------------------------------
@@ -87,8 +93,11 @@ const CodeBlockComponent = ({
   code,
   language = 'txt',
   caption = language,
-  isDark = false,
-  enablePreview = true
+  isDark = typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-color-scheme: dark)').matches
+    : false,
+  enablePreview = true,
+  highlightLines
 }: CodeBlockProps) => {
   const [isDarkLocal, setIsDarkLocal] = useState(isDark)
 
@@ -289,6 +298,7 @@ const CodeBlockComponent = ({
             showLineNumber={isShowNumber}
             isDark={isDarkLocal}
             code={code.trim()}
+            highlightLines={highlightLines}
             preStyle={{ margin: 0, borderRadius: '0 0 0.25rem 0.25rem' }}
           ></CodeHighlighter>
         )}
