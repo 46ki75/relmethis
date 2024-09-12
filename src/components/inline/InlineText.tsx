@@ -132,35 +132,35 @@ const InlineTextComponent = ({
     '--react-selection-color-bg': rgba(fgColor, 0.7)
   })
 
-  if (cite)
-    return (
-      <cite
-        style={{ marginInline: '0.5rem', paddingInline: '0.5rem', ...style }}
-      >
-        {text}
-      </cite>
-    )
-
-  if (quote)
-    return (
-      <q style={{ marginInline: '0.5rem', paddingInline: '0.5rem', ...style }}>
-        {text}
-      </q>
-    )
-
   const renderInnerContent = () => {
+    if (cite)
+      return (
+        <cite className={styles['text__cite']} style={style}>
+          {text}
+        </cite>
+      )
+
+    if (quote)
+      return (
+        <q className={styles['text__q']} style={style}>
+          {text}
+        </q>
+      )
+
     let result: ReactNode = <>{text}</>
 
     if (italic) result = <em>{result}</em>
-    if (bold) result = <strong>{result}</strong>
+    if (bold)
+      result = <strong className={styles['text__strong']}>{result}</strong>
     if (underline) result = <ins>{result}</ins>
-    if (strikethrough) result = <del>{result}</del>
+    if (strikethrough)
+      result = <del className={styles['text__del']}>{result}</del>
 
     return result
   }
 
   return (
-    <span ref={ref} className={styles.wrapper} style={style}>
+    <span ref={ref} className={styles.text} style={style}>
       {renderInnerContent()}
     </span>
   )

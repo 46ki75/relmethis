@@ -7,13 +7,23 @@
     background-color: var(--react-selection-color-bg);
   }
 
-  strong {
+  &__strong {
     color: var(--react-color-strong);
   }
 
-  del {
+  &__del {
     color: var(--react-color-del);
     text-decoration-color: var(--react-color-del);
+  }
+
+  &__cite {
+    margin-inline: 0.5rem;
+    padding-inline: 0.5rem;
+  }
+
+  &__q {
+    margin-inline: 0.5rem;
+    padding-inline: 0.5rem;
   }
 
   &::before,
