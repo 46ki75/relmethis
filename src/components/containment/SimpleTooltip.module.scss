@@ -4,4 +4,7 @@
   box-sizing: border-box;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
+  transition:
+    color 400ms ease 100ms,
+    background-color 400ms ease 100ms;
 }
