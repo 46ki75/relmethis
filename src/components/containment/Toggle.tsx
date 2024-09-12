@@ -8,8 +8,8 @@ import isEqual from 'react-fast-compare'
 import styles from './Toggle.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
-import { CSSTransition } from 'react-transition-group'
 import { InlineText } from '../inline/InlineText'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
@@ -48,19 +48,13 @@ const ToggleComponent = ({ children, summary }: ToggleProps) => {
         <InlineText text={summary} />
       </div>
 
-      <CSSTransition
-        in={isVisible}
-        timeout={400}
-        classNames={{
-          enterActive: styles['wrapper__details--enter'],
-          enterDone: styles['wrapper__details--enter']
-        }}
-        unmountOnExit
+      <div
+        className={classNames(styles['wrapper__details'], {
+          [styles['wrapper__details--visible']]: isVisible
+        })}
       >
-        <div className={styles['wrapper__details']}>
-          <Suspense fallback={<BlockFallback />}>{children}</Suspense>
-        </div>
-      </CSSTransition>
+        <Suspense fallback={<BlockFallback />}>{children}</Suspense>
+      </div>
     </div>
   )
 }

@@ -39,7 +39,7 @@
     transform: scaleY(0);
     transform-origin: top;
 
-    &--enter {
+    &--visible {
       opacity: 1;
       transform: scaleY(1);
     }
