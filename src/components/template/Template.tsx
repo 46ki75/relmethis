@@ -10,6 +10,11 @@ import styles from './Template.module.scss'
 
 export interface TemplateProps {
   style: React.CSSProperties
+
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -18,10 +23,15 @@ export interface TemplateProps {
 //
 // # --------------------------------------------------------------------------------
 
-const TemplateComponent = ({ style }: TemplateProps) => {
+const TemplateComponent = ({
+  style,
+  isDark = typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-color-scheme: dark)').matches
+    : false
+}: TemplateProps) => {
   return (
     <span className={styles.wrapper} style={style}>
-      Template
+      {String(isDark)}
     </span>
   )
 }
