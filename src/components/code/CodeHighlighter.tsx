@@ -35,6 +35,9 @@ import 'prismjs/plugins/autoloader/prism-autoloader.js'
 import 'prismjs/plugins/previewers/prism-previewers.css'
 import 'prismjs/plugins/previewers/prism-previewers.js'
 
+import 'prismjs/plugins/diff-highlight/prism-diff-highlight.css'
+import 'prismjs/plugins/diff-highlight/prism-diff-highlight.js'
+
 // # --------------------------------------------------------------------------------
 //
 // props
