@@ -1,0 +1,76 @@
+.wrapper {
+  margin-block: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  svg {
+    padding: 0.25rem;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: var(--react-opacity);
+    transition:
+      background-color 400ms,
+      opacity 400ms,
+      color 400ms;
+
+    color: var(--react-color);
+
+    &:hover {
+      background-color: rgba(128, 128, 128, 0.25);
+      color: #6987b8;
+    }
+
+    &:active {
+      color: #59b57c;
+    }
+
+    &.disable {
+      opacity: 0.2;
+    }
+  }
+
+  div.indicator {
+    color: var(--react-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+
+    .dot {
+      background-color: var(--react-color);
+      width: 10px;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      opacity: 0.2;
+
+      cursor: pointer;
+
+      transition:
+        opacity 400ms,
+        transform 200ms;
+
+      position: relative;
+
+      &:hover {
+        transform: scale(1.2);
+        background-color: #6987b8;
+        opacity: 1;
+      }
+
+      &:active {
+        background-color: #59b57c;
+        opacity: 1;
+      }
+
+      &.selected {
+        opacity: 0.9;
+        transform: scale(1.5);
+      }
+    }
+  }
+}

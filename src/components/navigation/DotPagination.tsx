@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import React from 'react'
 import {
   ChevronDoubleLeftIcon,
@@ -7,97 +5,12 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon
 } from '@heroicons/react/20/solid'
-import { css } from '@emotion/react'
+
 import isEqual from 'react-fast-compare'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const controlContainere = css`
-  margin-block: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-`
-
-const iconStyle = ({
-  isDark,
-  isDisable
-}: {
-  isDark: boolean
-  isDisable: boolean
-}) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-  padding: 0.25rem;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  cursor: pointer;
-  opacity: ${isDisable ? 0.2 : 1};
-  transition:
-    background-color 200ms,
-    opacity 200ms,
-    color 200ms;
-
-  &:hover {
-    background-color: rgba(128, 128, 128, 0.25);
-    color: #6987b8;
-  }
-
-  &:active {
-    color: #59b57c;
-  }
-`
-
-const controlIndicatorStyle = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  user-select: none;
-`
-
-const dot = ({
-  isDark,
-  isActive
-}: {
-  isDark: boolean
-  isActive: boolean
-}) => css`
-  background-color: ${isDark
-    ? 'rgba(255, 255, 255, 0.7)'
-    : 'rgba(0, 0, 0, 0.7)'};
-  opacity: ${isActive ? 0.9 : 0.2};
-  width: ${isActive ? 16 : 10}px;
-  height: ${isActive ? 16 : 10}px;
-  border-radius: 50%;
-
-  cursor: pointer;
-
-  transition:
-    width 400ms,
-    height 400ms,
-    opacity 400ms,
-    transform 200ms;
-
-  position: relative;
-
-  &:hover {
-    transform: scale(1.2);
-    background-color: #6987b8;
-    opacity: 1;
-  }
-
-  &:active {
-    background-color: #59b57c;
-    opacity: 1;
-  }
-`
+import styles from './DotPagination.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
@@ -147,7 +60,9 @@ const DotPaginationComponent = ({
   const renderDotIndicator = () =>
     new Array(length).fill(null).map((_, index) => (
       <span
-        css={dot({ isDark, isActive: index + 1 === currentPage })}
+        className={classNames(styles.dot, {
+          [styles.selected]: index + 1 === currentPage
+        })}
         onClick={() => {
           setCurrentPage(index + 1)
         }}
@@ -175,27 +90,31 @@ const DotPaginationComponent = ({
     }
   }
 
+  const { ref } = useCSSVariable({
+    '--react-color': isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'
+  })
+
   return (
-    <nav css={controlContainere}>
+    <nav ref={ref} className={styles.wrapper}>
       <ChevronDoubleLeftIcon
-        css={iconStyle({ isDark, isDisable: currentPage === 1 })}
+        className={classNames({ [styles.disable]: currentPage === 1 })}
         onClick={start}
       />
       <ChevronLeftIcon
-        css={iconStyle({ isDark, isDisable: currentPage === 1 })}
+        className={classNames({ [styles.disable]: currentPage === 1 })}
         onClick={prev}
       />
 
-      <div css={controlIndicatorStyle({ isDark })}>
+      <div className={styles.indicator}>
         {length <= threshold ? renderDotIndicator() : renderNumberIndicator()}
       </div>
 
       <ChevronRightIcon
-        css={iconStyle({ isDark, isDisable: currentPage === length })}
+        className={classNames({ [styles.disable]: currentPage === length })}
         onClick={next}
       />
       <ChevronDoubleRightIcon
-        css={iconStyle({ isDark, isDisable: currentPage === length })}
+        className={classNames({ [styles.disable]: currentPage === length })}
         onClick={end}
       />
     </nav>
