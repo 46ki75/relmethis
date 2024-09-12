@@ -5,6 +5,7 @@ import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 import styles from './Table.module.scss'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
@@ -36,14 +37,27 @@ interface TableRow {
 const MemoizedTableRow = React.memo(
   ({ row, isHeader = false, align = [] }: TableRow) => {
     return (
-      <tr>
+      <tr
+        className={classNames({
+          [styles['table__header__row']]: isHeader,
+          [styles['table__body__row']]: !isHeader
+        })}
+      >
         {row.map((cell, index) =>
           isHeader ? (
-            <th key={index} style={{ textAlign: align[index] }}>
+            <th
+              key={index}
+              style={{ textAlign: align[index] }}
+              className={styles['table__header__row__cell']}
+            >
               {cell}
             </th>
           ) : (
-            <td key={index} style={{ textAlign: align[index] }}>
+            <td
+              key={index}
+              style={{ textAlign: align[index] }}
+              className={styles['table__body__row__cell']}
+            >
               {cell}
             </td>
           )
@@ -74,11 +88,11 @@ const TableComponent = ({ isDark = false, rows, align = [] }: TableProps) => {
 
   return (
     <table ref={ref} className={styles.table}>
-      <thead>
+      <thead className={styles['table__header']}>
         <MemoizedTableRow row={headerRow ?? []} isHeader={true} align={align} />
       </thead>
 
-      <tbody>
+      <tbody className={styles['table__body']}>
         {bodyRows.map((row, index) => (
           <MemoizedTableRow
             key={index}

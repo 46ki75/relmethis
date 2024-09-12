@@ -1,4 +1,4 @@
-table.table {
+.table {
   width: fit-content;
   max-width: 100%;
   display: block;
@@ -25,12 +25,6 @@ table.table {
     background-color: #f3f3f3;
   }
 
-  th,
-  td {
-    padding: 12px 15px;
-    white-space: nowrap;
-  }
-
   @keyframes fade {
     from {
       opacity: 0;
@@ -40,19 +34,15 @@ table.table {
     }
   }
 
-  tr {
-    animation-name: fade;
-    animation-duration: 400ms;
-    animation-fill-mode: both;
-  }
-
-  thead {
-    tr {
+  &__header {
+    &__row {
       background-color: var(--react-color-fg);
 
       text-align: left;
 
-      th {
+      &__cell {
+        padding: 12px 15px;
+        white-space: nowrap;
         color: var(--react-color-bg);
         border-right: 1px dashed rgba(128, 128, 128, 0.4);
 
@@ -69,8 +59,12 @@ table.table {
     }
   }
 
-  tbody {
-    tr {
+  &__body {
+    &__row {
+      animation-name: fade;
+      animation-duration: 400ms;
+      animation-fill-mode: both;
+
       border-bottom: 1px solid rgba(128, 128, 128, 0.4);
 
       transition: background-color 300ms;
@@ -87,7 +81,9 @@ table.table {
         background-color: var(--react-hover-color);
       }
 
-      td {
+      &__cell {
+        padding: 12px 15px;
+        white-space: nowrap;
         color: var(--react-color-fg);
         border-right: 1px dashed rgba(128, 128, 128, 0.4);
 
