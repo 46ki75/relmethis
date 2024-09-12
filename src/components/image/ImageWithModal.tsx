@@ -16,6 +16,8 @@ import styles from './ImageWithModal.module.scss'
 // # --------------------------------------------------------------------------------
 
 export interface ImageWithModalProps {
+  style?: React.CSSProperties
+
   src: string
   alt?: string
   /**
@@ -62,6 +64,7 @@ export interface ImageWithModalProps {
 // # --------------------------------------------------------------------------------
 
 const ImageWithModalComponent = ({
+  style,
   src,
   alt = src,
   width = 1200,
@@ -106,7 +109,7 @@ const ImageWithModalComponent = ({
       {(isLoading || isFetchingImage) && (
         <div
           className={styles.fallback}
-          style={{ aspectRatio: `${width} / ${height}` }}
+          style={{ aspectRatio: `${width} / ${height}`, ...style }}
         >
           <RectangleWave isDark={isDark} />
           <div>
@@ -119,6 +122,7 @@ const ImageWithModalComponent = ({
       <img
         ref={imageRef}
         className={styles.image}
+        style={style}
         alt={alt}
         src={src}
         onLoad={() => {
