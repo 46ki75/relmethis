@@ -1,0 +1,13 @@
+.code-highlighter {
+  all: initial;
+
+  &__pre {
+    transition: background-color 400ms;
+  }
+
+  &__code {
+    transition:
+      background-color 400ms,
+      color 400ms;
+  }
+}
