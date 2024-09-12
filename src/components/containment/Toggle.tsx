@@ -8,6 +8,9 @@ import isEqual from 'react-fast-compare'
 import styles from './Toggle.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
+import { CSSTransition } from 'react-transition-group'
+import { InlineText } from '../inline/InlineText'
+
 // # --------------------------------------------------------------------------------
 //
 // props
@@ -30,26 +33,35 @@ const ToggleComponent = ({ children, summary }: ToggleProps) => {
 
   const { ref } = useCSSVariable({
     '--react-border-radius': `0.25rem 0.25rem ${isVisible ? '0rem 0rem' : '0.25rem 0.25rem'}`,
-    '--react-icon-trandform': `rotate(${isVisible ? 90 : 0}deg)`,
-    '--react-details-opacity': isVisible ? 1 : 0,
-    '--react-details-height': isVisible ? '100%' : '0px',
-    '--react-details-transform': `scaleY(${isVisible ? 1 : 0})`
+    '--react-icon-trandform': `rotate(${isVisible ? 90 : 0}deg)`
   })
 
   return (
     <div className={styles.wrapper} ref={ref}>
       <div
-        className={styles.summary}
+        className={styles['wrapper__summary']}
         onClick={() => {
           setIsVisible(!isVisible)
         }}
       >
-        <ChevronRightIcon className={styles.icon} />
-        <span>{summary}</span>
+        <ChevronRightIcon className={styles['wrapper__summary-icon']} />
+        <InlineText text={summary} />
       </div>
-      <div className={styles.details}>
-        <Suspense fallback={<BlockFallback />}>{children}</Suspense>
-      </div>
+
+      <CSSTransition
+        in={isVisible}
+        timeout={400}
+        classNames={{
+          enterActive: styles['wrapper__details--enter-active'],
+          enterDone: styles['wrapper__details--enter-done'],
+          exitActive: styles['wrapper__details--exit-active']
+        }}
+        unmountOnExit
+      >
+        <div className={styles['wrapper__details']}>
+          <Suspense fallback={<BlockFallback />}>{children}</Suspense>
+        </div>
+      </CSSTransition>
     </div>
   )
 }
