@@ -1,84 +1,16 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { useCallback, useEffect, useState } from 'react'
-import { css } from '@emotion/react'
-import { rgba } from 'polished'
 import { BarsArrowDownIcon } from '@heroicons/react/16/solid'
 import isEqual from 'react-fast-compare'
+
+import styles from './TableOfContents.module.scss'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
 // styles
 //
 // # --------------------------------------------------------------------------------
-
-const wrapperStyle = css`
-  box-sizing: border-box;
-  padding-left: 0.25rem;
-  border-left: solid 2px rgba(128, 128, 128, 0.2);
-`
-
-const headingStyle = ({
-  level,
-  isDark,
-  inSection,
-  fontSizeRatio
-}: {
-  level: 1 | 2 | 3 | 4 | 5 | 6
-  isDark: boolean
-  inSection: boolean
-  fontSizeRatio: number
-}) => css`
-  all: unset;
-  color: ${inSection
-    ? '#6987b8'
-    : rgba(isDark ? 'white' : 'black', 0.83 - level * 0.02)};
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  position: relative;
-  font-size: ${(1.2 - level * 0.03) * fontSizeRatio}rem;
-  padding: 0.25rem;
-  padding-left: ${1.25 * (level - 1)}rem;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  transition: background-color 300ms;
-
-  &::after {
-    position: absolute;
-    content: '';
-    height: 100%;
-    top: 0;
-    left: 0;
-    transition: border 400ms;
-    border-left: solid 4px ${inSection ? rgba('#6987b8', 0.8) : 'transparent'};
-  }
-
-  *::selection {
-    background-color: ${isDark
-      ? 'rgba(255, 255, 255, 0.8)'
-      : 'rgba(0, 0, 0, 0.8)'};
-    color: ${isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-  }
-
-  &:hover {
-    background-color: ${rgba('#6987b8', 0.15)};
-  }
-
-  sup {
-    color: ${rgba(isDark ? 'white' : 'black', 0.4)};
-    font-size: 0.75rem;
-    margin-inline-start: 0.75rem;
-    margin-inline-end: 0.5rem;
-  }
-`
-
-const iconStyle = css`
-  color: #6987b8;
-  width: 12px;
-  height: 12px;
-  margin-inline: 0.5rem;
-`
 
 // # --------------------------------------------------------------------------------
 //
@@ -152,32 +84,52 @@ const TableOfContentsComponent = ({
     }
   }, [handleIntersection])
 
+  const { ref } = useCSSVariable({
+    '--react-color-fg': isDark
+      ? 'rgba(255, 255, 255, 0.8)'
+      : 'rgba(0, 0, 0, 0.8)',
+    '--react-color-bg': isDark
+      ? 'rgba(0, 0, 0, 0.8)'
+      : 'rgba(255, 255, 255, 0.8)',
+    '--react-sup-color-fg': isDark
+      ? 'rgba(255, 255, 255, 0.4)'
+      : 'rgba(0, 0, 0, 0.4)',
+    '--react-sup-color-bg': isDark
+      ? 'rgba(0, 0, 0, 0.4)'
+      : 'rgba(255, 255, 255, 0.4)',
+    '--react-font-size-ratio': fontSizeRatio
+  })
+
   return (
     headings.length > 0 && (
-      <nav css={wrapperStyle}>
+      <nav className={styles.wrapper} ref={ref}>
         {headings.map(
           (heading, index) =>
             heading.level <= maxLevel && (
-              <React.Fragment key={`${index}-${heading.level}`}>
-                <a
-                  css={headingStyle({
-                    level: heading.level,
-                    isDark,
-                    inSection:
-                      (heading.identifier ?? heading.text) === activeElementId,
-                    fontSizeRatio
-                  })}
-                  href={`#${heading.identifier ?? heading.text}`}
-                >
-                  <sup>
-                    H<sub>{heading.level}</sub>
-                  </sup>
-                  <span>
-                    {heading.text}
-                    <BarsArrowDownIcon css={iconStyle} />
-                  </span>
-                </a>
-              </React.Fragment>
+              <a
+                key={`${index}-${heading.identifier}`}
+                className={classNames({
+                  [styles['in-section']]:
+                    (heading.identifier ?? heading.text) === activeElementId,
+                  [styles.light]: !isDark,
+                  [styles.dark]: isDark,
+                  [styles.h1]: heading.level === 1,
+                  [styles.h2]: heading.level === 2,
+                  [styles.h3]: heading.level === 3,
+                  [styles.h4]: heading.level === 4,
+                  [styles.h5]: heading.level === 5,
+                  [styles.h6]: heading.level === 6
+                })}
+                href={`#${heading.identifier ?? heading.text}`}
+              >
+                <sup>
+                  H<sub>{heading.level}</sub>
+                </sup>
+                <span>
+                  {heading.text}
+                  <BarsArrowDownIcon className={styles.icon} />
+                </span>
+              </a>
             )
         )}
       </nav>

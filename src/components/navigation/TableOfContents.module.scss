@@ -1,0 +1,166 @@
+.wrapper {
+  --const-padding-base: 0.75rem;
+  --const-font-size-base: 1rem;
+
+  box-sizing: border-box;
+  padding-left: 0.25rem;
+  border-left: solid 2px rgba(128, 128, 128, 0.2);
+
+  a.in-section {
+    color: #6987b8;
+
+    &::after {
+      border-left: solid 4px rgba(#6987b8, 0.8);
+    }
+  }
+
+  a {
+    all: unset;
+    color: var(--react-color-fg);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition:
+      background-color 300ms,
+      color 300ms;
+
+    &::after {
+      position: absolute;
+      content: '';
+      height: 100%;
+      top: 0;
+      left: 0;
+      transition: border 400ms;
+    }
+
+    *::selection {
+      color: var(--react-color-bg);
+      background-color: var(--react-color-fg);
+    }
+
+    &:hover {
+      background-color: rgba(#6987b8, 0.15);
+    }
+
+    sup {
+      color: var(--react-sup-color-fg);
+      font-size: 0.75rem;
+      margin-inline-start: 0.75rem;
+      margin-inline-end: 0.5rem;
+    }
+
+    span {
+      svg.icon {
+        color: #6987b8;
+        width: 12px;
+        height: 12px;
+        margin-inline: 0.5rem;
+      }
+    }
+
+    &.h1 {
+      padding-left: 0;
+      font-size: calc(
+        var(--const-font-size-base) * 1.2 * var(--react-font-size-ratio)
+      );
+
+      &.light {
+        color: rgba(0, 0, 0, 0.8);
+      }
+
+      &.dark {
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    &.h2 {
+      padding-left: calc(
+        var(--const-padding-base) * 1 * var(--react-font-size-ratio, 1)
+      );
+      font-size: calc(
+        var(--const-font-size-base) * 1.16 * var(--react-font-size-ratio)
+      );
+
+      &.light {
+        color: rgba(0, 0, 0, 0.7);
+      }
+
+      &.dark {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    &.h3 {
+      padding-left: calc(
+        var(--const-padding-base) * 2 * var(--react-font-size-ratio, 1)
+      );
+      font-size: calc(
+        var(--const-font-size-base) * 1.12 * var(--react-font-size-ratio)
+      );
+
+      &.light {
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      &.dark {
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+
+    &.h4 {
+      padding-left: calc(
+        var(--const-padding-base) * 3 * var(--react-font-size-ratio, 1)
+      );
+      font-size: calc(
+        var(--const-font-size-base) * 1.08 * var(--react-font-size-ratio)
+      );
+
+      &.light {
+        color: rgba(0, 0, 0, 0.55);
+      }
+
+      &.dark {
+        color: rgba(255, 255, 255, 0.55);
+      }
+    }
+
+    &.h5 {
+      padding-left: calc(
+        var(--const-padding-base) * 4 * var(--react-font-size-ratio, 1)
+      );
+
+      font-size: calc(
+        var(--const-font-size-base) * 1.04 * var(--react-font-size-ratio)
+      );
+
+      &.light {
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      &.dark {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    &.h6 {
+      padding-left: calc(
+        var(--const-padding-base) * 5 * var(--react-font-size-ratio, 1)
+      );
+      font-size: calc(
+        var(--const-font-size-base) * 1 * var(--react-font-size-ratio)
+      );
+
+      &.light {
+        color: rgba(0, 0, 0, 0.45);
+      }
+
+      &.dark {
+        color: rgba(255, 255, 255, 0.45);
+      }
+    }
+  }
+}
