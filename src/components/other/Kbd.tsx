@@ -1,7 +1,4 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { ReactNode } from 'react'
-import { css } from '@emotion/react'
 
 import { rgba } from 'polished'
 import isEqual from 'react-fast-compare'
@@ -9,80 +6,84 @@ import {
   ArrowsRightLeftIcon,
   ArrowTurnRightUpIcon
 } from '@heroicons/react/16/solid'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+
+import styles from './Kbd.module.scss'
 
 // # --------------------------------------------------------------------------------
 //
-// styles
+// keys
 //
 // # --------------------------------------------------------------------------------
 
-const style = ({
-  size,
-  isDark,
-  isPressed,
-  activeColor,
-  hasSubKey,
-  widthRatio,
-  bigKey,
-  progress
-}: {
-  size: number
-  isDark: boolean
-  isPressed: boolean
-  activeColor: string
-  hasSubKey: boolean
-  widthRatio: number
-  bigKey: boolean
-  progress?: number
-}) => css`
-  color: ${isPressed
-    ? activeColor
-    : isDark
-      ? 'rgba(255, 255, 255, 0.7)'
-      : 'rgba(0, 0, 0, 0.7)'};
-  border: solid 1px
-    ${isPressed
-      ? activeColor
-      : isDark
-        ? 'rgba(255, 255, 255, 0.3)'
-        : 'rgba(0, 0, 0, 0.3)'};
-
-  border-radius: 2px;
-
-  overflow: hidden;
-
-  font-size: ${hasSubKey
-    ? size / (bigKey ? 2.5 : 3.5)
-    : size / (bigKey ? 1.5 : 2.5)}px;
-  height: ${size}px;
-  aspect-ratio: ${widthRatio} / 1;
-
-  display: inline-flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-
-  position: relative;
-
-  &::after {
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 100%;
-    background-color: ${isPressed ? rgba(activeColor, 0.25) : 'none'};
-    transform: scaleY(${progress != null ? progress / 100 : 1});
-    transform-origin: 0 100%;
-  }
-
-  span {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-  }
-`
+export type KeyboardKey =
+  | 'Enter'
+  | 'Escape'
+  | 'Tab'
+  | 'Shift'
+  | 'Control'
+  | 'Alt'
+  | 'CapsLock'
+  | 'Space'
+  | 'ArrowUp'
+  | 'ArrowDown'
+  | 'ArrowLeft'
+  | 'ArrowRight'
+  | 'Backspace'
+  | 'Delete'
+  | 'Insert'
+  | 'Home'
+  | 'End'
+  | 'PageUp'
+  | 'PageDown'
+  | 'F1'
+  | 'F2'
+  | 'F3'
+  | 'F4'
+  | 'F5'
+  | 'F6'
+  | 'F7'
+  | 'F8'
+  | 'F9'
+  | 'F10'
+  | 'F11'
+  | 'F12'
+  | '0'
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | '6'
+  | '7'
+  | '8'
+  | '9'
+  | 'a'
+  | 'b'
+  | 'c'
+  | 'd'
+  | 'e'
+  | 'f'
+  | 'g'
+  | 'h'
+  | 'i'
+  | 'j'
+  | 'k'
+  | 'l'
+  | 'm'
+  | 'n'
+  | 'o'
+  | 'p'
+  | 'q'
+  | 'r'
+  | 's'
+  | 't'
+  | 'u'
+  | 'v'
+  | 'w'
+  | 'x'
+  | 'y'
+  | 'z'
 
 // # --------------------------------------------------------------------------------
 //
@@ -162,19 +163,28 @@ const KbdComponent = ({
     }
   }
 
+  const { ref } = useCSSVariable({
+    '--react-color': isPressed
+      ? activeColor
+      : isDark
+        ? 'rgba(255, 255, 255, 0.7)'
+        : 'rgba(0, 0, 0, 0.7)',
+    '--react-background-color': isPressed ? rgba(activeColor, 0.25) : 'none',
+    '--react-border-color': isPressed
+      ? activeColor
+      : isDark
+        ? 'rgba(255, 255, 255, 0.3)'
+        : 'rgba(0, 0, 0, 0.3)',
+    '--react-font-size': `${
+      subKey != null ? size / (bigKey ? 2.5 : 3.5) : size / (bigKey ? 1.5 : 2.5)
+    }px`,
+    '--react-size': `${size}px`,
+    '--react-width-ratio': widthRatio,
+    '--react-transform': `scaleY(${progress != null ? progress / 100 : 1})`
+  })
+
   return (
-    <kbd
-      css={style({
-        isDark,
-        hasSubKey: subKey != null,
-        isPressed,
-        activeColor,
-        size,
-        widthRatio,
-        bigKey,
-        progress
-      })}
-    >
+    <kbd ref={ref} className={styles.kbd}>
       {subKey != null && (
         <span>{toUpperCase ? subKey.toUpperCase() : subKey}</span>
       )}
@@ -194,78 +204,3 @@ const KbdComponent = ({
 // # --------------------------------------------------------------------------------
 
 export const Kbd = React.memo(KbdComponent, isEqual)
-
-// # --------------------------------------------------------------------------------
-//
-// keys
-//
-// # --------------------------------------------------------------------------------
-
-export type KeyboardKey =
-  | 'Enter'
-  | 'Escape'
-  | 'Tab'
-  | 'Shift'
-  | 'Control'
-  | 'Alt'
-  | 'CapsLock'
-  | 'Space'
-  | 'ArrowUp'
-  | 'ArrowDown'
-  | 'ArrowLeft'
-  | 'ArrowRight'
-  | 'Backspace'
-  | 'Delete'
-  | 'Insert'
-  | 'Home'
-  | 'End'
-  | 'PageUp'
-  | 'PageDown'
-  | 'F1'
-  | 'F2'
-  | 'F3'
-  | 'F4'
-  | 'F5'
-  | 'F6'
-  | 'F7'
-  | 'F8'
-  | 'F9'
-  | 'F10'
-  | 'F11'
-  | 'F12'
-  | '0'
-  | '1'
-  | '2'
-  | '3'
-  | '4'
-  | '5'
-  | '6'
-  | '7'
-  | '8'
-  | '9'
-  | 'a'
-  | 'b'
-  | 'c'
-  | 'd'
-  | 'e'
-  | 'f'
-  | 'g'
-  | 'h'
-  | 'i'
-  | 'j'
-  | 'k'
-  | 'l'
-  | 'm'
-  | 'n'
-  | 'o'
-  | 'p'
-  | 'q'
-  | 'r'
-  | 's'
-  | 't'
-  | 'u'
-  | 'v'
-  | 'w'
-  | 'x'
-  | 'y'
-  | 'z'
