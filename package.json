@@ -1,6 +1,6 @@
 {
   "name": "relmethis",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "engines": {
     "node": "20"
   },
@@ -51,6 +51,7 @@
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",
     "remark-parse": "^11.0.0",
+    "shiki": "^1.17.5",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
