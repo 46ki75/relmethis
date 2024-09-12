@@ -52,9 +52,8 @@ const ToggleComponent = ({ children, summary }: ToggleProps) => {
         in={isVisible}
         timeout={400}
         classNames={{
-          enterActive: styles['wrapper__details--enter-active'],
-          enterDone: styles['wrapper__details--enter-done'],
-          exitActive: styles['wrapper__details--exit-active']
+          enterActive: styles['wrapper__details--enter'],
+          enterDone: styles['wrapper__details--enter']
         }}
         unmountOnExit
       >
