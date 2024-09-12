@@ -1,21 +1,9 @@
-/** @jsxImportSource @emotion/react */
-
 import React from 'react'
-import { css } from '@emotion/react'
 import { Kbd, KeyboardKey } from './Kbd'
 
 import isEqual from 'react-fast-compare'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const style = css`
-  display: flex;
-  gap: 0.25rem;
-`
+import styles from './Keyboard.module.scss'
 
 // # --------------------------------------------------------------------------------
 //
@@ -24,7 +12,6 @@ const style = css`
 // # --------------------------------------------------------------------------------
 
 export interface KeyboardProps {
-  text: string
   /**
    * Indicates whether to use the dark theme
    */
@@ -39,11 +26,10 @@ export interface KeyboardProps {
 
 const keys: KeyboardKey[] = ['2', '3', '4', '5', '6', '7', '8', '9', '0']
 
-const KeyboardComponent = ({ text, isDark = false }: KeyboardProps) => {
+const KeyboardComponent = ({ isDark = false }: KeyboardProps) => {
   return (
     <>
-      {text}
-      <div css={style}>
+      <div className={styles.wrapper}>
         {keys.map((key) => (
           <Kbd key={key} mainKey={key} isDark={isDark} />
         ))}
