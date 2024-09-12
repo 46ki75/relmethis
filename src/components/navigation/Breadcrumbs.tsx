@@ -1,7 +1,5 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { ReactNode, useMemo } from 'react'
-import { css } from '@emotion/react'
+
 import {
   ArrowTopRightOnSquareIcon,
   ChevronRightIcon,
@@ -10,87 +8,14 @@ import {
   HomeIcon
 } from '@heroicons/react/24/outline'
 import { useInView } from 'react-intersection-observer'
-import { rgba } from 'polished'
+
 import isEqual from 'react-fast-compare'
 
 import type { Property } from 'csstype'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const wrapperStyle = ({
-  isDark,
-  align,
-  gap
-}: {
-  isDark: boolean
-  align?: 'center' | 'left' | 'right'
-  gap: Property.Gap<string | number>
-}) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-
-  display: flex;
-  justify-content: ${align === 'center'
-    ? 'center'
-    : align === 'left'
-      ? 'flex-start'
-      : 'flex-end'};
-  align-items: center;
-  gap: ${gap};
-  flex-wrap: wrap;
-`
-
-const linkStyle = ({
-  inView,
-  delay
-}: {
-  inView: boolean
-  delay: string
-}) => css`
-  all: unset;
-
-  padding: 0.125rem 0.25rem;
-  border-radius: 0.25rem;
-  cursor: pointer;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.25rem;
-
-  opacity: ${inView ? 1 : 0};
-  transition:
-    opacity 400ms ease ${delay},
-    background-color 300ms;
-
-  &:hover {
-    background-color: ${rgba('#6987b8', 0.2)};
-  }
-`
-
-const iconStyle = ({ color }: { color: string }) => css`
-  color: ${color};
-  width: 16px;
-  height: 16px;
-`
-
-const animationIconStyle = ({
-  inView,
-  delay
-}: {
-  inView: boolean
-  delay: string
-}) => css`
-  color: rgba(128, 128, 128, 0.8);
-  width: 16px;
-  height: 16px;
-
-  opacity: ${inView ? 1 : 0};
-  transition: opacity 400ms ease ${delay};
-`
+import styles from './Breadcrumbs.module.scss'
 
 // # --------------------------------------------------------------------------------
 //
@@ -166,7 +91,7 @@ const BreadcrumbsComponent = ({
   animationDuration = 1000,
   gap = '0.25rem'
 }: BreadcrumbsProps) => {
-  const { ref, inView } = useInView()
+  const { ref: a, inView } = useInView()
 
   const defaultColor = useMemo(
     () => (isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'),
@@ -174,6 +99,20 @@ const BreadcrumbsComponent = ({
   )
 
   const ANIMATION_SPEED = ((animationDuration / 3) * 2) / links.length
+
+  const { ref: b } = useCSSVariable({
+    '--react-color': isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
+    '--react-opacity': inView ? 1 : 0,
+    '--react-align':
+      align === 'center'
+        ? 'center'
+        : align === 'left'
+          ? 'flex-start'
+          : 'flex-end',
+    '--react-gap': gap
+  })
+
+  const ref = useMergeRefs(a, b)
 
   const Links = links.map((link, index) => (
     <React.Fragment key={`${index}-${link.label}-${link.href}`}>
@@ -183,30 +122,26 @@ const BreadcrumbsComponent = ({
         href={link.href}
         target={isExternal(link.href) ? '_blank' : undefined}
         rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
-        css={linkStyle({ inView, delay: `${ANIMATION_SPEED * index}ms` })}
+        style={{
+          transition: `opacity 400ms ease ${ANIMATION_SPEED * index}ms, background-color 300ms`
+        }}
       >
         {index === 0
           ? (link.icon ?? (
-              <HomeIcon
-                css={iconStyle({ color: link.color ?? defaultColor })}
-              />
+              <HomeIcon style={{ color: link.color ?? defaultColor }} />
             ))
           : index + 1 !== links.length
             ? (link.icon ?? (
-                <FolderOpenIcon
-                  css={iconStyle({ color: link.color ?? defaultColor })}
-                />
+                <FolderOpenIcon style={{ color: link.color ?? defaultColor }} />
               ))
             : (link.icon ?? (
-                <DocumentIcon
-                  css={iconStyle({ color: link.color ?? defaultColor })}
-                />
+                <DocumentIcon style={{ color: link.color ?? defaultColor }} />
               ))}
 
         <span>{link.label}</span>
         {isExternal(link.href) && (
           <ArrowTopRightOnSquareIcon
-            css={iconStyle({ color: link.color ?? defaultColor })}
+            style={{ color: link.color ?? defaultColor }}
           />
         )}
       </a>
@@ -215,17 +150,16 @@ const BreadcrumbsComponent = ({
 
       {index + 1 !== links.length && (
         <ChevronRightIcon
-          css={animationIconStyle({
-            inView,
-            delay: `${ANIMATION_SPEED * (index * 1) + ANIMATION_SPEED / 2}ms`
-          })}
+          style={{
+            transition: `opacity 400ms ease ${ANIMATION_SPEED * (index * 1) + ANIMATION_SPEED / 2}ms`
+          }}
         />
       )}
     </React.Fragment>
   ))
 
   return (
-    <nav css={wrapperStyle({ isDark, align, gap })} style={style} ref={ref}>
+    <nav style={style} ref={ref} className={styles.wrapper}>
       {Links}
     </nav>
   )

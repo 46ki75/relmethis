@@ -1,0 +1,41 @@
+.wrapper {
+  color: var(--react-color);
+
+  display: flex;
+  justify-content: var(--react-align);
+  align-items: center;
+  gap: var(--react-gap);
+  flex-wrap: wrap;
+
+  a {
+    all: unset;
+
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+
+    opacity: var(--react-opacity);
+
+    &:hover {
+      background-color: rgba(#6987b8, 0.2);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  svg {
+    color: rgba(128, 128, 128, 0.8);
+    width: 16px;
+    height: 16px;
+
+    opacity: var(--react-opacity);
+  }
+}
