@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import throttle from 'lodash/throttle'
 
 export interface ScrollState {
   x: number
@@ -6,7 +7,8 @@ export interface ScrollState {
 }
 
 export const useScroll = (
-  elementRef: React.RefObject<HTMLElement>
+  elementRef: React.RefObject<HTMLElement>,
+  options?: { throttle?: number }
 ): ScrollState => {
   const [scrollPosition, setScrollPosition] = useState<ScrollState>({
     x: 0,
@@ -24,13 +26,27 @@ export const useScroll = (
 
   useEffect(() => {
     const element = elementRef.current
+
+    // スロットリングされたスクロールハンドラを定義
+    const scrollHandler = options?.throttle
+      ? throttle(handleScroll, options.throttle)
+      : handleScroll
+
     if (element) {
-      element.addEventListener('scroll', handleScroll)
-      return () => {
-        element.removeEventListener('scroll', handleScroll)
+      element.addEventListener('scroll', scrollHandler)
+    }
+
+    return () => {
+      if (element) {
+        element.removeEventListener('scroll', scrollHandler)
+      }
+
+      if (options?.throttle) {
+        // eslint-disable-next-line no-extra-semi
+        ;(scrollHandler as ReturnType<typeof throttle>).cancel()
       }
     }
-  }, [elementRef, handleScroll])
+  }, [elementRef, handleScroll, options?.throttle])
 
   return scrollPosition
 }
