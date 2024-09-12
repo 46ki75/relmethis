@@ -1,19 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+
+// styles
+import styles from './CodeHighlighter.module.scss'
+import classNames from 'classnames'
+
+// # --------------------------------------------------------------------------------
+//
+// prism import
+//
+// # --------------------------------------------------------------------------------
 
 import Prism from 'prismjs'
 
+//styles
 import './prism-one-light.scss'
 import './prism-one-dark.scss'
 
+// line numbers
+// @see https://prismjs.com/plugins/line-numbers/
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js'
 
-import 'prismjs/plugins/autoloader/prism-autoloader.js'
+// line highlight
+// @see https://prismjs.com/plugins/line-highlight/
+import 'prismjs/plugins/line-highlight/prism-line-highlight.css'
+import 'prismjs/plugins/line-highlight/prism-line-highlight.js'
 
-import styles from './CodeHighlighter.module.scss'
-import classNames from 'classnames'
-import { useCSSVariable } from '../../hooks/useCSSVariable'
+// language autoloader
+import 'prismjs/plugins/autoloader/prism-autoloader.js'
 
 // # --------------------------------------------------------------------------------
 //
@@ -44,7 +60,17 @@ export interface CodeHighlighterProps {
    */
   transitionDuration?: number
 
+  /**
+   * If `true`, numbers will be displayed on the left side of the code.
+   */
   showNumber?: boolean
+
+  /**
+   * @see https://prismjs.com/plugins/line-highlight/
+   *
+   * Highlights specific lines. e.g., `['5', '14-17']`
+   */
+  highlightLines?: string[]
 }
 
 // # --------------------------------------------------------------------------------
@@ -61,7 +87,8 @@ const CodeHighlighterComponent = ({
   language = 'ts',
   code,
   transitionDuration = 400,
-  showNumber = false
+  showNumber = false,
+  highlightLines = []
 }: CodeHighlighterProps) => {
   const [isLoading, setIsLoading] = useState(true)
 
@@ -96,6 +123,7 @@ const CodeHighlighterComponent = ({
         className={classNames(styles['code-highlighter__pre'], {
           ['line-numbers']: showNumber
         })}
+        data-line={highlightLines.join(', ')}
       >
         <code
           ref={codeRef}
