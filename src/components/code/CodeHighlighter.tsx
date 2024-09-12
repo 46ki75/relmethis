@@ -87,7 +87,9 @@ function generatePrismDiff(oldCode: string, newCode: string): string {
 
 export interface CodeHighlighterProps {
   style?: React.CSSProperties
-
+  preStyle?: React.CSSProperties
+  codeStyle?: React.CSSProperties
+  className?: string
   /**
    * Whether or not to use the dark theme
    */
@@ -122,7 +124,7 @@ export interface CodeHighlighterProps {
   /**
    * If `true`, numbers will be displayed on the left side of the code.
    */
-  showNumber?: boolean
+  showLineNumber?: boolean
 
   /**
    * @see https://prismjs.com/plugins/line-highlight/
@@ -167,6 +169,9 @@ export interface CodeHighlighterProps {
 
 const CodeHighlighterComponent = ({
   style,
+  preStyle,
+  codeStyle,
+  className,
   isDark = typeof window !== 'undefined'
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false,
@@ -174,7 +179,7 @@ const CodeHighlighterComponent = ({
   oldCode,
   language = oldCode != null ? 'diff' : 'txt',
   transitionDuration = 400,
-  showNumber = false,
+  showLineNumber: showNumber = false,
   highlightLines = [],
   commandLine
 }: CodeHighlighterProps) => {
@@ -200,11 +205,15 @@ const CodeHighlighterComponent = ({
   return (
     <div
       ref={cssRef}
-      className={classNames(styles['code-highlighter'], {
-        [`relmethis-codeblock-container-light`]: !isDark,
-        [`relmethis-codeblock-container-dark`]: isDark,
-        [styles['code-highlighter--loading']]: isLoading
-      })}
+      className={classNames(
+        styles['code-highlighter'],
+        {
+          [`relmethis-codeblock-container-light`]: !isDark,
+          [`relmethis-codeblock-container-dark`]: isDark,
+          [styles['code-highlighter--loading']]: isLoading
+        },
+        className
+      )}
       style={style}
     >
       <pre
@@ -221,6 +230,7 @@ const CodeHighlighterComponent = ({
         data-continuation-str={commandLine?.continuationStr}
         data-filter-output={commandLine?.filterOutput}
         data-filter-continuation={commandLine?.filterContinuation}
+        style={preStyle}
       >
         <code
           ref={codeRef}
@@ -228,6 +238,7 @@ const CodeHighlighterComponent = ({
             `language-${language}`,
             styles['code-highlighter__code']
           )}
+          style={codeStyle}
         >
           {oldCode != null
             ? generatePrismDiff(oldCode.trim(), code.trim())

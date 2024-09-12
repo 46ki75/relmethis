@@ -1,6 +1,6 @@
 {
   "name": "relmethis",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "engines": {
     "node": "20"
   },
@@ -46,7 +46,6 @@
     "react-element-to-jsx-string": "^15.0.0",
     "react-fast-compare": "^3.2.2",
     "react-intersection-observer": "^9.13.1",
-    "react-syntax-highlighter": "^15.5.0",
     "react-use": "^17.5.0",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",
@@ -54,7 +53,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^2.0.1",
+    "@chromatic-com/storybook": "^2.0.2",
     "@storybook/addon-a11y": "^8.3.0",
     "@storybook/addon-essentials": "^8.3.0",
     "@storybook/addon-interactions": "^8.3.0",

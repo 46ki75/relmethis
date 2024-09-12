@@ -8,14 +8,6 @@ import React, {
   useState
 } from 'react'
 
-// highlight
-import type { Prism as SyntaxHighlighterType } from 'react-syntax-highlighter'
-const SyntaxHighlighter = React.lazy(() =>
-  import('react-syntax-highlighter').then((module) => ({
-    default: module.Prism
-  }))
-) as React.ComponentType<React.ComponentProps<typeof SyntaxHighlighterType>>
-
 // KaTex
 import type { KaTex as KaTexType } from './KaTex'
 const KaTex = React.lazy(() =>
@@ -31,11 +23,6 @@ const Mermaid = React.lazy(() =>
     default: module.Mermaid
   }))
 ) as React.ComponentType<React.ComponentProps<typeof MermaidType>>
-
-import {
-  oneLight,
-  oneDark
-} from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 // icons
 import {
@@ -58,6 +45,7 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 import styles from './CodeBlock.module.scss'
 import { darken, lighten } from 'polished'
+import { CodeHighlighter } from './CodeHighlighter'
 
 // # --------------------------------------------------------------------------------
 //
@@ -295,42 +283,19 @@ const CodeBlockComponent = ({
         {showPreview ? (
           renderPreviewComponent()
         ) : (
-          <MemoizedSyntaxHighlighter
-            code={code}
+          <CodeHighlighter
             language={deferredLanguage}
+            className={`${styles['fade-in']} ${styles['syntax-highlighter']}`}
+            showLineNumber={isShowNumber}
             isDark={isDarkLocal}
-            isShowNumber={isShowNumber}
-          />
+            code={code.trim()}
+            preStyle={{ margin: 0, borderRadius: '0 0 0.25rem 0.25rem' }}
+          ></CodeHighlighter>
         )}
       </Suspense>
     </div>
   )
 }
-
-const MemoizedSyntaxHighlighter = React.memo(
-  ({
-    code,
-    language = 'txt',
-    isDark = false,
-    isShowNumber = true
-  }: {
-    code: string
-    language?: string
-    isDark?: boolean
-    isShowNumber?: boolean
-  }) => (
-    <SyntaxHighlighter
-      language={language}
-      className={`${styles['fade-in']} ${styles['syntax-highlighter']}`}
-      style={isDark ? oneDark : oneLight}
-      showLineNumbers={isShowNumber}
-      customStyle={{ margin: 0, borderRadius: '0 0 0.25rem 0.25rem' }}
-    >
-      {code.trim()}
-    </SyntaxHighlighter>
-  ),
-  isEqual
-)
 
 // # --------------------------------------------------------------------------------
 //

@@ -5,7 +5,7 @@ const meta: Meta<typeof CodeHighlighter> = {
   title: 'Components/Code/CodeHighlighter',
   component: CodeHighlighter,
   tags: ['autodocs'],
-  args: { isDark: true, showNumber: true }
+  args: { isDark: true, showLineNumber: true }
 }
 
 export default meta
