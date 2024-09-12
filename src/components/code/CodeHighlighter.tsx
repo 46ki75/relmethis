@@ -131,7 +131,7 @@ export interface CodeHighlighterProps {
    *
    * Highlights specific lines. e.g., `['5', '14-17']`
    */
-  highlightLines?: string[]
+  highlightLines?: (string | number)[]
 
   /**
    * @see https://prismjs.com/plugins/command-line/
@@ -149,7 +149,7 @@ export interface CodeHighlighterProps {
      * Lines marked as standard output. Only the left side of standard input lines will display the prompt.
      * e.g., `['2', '4-8']`
      */
-    output?: string[]
+    output?: (string | number)[]
     /**
      * Fully customizable prompt. e.g., `$`
      */

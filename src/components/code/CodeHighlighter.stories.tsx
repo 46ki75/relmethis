@@ -39,7 +39,7 @@ async fn main() -> Result<(), Error> {
 `
 
 export const Primary: Story = {
-  args: { code, highlightLines: ['5', '14-17'], language: 'rust' }
+  args: { code, highlightLines: ['2', 5, '14-17'], language: 'rust' }
 }
 
 const css = `
