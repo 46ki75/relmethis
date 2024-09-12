@@ -31,6 +31,10 @@ import 'prismjs/plugins/line-highlight/prism-line-highlight.js'
 // language autoloader
 import 'prismjs/plugins/autoloader/prism-autoloader.js'
 
+// previewers @see https://prismjs.com/plugins/previewers/
+import 'prismjs/plugins/previewers/prism-previewers.css'
+import 'prismjs/plugins/previewers/prism-previewers.js'
+
 // # --------------------------------------------------------------------------------
 //
 // props
