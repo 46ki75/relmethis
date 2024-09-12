@@ -1,0 +1,51 @@
+.wrapper {
+  color: var(--react-color);
+  margin: 2rem auto;
+  box-sizing: border-box;
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  border-left: solid 4px rgba(128, 128, 128, 0.5);
+  background-color: rgba(128, 128, 128, 0.08);
+  .children {
+    opacity: var(--react-opacity);
+    transition: opacity 1000ms;
+  }
+
+  .cite {
+    opacity: var(--react-opacity);
+    transition: opacity 1000ms;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.25rem;
+
+    svg {
+      color: #4c6da2;
+      width: 16px;
+      height: 16px;
+    }
+
+    a {
+      all: unset;
+      color: #6987b8;
+      font-size: 0.85rem;
+      border-radius: 0.25rem;
+      padding: 0 0.25rem;
+      cursor: pointer;
+
+      transition: background-color 200ms;
+
+      &:hover {
+        background-color: rgba(#6987b8, 0.1);
+      }
+
+      &:visited {
+        color: #9771bd;
+
+        &:hover {
+          background-color: rgba(#9771bd, 0.1);
+        }
+      }
+    }
+  }
+}

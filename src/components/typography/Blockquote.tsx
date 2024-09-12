@@ -1,71 +1,12 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { ReactNode } from 'react'
-import { css } from '@emotion/react'
 import { LinkIcon } from '@heroicons/react/16/solid'
-import { rgba } from 'polished'
 import { useInView } from 'react-intersection-observer'
 
 import isEqual from 'react-fast-compare'
+import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { useMergeRefs } from '../../hooks/useMergeRefs'
 
-// # --------------------------------------------------------------------------------
-//
-// styles
-//
-// # --------------------------------------------------------------------------------
-
-const style = ({ isDark }: { isDark: boolean }) => css`
-  color: ${isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-  margin: 2rem auto;
-  box-sizing: border-box;
-  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
-  border-left: solid 4px rgba(128, 128, 128, 0.5);
-  background-color: rgba(128, 128, 128, 0.05);
-`
-
-const childrenStyle = ({ inView }: { inView: boolean }) => css`
-  opacity: ${inView ? 1 : 0};
-  transition: opacity 1000ms;
-`
-
-const citeBlockStyle = ({ inView }: { inView: boolean }) => css`
-  opacity: ${inView ? 1 : 0};
-  transition: opacity 1000ms;
-
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 0.25rem;
-`
-
-const iconStyle = css`
-  color: #4c6da2;
-  width: 16px;
-  height: 16px;
-`
-
-const linkStyle = css`
-  all: unset;
-  color: #6987b8;
-  font-size: 0.85rem;
-  border-radius: 0.25rem;
-  padding: 0 0.25rem;
-  cursor: pointer;
-
-  transition: background-color 200ms;
-
-  &:hover {
-    background-color: ${rgba('#6987b8', 0.1)};
-  }
-
-  &:visited {
-    color: #9771bd;
-
-    &:hover {
-      background-color: ${rgba('#9771bd', 0.1)};
-    }
-  }
-`
+import styles from './Blockquote.module.scss'
 
 // # --------------------------------------------------------------------------------
 //
@@ -96,20 +37,22 @@ const BlockquoteComponent = ({
   cite,
   isDark = false
 }: BlockquoteProps) => {
-  const { ref, inView } = useInView()
+  const { ref: a, inView } = useInView()
+
+  const { ref: b } = useCSSVariable({
+    '--react-color': isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
+    '--react-opacity': inView ? 1 : 0
+  })
+
+  const ref = useMergeRefs(a, b)
 
   return (
-    <blockquote cite={cite} css={style({ isDark })} ref={ref}>
-      <div css={childrenStyle({ inView })}>{children}</div>
+    <blockquote cite={cite} ref={ref} className={styles.wrapper}>
+      <div className={styles.children}>{children}</div>
       {cite != null && (
-        <div css={citeBlockStyle({ inView })}>
-          <LinkIcon css={iconStyle} />
-          <a
-            href={cite}
-            target='_blank'
-            rel='noreferrer noopener'
-            css={linkStyle}
-          >
+        <div className={styles.cite}>
+          <LinkIcon />
+          <a href={cite} target='_blank' rel='noreferrer noopener'>
             {cite}
           </a>
         </div>
