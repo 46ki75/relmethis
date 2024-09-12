@@ -6,7 +6,7 @@ import {
   XCircleIcon
 } from '@heroicons/react/24/outline'
 import isEqual from 'react-fast-compare'
-import { darken, lighten } from 'polished'
+import { darken, lighten, rgba } from 'polished'
 import React, { useMemo } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
@@ -78,7 +78,7 @@ export const AlertComponent = ({
   const { ref: a, inView } = useInView()
 
   const { ref: b } = useCSSVariable({
-    '--react-background-color': lighten(0.38, color),
+    '--react-background-color': lighten(0.15, rgba(color, 0.2)),
     '--react-border-color': darken(0.1, color),
     '--react-position': `${inView ? 0 : -100}%`,
     '--react-selection-color': isDark
