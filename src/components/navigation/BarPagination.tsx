@@ -4,6 +4,7 @@ import isEqual from 'react-fast-compare'
 
 import styles from './BarPagination.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
@@ -30,6 +31,10 @@ export interface BarPaginationProps {
    * @returns {void}
    */
   setCurrentPage: (page: number) => void
+  /**
+   * Thickness of the indicator
+   */
+  weight?: number
 }
 
 // # --------------------------------------------------------------------------------
@@ -42,18 +47,22 @@ const BarPaginationComponent = ({
   length,
   isDark = false,
   currentPage,
-  setCurrentPage
+  setCurrentPage,
+  weight = 8
 }: BarPaginationProps) => {
   const { ref } = useCSSVariable({
-    '--react-color': isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'
+    '--react-color': isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
+    '--react-bar-weight': weight + 'px'
   })
 
   return (
-    <nav className={styles.wrapper} ref={ref}>
+    <nav className={styles['bar-paginarion']} ref={ref}>
       {new Array(length).fill(null).map((_, index) => (
         <div
           key={index}
-          className={currentPage === index + 1 ? styles['current-page'] : ''}
+          className={classNames(styles['bar-paginarion__bar'], {
+            [styles['bar-paginarion__bar--active']]: currentPage === index + 1
+          })}
           onClick={() => {
             setCurrentPage(index + 1)
           }}
