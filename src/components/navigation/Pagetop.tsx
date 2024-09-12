@@ -4,11 +4,11 @@ import { createPortal } from 'react-dom'
 // scss modules
 import styles from './Pagetop.module.scss'
 
-import { useWindowScroll } from 'react-use'
 import { darken, lighten } from 'polished'
 import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 import classNames from 'classnames'
+import { useWindowScroll } from '../../hooks/useWindowScroll'
 
 // # --------------------------------------------------------------------------------
 //
@@ -45,7 +45,7 @@ export const PagetopComponent = ({
   size = 64
 }: PagetopProps): JSX.Element => {
   const [isVisible, setIsVisible] = useState(true)
-  const { y } = useWindowScroll()
+  const { y } = useWindowScroll({ throttle: 500 })
 
   useEffect(() => {
     setIsVisible(y > 100)

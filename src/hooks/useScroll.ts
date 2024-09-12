@@ -27,7 +27,6 @@ export const useScroll = (
   useEffect(() => {
     const element = elementRef.current
 
-    // スロットリングされたスクロールハンドラを定義
     const scrollHandler = options?.throttle
       ? throttle(handleScroll, options.throttle)
       : handleScroll
