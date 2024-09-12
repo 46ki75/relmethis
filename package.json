@@ -37,6 +37,7 @@
     "@heroicons/react": "^2.1.5",
     "classnames": "^2.5.1",
     "katex": "^0.16.11",
+    "lodash": "^4.17.21",
     "mermaid": "^11.2.0",
     "polished": "^4.3.1",
     "prismjs": "^1.29.0",
