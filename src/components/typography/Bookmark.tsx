@@ -3,7 +3,7 @@ import React from 'react'
 import { LinkIcon } from '@heroicons/react/24/outline'
 
 import isEqual from 'react-fast-compare'
-import { ImageWithModal } from '../image/ImageWithModal'
+import { Image } from '../media/Image'
 
 import styles from './Bookmark.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
@@ -60,7 +60,7 @@ const BookmarkComponent = ({
   return (
     <div ref={ref} className={styles.wrapper}>
       <a href={url} target='_blank' rel='nopager noopener'>
-        <ImageWithModal src={image} alt={description} disableModal={true} />
+        <Image src={image} alt={description} disableModal={true} />
 
         <div className={styles.typography}>
           <div className={styles.title}>{title}</div>

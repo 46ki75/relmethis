@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { ImageWithModal } from './ImageWithModal'
+import { Image } from './Image'
 
-const meta: Meta<typeof ImageWithModal> = {
-  title: 'Components/Image/ImageWithModal',
-  component: ImageWithModal,
+const meta: Meta<typeof Image> = {
+  title: 'Components/Media/Image',
+  component: Image,
   parameters: {},
   tags: ['autodocs'],
   args: {

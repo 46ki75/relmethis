@@ -7,7 +7,7 @@ import { useKey } from 'react-use'
 import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
-import styles from './ImageWithModal.module.scss'
+import styles from './Image.module.scss'
 
 import classNames from 'classnames'
 
@@ -17,7 +17,7 @@ import classNames from 'classnames'
 //
 // # --------------------------------------------------------------------------------
 
-export interface ImageWithModalProps {
+export interface ImageProps {
   style?: React.CSSProperties
 
   src: string
@@ -65,7 +65,7 @@ export interface ImageWithModalProps {
 //
 // # --------------------------------------------------------------------------------
 
-const ImageWithModalComponent = ({
+const ImageComponent = ({
   style,
   src,
   alt = src,
@@ -77,7 +77,7 @@ const ImageWithModalComponent = ({
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false,
   disableModal = false
-}: ImageWithModalProps): JSX.Element => {
+}: ImageProps): JSX.Element => {
   const [isFetchingImage, setIsFetchingImage] = useState(true)
   const [isModalShow, setIsModalShow] = useState(false)
 
@@ -159,4 +159,4 @@ const ImageWithModalComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const ImageWithModal = React.memo(ImageWithModalComponent, isEqual)
+export const Image = React.memo(ImageComponent, isEqual)

@@ -27,12 +27,12 @@ const CodeBlock = React.lazy(() =>
   }))
 ) as React.ComponentType<React.ComponentProps<typeof CodeBlockType>>
 
-import type { ImageWithModal as ImageWithModalType } from '../image/ImageWithModal'
+import type { Image as ImageWithModalType } from '../media/Image'
 import { mdastToString } from './mdastToString'
 import { Table } from '../data/Table'
 const ImageWithModal = React.lazy(() =>
-  import('../image/ImageWithModal').then((module) => ({
-    default: module.ImageWithModal
+  import('../media/Image').then((module) => ({
+    default: module.Image
   }))
 ) as React.ComponentType<React.ComponentProps<typeof ImageWithModalType>>
 

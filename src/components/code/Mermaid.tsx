@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import mermaid from 'mermaid'
 
-import { ImageWithModal } from '../image/ImageWithModal'
+import { Image } from '../media/Image'
 import { BlockFallback } from '../fallback/BlockFallback'
 
 import isEqual from 'react-fast-compare'
@@ -82,7 +82,7 @@ const MermaidComponent = ({
 
   return svgBase64 ? (
     <div className={styles.mermaid} ref={ref}>
-      <ImageWithModal src={svgBase64} alt='Mermaid Chart' />
+      <Image src={svgBase64} alt='Mermaid Chart' />
     </div>
   ) : (
     <div

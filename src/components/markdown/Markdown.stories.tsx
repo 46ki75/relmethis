@@ -113,7 +113,7 @@ export const Headings: Story = {
   }
 }
 
-export const Image: Story = {
+export const Images: Story = {
   args: {
     isDark: false,
     enableTableOfContents: true,
