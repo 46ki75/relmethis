@@ -11,16 +11,18 @@
     display: flex;
     flex-direction: column;
 
-    @media (min-width: 768px) {
-      flex-direction: row;
-    }
-
     user-select: none;
     cursor: pointer;
 
     transition:
       opacity 300ms,
       border-color 400ms ease 400ms;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      maxwidth: 35%;
+      borderradius: 0.25rem 0 0 0.25rem;
+    }
 
     &:hover {
       opacity: 0.9;
