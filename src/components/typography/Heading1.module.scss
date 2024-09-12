@@ -1,4 +1,6 @@
 .section {
+  --cont-decoration-width: 10%;
+
   &__heading {
     margin-block-start: 1rem;
     box-sizing: border-box;
@@ -18,37 +20,35 @@
     &::before {
       position: absolute;
       content: '';
+      left: calc(50% - var(--cont-decoration-width) / 2);
+      width: var(--cont-decoration-width);
       bottom: 0;
       height: 3px;
       background-color: var(--react-color-fg);
-      transition:
-        left 400ms ease-in-out 0ms,
-        height 400ms ease-in-out 0ms,
-        width 400ms ease-in-out 0ms;
+      transition: transform 400ms ease-in-out 0ms;
 
-      left: 50%;
-      width: 0%;
+      transform: scaleX(0);
     }
 
     &--visible::before {
-      left: 45%;
-      width: 10%;
+      transform: scaleX(1);
     }
 
     &::after {
       position: absolute;
       content: '';
+      width: 100%;
       left: 0;
       bottom: 0;
       border-bottom: solid 1px var(--react-color-fg);
-      transition: width 400ms ease-in-out 200ms;
+      transition: transform 400ms ease-in-out 200ms;
       pointer-events: none;
 
-      width: 0%;
+      transform: scaleX(0);
     }
 
     &--visible::after {
-      width: 100%;
+      transform: scaleX(1);
     }
 
     &::selection {

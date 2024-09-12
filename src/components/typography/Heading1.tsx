@@ -46,6 +46,7 @@ export interface Heading1Props {
 export const Heading1Component = ({
   text,
   identifier = text,
+
   isDark = false
 }: Heading1Props) => {
   const { ref: a, inView } = useInView()
