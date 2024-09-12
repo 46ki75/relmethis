@@ -9,7 +9,7 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 import styles from './ImageWithModal.module.scss'
 
-import { CSSTransition } from 'react-transition-group'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
@@ -73,7 +73,9 @@ const ImageWithModalComponent = ({
   height = 630,
   lang = 'ja',
   isLoading = false,
-  isDark = false,
+  isDark = typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-color-scheme: dark)').matches
+    : false,
   disableModal = false
 }: ImageWithModalProps): JSX.Element => {
   const [isFetchingImage, setIsFetchingImage] = useState(true)
@@ -131,32 +133,19 @@ const ImageWithModalComponent = ({
 
       <>
         {createPortal(
-          <CSSTransition
-            in={isModalShow}
-            timeout={280}
-            classNames={{
-              enterActive: styles['modal__transition--enter-active'],
-              enterDone: styles['modal__transition--enter-done'],
-              exitActive: styles['modal__transition--exit-active']
+          <div
+            className={classNames(styles.modal, {
+              [styles['modal--visible']]: isModalShow
+            })}
+            onClick={() => {
+              setIsModalShow(false)
             }}
-            unmountOnExit
           >
-            <div
-              className={styles.modal}
-              onClick={() => {
-                setIsModalShow(false)
-              }}
-            >
-              <img
-                alt={alt}
-                src={src}
-                className={styles['modal__modal-image']}
-              />
-              <span className={styles['modal__modal-guide-text']}>
-                {guideText}
-              </span>
-            </div>
-          </CSSTransition>,
+            <img alt={alt} src={src} className={styles['modal__modal-image']} />
+            <span className={styles['modal__modal-guide-text']}>
+              {guideText}
+            </span>
+          </div>,
           document.body
         )}
       </>

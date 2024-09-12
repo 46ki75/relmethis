@@ -45,8 +45,15 @@
   user-select: none;
   cursor: zoom-out;
 
-  transition: opacity 280ms;
+  transition: opacity 250ms;
+
   opacity: 0;
+  pointer-events: none;
+
+  &--visible {
+    opacity: 1;
+    pointer-events: all;
+  }
 
   &__modal-image {
     max-width: 100%;
@@ -59,19 +66,5 @@
     right: 0;
     color: rgba(255, 255, 255, 0.6);
     font-size: 0.75rem;
-  }
-
-  // transition
-
-  &__transition--enter-active {
-    opacity: 1;
-  }
-
-  &__transition--enter-done {
-    opacity: 1;
-  }
-
-  &__transition--exit-active {
-    opacity: 0;
   }
 }
