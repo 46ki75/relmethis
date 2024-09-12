@@ -46,6 +46,10 @@
         color: var(--react-color-bg);
         border-right: 1px dashed rgba(128, 128, 128, 0.4);
 
+        * {
+          color: var(--react-color-bg);
+        }
+
         &::selection,
         *::selection {
           background-color: var(--react-color-bg);
