@@ -91,6 +91,6 @@ export const SelfNest: Story = {
         </Alert>
       </>
     ),
-    type: 'caution'
+    type: 'note'
   }
 }
