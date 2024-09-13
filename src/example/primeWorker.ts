@@ -1,19 +1,25 @@
-export interface ProgressMessage {
+export type ResultMessageType = 'progress' | 'complete'
+
+export interface ResultMessageBase<T extends ResultMessageType> {
+  type: T
+}
+
+export interface ProgressResultMessage extends ResultMessageBase<'progress'> {
   type: 'progress'
   progress: number
 }
 
-export interface CompleteMessage {
+export interface CompleteResultMessage extends ResultMessageBase<'complete'> {
   type: 'complete'
   progress: number
   primes: number[]
 }
 
-export interface PrimeWorkerMessage {
+export interface InputMessage {
   count: number
 }
 
-export type WorkerMessage = ProgressMessage | CompleteMessage
+export type ResultMessage = ProgressResultMessage | CompleteResultMessage
 
 function isPrime(num: number): boolean {
   if (num < 2) return false
@@ -32,7 +38,7 @@ function findPrimes(limit: number): number[] {
       primes.push(num)
 
       const progress = (primes.length / limit) * 100
-      self.postMessage({ type: 'progress', progress } as ProgressMessage)
+      self.postMessage({ type: 'progress', progress } as ProgressResultMessage)
     }
     num++
   }
@@ -43,5 +49,5 @@ function findPrimes(limit: number): number[] {
 self.onmessage = (event) => {
   const limit = event.data
   const primes = findPrimes(limit)
-  self.postMessage({ type: 'complete', primes } as CompleteMessage)
+  self.postMessage({ type: 'complete', primes } as CompleteResultMessage)
 }

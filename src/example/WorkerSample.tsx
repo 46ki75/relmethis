@@ -5,7 +5,7 @@ import { LineProgress } from '../components/data/LineProgress'
 
 // web worker
 import PrimeWorker from './primeWorker.ts?worker'
-import type { WorkerMessage } from './primeWorker'
+import type { ResultMessage } from './primeWorker'
 
 // # --------------------------------------------------------------------------------
 //
@@ -20,7 +20,7 @@ const WorkerSampleComponent = ({ count = 100 }: { count: number }) => {
   useEffect(() => {
     const worker = new PrimeWorker()
 
-    worker.onmessage = (event: MessageEvent<WorkerMessage>) => {
+    worker.onmessage = (event: MessageEvent<ResultMessage>) => {
       if (event.data.type === 'progress') {
         setProgress(event.data.progress)
       }
