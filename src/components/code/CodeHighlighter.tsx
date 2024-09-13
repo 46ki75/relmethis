@@ -15,6 +15,7 @@ import classNames from 'classnames'
 import Prism from 'prismjs'
 
 //styles
+import './prism-one-common.scss'
 import './prism-one-light.scss'
 import './prism-one-dark.scss'
 

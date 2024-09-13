@@ -1,0 +1,9 @@
+.relmethis-codeblock-container-light,
+.relmethis-codeblock-container-dark {
+  .line-highlight::after,
+  .line-highlight::before {
+    transition:
+      background-color var(--react-transition-duration, 400ms),
+      color var(--react-transition-duration, 400ms);
+  }
+}
