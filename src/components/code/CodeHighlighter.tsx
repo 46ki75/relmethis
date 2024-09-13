@@ -209,7 +209,7 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
 
   useDeepCompareEffect(() => {
     highlight()
-  }, [highlightLines])
+  }, [highlightLines, commandLine])
 
   // # --------------------------------------------------------------------------------
   //
