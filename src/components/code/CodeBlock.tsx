@@ -294,13 +294,12 @@ const CodeBlockComponent = ({
         ) : (
           <CodeHighlighter
             language={deferredLanguage}
-            className={`${styles['fade-in']} ${styles['syntax-highlighter']}`}
             showLineNumber={isShowNumber}
             isDark={isDarkLocal}
             code={code.trim()}
             highlightLines={highlightLines}
             preStyle={{ margin: 0, borderRadius: '0 0 0.25rem 0.25rem' }}
-          ></CodeHighlighter>
+          />
         )}
       </Suspense>
     </div>

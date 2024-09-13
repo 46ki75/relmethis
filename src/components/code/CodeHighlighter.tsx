@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
@@ -183,8 +183,6 @@ const CodeHighlighterComponent = ({
   highlightLines = [],
   commandLine
 }: CodeHighlighterProps) => {
-  const [isLoading, setIsLoading] = useState(true)
-
   const { ref: cssRef } = useCSSVariable({
     '--react-transition-duration': transitionDuration + 'ms'
   })
@@ -192,15 +190,16 @@ const CodeHighlighterComponent = ({
   const codeRef = useRef(null)
 
   useEffect(() => {
-    setIsLoading(true)
-    Prism.plugins.autoloader.languages_path =
-      'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/'
-
-    if (codeRef.current) {
-      Prism.highlightElement(codeRef.current)
+    const highlight = async () => {
+      Prism.plugins.autoloader.languages_path =
+        'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/'
+      if (codeRef.current) {
+        Prism.highlightElement(codeRef.current)
+      }
     }
-    setIsLoading(false)
-  }, [code, showNumber])
+
+    highlight()
+  }, [code, showNumber, language, highlightLines])
 
   return (
     <div
@@ -209,12 +208,11 @@ const CodeHighlighterComponent = ({
         styles['code-highlighter'],
         {
           [`relmethis-codeblock-container-light`]: !isDark,
-          [`relmethis-codeblock-container-dark`]: isDark,
-          [styles['code-highlighter--loading']]: isLoading
+          [`relmethis-codeblock-container-dark`]: isDark
         },
         className
       )}
-      style={style}
+      style={{ ...style }}
     >
       <pre
         className={classNames(styles['code-highlighter__pre'], {

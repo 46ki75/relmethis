@@ -90,10 +90,3 @@
   animation-duration: 800ms;
   animation-fill-mode: both;
 }
-
-.syntax-highlighter {
-  &,
-  * {
-    transition: background-color 200ms ease 200ms;
-  }
-}
