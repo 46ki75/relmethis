@@ -28,10 +28,30 @@
  * --syntax-cursor-line: hsla(230, 8%, 24%, 0.05);
  */
 .relmethis-codeblock-container-light {
+  --mono-1: hsl(230, 8%, 24%);
+  --mono-2: hsl(230, 6%, 44%);
+  --mono-3: hsl(230, 4%, 64%);
+  --hue-1: hsl(198, 99%, 37%);
+  --hue-2: hsl(221, 60%, 46%);
+  --hue-3: hsl(301, 63%, 40%);
+  --hue-4: hsl(119, 34%, 47%);
+  --hue-5: hsl(5, 74%, 59%);
+  --hue-5-2: hsl(344, 84%, 43%);
+  --hue-6: hsl(35, 99%, 36%);
+  --hue-6-2: hsl(35, 99%, 40%);
+  --syntax-fg: var(--mono-1);
+  --syntax-bg: hsl(230, 1%, 98%);
+  --syntax-gutter: hsl(230, 1%, 62%);
+  --syntax-guide: hsla(230, 8%, 24%, 0.2);
+  --syntax-accent: hsl(230, 100%, 66%);
+  --syntax-selection-color: hsl(230, 1%, 90%);
+  --syntax-gutter-background-color-selected: var(--syntax-selection-color);
+  --syntax-cursor-line: hsla(230, 8%, 24%, 0.05);
+
   code[class*='language-'],
   pre[class*='language-'] {
-    background: hsl(230, 1%, 98%);
-    color: hsl(230, 8%, 24%);
+    background: var(--syntax-bg);
+    color: var(--syntax-fg);
     font-family: 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono',
       monospace;
     direction: ltr;
@@ -53,14 +73,14 @@
   code[class*='language-']::-moz-selection,
   code[class*='language-'] *::-moz-selection,
   pre[class*='language-'] *::-moz-selection {
-    background: hsl(230, 1%, 90%);
+    background: var(--syntax-selection-color);
     color: inherit;
   }
 
   code[class*='language-']::selection,
   code[class*='language-'] *::selection,
   pre[class*='language-'] *::selection {
-    background: hsl(230, 1%, 90%);
+    background: var(--syntax-selection-color);
     color: inherit;
   }
 
@@ -80,13 +100,13 @@
   .token.comment,
   .token.prolog,
   .token.cdata {
-    color: hsl(230, 4%, 64%);
+    color: var(--mono-3);
   }
 
   .token.doctype,
   .token.punctuation,
   .token.entity {
-    color: hsl(230, 8%, 24%);
+    color: var(--mono-1);
   }
 
   .token.attr-name,
@@ -95,11 +115,11 @@
   .token.constant,
   .token.number,
   .token.atrule {
-    color: hsl(35, 99%, 36%);
+    color: var(--hue-6);
   }
 
   .token.keyword {
-    color: hsl(301, 63%, 40%);
+    color: var(--hue-3);
   }
 
   .token.property,
@@ -107,7 +127,7 @@
   .token.symbol,
   .token.deleted,
   .token.important {
-    color: hsl(5, 74%, 59%);
+    color: var(--hue-5);
   }
 
   .token.selector,
@@ -118,108 +138,108 @@
   .token.regex,
   .token.attr-value,
   .token.attr-value > .token.punctuation {
-    color: hsl(119, 34%, 47%);
+    color: var(--hue-4);
   }
 
   .token.variable,
   .token.operator,
   .token.function {
-    color: hsl(221, 60%, 46%);
+    color: var(--hue-2);
   }
 
   .token.url {
-    color: hsl(198, 99%, 37%);
+    color: var(--hue-1);
   }
 
   /* HTML overrides */
   .token.attr-value > .token.punctuation.attr-equals,
   .token.special-attr > .token.attr-value > .token.value.css {
-    color: hsl(230, 8%, 24%);
+    color: var(--mono-1);
   }
 
   /* CSS overrides */
   .language-css .token.selector {
-    color: hsl(5, 74%, 59%);
+    color: var(--hue-5);
   }
 
   .language-css .token.property {
-    color: hsl(230, 8%, 24%);
+    color: var(--mono-1);
   }
 
   .language-css .token.function,
   .language-css .token.url > .token.function {
-    color: hsl(198, 99%, 37%);
+    color: var(--hue-1);
   }
 
   .language-css .token.url > .token.string.url {
-    color: hsl(119, 34%, 47%);
+    color: var(--hue-4);
   }
 
   .language-css .token.important,
   .language-css .token.atrule .token.rule {
-    color: hsl(301, 63%, 40%);
+    color: var(--hue-3);
   }
 
   /* JS overrides */
   .language-javascript .token.operator {
-    color: hsl(301, 63%, 40%);
+    color: var(--hue-3);
   }
 
   .language-javascript
     .token.template-string
     > .token.interpolation
     > .token.interpolation-punctuation.punctuation {
-    color: hsl(344, 84%, 43%);
+    color: var(--hue-5-2);
   }
 
   /* JSON overrides */
   .language-json .token.operator {
-    color: hsl(230, 8%, 24%);
+    color: var(--mono-1);
   }
 
   .language-json .token.null.keyword {
-    color: hsl(35, 99%, 36%);
+    color: var(--hue-6);
   }
 
   /* MD overrides */
   .language-markdown .token.url,
   .language-markdown .token.url > .token.operator,
   .language-markdown .token.url-reference.url > .token.string {
-    color: hsl(230, 8%, 24%);
+    color: var(--mono-1);
   }
 
   .language-markdown .token.url > .token.content {
-    color: hsl(221, 60%, 46%);
+    color: var(--hue-2);
   }
 
   .language-markdown .token.url > .token.url,
   .language-markdown .token.url-reference.url {
-    color: hsl(198, 99%, 37%);
+    color: var(--hue-1);
   }
 
   .language-markdown .token.blockquote.punctuation,
   .language-markdown .token.hr.punctuation {
-    color: hsl(230, 4%, 64%);
+    color: var(--mono-3);
     font-style: italic;
   }
 
   .language-markdown .token.code-snippet {
-    color: hsl(119, 34%, 47%);
+    color: var(--hue-4);
   }
 
   .language-markdown .token.bold .token.content {
-    color: hsl(35, 99%, 36%);
+    color: var(--hue-6);
   }
 
   .language-markdown .token.italic .token.content {
-    color: hsl(301, 63%, 40%);
+    color: var(--hue-3);
   }
 
   .language-markdown .token.strike .token.content,
   .language-markdown .token.strike .token.punctuation,
   .language-markdown .token.list.punctuation,
   .language-markdown .token.title.important > .token.punctuation {
-    color: hsl(5, 74%, 59%);
+    color: var(--hue-5);
   }
 
   /* General */
@@ -261,8 +281,8 @@
   div.code-toolbar > .toolbar.toolbar > .toolbar-item > button,
   div.code-toolbar > .toolbar.toolbar > .toolbar-item > a,
   div.code-toolbar > .toolbar.toolbar > .toolbar-item > span {
-    background: hsl(230, 1%, 90%);
-    color: hsl(230, 6%, 44%);
+    background: var(--syntax-selection-color);
+    color: var(--mono-2);
     padding: 0.1em 0.4em;
     border-radius: 0.3em;
   }
@@ -273,21 +293,21 @@
   div.code-toolbar > .toolbar.toolbar > .toolbar-item > a:focus,
   div.code-toolbar > .toolbar.toolbar > .toolbar-item > span:hover,
   div.code-toolbar > .toolbar.toolbar > .toolbar-item > span:focus {
-    background: hsl(230, 1%, 78%); /* custom: darken(--syntax-bg, 20%) */
-    color: hsl(230, 8%, 24%);
+    background: hsl(230, 1%, 78%);
+    color: var(--mono-1);
   }
 
   /* Line Highlight plugin overrides */
   /* The highlighted line itself */
   .line-highlight.line-highlight {
-    background: hsla(230, 8%, 24%, 0.05);
+    background: var(--syntax-cursor-line);
   }
 
   /* Default line numbers in Line Highlight plugin */
   .line-highlight.line-highlight:before,
   .line-highlight.line-highlight[data-end]:after {
-    background: hsl(230, 1%, 90%);
-    color: hsl(230, 8%, 24%);
+    background: var(--syntax-selection-color);
+    color: var(--syntax-fg);
     padding: 0.1em 0.6em;
     border-radius: 0.3em;
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2); /* same as Toolbar plugin default */
@@ -311,7 +331,7 @@
   /* Stuff in the gutter */
   .line-numbers .line-numbers-rows > span:before,
   .command-line .command-line-prompt > span:before {
-    color: hsl(230, 1%, 62%);
+    color: var(--syntax-gutter);
   }
 
   /* Match Braces plugin overrides */
@@ -319,25 +339,25 @@
   .rainbow-braces .token.token.punctuation.brace-level-1,
   .rainbow-braces .token.token.punctuation.brace-level-5,
   .rainbow-braces .token.token.punctuation.brace-level-9 {
-    color: hsl(5, 74%, 59%);
+    color: var(--hue-5);
   }
 
   .rainbow-braces .token.token.punctuation.brace-level-2,
   .rainbow-braces .token.token.punctuation.brace-level-6,
   .rainbow-braces .token.token.punctuation.brace-level-10 {
-    color: hsl(119, 34%, 47%);
+    color: var(--hue-4);
   }
 
   .rainbow-braces .token.token.punctuation.brace-level-3,
   .rainbow-braces .token.token.punctuation.brace-level-7,
   .rainbow-braces .token.token.punctuation.brace-level-11 {
-    color: hsl(221, 60%, 46%);
+    color: var(--hue-2);
   }
 
   .rainbow-braces .token.token.punctuation.brace-level-4,
   .rainbow-braces .token.token.punctuation.brace-level-8,
   .rainbow-braces .token.token.punctuation.brace-level-12 {
-    color: hsl(301, 63%, 40%);
+    color: var(--hue-3);
   }
 
   /* Diff Highlight plugin overrides */
@@ -424,7 +444,7 @@
   /* For time, this is the alternate colour */
   .prism-previewer-angle.prism-previewer-angle circle,
   .prism-previewer-time.prism-previewer-time circle {
-    stroke: hsl(230, 8%, 24%);
+    stroke: var(--mono-1);
     stroke-opacity: 1;
   }
 
@@ -432,7 +452,7 @@
   .prism-previewer-easing.prism-previewer-easing circle,
   .prism-previewer-easing.prism-previewer-easing path,
   .prism-previewer-easing.prism-previewer-easing line {
-    stroke: hsl(230, 8%, 24%);
+    stroke: var(--mono-1);
   }
 
   /* Fill colour of the handle */
