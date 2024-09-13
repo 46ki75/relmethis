@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 
 import react from '@vitejs/plugin-react-swc'
 import dts from 'vite-plugin-dts'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
+import UnoCSS from 'unocss/vite'
 
 import path from 'path'
 
@@ -11,7 +11,8 @@ export default defineConfig({
   plugins: [
     react(),
     dts({ tsconfigPath: './tsconfig.app.json' }),
-    cssInjectedByJsPlugin() // Bundling CSS into JS
+    UnoCSS()
+    // cssInjectedByJsPlugin() // Bundling CSS into JS
   ],
   base: '/relmethis',
   build: {
