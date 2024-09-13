@@ -174,7 +174,7 @@ const CodeBlockComponent = ({
   //
   // # --------------------------------------------------------------------------------
 
-  const COLOR_LIGHT = '#f2f2f2'
+  const COLOR_LIGHT = '#eaeaea'
   const COLOR_DARK = '#1e1e1e'
 
   const { ref } = useCSSVariable({

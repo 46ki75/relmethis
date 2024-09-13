@@ -56,12 +56,12 @@ import { useDeepCompareEffect } from 'react-use'
 
 const VITESSE_LIGHT = {
   '--prism-foreground': '#393a34',
-  '--prism-background': '#f2f2f2',
+  '--prism-background': '#eaeaea',
   '--prism-comment': '#a0ada0',
   '--prism-string': '#b56959',
   '--prism-literal': '#2f8a89',
   '--prism-number': '#296aa3',
-  '--prism-keyword': '#1c6b48',
+  '--prism-keyword': '#098f53',
   '--prism-function': '#6c7834',
   '--prism-boolean': '#1c6b48',
   '--prism-constant': '#a65e2b',
