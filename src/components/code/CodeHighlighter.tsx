@@ -56,7 +56,7 @@ import { useDeepCompareEffect } from 'react-use'
 
 const VITESSE_LIGHT = {
   '--prism-foreground': '#393a34',
-  '--prism-background': '#eaeaea',
+  '--prism-background': '#f5f5f5',
   '--prism-comment': '#a0ada0',
   '--prism-string': '#b56959',
   '--prism-literal': '#2f8a89',
