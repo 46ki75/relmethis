@@ -67,7 +67,7 @@ const LineProgressComponent = ({
     '--react-percent': `scaleX(${inView && !isLoading ? percent : 0}%)`,
     '--react-color': color,
     '--react-opacity': isLoading ? 1 : 0,
-    '--react-transition-duration': `${isLoading ? 400 : 1600}ms`
+    '--react-transition-duration': `${isLoading ? 400 : 800}ms`
   })
 
   const ref = useMergeRefs(a, b)

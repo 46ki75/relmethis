@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import isEqual from 'react-fast-compare'
+
+import { LineProgress } from '../components/data/LineProgress'
+
+// web worker
 import PrimeWorker from './primeWorker.ts?worker'
+import type { WorkerMessage } from './primeWorker'
 
 // # --------------------------------------------------------------------------------
 //
@@ -10,17 +15,22 @@ import PrimeWorker from './primeWorker.ts?worker'
 
 const WorkerSampleComponent = ({ count = 100 }: { count: number }) => {
   const [primes, setPrimes] = useState<number[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
+  const [progress, setProgress] = useState<number>(0)
 
   useEffect(() => {
     const worker = new PrimeWorker()
 
-    worker.onmessage = (event) => {
-      setPrimes(event.data)
-      setLoading(false)
+    worker.onmessage = (event: MessageEvent<WorkerMessage>) => {
+      if (event.data.type === 'progress') {
+        setProgress(event.data.progress)
+      }
+
+      if (event.data.type === 'complete') {
+        setPrimes(event.data.primes)
+        setProgress(event.data.progress)
+      }
     }
 
-    setLoading(true)
     worker.postMessage(count)
 
     return () => {
@@ -31,8 +41,8 @@ const WorkerSampleComponent = ({ count = 100 }: { count: number }) => {
   return (
     <div>
       <h1>First {count} Primes</h1>
-      {loading ? (
-        <p>Loading...</p>
+      {progress < 100 ? (
+        <LineProgress percent={progress} />
       ) : (
         <p>
           {primes.slice(primes.length - 100).map((prime, index) => (
