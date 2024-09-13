@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
@@ -180,7 +180,7 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
     oldCode,
     language = oldCode != null ? 'diff' : 'txt',
     transitionDuration = 400,
-    showLineNumber: showNumber = false,
+    showLineNumber = false,
     highlightLines = [],
     commandLine
   } = props
@@ -196,6 +196,14 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
     [highlightLines]
   )
 
+  const [paddingLeft, setPaddingLeft] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    setPaddingLeft(
+      highlightLines.length > 0 && !showLineNumber ? '2.5rem' : undefined
+    )
+  }, [highlightLines.length, highlightLinesString, showLineNumber])
+
   // # --------------------------------------------------------------------------------
   //
   // render
@@ -210,7 +218,7 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
     if (codeRef.current) {
       Prism.highlightElement(codeRef.current)
     }
-  }, [code, showNumber, language, highlightLinesString])
+  }, [code, oldCode, language, showLineNumber, highlightLinesString])
 
   // # --------------------------------------------------------------------------------
   //
@@ -242,13 +250,9 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
       )}
     >
       <pre
-        style={{
-          ...preStyle,
-          paddingLeft:
-            highlightLines.length > 0 && !showNumber ? '2.5rem' : 'auto'
-        }}
+        style={{ ...preStyle, paddingLeft: paddingLeft }}
         className={classNames(styles['code-highlighter__pre'], {
-          ['line-numbers']: commandLine != null ? false : showNumber,
+          ['line-numbers']: commandLine != null ? false : showLineNumber,
           ['command-line']: commandLine != null
         })}
         data-line={highlightLinesString}
