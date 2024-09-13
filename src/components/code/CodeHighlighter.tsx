@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
@@ -167,42 +167,70 @@ export interface CodeHighlighterProps {
 //
 // # --------------------------------------------------------------------------------
 
-const CodeHighlighterComponent = ({
-  style,
-  preStyle,
-  codeStyle,
-  className,
-  isDark = typeof window !== 'undefined'
-    ? window.matchMedia('(prefers-color-scheme: dark)').matches
-    : false,
-  code,
-  oldCode,
-  language = oldCode != null ? 'diff' : 'txt',
-  transitionDuration = 400,
-  showLineNumber: showNumber = false,
-  highlightLines = [],
-  commandLine
-}: CodeHighlighterProps) => {
-  const { ref: cssRef } = useCSSVariable({
-    '--react-transition-duration': transitionDuration + 'ms'
-  })
+const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
+  const {
+    style,
+    preStyle,
+    codeStyle,
+    className,
+    isDark = typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false,
+    code,
+    oldCode,
+    language = oldCode != null ? 'diff' : 'txt',
+    transitionDuration = 400,
+    showLineNumber: showNumber = false,
+    highlightLines = [],
+    commandLine
+  } = props
+
+  // # --------------------------------------------------------------------------------
+  //
+  // reactive values
+  //
+  // # --------------------------------------------------------------------------------
+
+  const highlightLinesString = useMemo(
+    () => highlightLines.join(', '),
+    [highlightLines]
+  )
+
+  // # --------------------------------------------------------------------------------
+  //
+  // render
+  //
+  // # --------------------------------------------------------------------------------
 
   const codeRef = useRef(null)
 
   useEffect(() => {
-    const highlight = async () => {
-      Prism.plugins.autoloader.languages_path =
-        'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/'
-      if (codeRef.current) {
-        Prism.highlightElement(codeRef.current)
-      }
+    Prism.plugins.autoloader.languages_path =
+      'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/'
+    if (codeRef.current) {
+      Prism.highlightElement(codeRef.current)
     }
+  }, [code, showNumber, language, highlightLinesString])
 
-    highlight()
-  }, [code, showNumber, language, highlightLines])
+  // # --------------------------------------------------------------------------------
+  //
+  // CSS Variables
+  //
+  // # --------------------------------------------------------------------------------
+
+  const { ref: cssRef } = useCSSVariable({
+    '--react-transition-duration': transitionDuration + 'ms'
+  })
+
+  // # --------------------------------------------------------------------------------
+  //
+  // render
+  //
+  // # --------------------------------------------------------------------------------
 
   return (
     <div
+      style={{ ...style }}
       ref={cssRef}
       className={classNames(
         styles['code-highlighter'],
@@ -212,14 +240,18 @@ const CodeHighlighterComponent = ({
         },
         className
       )}
-      style={{ ...style }}
     >
       <pre
+        style={{
+          ...preStyle,
+          paddingLeft:
+            highlightLines.length > 0 && !showNumber ? '2.5rem' : 'auto'
+        }}
         className={classNames(styles['code-highlighter__pre'], {
           ['line-numbers']: commandLine != null ? false : showNumber,
           ['command-line']: commandLine != null
         })}
-        data-line={highlightLines.join(', ')}
+        data-line={highlightLinesString}
         data-user={commandLine?.user}
         data-host={commandLine?.host}
         data-output={commandLine?.output?.join(', ')}
@@ -228,7 +260,6 @@ const CodeHighlighterComponent = ({
         data-continuation-str={commandLine?.continuationStr}
         data-filter-output={commandLine?.filterOutput}
         data-filter-continuation={commandLine?.filterContinuation}
-        style={preStyle}
       >
         <code
           ref={codeRef}

@@ -1,8 +1,11 @@
 .code-highlighter {
   box-sizing: border-box;
   width: 100%;
+  margin: 0;
+  padding: 0;
 
   &__pre {
+    margin: 0;
     transition: background-color var(--react-transition-duration, 400ms);
   }
 
