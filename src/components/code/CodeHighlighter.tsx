@@ -212,12 +212,16 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
 
   const codeRef = useRef(null)
 
-  useEffect(() => {
+  const highlight = () => {
     Prism.plugins.autoloader.languages_path =
       'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/'
     if (codeRef.current) {
       Prism.highlightElement(codeRef.current)
     }
+  }
+
+  useEffect(() => {
+    highlight()
   }, [code, oldCode, language, showLineNumber, highlightLinesString])
 
   // # --------------------------------------------------------------------------------
