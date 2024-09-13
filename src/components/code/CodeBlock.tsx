@@ -117,7 +117,7 @@ const CodeBlockComponent = ({
     setIsShowNumber(media.matches)
   }, [])
 
-  const { copy, isCopied } = useCopy()
+  const { copy, isCopied } = useCopy(2000)
 
   // # --------------------------------------------------------------------------------
   //

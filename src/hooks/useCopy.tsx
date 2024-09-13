@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from 'react'
  * @returns
  */
 export const useCopy = (
-  delay?: number
+  delay: number = 0
 ): {
   isCopied: boolean
   copy: (text: string) => void
@@ -28,7 +28,7 @@ export const useCopy = (
     if (isCopied) {
       const timer = setTimeout(() => {
         setCopied(false)
-      }, delay ?? 3000)
+      }, delay)
 
       return () => clearTimeout(timer)
     }

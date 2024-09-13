@@ -44,7 +44,7 @@ const FragmentIdentifierComponent = ({
     }
   }
 
-  const { copy, isCopied } = useCopy()
+  const { copy, isCopied } = useCopy(2000)
 
   return (
     <div className={styles['fragment-identifier']}>
