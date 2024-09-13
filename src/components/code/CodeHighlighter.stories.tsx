@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { CodeHighlighter } from './CodeHighlighter'
 
 import rustCode from '../../assets/code/main.rs?raw'
-import scss from './prism-one-dark.scss?raw'
+import scss from './prism-one-common.scss?raw'
 
 const meta: Meta<typeof CodeHighlighter> = {
   title: 'Components/Code/CodeHighlighter',

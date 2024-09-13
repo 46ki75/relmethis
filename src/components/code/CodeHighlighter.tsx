@@ -16,8 +16,6 @@ import Prism from 'prismjs'
 
 //styles
 import './prism-one-common.scss'
-import './prism-one-light.scss'
-import './prism-one-dark.scss'
 
 // line numbers
 // @see https://prismjs.com/plugins/line-numbers/
@@ -48,6 +46,56 @@ import 'prismjs/plugins/treeview/prism-treeview.js'
 import 'prismjs/plugins/command-line/prism-command-line.css'
 import 'prismjs/plugins/command-line/prism-command-line.js'
 import { useDeepCompareEffect } from 'react-use'
+
+// # --------------------------------------------------------------------------------
+//
+// themes
+//
+// # --------------------------------------------------------------------------------
+
+const ATOM_ONE_LIGHT = {
+  '--mono-1': 'hsl(230, 8%, 24%)',
+  '--mono-2': 'hsl(230, 6%, 44%)',
+  '--mono-3': 'hsl(230, 4%, 64%)',
+  '--hue-1': 'hsl(198, 99%, 37%)',
+  '--hue-2': 'hsl(221, 60%, 46%)',
+  '--hue-3': 'hsl(301, 63%, 40%)',
+  '--hue-4': 'hsl(119, 34%, 47%)',
+  '--hue-5': 'hsl(5, 74%, 59%)',
+  '--hue-5-2': 'hsl(344, 84%, 43%)',
+  '--hue-6': 'hsl(35, 99%, 36%)',
+  '--hue-6-2': 'hsl(35, 99%, 40%)',
+  '--syntax-fg': 'var(--mono-1)',
+  '--syntax-bg': 'hsl(230, 1%, 98%)',
+  '--syntax-gutter': 'hsl(230, 1%, 62%)',
+  '--syntax-guide': 'hsla(230, 8%, 24%, 0.2)',
+  '--syntax-accent': 'hsl(230, 100%, 66%)',
+  '--syntax-selection-color': 'hsl(230, 1%, 90%)',
+  '--syntax-gutter-background-color-selected': 'var(--syntax-selection-color)',
+  '--syntax-cursor-line': 'hsla(230, 8%, 24%, 0.05)'
+}
+
+const ATOM_ONE_DARK = {
+  '--mono-1': 'hsl(220, 14%, 71%)',
+  '--mono-2': 'hsl(220, 9%, 55%)',
+  '--mono-3': 'hsl(220, 10%, 40%)',
+  '--hue-1': 'hsl(187, 47%, 55%)',
+  '--hue-2': 'hsl(207, 82%, 66%)',
+  '--hue-3': 'hsl(286, 60%, 67%)',
+  '--hue-4': 'hsl(95, 38%, 62%)',
+  '--hue-5': 'hsl(355, 65%, 65%)',
+  '--hue-5-2': 'hsl(5, 48%, 51%)',
+  '--hue-6': 'hsl(29, 54%, 61%)',
+  '--hue-6-2': 'hsl(39, 67%, 69%)',
+  '--syntax-fg': 'var(--mono-1)',
+  '--syntax-bg': 'hsl(220, 13%, 18%)',
+  '--syntax-gutter': 'hsl(220, 14%, 45%)',
+  '--syntax-guide': 'hsla(220, 14%, 71%, 0.15)',
+  '--syntax-accent': 'hsl(220, 100%, 66%)',
+  '--syntax-selection-color': 'hsl(220, 13%, 28%)',
+  '--syntax-gutter-background-color-selected': 'hsl(220, 13%, 26%)',
+  '--syntax-cursor-line': 'hsla(220, 100%, 80%, 0.04)'
+}
 
 // # --------------------------------------------------------------------------------
 //
@@ -218,7 +266,8 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
   // # --------------------------------------------------------------------------------
 
   const { ref: cssRef } = useCSSVariable({
-    '--react-transition-duration': transitionDuration + 'ms'
+    '--react-transition-duration': transitionDuration + 'ms',
+    ...(isDark ? ATOM_ONE_DARK : ATOM_ONE_LIGHT)
   })
 
   // # --------------------------------------------------------------------------------
@@ -233,10 +282,7 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
       ref={cssRef}
       className={classNames(
         styles['code-highlighter'],
-        {
-          [`relmethis-codeblock-container-light`]: !isDark,
-          [`relmethis-codeblock-container-dark`]: isDark
-        },
+        'relmethis-codeblock-container-common',
         className
       )}
     >
