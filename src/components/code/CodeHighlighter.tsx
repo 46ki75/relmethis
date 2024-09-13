@@ -109,7 +109,7 @@ const VITESSE_LIGHT = {
 const VITESSE_DARK = {
   '--prism-scheme': 'dark',
   '--prism-foreground': '#d4cfbf',
-  '--prism-background': '#1e1e1e',
+  '--prism-background': '#272727',
   '--prism-comment': '#758575',
   '--prism-string': '#d48372',
   '--prism-literal': '#429988',

@@ -175,7 +175,7 @@ const CodeBlockComponent = ({
   // # --------------------------------------------------------------------------------
 
   const COLOR_LIGHT = '#f5f5f5'
-  const COLOR_DARK = '#1e1e1e'
+  const COLOR_DARK = '#272727'
 
   const { ref } = useCSSVariable({
     '--react-color-fg': isDarkLocal
