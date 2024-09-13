@@ -1,5 +1,7 @@
 import type { Preview } from '@storybook/react'
+
 import '../src/index.scss'
+import 'uno.css'
 
 const preview: Preview = {
   parameters: {
