@@ -23,7 +23,7 @@
     height: 100%;
     background-color: var(--react-background-color);
     transition: transform 600ms;
-    transform: translateX(var(--react-position));
+    transform: translateX(var(--react-position, -100%));
   }
 
   &__header {
