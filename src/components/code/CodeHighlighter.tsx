@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
@@ -46,6 +46,7 @@ import 'prismjs/plugins/treeview/prism-treeview.js'
 // commandline
 import 'prismjs/plugins/command-line/prism-command-line.css'
 import 'prismjs/plugins/command-line/prism-command-line.js'
+import { useDeepCompareEffect } from 'react-use'
 
 // # --------------------------------------------------------------------------------
 //
@@ -187,25 +188,6 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
 
   // # --------------------------------------------------------------------------------
   //
-  // reactive values
-  //
-  // # --------------------------------------------------------------------------------
-
-  const highlightLinesString = useMemo(
-    () => highlightLines.join(', '),
-    [highlightLines]
-  )
-
-  const [paddingLeft, setPaddingLeft] = useState<string | undefined>(undefined)
-
-  useEffect(() => {
-    setPaddingLeft(
-      highlightLines.length > 0 && !showLineNumber ? '2.5rem' : undefined
-    )
-  }, [highlightLines.length, highlightLinesString, showLineNumber])
-
-  // # --------------------------------------------------------------------------------
-  //
   // render
   //
   // # --------------------------------------------------------------------------------
@@ -222,7 +204,11 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
 
   useEffect(() => {
     highlight()
-  }, [code, oldCode, language, showLineNumber, highlightLinesString])
+  }, [code, oldCode, language, showLineNumber])
+
+  useDeepCompareEffect(() => {
+    highlight()
+  }, [highlightLines])
 
   // # --------------------------------------------------------------------------------
   //
@@ -254,12 +240,16 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
       )}
     >
       <pre
-        style={{ ...preStyle, paddingLeft: paddingLeft }}
+        style={{
+          ...preStyle,
+          paddingLeft:
+            highlightLines.length > 0 && !showLineNumber ? '2.5rem' : undefined
+        }}
         className={classNames(styles['code-highlighter__pre'], {
           ['line-numbers']: commandLine != null ? false : showLineNumber,
           ['command-line']: commandLine != null
         })}
-        data-line={highlightLinesString}
+        data-line={highlightLines.join(', ')}
         data-user={commandLine?.user}
         data-host={commandLine?.host}
         data-output={commandLine?.output?.join(', ')}
