@@ -42,10 +42,10 @@ export const VITESSE_LIGHT = {
   '--prism-block-padding-y': '1em',
   '--prism-block-margin-x': '0',
   '--prism-block-margin-y': '0.5em',
-  '--prism-block-radius': '0.3em',
+  '--prism-block-radius': '0rem',
   '--prism-inline-padding-x': '0.3em',
   '--prism-inline-padding-y': '0.1em',
-  '--prism-inline-radius': '0.3em',
+  '--prism-inline-radius': '0rem',
   '--prism-comment-style': 'italic',
   '--prism-url-decoration': 'underline'
 }
@@ -95,10 +95,10 @@ export const VITESSE_DARK = {
   '--prism-block-padding-y': '1em',
   '--prism-block-margin-x': '0',
   '--prism-block-margin-y': '0.5em',
-  '--prism-block-radius': '0.3em',
+  '--prism-block-radius': '0rem',
   '--prism-inline-padding-x': '0.3em',
   '--prism-inline-padding-y': '0.1em',
-  '--prism-inline-radius': '0.3em',
+  '--prism-inline-radius': '0rem',
   '--prism-comment-style': 'italic',
   '--prism-url-decoration': 'underline'
 }

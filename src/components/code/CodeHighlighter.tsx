@@ -242,8 +242,11 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
       <pre
         style={{
           ...preStyle,
-          paddingLeft:
-            highlightLines.length > 0 && !showLineNumber ? '2.5rem' : undefined
+          paddingLeft: showLineNumber
+            ? '3.5rem'
+            : highlightLines.length > 0
+              ? '2.5rem'
+              : '1rem'
         }}
         className={classNames(styles['code-highlighter__pre'], {
           ['line-numbers']: commandLine != null ? false : showLineNumber,
