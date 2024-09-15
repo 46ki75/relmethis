@@ -136,7 +136,7 @@ const EditComponent = ({
             />
           </SimpleTooltip>
           {localValue !== remoteValue && (
-            <SimpleTooltip content='Revert' isDark={isDark}>
+            <SimpleTooltip content='Discard Changes' isDark={isDark}>
               <ArrowUturnLeftIcon
                 className={styles['edit__icon--clickable']}
                 onClick={handleRevert}
