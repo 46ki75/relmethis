@@ -87,13 +87,23 @@ const EditComponent = ({
 
   const statusIcon = () => {
     if (inputStatus === 'error') {
-      return <ExclamationTriangleIcon />
+      return (
+        <ExclamationTriangleIcon
+          className={styles['edit__icon']}
+          style={{ color: '#b8a36e' }}
+        />
+      )
     } else if (inputStatus === 'pending') {
-      return <ArrowPathIcon className={styles.load} />
+      return <ArrowPathIcon className={styles['edit__icon--load']} />
     } else if (localValue === remoteValue) {
-      return <CheckIcon />
+      return (
+        <CheckIcon
+          className={styles['edit__icon']}
+          style={{ color: '#59b57c' }}
+        />
+      )
     } else {
-      return <EllipsisHorizontalIcon />
+      return <EllipsisHorizontalIcon className={styles['edit__icon']} />
     }
   }
 
@@ -102,7 +112,7 @@ const EditComponent = ({
       return (
         <>
           <PencilSquareIcon
-            className={styles.clickable}
+            className={styles['edit__icon--clickable']}
             onClick={() => {
               setInputStatus('edit')
               if (inputRef.current !== null) inputRef.current.focus()
@@ -110,7 +120,7 @@ const EditComponent = ({
           />
           {localValue !== remoteValue && (
             <ArrowUturnLeftIcon
-              className={styles.clickable}
+              className={styles['edit__icon--clickable']}
               onClick={handleRevert}
             />
           )}
@@ -120,13 +130,13 @@ const EditComponent = ({
       return (
         <>
           <XMarkIcon
-            className={styles.clickable}
+            className={styles['edit__icon--clickable']}
             onClick={() => {
               setInputStatus('display')
             }}
           />
           <PaperAirplaneIcon
-            className={styles.clickable}
+            className={styles['edit__icon--clickable']}
             onClick={handleSubmit}
           />
         </>
@@ -141,7 +151,7 @@ const EditComponent = ({
     '--react-editable-border-color':
       inputStatus === 'edit' || inputStatus === 'error'
         ? rgba('#5879b0', 0.8)
-        : 'rgba(128, 128, 128, 0.1)',
+        : 'rgba(128, 128, 128, 0.2)',
     '--react-focus-border-color':
       inputStatus === 'edit' || inputStatus === 'error'
         ? rgba('#59b57c', 0.8)
@@ -149,9 +159,10 @@ const EditComponent = ({
   })
 
   return (
-    <span ref={ref} className={styles.wrapper}>
+    <span ref={ref} className={styles.edit}>
       {statusIcon()}
       <input
+        className={styles['edit__input']}
         ref={inputRef}
         readOnly={inputStatus !== 'edit' && inputStatus !== 'error'}
         value={localValue}

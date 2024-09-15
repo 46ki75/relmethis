@@ -4,7 +4,8 @@ import { Edit } from './Edit'
 const meta: Meta<typeof Edit> = {
   title: 'Components/Form/Edit',
   component: Edit,
-  tags: ['autodocs']
+  tags: ['autodocs'],
+  args: { isDark: false }
 }
 
 export default meta
