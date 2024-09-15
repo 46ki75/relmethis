@@ -5,7 +5,8 @@ export const mdastToString = (nodes: PhrasingContent[]): string => {
   for (const node of nodes) {
     switch (node.type) {
       case 'text':
-      case 'inlineCode': {
+      case 'inlineCode':
+      case 'inlineMath': {
         results.push(node.value)
         break
       }
