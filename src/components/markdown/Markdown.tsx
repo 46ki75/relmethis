@@ -2,6 +2,7 @@ import React, { Suspense, useMemo } from 'react'
 
 import { remark } from 'remark'
 import gfm from 'remark-gfm'
+import remarkMath from 'remark-math'
 
 import type { Mdast as MdastType } from './Mdast'
 import { BlockFallback } from '../fallback/BlockFallback'
@@ -39,7 +40,7 @@ export interface MarkdownProps {
 // # --------------------------------------------------------------------------------
 
 const parseMarkdownToMdast = (markdown: string) => {
-  const processor = remark().use(gfm).parse(markdown)
+  const processor = remark().use(gfm).use(remarkMath).parse(markdown)
   return processor
 }
 

@@ -30,6 +30,7 @@ const CodeBlock = React.lazy(() =>
 import type { Image as ImageWithModalType } from '../media/Image'
 import { mdastToString } from './mdastToString'
 import { Table } from '../data/Table'
+import { KaTex } from '../code/KaTex'
 const ImageWithModal = React.lazy(() =>
   import('../media/Image').then((module) => ({
     default: module.Image
@@ -80,6 +81,16 @@ export const RenderMdast = ({
 
       case 'text': {
         markdownComponent.push(<InlineText text={node.value} isDark={isDark} />)
+        break
+      }
+
+      case 'inlineMath': {
+        markdownComponent.push(<KaTex display={false} equation={node.value} />)
+        break
+      }
+
+      case 'math': {
+        markdownComponent.push(<KaTex display={true} equation={node.value} />)
         break
       }
 

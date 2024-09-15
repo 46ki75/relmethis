@@ -212,6 +212,28 @@ export const GfmAlert: Story = {
   }
 }
 
+export const InlineMath: Story = {
+  args: {
+    isDark: false,
+    markdown: `This is an inline equation: $x^2 + y^2 = z^2$`
+  }
+}
+
+const blockMath = `
+This is an block equation:
+
+$$
+x^2 + y^2 = z^2
+$$
+`
+
+export const BlockMath: Story = {
+  args: {
+    isDark: false,
+    markdown: blockMath
+  }
+}
+
 const longMarkdown = `
 # Markdown Components Showcase
 
