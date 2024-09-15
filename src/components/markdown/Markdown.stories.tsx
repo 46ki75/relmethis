@@ -10,6 +10,12 @@ const meta: Meta<typeof Markdown> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+export const InlineStyle: Story = {
+  args: {
+    markdown: 'Hello, this is :style[red text]{color=red font-weight=bold}.'
+  }
+}
+
 const blockquoteMarkdown =
   '> This is a blockquote, used for quoting external content or highlighting important sections in your document.'
 

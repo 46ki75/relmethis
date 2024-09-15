@@ -18,7 +18,6 @@ import { NumberedList } from '../typography/NumberedList'
 import { BulletedList } from '../typography/BulletedList'
 import { Blockquote } from '../typography/Blockquote'
 import { Paragraph } from '../typography/Paragraph'
-import { InlineText } from '../inline/InlineText'
 
 import type { CodeBlock as CodeBlockType } from '../code/CodeBlock'
 const CodeBlock = React.lazy(() =>
@@ -31,6 +30,7 @@ import type { Image as ImageWithModalType } from '../media/Image'
 import { mdastToString } from './mdastToString'
 import { Table } from '../data/Table'
 import { KaTex } from '../code/KaTex'
+import { InlineText } from '../inline/InlineText'
 const ImageWithModal = React.lazy(() =>
   import('../media/Image').then((module) => ({
     default: module.Image
@@ -73,6 +73,36 @@ export const RenderMdast = ({
 
   for (const node of mdastNodes) {
     switch (node.type) {
+      // # --------------------------------------------------------------------------------
+      //
+      // directives
+      //
+      // # --------------------------------------------------------------------------------
+
+      case 'textDirective': {
+        if (node.name === 'style') {
+          markdownComponent.push(
+            <span style={node.attributes as React.CSSProperties}>
+              {mdastToString(node.children)}
+            </span>
+          )
+        }
+        break
+      }
+
+      case 'leafDirective':
+      case 'containerDirective': {
+        markdownComponent.push(
+          RenderMdast({
+            mdastNodes: node.children,
+            definitions,
+            isDark,
+            footnoteComponent
+          }).markdownComponent
+        )
+        break
+      }
+
       // # --------------------------------------------------------------------------------
       //
       // inline
