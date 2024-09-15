@@ -14,6 +14,7 @@ import isEqual from 'react-fast-compare'
 
 import styles from './Edit.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { SimpleTooltip } from '../containment/SimpleTooltip'
 
 // # --------------------------------------------------------------------------------
 //
@@ -51,7 +52,9 @@ export interface EditProps {
 const EditComponent = ({
   firstValue,
   mutateFunction,
-  isDark = false
+  isDark = typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-color-scheme: dark)').matches
+    : false
 }: EditProps) => {
   const [inputStatus, setInputStatus] = useState<InputStatus>('success')
   const [remoteValue, setRemoteValue] = useState(firstValue ?? '')
@@ -88,22 +91,34 @@ const EditComponent = ({
   const statusIcon = () => {
     if (inputStatus === 'error') {
       return (
-        <ExclamationTriangleIcon
-          className={styles['edit__icon']}
-          style={{ color: '#b8a36e' }}
-        />
+        <SimpleTooltip content='Failed to Update' isDark={isDark}>
+          <ExclamationTriangleIcon
+            className={styles['edit__icon']}
+            style={{ color: '#b8a36e' }}
+          />
+        </SimpleTooltip>
       )
     } else if (inputStatus === 'pending') {
-      return <ArrowPathIcon className={styles['edit__icon--load']} />
+      return (
+        <SimpleTooltip content='Updating' isDark={isDark}>
+          <ArrowPathIcon className={styles['edit__icon--load']} />
+        </SimpleTooltip>
+      )
     } else if (localValue === remoteValue) {
       return (
-        <CheckIcon
-          className={styles['edit__icon']}
-          style={{ color: '#59b57c' }}
-        />
+        <SimpleTooltip content='Synced!' isDark={isDark}>
+          <CheckIcon
+            className={styles['edit__icon']}
+            style={{ color: '#59b57c' }}
+          />
+        </SimpleTooltip>
       )
     } else {
-      return <EllipsisHorizontalIcon className={styles['edit__icon']} />
+      return (
+        <SimpleTooltip content='Changes not submitted' isDark={isDark}>
+          <EllipsisHorizontalIcon className={styles['edit__icon']} />
+        </SimpleTooltip>
+      )
     }
   }
 
@@ -111,34 +126,43 @@ const EditComponent = ({
     if (inputStatus === 'display' || inputStatus === 'success') {
       return (
         <>
-          <PencilSquareIcon
-            className={styles['edit__icon--clickable']}
-            onClick={() => {
-              setInputStatus('edit')
-              if (inputRef.current !== null) inputRef.current.focus()
-            }}
-          />
-          {localValue !== remoteValue && (
-            <ArrowUturnLeftIcon
+          <SimpleTooltip content='Edit' isDark={isDark}>
+            <PencilSquareIcon
               className={styles['edit__icon--clickable']}
-              onClick={handleRevert}
+              onClick={() => {
+                setInputStatus('edit')
+                if (inputRef.current !== null) inputRef.current.focus()
+              }}
             />
+          </SimpleTooltip>
+          {localValue !== remoteValue && (
+            <SimpleTooltip content='Revert' isDark={isDark}>
+              <ArrowUturnLeftIcon
+                className={styles['edit__icon--clickable']}
+                onClick={handleRevert}
+              />
+            </SimpleTooltip>
           )}
         </>
       )
     } else if (inputStatus === 'edit' || inputStatus === 'error') {
       return (
         <>
-          <XMarkIcon
-            className={styles['edit__icon--clickable']}
-            onClick={() => {
-              setInputStatus('display')
-            }}
-          />
-          <PaperAirplaneIcon
-            className={styles['edit__icon--clickable']}
-            onClick={handleSubmit}
-          />
+          <SimpleTooltip content='Pause Editing' isDark={isDark}>
+            <XMarkIcon
+              className={styles['edit__icon--clickable']}
+              onClick={() => {
+                setInputStatus('display')
+              }}
+            />
+          </SimpleTooltip>
+
+          <SimpleTooltip content='Submit Changes' isDark={isDark}>
+            <PaperAirplaneIcon
+              className={styles['edit__icon--clickable']}
+              onClick={handleSubmit}
+            />
+          </SimpleTooltip>
         </>
       )
     } else if (inputStatus === 'pending') {
