@@ -2,7 +2,8 @@ import React, { ReactNode } from 'react'
 import isEqual from 'react-fast-compare'
 import styles from './Modal.module.scss'
 import classNames from 'classnames'
-import { useCSSVariable } from '../../hooks/useCSSVariable'
+
+import { createPortal } from 'react-dom'
 
 // # --------------------------------------------------------------------------------
 //
@@ -18,6 +19,8 @@ export interface ModalProps {
    */
   isDark?: boolean
 
+  title?: string
+
   visible: boolean
 
   children: ReactNode
@@ -29,51 +32,33 @@ export interface ModalProps {
 //
 // # --------------------------------------------------------------------------------
 
-const ModalComponent = ({
-  style,
-  isDark = typeof window !== 'undefined'
-    ? window.matchMedia('(prefers-color-scheme: dark)').matches
-    : false,
-  visible,
-  children
-}: ModalProps) => {
-  const { ref } = useCSSVariable({
-    // '--react-border-color': isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)',
-    '--react-border-color': 'rgba(255,255,255,0.5)'
-  })
-
-  return (
+const ModalComponent = ({ style, title, visible, children }: ModalProps) => {
+  return createPortal(
     <div
-      ref={ref}
       className={classNames(styles.canvas, {
         [styles['canvas--hidden']]: !visible,
         [styles['canvas--visible']]: visible
       })}
     >
-      <div
-        className={classNames(styles['canvas__modal'], {
-          [styles['canvas__modal--hidden']]: !visible,
-          [styles['canvas__modal--visible']]: visible
-        })}
-        style={style}
-      >
-        {children}
+      <div className={styles['canvas__container']}>
+        {title != null && (
+          <div className={styles['canvas__title']}>
+            <h2 className={styles['canvas__title-text']}>{title}</h2>
+          </div>
+        )}
+
+        <div
+          className={classNames(styles['canvas__modal'], {
+            [styles['canvas__modal--hidden']]: !visible,
+            [styles['canvas__modal--visible']]: visible
+          })}
+          style={style}
+        >
+          {children}
+        </div>
       </div>
-
-      <div
-        className={classNames(styles['canvas__wave-fast'], {
-          [styles['canvas__wave-fast--hidden']]: !visible,
-          [styles['canvas__wave-fast--visible']]: visible
-        })}
-      ></div>
-
-      <div
-        className={classNames(styles['canvas__wave-late'], {
-          [styles['canvas__wave-late--hidden']]: !visible,
-          [styles['canvas__wave-late--visible']]: visible
-        })}
-      ></div>
-    </div>
+    </div>,
+    document.body
   )
 }
 

@@ -1,16 +1,17 @@
 .canvas {
-  --const-modal-bg: rgba(255, 255, 255, 0.5);
+  --const-modal-bg: rgba(255, 255, 255, 0.8);
 
   position: fixed;
   width: 100%;
   height: 100vh;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.75);
 
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
   transition: opacity 300ms;
 
@@ -22,6 +23,33 @@
   &--visible {
     opacity: 1;
     pointer-events: all;
+  }
+
+  &__container {
+    max-width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__title {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+
+    &-text {
+      color: var(--const-modal-bg);
+      margin-block: 0.5rem;
+
+      &::selection {
+        background-color: var(--const-modal-bg);
+        color: rgba(0, 0, 0, 0.8);
+      }
+    }
   }
 
   &__modal {
@@ -43,14 +71,14 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(255, 255, 255, 0);
+      background-color: transparent;
       border: 1px solid var(--const-modal-bg);
       transition: transform 250ms ease 50ms;
       pointer-events: none;
     }
 
     &--hidden {
-      background-color: rgba(255, 255, 255, 0);
+      background-color: rgba(255, 255, 255, 0.05);
       pointer-events: none;
 
       &::before {
@@ -66,45 +94,5 @@
         transform: scale(1);
       }
     }
-  }
-
-  &__wave-fast {
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 100%;
-
-    border: 1px solid var(--react-border-color);
-    pointer-events: none;
-
-    transition: transform 1200ms ease;
-
-    // &--hidden {
-    //   transform: scale(0);
-    // }
-
-    // &--visible {
-    //   transform: scale(1);
-    // }
-  }
-
-  &__wave-late {
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 100%;
-
-    border: 1px solid var(--react-border-color);
-    pointer-events: none;
-
-    transition: transform 800ms ease 400ms;
-
-    // &--hidden {
-    //   transform: scale(0);
-    // }
-
-    // &--visible {
-    //   transform: scale(1);
-    // }
   }
 }
