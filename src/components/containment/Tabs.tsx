@@ -44,6 +44,7 @@ const TabsComponent = ({
   const [page, setPage] = useState(1)
 
   const { ref } = useCSSVariable({
+    '--react-font-color': isDark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)',
     '--react-tab-color-primary': color,
     '--react-tab-color-secondary': rgba(color, 0.2),
     '--react-tab-color-tertiary': rgba(color, 0.1),
