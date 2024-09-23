@@ -1,0 +1,35 @@
+.tabs {
+  box-sizing: border-box;
+
+  &__header-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__header {
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+
+    border-bottom: solid 4px var(--react-tab-color-secondary);
+    transition:
+      border-color 250ms,
+      background-color 250ms;
+
+    &--selected {
+      border-color: var(--react-tab-color-primary);
+    }
+
+    &:hover {
+      background-color: var(--react-tab-color-tertiary);
+    }
+  }
+
+  &__content {
+    padding: 0.5rem;
+  }
+}
