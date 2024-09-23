@@ -56,26 +56,26 @@ const ModalComponent = ({
 }: ModalProps) => {
   return createPortal(
     <div
-      className={classNames(styles.canvas, {
-        [styles['canvas--hidden']]: !visible,
-        [styles['canvas--visible']]: visible
+      className={classNames(styles.modal, {
+        [styles['modal--hidden']]: !visible,
+        [styles['modal--visible']]: visible
       })}
       onClick={onBackdropClick}
     >
       <div
-        className={styles['canvas__container']}
+        className={styles['modal__container']}
         onClick={(e) => e.stopPropagation()}
       >
         {title != null && (
-          <div className={styles['canvas__title']}>
-            <h2 className={styles['canvas__title-text']}>{title}</h2>
+          <div className={styles['modal__title']}>
+            <h2 className={styles['modal__title-text']}>{title}</h2>
           </div>
         )}
 
         <div
-          className={classNames(styles['canvas__modal'], {
-            [styles['canvas__modal--hidden']]: !visible,
-            [styles['canvas__modal--visible']]: visible
+          className={classNames(styles['modal__content'], {
+            [styles['modal__content--hidden']]: !visible,
+            [styles['modal__content--visible']]: visible
           })}
           style={style}
         >
