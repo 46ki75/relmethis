@@ -1,5 +1,6 @@
 .tabs {
   box-sizing: border-box;
+  overflow-x: hidden;
 
   &__header-container {
     display: flex;
@@ -15,21 +16,30 @@
     align-items: center;
     cursor: pointer;
 
-    border-bottom: solid 4px var(--react-tab-color-secondary);
+    border-bottom: solid 4px var(--react-tab-color-secondary, rgba(0, 0, 0, 0));
     transition:
       border-color 250ms,
       background-color 250ms;
 
     &--selected {
-      border-color: var(--react-tab-color-primary);
+      border-color: var(--react-tab-color-primary, rgba(0, 0, 0, 0));
     }
 
     &:hover {
-      background-color: var(--react-tab-color-tertiary);
+      background-color: var(--react-tab-color-tertiary, rgba(0, 0, 0, 0));
     }
   }
 
+  &__content-container {
+    width: var(--react-content-width);
+    display: flex;
+    flex-direction: row;
+    transition: transform 200ms;
+    transform: var(--react-translate);
+  }
+
   &__content {
-    padding: 0.5rem;
+    width: 100%;
+    margin: 0.25rem;
   }
 }

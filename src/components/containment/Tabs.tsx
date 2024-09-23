@@ -46,7 +46,9 @@ const TabsComponent = ({
   const { ref } = useCSSVariable({
     '--react-tab-color-primary': color,
     '--react-tab-color-secondary': rgba(color, 0.2),
-    '--react-tab-color-tertiary': rgba(color, 0.1)
+    '--react-tab-color-tertiary': rgba(color, 0.1),
+    '--react-content-width': `${100 * tabs.length}%`,
+    '--react-translate': `translateX(${(-100 * (page - 1)) / tabs.length}%)`
   })
 
   return (
@@ -65,7 +67,11 @@ const TabsComponent = ({
           </div>
         ))}
       </div>
-      <div className={styles['tabs__content']}>{tabs[page - 1].content}</div>
+      <div className={styles['tabs__content-container']}>
+        {tabs.map((tab) => (
+          <div className={styles['tabs__content']}>{tab.content}</div>
+        ))}
+      </div>
     </div>
   )
 }

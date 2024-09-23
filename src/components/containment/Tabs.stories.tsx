@@ -31,3 +31,12 @@ type Story = StoryObj<typeof meta>
 export const Primary: Story = {
   args: { style: {} }
 }
+
+export const TooManyTabs: Story = {
+  args: {
+    tabs: new Array(20).fill(null).map((_, index) => ({
+      header: `Tab${index + 1}`,
+      content: <h2>Tab{index + 1}</h2>
+    }))
+  }
+}
