@@ -1,9 +1,9 @@
 .code-block {
   background-color: var(--react-color-bg);
-  transition: background-color 350ms ease 50ms;
+  transition: background-color 400ms;
 
   border-radius: 0.25rem;
-  box-shadow: 0 0 0.25rem rgba(128, 128, 128, 0.4);
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.2);
   margin-block: 2rem;
 
   *::selection {
