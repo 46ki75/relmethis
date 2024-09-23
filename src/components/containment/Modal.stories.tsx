@@ -25,7 +25,13 @@ const meta: Meta<typeof Modal> = {
         >
           close
         </button>
-        <Modal {...args} visible={isVisible}>
+        <Modal
+          {...args}
+          visible={isVisible}
+          onBackdropClick={() => {
+            setIsVisible(false)
+          }}
+        >
           <h2>Hello, world! sup?</h2>
           <p>
             Eu fugiat irure quis dolore dolore exercitation culpa aute magna
