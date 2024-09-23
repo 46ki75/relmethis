@@ -23,7 +23,8 @@ const meta: Meta<typeof LanguageIcon> = {
         'tex',
         'katex',
         'latex',
-        'go'
+        'go',
+        'lua'
       ]
     }
   }

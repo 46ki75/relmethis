@@ -133,6 +133,14 @@ const LanguageIconComponent = ({
       )
       break
 
+    case 'lua':
+      IconComponent = React.lazy(() =>
+        import('./language/Lua').then((module) => ({
+          default: module.Lua
+        }))
+      )
+      break
+
     default:
       return <CommandLineIcon style={{ width: size, height: size, color }} />
   }
