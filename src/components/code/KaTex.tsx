@@ -54,7 +54,10 @@ const KaTexComponent = ({
 
   const { ref: cssVariableRef } = useCSSVariable({
     '--react-margin': display ? '0.5rem' : '0rem 0.5rem 0rem 0.5rem',
-    '--react-color': isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'
+    '--react-color': isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
+    '--react-color-reverse': isDark
+      ? 'rgba(0, 0, 0, 0.8)'
+      : 'rgba(255, 255, 255, 0.8)'
   })
 
   const ref = useMergeRefs(targetRef, cssVariableRef)

@@ -21,4 +21,9 @@
 .katex {
   margin: var(--react-margin);
   color: var(--react-color);
+
+  *::selection {
+    color: var(--react-color-reverse);
+    background-color: var(--react-color);
+  }
 }
