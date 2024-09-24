@@ -1,0 +1,19 @@
+.icon {
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--react-padding);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 200ms;
+
+  &:hover {
+    background-color: var(--react-bg-color-primary);
+  }
+
+  &:active {
+    transition: background-color 50ms;
+    background-color: var(--react-bg-color-secondary);
+  }
+}
