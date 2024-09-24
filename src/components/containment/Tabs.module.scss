@@ -3,6 +3,11 @@
   overflow-x: hidden;
 
   &__header-container {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: transparent;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -40,7 +45,10 @@
   }
 
   &__content {
+    height: var(--react-content-height, auto);
+    box-sizing: border-box;
     width: 100%;
-    margin: 0.25rem;
+    padding: 0.25rem;
+    overflow-y: auto;
   }
 }

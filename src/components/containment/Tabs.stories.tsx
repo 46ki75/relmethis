@@ -28,8 +28,10 @@ const meta: Meta<typeof Tabs> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {
-  args: { style: {} }
+export const Primary: Story = {}
+
+export const Height: Story = {
+  args: { height: '200px' }
 }
 
 export const TooManyTabs: Story = {

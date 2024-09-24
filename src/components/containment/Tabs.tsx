@@ -4,6 +4,7 @@ import styles from './Tabs.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { rgba } from 'polished'
 import classNames from 'classnames'
+import { type Property } from 'csstype'
 
 // # --------------------------------------------------------------------------------
 //
@@ -13,6 +14,8 @@ import classNames from 'classnames'
 
 export interface TabsProps {
   style?: React.CSSProperties
+
+  height?: Property.Height
 
   /**
    * Whether or not to use the dark theme
@@ -35,6 +38,7 @@ export interface TabsProps {
 
 const TabsComponent = ({
   style,
+  height,
   isDark = typeof window !== 'undefined'
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false,
@@ -49,7 +53,8 @@ const TabsComponent = ({
     '--react-tab-color-secondary': rgba(color, 0.2),
     '--react-tab-color-tertiary': rgba(color, 0.1),
     '--react-content-width': `${100 * tabs.length}%`,
-    '--react-translate': `translateX(${(-100 * (page - 1)) / tabs.length}%)`
+    '--react-translate': `translateX(${(-100 * (page - 1)) / tabs.length}%)`,
+    '--react-content-height': height?.toString() ?? 'auto'
   })
 
   return (
