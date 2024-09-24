@@ -2,7 +2,7 @@ import React, { ReactNode, useState } from 'react'
 import isEqual from 'react-fast-compare'
 import styles from './Tabs.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
-import { rgba } from 'polished'
+import { getLuminance, rgba } from 'polished'
 import classNames from 'classnames'
 import { type Property } from 'csstype'
 
@@ -49,6 +49,8 @@ const TabsComponent = ({
 
   const { ref } = useCSSVariable({
     '--react-font-color': isDark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)',
+    '--react-font-color-selection':
+      getLuminance(color) < 0.5 ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)',
     '--react-tab-color-primary': color,
     '--react-tab-color-secondary': rgba(color, 0.2),
     '--react-tab-color-tertiary': rgba(color, 0.1),
