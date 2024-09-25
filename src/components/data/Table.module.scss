@@ -8,7 +8,7 @@
   margin: 25px 0;
   font-size: 0.9em;
   font-family: sans-serif;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
 
   &::-webkit-scrollbar {
     height: 6px;
@@ -23,6 +23,19 @@
 
   &::-webkit-scrollbar-track {
     background-color: #f3f3f3;
+  }
+
+  &__caption {
+    box-sizing: border-box;
+    padding: 0.25rem;
+    border: dotted 1px rgba(128, 128, 128, 0.4);
+    color: rgba(128, 128, 128, 0.8);
+
+    &::selection,
+    *::selection {
+      background-color: var(--react-color-fg);
+      color: var(--react-color-bg);
+    }
   }
 
   @keyframes fade {

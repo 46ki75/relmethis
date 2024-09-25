@@ -25,6 +25,14 @@ export const Primary: Story = {
   }
 }
 
+export const Withcaption: Story = {
+  args: {
+    isDark: false,
+    rows: SEED_ROWS,
+    caption: 'Table Description'
+  }
+}
+
 export const Reactive: Story = {
   args: {
     isDark: false,

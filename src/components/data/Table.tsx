@@ -20,6 +20,7 @@ export interface TableProps {
   isDark?: boolean
   rows: ReactNode[][]
   align?: Array<'left' | 'center' | 'right'>
+  caption?: string
 }
 
 interface TableRow {
@@ -69,7 +70,12 @@ const MemoizedTableRow = React.memo(
     p.align === n.align && p.isHeader === n.isHeader && isEqual(p.row, n.row)
 )
 
-const TableComponent = ({ isDark = false, rows, align = [] }: TableProps) => {
+const TableComponent = ({
+  isDark = false,
+  rows,
+  align = [],
+  caption
+}: TableProps) => {
   const [headerRow, ...bodyRows] = useDeferredValue(rows)
 
   const { ref } = useCSSVariable<HTMLTableElement>({
@@ -88,6 +94,10 @@ const TableComponent = ({ isDark = false, rows, align = [] }: TableProps) => {
 
   return (
     <table ref={ref} className={styles.table}>
+      {caption != null && (
+        <caption className={styles['table__caption']}>{caption}</caption>
+      )}
+
       <thead className={styles['table__header']}>
         <MemoizedTableRow row={headerRow ?? []} isHeader={true} align={align} />
       </thead>
