@@ -1,0 +1,104 @@
+.audio {
+  --const-width: 120px;
+  --const-range-weight: 4px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.1);
+  background-color: var(--react-background-color);
+
+  &__cover {
+    width: var(--const-width);
+    height: var(--const-width);
+    min-width: var(--const-width);
+    min-height: var(--const-width);
+  }
+
+  &__info {
+    flex-grow: 1;
+    height: var(--const-width);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__title {
+    width: calc(100% - 20px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    color: var(--react-text-color);
+    word-break: break-all;
+  }
+
+  &__control {
+    padding: 0.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 1rem;
+  }
+
+  &__time {
+    font-size: 0.8rem;
+    color: var(--react-text-color);
+    opacity: 0.6;
+  }
+
+  &__icon {
+    width: 32px;
+
+    transition: opacity 200ms;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  &__seek {
+    appearance: none;
+    position: relative;
+    width: 100%;
+    height: var(--const-range-weight);
+    background: none;
+    border: none;
+    margin: 0;
+
+    &::after {
+      position: absolute;
+      content: '';
+      z-index: -1;
+      background-color: var(--react-seek-color-fg);
+      height: var(--const-range-weight);
+      width: 100%;
+      transform: var(--react-seek-progress);
+      transform-origin: left;
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      z-index: -2;
+      background-color: var(--react-seek-color-bg);
+      height: var(--const-range-weight);
+      width: 100%;
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: var(--react-seek-color-fg);
+      cursor: pointer;
+    }
+  }
+}
