@@ -1,5 +1,5 @@
 .audio {
-  --const-width: 120px;
+  --const-width: 100px;
   --const-range-weight: 4px;
 
   display: flex;
@@ -52,7 +52,7 @@
   }
 
   &__icon {
-    width: 32px;
+    width: 24px;
 
     transition: opacity 200ms;
     cursor: pointer;
