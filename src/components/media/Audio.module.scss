@@ -7,7 +7,6 @@
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.1);
-  background-color: var(--react-background-color);
 
   &__cover {
     width: var(--const-width);
@@ -17,11 +16,39 @@
   }
 
   &__info {
+    position: relative;
     flex-grow: 1;
     height: var(--const-width);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    &::after {
+      position: absolute;
+      content: '';
+      z-index: -2;
+      left: 0;
+      top: 0;
+      background-color: var(--react-seek-color-bg);
+      height: 100%;
+      width: 100%;
+      transform: var(--react-seek-progress);
+      transform-origin: left;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      z-index: -3;
+      left: 0;
+      top: 0;
+      background-color: var(--react-background-color);
+      height: 100%;
+      width: 100%;
+      pointer-events: none;
+    }
   }
 
   &__title {
@@ -52,6 +79,7 @@
   }
 
   &__icon {
+    color: var(--react-text-color);
     width: 24px;
 
     transition: opacity 200ms;
@@ -59,6 +87,10 @@
 
     &:hover {
       opacity: 0.5;
+    }
+
+    &--muted {
+      color: #b36472;
     }
   }
 
@@ -70,6 +102,7 @@
     background: none;
     border: none;
     margin: 0;
+    cursor: pointer;
 
     &::after {
       position: absolute;
@@ -94,8 +127,8 @@
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 1rem;
-      height: 1rem;
+      width: 0.75rem;
+      height: 0.75rem;
       border-radius: 50%;
       background: var(--react-seek-color-fg);
       cursor: pointer;

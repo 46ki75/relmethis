@@ -14,6 +14,7 @@ import { Image } from './Image'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { lighten } from 'polished'
 import { InlineText } from '../inline/InlineText'
+import classNames from 'classnames'
 
 // # --------------------------------------------------------------------------------
 //
@@ -120,7 +121,10 @@ const AudioComponent = ({
 
           {state.muted ? (
             <SpeakerXMarkIcon
-              className={styles['audio__icon']}
+              className={classNames(
+                styles['audio__icon'],
+                styles['audio__icon--muted']
+              )}
               onClick={controls.unmute}
             />
           ) : (
@@ -130,7 +134,7 @@ const AudioComponent = ({
             />
           )}
 
-          <input
+          {/* <input
             type='range'
             name='volume'
             min={0}
@@ -139,7 +143,7 @@ const AudioComponent = ({
             onChange={(e) => {
               controls.volume(Number(e.target.value))
             }}
-          />
+          /> */}
         </div>
 
         <input
