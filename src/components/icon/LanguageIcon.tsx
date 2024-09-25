@@ -141,6 +141,14 @@ const LanguageIconComponent = ({
       )
       break
 
+    case 'css':
+      IconComponent = React.lazy(() =>
+        import('./language/Css').then((module) => ({
+          default: module.Css
+        }))
+      )
+      break
+
     default:
       return <CommandLineIcon style={{ width: size, height: size, color }} />
   }
