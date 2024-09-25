@@ -9,7 +9,8 @@ import markdown from '../../assets/code/markdown.md?raw'
 const meta: Meta<typeof CodeBlock> = {
   title: 'Components/Code/CodeBlock',
   component: CodeBlock,
-  tags: ['autodocs']
+  tags: ['autodocs'],
+  args: { invalidCode: false }
 }
 
 export default meta
@@ -30,6 +31,16 @@ export const Dark: Story = {
     language: 'rust',
     isDark: true,
     enablePreview: true
+  }
+}
+
+export const InvalidCode: Story = {
+  args: {
+    code: rustCode,
+    language: 'rust',
+    isDark: false,
+    enablePreview: true,
+    invalidCode: true
   }
 }
 

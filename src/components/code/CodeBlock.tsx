@@ -81,6 +81,11 @@ interface CodeBlockProps {
    * Highlights specific lines. e.g., `['5', '14-17']`
    */
   highlightLines?: (string | number)[]
+  /**
+   * Set this to `true` if the code is not functioning correctly.
+   * The default value is `false`.
+   */
+  invalidCode?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -97,7 +102,8 @@ const CodeBlockComponent = ({
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false,
   enablePreview = true,
-  highlightLines
+  highlightLines,
+  invalidCode = false
 }: CodeBlockProps) => {
   const [isDarkLocal, setIsDarkLocal] = useState(isDark)
 
@@ -196,6 +202,8 @@ const CodeBlockComponent = ({
       {/* header */}
 
       <div className={styles.header}>
+        {/* captions */}
+
         <div>
           <LanguageIcon
             language={deferredLanguage}
@@ -204,7 +212,13 @@ const CodeBlockComponent = ({
             isDark={isDarkLocal}
           />
           <span className={styles.caption}>{caption}</span>
+
+          {/* invalid code caution */}
+          {invalidCode && <div className={styles.badge}>Invalid Code</div>}
         </div>
+
+        {/* buttons */}
+
         <div>
           {<span className={styles['copy-text']}>copied!</span>}
 
@@ -212,7 +226,7 @@ const CodeBlockComponent = ({
             <SimpleTooltip
               content={'Toggle Code Preview'}
               isDark={isDarkLocal}
-              place='bottom'
+              place='top'
               margin={24}
             >
               <ArrowsRightLeftIcon
@@ -226,7 +240,7 @@ const CodeBlockComponent = ({
           <SimpleTooltip
             content={'Toggle Line Numbers'}
             isDark={isDarkLocal}
-            place='bottom'
+            place='top'
             margin={24}
           >
             <NumberedListIcon
@@ -240,7 +254,7 @@ const CodeBlockComponent = ({
           <SimpleTooltip
             content={'Copy Code to Clipboard'}
             isDark={isDarkLocal}
-            place='bottom'
+            place='top'
             margin={24}
           >
             <ClipboardDocumentIcon
@@ -254,7 +268,7 @@ const CodeBlockComponent = ({
           <SimpleTooltip
             content={'Toggle Theme'}
             isDark={isDarkLocal}
-            place='bottom'
+            place='top'
             margin={24}
           >
             {isDarkLocal ? (
