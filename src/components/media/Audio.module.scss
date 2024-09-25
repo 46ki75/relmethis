@@ -13,6 +13,9 @@
     height: var(--const-width);
     min-width: var(--const-width);
     min-height: var(--const-width);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &__info {
@@ -29,12 +32,12 @@
       z-index: -2;
       left: 0;
       top: 0;
-      background-color: var(--react-seek-color-bg);
+      background-color: var(--react-seek-color-fg);
       height: 100%;
       width: 100%;
       transform: var(--react-seek-progress);
       transform-origin: left;
-      opacity: 0.5;
+      opacity: 0.1;
       pointer-events: none;
     }
 
@@ -53,13 +56,31 @@
 
   &__title {
     width: calc(100% - 20px);
+    font-size: 0.8rem;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 0.5rem;
-    padding: 0.5rem;
+    padding: 0.25rem 0.5rem;
     color: var(--react-text-color);
     word-break: break-all;
+  }
+
+  &__artist {
+    width: calc(100% - 20px);
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    color: var(--react-text-color);
+    word-break: break-all;
+  }
+
+  &__icon {
+    color: var(--react-text-color);
+    width: 12px;
   }
 
   &__control {
@@ -78,9 +99,9 @@
     opacity: 0.6;
   }
 
-  &__icon {
+  &__control-icon {
     color: var(--react-text-color);
-    width: 24px;
+    width: 20px;
 
     transition: opacity 200ms;
     cursor: pointer;
@@ -119,7 +140,8 @@
       position: absolute;
       content: '';
       z-index: -2;
-      background-color: var(--react-seek-color-bg);
+      background-color: var(--react-seek-color-fg);
+      opacity: 0.2;
       height: var(--const-range-weight);
       width: 100%;
     }

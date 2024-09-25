@@ -7,12 +7,12 @@ import {
   PauseIcon,
   PlayIcon,
   SpeakerWaveIcon,
-  SpeakerXMarkIcon
+  SpeakerXMarkIcon,
+  UserIcon
 } from '@heroicons/react/20/solid'
 
 import { Image } from './Image'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
-import { lighten } from 'polished'
 import { InlineText } from '../inline/InlineText'
 import classNames from 'classnames'
 
@@ -53,6 +53,8 @@ export interface AudioProps {
 
   title?: string
 
+  artist?: string
+
   cover?: string
 
   autoPlay?: boolean
@@ -71,6 +73,7 @@ const AudioComponent = ({
     : false,
   src,
   title = src,
+  artist = 'unknown',
   cover,
   autoPlay = false
 }: AudioProps) => {
@@ -84,7 +87,6 @@ const AudioComponent = ({
       ? 'rgba(255,255,255,0.1)'
       : 'rgba(0,0,0,0.03)',
     '--react-seek-color-fg': color,
-    '--react-seek-color-bg': lighten(0.4, color),
     '--react-seek-progress': `scaleX(${state.time / state.duration})`
   })
 
@@ -93,24 +95,33 @@ const AudioComponent = ({
       {audio}
 
       <div className={styles['audio__cover']}>
-        {cover && <Image src={cover} width={1} height={1} />}
+        {cover ? (
+          <Image src={cover} width={1} height={1} />
+        ) : (
+          <MusicalNoteIcon className={styles['audio__icon']} />
+        )}
       </div>
 
       <div className={styles['audio__info']}>
         <div className={styles['audio__title']}>
-          <MusicalNoteIcon style={{ width: 20 }} />
-          <InlineText text={title} />
+          <MusicalNoteIcon className={styles['audio__icon']} />
+          <InlineText text={title} isDark={isDark} />
+        </div>
+
+        <div className={styles['audio__artist']}>
+          <UserIcon className={styles['audio__icon']} />
+          <InlineText text={artist} isDark={isDark} />
         </div>
 
         <div className={styles['audio__control']}>
           {state.paused ? (
             <PlayIcon
-              className={styles['audio__icon']}
+              className={styles['audio__control-icon']}
               onClick={controls.play}
             />
           ) : (
             <PauseIcon
-              className={styles['audio__icon']}
+              className={styles['audio__control-icon']}
               onClick={controls.pause}
             />
           )}
@@ -122,14 +133,14 @@ const AudioComponent = ({
           {state.muted ? (
             <SpeakerXMarkIcon
               className={classNames(
-                styles['audio__icon'],
-                styles['audio__icon--muted']
+                styles['audio__control-icon'],
+                styles['audio__control-icon--muted']
               )}
               onClick={controls.unmute}
             />
           ) : (
             <SpeakerWaveIcon
-              className={styles['audio__icon']}
+              className={styles['audio__control-icon']}
               onClick={controls.mute}
             />
           )}
