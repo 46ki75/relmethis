@@ -163,7 +163,7 @@ const AudioComponent = ({
           name='seek'
           min={0}
           max={state.duration}
-          step={1}
+          step={0.1}
           value={state.time}
           onChange={(e) => {
             controls.seek(Number(e.target.value))
