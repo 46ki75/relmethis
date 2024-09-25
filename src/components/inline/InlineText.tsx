@@ -88,6 +88,13 @@ export interface InlineTextProps {
    * Preset color. This takes precedence if `color` is also set.
    */
   presetColorName?: ColorPresetName
+
+  /**
+   * Displays phonetic annotations or pronunciation guides for a given text.
+   * Commonly used for ruby text in East Asian languages, such as furigana in Japanese,
+   * or pinyin in Chinese, but can also be applied for other languages or annotations.
+   */
+  ruby?: string
 }
 
 // # --------------------------------------------------------------------------------
@@ -107,7 +114,8 @@ const InlineTextComponent = ({
   color,
   presetColorName,
   cite = false,
-  quote = false
+  quote = false,
+  ruby
 }: InlineTextProps) => {
   const fgColor = useMemo(
     () =>
@@ -148,6 +156,17 @@ const InlineTextComponent = ({
       )
 
     let result: ReactNode = <>{text}</>
+
+    if (ruby != null) {
+      result = (
+        <ruby>
+          {result}
+          <rp>(</rp>
+          <rt>{ruby}</rt>
+          <rp>)</rp>
+        </ruby>
+      )
+    }
 
     if (italic) result = <em>{result}</em>
     if (bold)
