@@ -149,6 +149,15 @@ const LanguageIconComponent = ({
       )
       break
 
+    case 'sass':
+    case 'scss':
+      IconComponent = React.lazy(() =>
+        import('./language/Sass').then((module) => ({
+          default: module.Sass
+        }))
+      )
+      break
+
     default:
       return <CommandLineIcon style={{ width: size, height: size, color }} />
   }

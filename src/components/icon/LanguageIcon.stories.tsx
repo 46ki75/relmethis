@@ -25,7 +25,8 @@ const meta: Meta<typeof LanguageIcon> = {
         'latex',
         'go',
         'lua',
-        'css'
+        'css',
+        'sass'
       ]
     }
   }
