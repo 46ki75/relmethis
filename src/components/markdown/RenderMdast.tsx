@@ -304,13 +304,22 @@ export const RenderMdast = ({
       }
 
       case 'code': {
+        const meta = node.meta
+        let title = node.meta
+        let highlightLines: string[] = []
+        if (meta != null) {
+          title = meta.match(/\[(.*?)\]/)?.[1]
+          highlightLines = meta.match(/\{(.*?)\}/)?.[1].split(',') ?? []
+        }
+
         markdownComponent.push(
           <Suspense fallback={<BlockFallback />}>
             <CodeBlock
               code={node.value}
               language={node.lang ?? 'txt'}
               isDark={isDark}
-              caption={node.meta ?? node.lang ?? 'txt'}
+              caption={title ?? node.lang ?? 'txt'}
+              highlightLines={highlightLines}
             />
           </Suspense>
         )

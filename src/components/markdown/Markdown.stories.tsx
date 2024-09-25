@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Markdown } from './Markdown'
+import code from '../../assets/code/main.rs?raw'
 
 const meta: Meta<typeof Markdown> = {
   title: 'Components/Markdown/Markdown',
@@ -65,35 +66,8 @@ export const Footnote: Story = {
   }
 }
 
-const code = `
-use reqwest::Error;
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Post {
-    #[serde(rename = "userId")]
-    user_id: u32,
-    id: u32,
-    title: String,
-    body: String,
-}
-
-#[tokio::main]
-async fn main() -> Result<(), Error> {
-    let url = "https://jsonplaceholder.typicode.com/posts";
-    let response = reqwest::get(url).await?;
-    let posts: Vec<Post> = response.json().await?;
-
-    for post in posts.iter().take(5) {
-        println!("ID: {}, Title: {}", post.id, post.title);
-    }
-
-    Ok(())
-}
-`
-
 const codeMarkdown = `
-\`\`\`rust src/main.rs
+\`\`\`rust [src/main.rs] {2, 5-11, 20}
 ${code}
 \`\`\`
 `
