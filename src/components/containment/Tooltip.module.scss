@@ -1,4 +1,5 @@
 .tooltip {
+  z-index: 5;
   max-width: calc(100vw - var(--react-margin-double));
   max-height: calc(100vh - var(--react-margin-double));
   position: fixed;
