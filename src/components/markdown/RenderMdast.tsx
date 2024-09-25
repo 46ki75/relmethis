@@ -365,14 +365,9 @@ export const RenderMdast = ({
         const rowNodes: ReactNode[][] = []
 
         rowNodes.push(
-          tableHeaderRow.children.map((tableCell) => {
-            return RenderMdast({
-              mdastNodes: tableCell.children,
-              definitions,
-              isDark,
-              footnoteComponent
-            }).markdownComponent
-          })
+          tableHeaderRow.children.map((tableCell) => (
+            <span>{mdastToString(tableCell.children)}</span>
+          ))
         )
 
         for (const tableBodyRow of tableBodyRows) {
