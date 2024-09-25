@@ -7,6 +7,7 @@ import styles from './Divider.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { useMergeRefs } from '../../hooks/useMergeRefs'
 import classNames from 'classnames'
+import { rgba } from 'polished'
 
 // # --------------------------------------------------------------------------------
 //
@@ -42,7 +43,7 @@ interface DividerProps {
 
 const DividerComponent = ({
   text,
-  color = 'gray'
+  color = rgba(128, 128, 128, 0.5)
 }: DividerProps): JSX.Element => {
   const { ref: a, inView } = useInView()
   const { ref: b } = useCSSVariable({
