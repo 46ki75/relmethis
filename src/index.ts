@@ -35,7 +35,6 @@ export * from './components/icon/SquareLoadingIcon'
 
 export * from './components/media/Image'
 
-export * from './components/inline/InlineCode'
 export * from './components/inline/InlineLink'
 export * from './components/inline/InlineText'
 
