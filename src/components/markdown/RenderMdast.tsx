@@ -4,7 +4,6 @@ import type { Definition, RootContent } from 'mdast'
 
 // components
 import { BlockFallback } from '../fallback/BlockFallback'
-import { InlineCode } from '../inline/InlineCode'
 import { InlineLink } from '../inline/InlineLink'
 import { Heading1 } from '../typography/Heading1'
 import { Heading2 } from '../typography/Heading2'
@@ -31,6 +30,7 @@ import { mdastToString } from './mdastToString'
 import { Table } from '../data/Table'
 import { KaTex } from '../code/KaTex'
 import {
+  colorPresetName,
   convertStringToColorPresetName,
   InlineText
 } from '../inline/InlineText'
@@ -97,6 +97,25 @@ export const RenderMdast = ({
               presetColorName={convertStringToColorPresetName(color)}
             />
           )
+        } else if (node.name === 'rich-text' && node.attributes != null) {
+          const classes = node.attributes.class?.split(' ')
+          const color = classes?.find((c) => colorPresetName.includes(c))
+          const bold = classes?.includes('bold')
+          const italic = classes?.includes('italic')
+          const strikethrough = classes?.includes('strikethrough')
+          const underline = classes?.includes('underline')
+          const code = classes?.includes('code')
+          markdownComponent.push(
+            <InlineText
+              text={mdastToString(node.children)}
+              presetColorName={convertStringToColorPresetName(color)}
+              bold={bold}
+              italic={italic}
+              strikethrough={strikethrough}
+              underline={underline}
+              code={code}
+            />
+          )
         }
         break
       }
@@ -136,7 +155,9 @@ export const RenderMdast = ({
       }
 
       case 'inlineCode': {
-        markdownComponent.push(<InlineCode text={node.value} isDark={isDark} />)
+        markdownComponent.push(
+          <InlineText text={node.value} isDark={isDark} code={true} />
+        )
         break
       }
 

@@ -23,6 +23,13 @@ export const ColorStyle: Story = {
   }
 }
 
+export const RichText: Story = {
+  args: {
+    markdown:
+      'Hello, this is :rich-text[emerald text]{.emerald .bold}.\n\n:rich-text[JSON.stringify()]{.code .amber}'
+  }
+}
+
 const blockquoteMarkdown =
   '> This is a blockquote, used for quoting external content or highlighting important sections in your document.'
 
