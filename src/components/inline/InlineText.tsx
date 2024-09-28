@@ -13,7 +13,7 @@ import styles from './InlineText.module.scss'
 //
 // # --------------------------------------------------------------------------------
 
-type ColorPresetName =
+export type ColorPresetName =
   | 'crimson'
   | 'amber'
   | 'gold'
@@ -22,6 +22,59 @@ type ColorPresetName =
   | 'purple'
   | 'pink'
   | 'slate'
+
+const colorPresetName = [
+  'crimson',
+  'amber',
+  'gold',
+  'emerald',
+  'blue',
+  'purple',
+  'pink',
+  'slate'
+]
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const isColorPresetName = (
+  colorName: string | null | undefined
+): boolean => {
+  if (colorName == null) return false
+  return colorPresetName.includes(colorName)
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const convertStringToColorPresetName = (
+  colorName: string | null | undefined
+): ColorPresetName => {
+  if (colorName == null) return 'slate'
+  if (colorPresetName.includes(colorName)) {
+    return colorName as ColorPresetName
+  } else {
+    switch (colorName) {
+      case 'red':
+        return 'crimson'
+
+      case 'orange':
+        return 'amber'
+
+      case 'yellow':
+        return 'gold'
+
+      case 'green':
+        return 'emerald'
+
+      case 'skyblue':
+      case 'darkblue':
+        return 'blue'
+
+      case 'magenta':
+        return 'pink'
+
+      default:
+        return 'slate'
+    }
+  }
+}
 
 const COLOR_PRESET: Record<ColorPresetName, string> = {
   crimson: '#b36472',

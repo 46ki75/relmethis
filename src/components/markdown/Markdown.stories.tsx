@@ -17,6 +17,12 @@ export const InlineStyle: Story = {
   }
 }
 
+export const ColorStyle: Story = {
+  args: {
+    markdown: 'Hello, this is :color[emerald text]{.emerald}.'
+  }
+}
+
 const blockquoteMarkdown =
   '> This is a blockquote, used for quoting external content or highlighting important sections in your document.'
 

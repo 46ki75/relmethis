@@ -30,7 +30,10 @@ import type { Image as ImageWithModalType } from '../media/Image'
 import { mdastToString } from './mdastToString'
 import { Table } from '../data/Table'
 import { KaTex } from '../code/KaTex'
-import { InlineText } from '../inline/InlineText'
+import {
+  convertStringToColorPresetName,
+  InlineText
+} from '../inline/InlineText'
 const ImageWithModal = React.lazy(() =>
   import('../media/Image').then((module) => ({
     default: module.Image
@@ -85,6 +88,14 @@ export const RenderMdast = ({
             <span style={node.attributes as React.CSSProperties}>
               {mdastToString(node.children)}
             </span>
+          )
+        } else if (node.name === 'color' && node.attributes != null) {
+          const color = node.attributes.class
+          markdownComponent.push(
+            <InlineText
+              text={mdastToString(node.children)}
+              presetColorName={convertStringToColorPresetName(color)}
+            />
           )
         }
         break
