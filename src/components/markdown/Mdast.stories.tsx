@@ -75,3 +75,29 @@ export const Bookmark: Story = {
     ]
   }
 }
+
+export const Toggle: Story = {
+  args: {
+    mdast: [
+      {
+        type: 'containerDirective',
+        name: 'toggle',
+        attributes: {
+          summary: 'summary text'
+        },
+        children: [
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'text',
+                value:
+                  'Describes the four payment methods for Amazon EC2 instances. In addition to the three methods of on-demand, reserved instances, and spot instances, payments can also be made for Dedicated Hosts.'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -49,6 +49,20 @@ export const Embed: Story = {
   }
 }
 
+const toggle = `
+:::toggle{summary="Folded"}
+Describes the four payment methods for Amazon EC2 instances.
+In addition to the three methods of on-demand, reserved instances,
+and spot instances, payments can also be made for Dedicated Hosts.
+:::
+`
+
+export const Toggle: Story = {
+  args: {
+    markdown: toggle
+  }
+}
+
 const blockquoteMarkdown =
   '> This is a blockquote, used for quoting external content or highlighting important sections in your document.'
 

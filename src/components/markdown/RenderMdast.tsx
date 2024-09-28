@@ -35,6 +35,7 @@ import {
   InlineText
 } from '../inline/InlineText'
 import { Bookmark } from '../typography/Bookmark'
+import { Toggle } from '../containment/Toggle'
 const ImageWithModal = React.lazy(() =>
   import('../media/Image').then((module) => ({
     default: module.Image
@@ -150,6 +151,19 @@ export const RenderMdast = ({
               url={node.attributes?.url ?? ''}
               image={node.attributes?.image ?? ''}
             />
+          )
+        } else if (node.name === 'toggle') {
+          markdownComponent.push(
+            <Toggle summary={node.attributes?.summary ?? 'Show More'}>
+              {
+                RenderMdast({
+                  mdastNodes: node.children,
+                  definitions,
+                  isDark,
+                  footnoteComponent
+                }).markdownComponent
+              }
+            </Toggle>
           )
         }
         break
