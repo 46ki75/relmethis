@@ -60,7 +60,9 @@ const BookmarkComponent = ({
   return (
     <div ref={ref} className={styles.wrapper}>
       <a href={url} target='_blank' rel='nopager noopener'>
-        <Image src={image} alt={description} disableModal={true} />
+        <div className={styles.image}>
+          <Image src={image} alt={description} disableModal={true} />
+        </div>
 
         <div className={styles.typography}>
           <div className={styles.title}>{title}</div>

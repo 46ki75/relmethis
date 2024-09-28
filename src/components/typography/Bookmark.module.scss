@@ -20,7 +20,6 @@
 
     @media (min-width: 768px) {
       flex-direction: row;
-      max-width: 35%;
       border-radius: 0.25rem 0 0 0.25rem;
     }
 
@@ -30,6 +29,12 @@
 
     &:active {
       opacity: 0.6;
+    }
+
+    .image {
+      @media (min-width: 768px) {
+        max-width: 35%;
+      }
     }
   }
 
