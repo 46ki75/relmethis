@@ -117,6 +117,14 @@ export const RenderMdast = ({
               code={code}
             />
           )
+        } else if (node.name === 'embed') {
+          markdownComponent.push(
+            <iframe
+              src={String(node.attributes?.src)}
+              width={'100%'}
+              height={500}
+            />
+          )
         }
         break
       }

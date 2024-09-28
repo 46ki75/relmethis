@@ -42,6 +42,13 @@ export const Bookmark: Story = {
   args: { markdown: bookmark }
 }
 
+export const Embed: Story = {
+  args: {
+    markdown:
+      ':embed[external contents]{src="https://www.youtube.com/embed/BpPEoZW5IiY"}'
+  }
+}
+
 const blockquoteMarkdown =
   '> This is a blockquote, used for quoting external content or highlighting important sections in your document.'
 
