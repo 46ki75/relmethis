@@ -34,6 +34,7 @@ import {
   convertStringToColorPresetName,
   InlineText
 } from '../inline/InlineText'
+import { Bookmark } from '../typography/Bookmark'
 const ImageWithModal = React.lazy(() =>
   import('../media/Image').then((module) => ({
     default: module.Image
@@ -120,8 +121,7 @@ export const RenderMdast = ({
         break
       }
 
-      case 'leafDirective':
-      case 'containerDirective': {
+      case 'leafDirective': {
         markdownComponent.push(
           RenderMdast({
             mdastNodes: node.children,
@@ -130,6 +130,20 @@ export const RenderMdast = ({
             footnoteComponent
           }).markdownComponent
         )
+        break
+      }
+
+      case 'containerDirective': {
+        if (node.name === 'bookmark' && node.children[0].type === 'paragraph') {
+          markdownComponent.push(
+            <Bookmark
+              title={node.attributes?.title ?? ''}
+              description={mdastToString(node.children[0].children)}
+              url={node.attributes?.url ?? ''}
+              image={node.attributes?.image ?? ''}
+            />
+          )
+        }
         break
       }
 

@@ -30,6 +30,18 @@ export const RichText: Story = {
   }
 }
 
+const bookmark = `
+:::bookmark{title="Amazon EC2 Pricing | AWS Official" url="https://aws.amazon.com/jp/ec2/pricing/" image="https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png"}
+Describes the four payment methods for Amazon EC2 instances.
+In addition to the three methods of on-demand, reserved instances,
+and spot instances, payments can also be made for Dedicated Hosts.
+:::
+`
+
+export const Bookmark: Story = {
+  args: { markdown: bookmark }
+}
+
 const blockquoteMarkdown =
   '> This is a blockquote, used for quoting external content or highlighting important sections in your document.'
 
