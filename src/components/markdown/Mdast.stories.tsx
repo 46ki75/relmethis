@@ -46,3 +46,32 @@ export const Headings: Story = {
     ]
   }
 }
+
+export const Bookmark: Story = {
+  args: {
+    mdast: [
+      {
+        type: 'containerDirective',
+        name: 'bookmark',
+        attributes: {
+          title: 'Amazon EC2 Pricing | AWS Official',
+          url: 'https://aws.amazon.com/jp/ec2/pricing/',
+          image:
+            'https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png'
+        },
+        children: [
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'text',
+                value:
+                  'Describes the four payment methods for Amazon EC2 instances. In addition to the three methods of on-demand, reserved instances, and spot instances, payments can also be made for Dedicated Hosts.'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
