@@ -15,6 +15,10 @@ export const Primary: Story = {
   args: { text: 'Inline Text' }
 }
 
+export const Code: Story = {
+  args: { text: 'JSON.stringify()', code: true }
+}
+
 export const Ruby: Story = {
   args: { text: '名古屋', ruby: 'なごや' }
 }

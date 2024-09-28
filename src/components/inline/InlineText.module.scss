@@ -7,6 +7,15 @@
     background-color: var(--react-selection-color-bg);
   }
 
+  &__code {
+    padding: 0.25rem 0.5rem;
+    margin-inline: 0.25rem;
+
+    background-color: rgba(128, 128, 128, 0.1);
+    border-radius: 0.25rem;
+    font-family: monospace;
+  }
+
   &__strong {
     color: var(--react-color-strong);
   }

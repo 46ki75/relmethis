@@ -23,7 +23,8 @@ export type ColorPresetName =
   | 'pink'
   | 'slate'
 
-const colorPresetName = [
+// eslint-disable-next-line react-refresh/only-export-components
+export const colorPresetName = [
   'crimson',
   'amber',
   'gold',
@@ -132,6 +133,8 @@ export interface InlineTextProps {
    */
   quote?: boolean
 
+  code?: boolean
+
   /**
    * The color of the text
    */
@@ -168,6 +171,7 @@ const InlineTextComponent = ({
   presetColorName,
   cite = false,
   quote = false,
+  code = false,
   ruby
 }: InlineTextProps) => {
   const fgColor = useMemo(
@@ -194,6 +198,13 @@ const InlineTextComponent = ({
   })
 
   const renderInnerContent = () => {
+    if (code)
+      return (
+        <code className={styles['text__code']} style={style}>
+          {text}
+        </code>
+      )
+
     if (cite)
       return (
         <cite className={styles['text__cite']} style={style}>
