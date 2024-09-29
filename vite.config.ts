@@ -36,6 +36,11 @@ export default defineConfig({
   css: {
     modules: {
       scopeBehaviour: 'local'
+    },
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      }
     }
   }
 })

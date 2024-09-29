@@ -16,8 +16,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js",
-      "types": "./dist/src/index.d.ts"
+      "require": "./dist/index.cjs.js"
     },
     "./style": {
       "default": "./dist/assets/style.css"
