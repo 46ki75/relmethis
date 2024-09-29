@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
-import css from './RectangleWave.css?raw'
+import css from './RectangleWave.css?inline'
 
 // # --------------------------------------------------------------------------------
 //
