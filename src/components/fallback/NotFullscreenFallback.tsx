@@ -2,11 +2,13 @@
 
 import React from 'react'
 
-import { createPortal } from 'react-dom'
+import { DotLoadingIcon } from '../icon/DotLoadingIcon'
+
+import { RectangleWave } from './RectangleWave'
 
 import isEqual from 'react-fast-compare'
 
-import { NotFullscreenFallback } from './NotFullscreenFallback'
+import styles from './NotFullscreenFallback.module.scss'
 
 // # --------------------------------------------------------------------------------
 //
@@ -14,7 +16,7 @@ import { NotFullscreenFallback } from './NotFullscreenFallback'
 //
 // # --------------------------------------------------------------------------------
 
-export interface FullscreenFallbackProps {
+export interface NotFullscreenFallbackProps {
   style?: React.CSSProperties
   /**
    * Whether or not to use the dark theme
@@ -28,15 +30,28 @@ export interface FullscreenFallbackProps {
 //
 // # --------------------------------------------------------------------------------
 
-const FullscreenFallbackComponent = ({
+/**
+ * UNIVERSAL (NO DOM ACCESS)
+ */
+const NotFullscreenFallbackComponent = ({
   style,
   isDark = typeof window !== 'undefined'
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false
-}: FullscreenFallbackProps) => {
-  return createPortal(
-    <NotFullscreenFallback style={style} isDark={isDark} />,
-    document.body
+}: NotFullscreenFallbackProps) => {
+  return (
+    <div
+      className={styles['full-screen-fallback']}
+      style={{
+        backgroundColor: isDark
+          ? 'rgb(25.5, 25.5, 25.5)'
+          : 'rgb(229.5, 229.5, 229.5)',
+        ...style
+      }}
+    >
+      <RectangleWave color='rgba(128,128,128,0.8)' />
+      <DotLoadingIcon size={64} color='rgba(128,128,128,0.8)' />
+    </div>
   )
 }
 
@@ -46,7 +61,7 @@ const FullscreenFallbackComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-export const FullscreenFallback = React.memo(
-  FullscreenFallbackComponent,
+export const NotFullscreenFallback = React.memo(
+  NotFullscreenFallbackComponent,
   isEqual
 )
