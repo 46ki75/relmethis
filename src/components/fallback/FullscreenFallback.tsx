@@ -31,7 +31,10 @@ export interface FullscreenFallbackProps {
 //
 // # --------------------------------------------------------------------------------
 
-export const NotFullscreenFallbackComponent = ({
+/**
+ * UNIVERSAL (NO DOM ACCESS)
+ */
+export const NotFullscreenFallback = ({
   style,
   isDark = typeof window !== 'undefined'
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -60,7 +63,7 @@ const FullscreenFallbackComponent = ({
     : false
 }: FullscreenFallbackProps) => {
   return createPortal(
-    <NotFullscreenFallbackComponent style={style} isDark={isDark} />,
+    <NotFullscreenFallback style={style} isDark={isDark} />,
     document.body
   )
 }
