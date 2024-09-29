@@ -1,6 +1,6 @@
 {
   "name": "relmethis",
-  "version": "0.1.43",
+  "version": "0.1.44",
   "engines": {
     "node": "20"
   },
@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git@github.com:46ki75/relmethis.git"
   },
-  "main": "dist/index.cjs.js",
+  "main": "dist/src/index.cjs.js",
   "module": "dist/src/index.es.js",
   "types": "dist/src/index.d.ts",
   "type": "module",
