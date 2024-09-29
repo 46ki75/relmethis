@@ -20,7 +20,7 @@ export interface InlineLinkProps {
   /**
    * The text to be displayed
    */
-  text: string
+  children: string
   /**
    * The URL to which the link points. Links within the same domain will open in the same tab,
    * while links to different domains will open in a new tab.
@@ -39,7 +39,7 @@ export interface InlineLinkProps {
 // # --------------------------------------------------------------------------------
 
 const InlineLinkComponent = ({
-  text,
+  children,
   href,
   isDark = false
 }: InlineLinkProps) => {
@@ -64,7 +64,7 @@ const InlineLinkComponent = ({
       target={isExternal ? '_blank' : undefined}
       rel={isExternal ? 'noopener noreferrer' : undefined}
     >
-      <span>{text}</span>
+      <span>{children}</span>
       {isExternal ? <ArrowTopRightOnSquareIcon /> : <ChevronRightIcon />}
     </a>
   )

@@ -12,7 +12,7 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    text: 'Link to Page',
+    children: 'Link to Page',
     href: 'https://example.com',
     isDark: false
   }
@@ -20,14 +20,14 @@ export const Primary: Story = {
 
 export const External: Story = {
   args: {
-    text: 'Link to Page',
+    children: 'Link to Page',
     href: 'https://example.com'
   }
 }
 
 export const Internal: Story = {
   args: {
-    text: 'Link to Page',
+    children: 'Link to Page',
     href: window.location.href
   }
 }

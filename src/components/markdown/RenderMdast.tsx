@@ -258,11 +258,9 @@ export const RenderMdast = ({
 
       case 'link': {
         markdownComponent.push(
-          <InlineLink
-            text={mdastToString(node.children)}
-            href={node.url}
-            isDark={isDark}
-          />
+          <InlineLink href={node.url} isDark={isDark}>
+            {mdastToString(node.children)}
+          </InlineLink>
         )
         break
       }
@@ -564,10 +562,9 @@ export const RenderMdast = ({
 
         if (linkDefinition != null) {
           markdownComponent.push(
-            <InlineLink
-              text={linkDefinition.title ?? linkDefinition.url}
-              href={linkDefinition.url}
-            />
+            <InlineLink href={linkDefinition.url}>
+              {linkDefinition.title ?? linkDefinition.url}
+            </InlineLink>
           )
         }
 
