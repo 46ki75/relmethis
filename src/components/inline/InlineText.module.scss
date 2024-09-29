@@ -1,5 +1,6 @@
 .text {
   color: var(--react-color-fg);
+  font-size: var(--react-font-size);
 
   &::selection,
   *::selection {

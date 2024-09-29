@@ -151,6 +151,8 @@ export interface InlineTextProps {
    * or pinyin in Chinese, but can also be applied for other languages or annotations.
    */
   ruby?: string
+
+  fontSize?: Property.FontSize
 }
 
 // # --------------------------------------------------------------------------------
@@ -172,7 +174,8 @@ const InlineTextComponent = ({
   cite = false,
   quote = false,
   code = false,
-  ruby
+  ruby,
+  fontSize = 'inherit'
 }: InlineTextProps) => {
   const fgColor = useMemo(
     () =>
@@ -194,7 +197,8 @@ const InlineTextComponent = ({
       getLuminance(fgColor) < 0.5
         ? 'rgba(255, 255, 255, 0.7)'
         : 'rgba(0, 0, 0, 0.7)',
-    '--react-selection-color-bg': rgba(fgColor, 0.7)
+    '--react-selection-color-bg': rgba(fgColor, 0.7),
+    '--react-font-size': fontSize
   })
 
   const renderInnerContent = () => {
