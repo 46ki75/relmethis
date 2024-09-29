@@ -1,4 +1,4 @@
-@keyframes wave {
+@keyframes com-46ki75-react-relmethis-rectangle-wave {
   0% {
     transform: scale(0);
     opacity: 0;
@@ -18,7 +18,7 @@
   }
 }
 
-.wrapper {
+.com-46ki75-react-relmethis-rectangle-wave {
   position: absolute;
 
   width: 100%;
@@ -26,7 +26,7 @@
 
   border: solid 1px var(--react-color);
 
-  animation-name: wave;
+  animation-name: com-46ki75-react-relmethis-rectangle-wave;
   animation-duration: 1200ms;
   animation-iteration-count: infinite;
   animation-fill-mode: both;

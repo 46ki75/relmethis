@@ -1,9 +1,10 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 
 import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
-import styles from './RectangleWave.module.scss'
+import css from './RectangleWave.css?raw'
 
 // # --------------------------------------------------------------------------------
 //
@@ -29,9 +30,18 @@ const RectangleWaveComponent = ({
   isDark = false,
   color = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)'
 }: RectangleWaveProps): JSX.Element => {
+  const CLASSNAME = 'com-46ki75-react-relmethis-rectangle-wave'
+
   const { ref } = useCSSVariable({ '--react-color': color })
 
-  return <div ref={ref} className={styles.wrapper}></div>
+  return (
+    <>
+      <Helmet>
+        <style key={CLASSNAME}>{css}</style>
+      </Helmet>
+      <div ref={ref} className={CLASSNAME}></div>
+    </>
+  )
 }
 
 // # --------------------------------------------------------------------------------
@@ -40,15 +50,4 @@ const RectangleWaveComponent = ({
 //
 // # --------------------------------------------------------------------------------
 
-/**
- * Please set the position of the parent component to relative when using this component.
- *
- * ## Example
- *
- * ```tsx
- * <div style={{ position: 'relative', width: '100%', height: 400 }}>
- *   <RectangleWave />
- * </div>
- * ```
- */
 export const RectangleWave = React.memo(RectangleWaveComponent, isEqual)
