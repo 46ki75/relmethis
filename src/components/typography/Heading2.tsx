@@ -26,7 +26,8 @@ export interface Heading2Props {
   /**
    * The text to be displayed
    */
-  text: string
+  children: string
+
   /**
    * The ID to be assigned to the tag. Defaults to the value of `text` if not provided
    */
@@ -44,8 +45,8 @@ export interface Heading2Props {
 // # --------------------------------------------------------------------------------
 
 const Heading2Component = ({
-  text,
-  identifier = text,
+  children,
+  identifier = children,
   isDark = false
 }: Heading2Props) => {
   const { ref: a, inView } = useInView()
@@ -76,7 +77,7 @@ const Heading2Component = ({
           [styles['section__heading--visible']]: inView
         })}
       >
-        {text}
+        {children}
       </h2>
       <div
         className={classNames(styles['section__bottom'], {

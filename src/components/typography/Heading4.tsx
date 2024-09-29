@@ -22,7 +22,7 @@ export interface Heading4Props {
   /**
    * The text to be displayed
    */
-  text: string
+  children: string
   /**
    * The ID to be assigned to the tag. Defaults to the value of `text` if not provided
    */
@@ -40,8 +40,8 @@ export interface Heading4Props {
 // # --------------------------------------------------------------------------------
 
 const Heading4Component = ({
-  text,
-  identifier = text,
+  children,
+  identifier = children,
   isDark = false
 }: Heading4Props) => {
   useScrollToHash(identifier, 400)
@@ -64,7 +64,7 @@ const Heading4Component = ({
           [styles['section__heading--visible']]: inView
         })}
       >
-        {text}
+        {children}
       </h4>
       <FragmentIdentifier identifier={identifier} isDark={isDark} />
     </section>

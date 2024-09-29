@@ -400,17 +400,17 @@ export const RenderMdast = ({
         headings.push({ level: node.depth, text })
 
         if (node.depth === 1) {
-          markdownComponent.push(<Heading1 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading1 isDark={isDark}>{text}</Heading1>)
         } else if (node.depth === 2) {
-          markdownComponent.push(<Heading2 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading2 isDark={isDark}>{text}</Heading2>)
         } else if (node.depth === 3) {
-          markdownComponent.push(<Heading3 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading3 isDark={isDark}>{text}</Heading3>)
         } else if (node.depth === 4) {
-          markdownComponent.push(<Heading4 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading4 isDark={isDark}>{text}</Heading4>)
         } else if (node.depth === 5) {
-          markdownComponent.push(<Heading5 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading5 isDark={isDark}>{text}</Heading5>)
         } else if (node.depth === 6) {
-          markdownComponent.push(<Heading6 text={text} isDark={isDark} />)
+          markdownComponent.push(<Heading6 isDark={isDark}>{text}</Heading6>)
         }
         break
       }

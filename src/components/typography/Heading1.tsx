@@ -26,7 +26,8 @@ export interface Heading1Props {
   /**
    * The text to be displayed
    */
-  text: string
+  children: string
+
   /**
    * The ID to be assigned to the tag. Defaults to the value of `text` if not provided
    */
@@ -44,9 +45,8 @@ export interface Heading1Props {
 // # --------------------------------------------------------------------------------
 
 export const Heading1Component = ({
-  text,
-  identifier = text,
-
+  children,
+  identifier = children,
   isDark = false
 }: Heading1Props) => {
   const { ref: a, inView } = useInView()
@@ -69,7 +69,7 @@ export const Heading1Component = ({
           [styles['section__heading--visible']]: inView
         })}
       >
-        {text}
+        {children}
       </h1>
       <FragmentIdentifier identifier={identifier} isDark={isDark} />
     </section>
