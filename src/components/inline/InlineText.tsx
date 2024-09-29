@@ -153,6 +153,8 @@ export interface InlineTextProps {
   ruby?: string
 
   fontSize?: Property.FontSize
+
+  opacity?: Property.Opacity
 }
 
 // # --------------------------------------------------------------------------------
@@ -175,7 +177,8 @@ const InlineTextComponent = ({
   quote = false,
   code = false,
   ruby,
-  fontSize = 'inherit'
+  fontSize = 'inherit',
+  opacity = 'inherit'
 }: InlineTextProps) => {
   const fgColor = useMemo(
     () =>
@@ -198,7 +201,8 @@ const InlineTextComponent = ({
         ? 'rgba(255, 255, 255, 0.7)'
         : 'rgba(0, 0, 0, 0.7)',
     '--react-selection-color-bg': rgba(fgColor, 0.7),
-    '--react-font-size': fontSize
+    '--react-font-size': fontSize,
+    '--react-opacity': opacity
   })
 
   const renderInnerContent = () => {
