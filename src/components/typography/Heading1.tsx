@@ -36,6 +36,7 @@ export interface Heading1Props {
    * Whether or not to use the dark theme
    */
   isDark?: boolean
+  locale?: 'en-US' | 'ja-JP'
 }
 
 // # --------------------------------------------------------------------------------
@@ -47,7 +48,8 @@ export interface Heading1Props {
 export const Heading1Component = ({
   children,
   identifier = children,
-  isDark = false
+  isDark = false,
+  locale = 'en-US'
 }: Heading1Props) => {
   const { ref: a, inView } = useInView()
   const { ref: b } = useCSSVariable({
@@ -71,7 +73,11 @@ export const Heading1Component = ({
       >
         {children}
       </h1>
-      <FragmentIdentifier identifier={identifier} isDark={isDark} />
+      <FragmentIdentifier
+        identifier={identifier}
+        isDark={isDark}
+        locale={locale}
+      />
     </section>
   )
 }

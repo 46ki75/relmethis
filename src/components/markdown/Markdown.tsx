@@ -33,6 +33,7 @@ export interface MarkdownProps {
    * Determines whether to display the table of contents
    */
   enableTableOfContents?: boolean
+  locale?: 'en-US' | 'ja-JP'
 }
 
 // # --------------------------------------------------------------------------------
@@ -54,7 +55,8 @@ const parseMarkdownToMdast = (markdown: string) => {
 const MarkdownComponent = ({
   markdown,
   isDark,
-  enableTableOfContents = true
+  enableTableOfContents = true,
+  locale = 'en-US'
 }: MarkdownProps) => {
   const mdast = useMemo(() => parseMarkdownToMdast(markdown), [markdown])
 
@@ -64,6 +66,7 @@ const MarkdownComponent = ({
         mdast={mdast.children}
         isDark={isDark}
         enableTableOfContents={enableTableOfContents}
+        locale={locale}
       />
     </Suspense>
   )

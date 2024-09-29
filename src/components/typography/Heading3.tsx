@@ -35,6 +35,7 @@ export interface Heading3Props {
    * Whether or not to use the dark theme
    */
   isDark?: boolean
+  locale?: 'en-US' | 'ja-JP'
 }
 
 // # --------------------------------------------------------------------------------
@@ -46,7 +47,8 @@ export interface Heading3Props {
 export const Heading3Component = ({
   children,
   identifier = children,
-  isDark = false
+  isDark = false,
+  locale = 'en-US'
 }: Heading3Props) => {
   useScrollToHash(identifier, 300)
 
@@ -72,7 +74,11 @@ export const Heading3Component = ({
       >
         {children}
       </h3>
-      <FragmentIdentifier identifier={identifier} isDark={isDark} />
+      <FragmentIdentifier
+        identifier={identifier}
+        isDark={isDark}
+        locale={locale}
+      />
     </section>
   )
 }

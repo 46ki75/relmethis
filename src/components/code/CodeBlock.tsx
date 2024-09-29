@@ -86,6 +86,7 @@ interface CodeBlockProps {
    * The default value is `false`.
    */
   invalidCode?: boolean
+  locale?: 'en-US' | 'ja-JP'
 }
 
 // # --------------------------------------------------------------------------------
@@ -103,7 +104,8 @@ const CodeBlockComponent = ({
     : false,
   enablePreview = true,
   highlightLines,
-  invalidCode = false
+  invalidCode = false,
+  locale = 'en-US'
 }: CodeBlockProps) => {
   const [isDarkLocal, setIsDarkLocal] = useState(isDark)
 
@@ -214,17 +216,27 @@ const CodeBlockComponent = ({
           <span className={styles.caption}>{caption}</span>
 
           {/* invalid code caution */}
-          {invalidCode && <div className={styles.badge}>Invalid Code</div>}
+          {invalidCode && (
+            <div className={styles.badge}>
+              {locale === 'en-US' ? 'Invalid Code' : '誤りを含むコード'}
+            </div>
+          )}
         </div>
 
         {/* buttons */}
 
         <div>
-          {<span className={styles['copy-text']}>copied!</span>}
+          {
+            <span className={styles['copy-text']}>
+              {locale === 'en-US' ? 'copied!' : 'コピーしました'}
+            </span>
+          }
 
           {isAvailablePreview && (
             <SimpleTooltip
-              content={'Toggle Code Preview'}
+              content={
+                locale === 'en-US' ? 'Toggle Code Preview' : 'コピーしました'
+              }
               isDark={isDarkLocal}
               place='top'
               margin={24}
@@ -238,7 +250,11 @@ const CodeBlockComponent = ({
             </SimpleTooltip>
           )}
           <SimpleTooltip
-            content={'Toggle Line Numbers'}
+            content={
+              locale === 'en-US'
+                ? 'Toggle Line Numbers'
+                : '行番号表示の切り替え'
+            }
             isDark={isDarkLocal}
             place='top'
             margin={24}
@@ -252,7 +268,9 @@ const CodeBlockComponent = ({
           </SimpleTooltip>
 
           <SimpleTooltip
-            content={'Copy Code to Clipboard'}
+            content={
+              locale === 'en-US' ? 'Copy Code to Clipboard' : 'コードのコピー'
+            }
             isDark={isDarkLocal}
             place='top'
             margin={24}
@@ -266,7 +284,7 @@ const CodeBlockComponent = ({
           </SimpleTooltip>
 
           <SimpleTooltip
-            content={'Toggle Theme'}
+            content={locale === 'en-US' ? 'Toggle Theme' : 'テーマ切り替え'}
             isDark={isDarkLocal}
             place='top'
             margin={24}

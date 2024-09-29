@@ -52,12 +52,14 @@ export const RenderMdast = ({
   mdastNodes,
   footnoteComponent,
   definitions,
-  isDark
+  isDark,
+  locale
 }: {
   mdastNodes: RootContent[]
   footnoteComponent: ReactNode[]
   definitions: Definition[]
   isDark: boolean
+  locale: 'en-US' | 'ja-JP'
 }): {
   markdownComponent: ReactNode[]
   footnoteComponent: ReactNode[]
@@ -136,7 +138,8 @@ export const RenderMdast = ({
             mdastNodes: node.children,
             definitions,
             isDark,
-            footnoteComponent
+            footnoteComponent,
+            locale
           }).markdownComponent
         )
         break
@@ -160,7 +163,8 @@ export const RenderMdast = ({
                   mdastNodes: node.children,
                   definitions,
                   isDark,
-                  footnoteComponent
+                  footnoteComponent,
+                  locale
                 }).markdownComponent
               }
             </Toggle>
@@ -205,7 +209,8 @@ export const RenderMdast = ({
                 mdastNodes: node.children,
                 definitions,
                 isDark,
-                footnoteComponent
+                footnoteComponent,
+                locale
               }).markdownComponent
             }
           </strong>
@@ -221,7 +226,8 @@ export const RenderMdast = ({
                 mdastNodes: node.children,
                 definitions,
                 isDark,
-                footnoteComponent
+                footnoteComponent,
+                locale
               }).markdownComponent
             }
           </em>
@@ -237,7 +243,8 @@ export const RenderMdast = ({
                 mdastNodes: node.children,
                 definitions,
                 isDark,
-                footnoteComponent
+                footnoteComponent,
+                locale
               }).markdownComponent
             }
           </del>
@@ -275,7 +282,8 @@ export const RenderMdast = ({
                 mdastNodes: node.children,
                 definitions,
                 isDark,
-                footnoteComponent
+                footnoteComponent,
+                locale
               }).markdownComponent
             }
           </Paragraph>
@@ -340,7 +348,8 @@ export const RenderMdast = ({
                       mdastNodes: newChildren,
                       definitions,
                       isDark,
-                      footnoteComponent
+                      footnoteComponent,
+                      locale
                     }).markdownComponent
                   }
                 </Alert>
@@ -357,7 +366,8 @@ export const RenderMdast = ({
                 mdastNodes: node.children,
                 definitions,
                 isDark,
-                footnoteComponent
+                footnoteComponent,
+                locale
               }).markdownComponent
             }
           </Blockquote>
@@ -388,6 +398,7 @@ export const RenderMdast = ({
               isDark={isDark}
               caption={title ?? node.lang ?? 'txt'}
               highlightLines={highlightLines}
+              locale={locale}
             />
           </Suspense>
         )
@@ -400,17 +411,41 @@ export const RenderMdast = ({
         headings.push({ level: node.depth, text })
 
         if (node.depth === 1) {
-          markdownComponent.push(<Heading1 isDark={isDark}>{text}</Heading1>)
+          markdownComponent.push(
+            <Heading1 isDark={isDark} locale={locale}>
+              {text}
+            </Heading1>
+          )
         } else if (node.depth === 2) {
-          markdownComponent.push(<Heading2 isDark={isDark}>{text}</Heading2>)
+          markdownComponent.push(
+            <Heading2 isDark={isDark} locale={locale}>
+              {text}
+            </Heading2>
+          )
         } else if (node.depth === 3) {
-          markdownComponent.push(<Heading3 isDark={isDark}>{text}</Heading3>)
+          markdownComponent.push(
+            <Heading3 isDark={isDark} locale={locale}>
+              {text}
+            </Heading3>
+          )
         } else if (node.depth === 4) {
-          markdownComponent.push(<Heading4 isDark={isDark}>{text}</Heading4>)
+          markdownComponent.push(
+            <Heading4 isDark={isDark} locale={locale}>
+              {text}
+            </Heading4>
+          )
         } else if (node.depth === 5) {
-          markdownComponent.push(<Heading5 isDark={isDark}>{text}</Heading5>)
+          markdownComponent.push(
+            <Heading5 isDark={isDark} locale={locale}>
+              {text}
+            </Heading5>
+          )
         } else if (node.depth === 6) {
-          markdownComponent.push(<Heading6 isDark={isDark}>{text}</Heading6>)
+          markdownComponent.push(
+            <Heading6 isDark={isDark} locale={locale}>
+              {text}
+            </Heading6>
+          )
         }
         break
       }
@@ -445,7 +480,8 @@ export const RenderMdast = ({
                 mdastNodes: tableCell.children,
                 definitions,
                 isDark,
-                footnoteComponent
+                footnoteComponent,
+                locale
               }).markdownComponent
             })
           )
@@ -477,7 +513,8 @@ export const RenderMdast = ({
                   mdastNodes: node.children,
                   definitions,
                   isDark,
-                  footnoteComponent
+                  footnoteComponent,
+                  locale
                 }).markdownComponent
               }
             </NumberedList>
@@ -488,7 +525,8 @@ export const RenderMdast = ({
                   mdastNodes: node.children,
                   definitions,
                   isDark,
-                  footnoteComponent
+                  footnoteComponent,
+                  locale
                 }).markdownComponent
               }
             </BulletedList>
@@ -505,7 +543,8 @@ export const RenderMdast = ({
                 mdastNodes: node.children,
                 definitions,
                 isDark,
-                footnoteComponent
+                footnoteComponent,
+                locale
               }).markdownComponent
             }
           </>
@@ -570,7 +609,8 @@ export const RenderMdast = ({
                 mdastNodes: node.children,
                 definitions,
                 isDark,
-                footnoteComponent
+                footnoteComponent,
+                locale
               }).markdownComponent
             }
           </div>

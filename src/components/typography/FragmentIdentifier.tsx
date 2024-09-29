@@ -24,6 +24,7 @@ export interface FragmentIdentifierProps {
    * Whether or not to use the dark theme
    */
   isDark?: boolean
+  locale?: 'en-US' | 'ja-JP'
 }
 
 // # --------------------------------------------------------------------------------
@@ -34,7 +35,8 @@ export interface FragmentIdentifierProps {
 
 const FragmentIdentifierComponent = ({
   identifier,
-  isDark = false
+  isDark = false,
+  locale = 'en-US'
 }: FragmentIdentifierProps) => {
   const scrollToIdentifier = () => {
     const element = document.getElementById(identifier)
@@ -53,11 +55,17 @@ const FragmentIdentifierComponent = ({
           [styles['fragment-identifier__copiedtext--visible']]: isCopied
         })}
       >
-        Link has been copied!
+        {locale === 'en-US'
+          ? 'Link has been copied!'
+          : 'リンクがコピーされました！'}
       </span>
 
       <SimpleTooltip
-        content='Jump to a link with a fragment modifier'
+        content={
+          locale === 'en-US'
+            ? 'Jump to a link with a fragment modifier'
+            : 'フラグメント識別子のセクションまで移動します'
+        }
         place='bottom'
         isDark={isDark}
       >
@@ -68,7 +76,11 @@ const FragmentIdentifierComponent = ({
       </SimpleTooltip>
 
       <SimpleTooltip
-        content='Copy a link with a fragment modifier'
+        content={
+          locale === 'en-US'
+            ? 'Copy a link with a fragment modifier'
+            : 'フラグメント識別子を含むリンクをコピーします'
+        }
         place='bottom'
         isDark={isDark}
       >

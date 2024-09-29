@@ -28,6 +28,7 @@ export interface MdastProps {
    * Determines whether to display the table of contents
    */
   enableTableOfContents?: boolean
+  locale?: 'en-US' | 'ja-JP'
 }
 
 // # --------------------------------------------------------------------------------
@@ -39,7 +40,8 @@ export interface MdastProps {
 const MdastComponent = ({
   mdast,
   isDark = false,
-  enableTableOfContents = true
+  enableTableOfContents = true,
+  locale = 'en-US'
 }: MdastProps) => {
   const [components, setComponents] = useState<ReactNode[]>([<BlockFallback />])
 
@@ -56,7 +58,8 @@ const MdastComponent = ({
       mdastNodes: mdast,
       definitions,
       isDark,
-      footnoteComponent: []
+      footnoteComponent: [],
+      locale
     })
 
     setComponents(
@@ -73,7 +76,7 @@ const MdastComponent = ({
             footnoteComponent
           ]
     )
-  }, [enableTableOfContents, isDark, mdast])
+  }, [enableTableOfContents, isDark, locale, mdast])
 
   return <article>{components}</article>
 }

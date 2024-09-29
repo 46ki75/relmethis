@@ -36,6 +36,7 @@ export interface Heading2Props {
    * Whether or not to use the dark theme
    */
   isDark?: boolean
+  locale?: 'en-US' | 'ja-JP'
 }
 
 // # --------------------------------------------------------------------------------
@@ -47,7 +48,8 @@ export interface Heading2Props {
 const Heading2Component = ({
   children,
   identifier = children,
-  isDark = false
+  isDark = false,
+  locale = 'en-US'
 }: Heading2Props) => {
   const { ref: a, inView } = useInView()
   const { ref: b } = useCSSVariable({
@@ -84,7 +86,11 @@ const Heading2Component = ({
           [styles['section__bottom--visible']]: inView
         })}
       ></div>
-      <FragmentIdentifier identifier={identifier} isDark={isDark} />
+      <FragmentIdentifier
+        identifier={identifier}
+        isDark={isDark}
+        locale={locale}
+      />
     </section>
   )
 }
