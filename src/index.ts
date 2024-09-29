@@ -28,7 +28,6 @@ export * from './components/data/Table'
 
 export * from './components/fallback/BlockFallback'
 export * from './components/fallback/FullscreenFallback'
-export * from './components/fallback/NotFullscreenFallback'
 export * from './components/fallback/RectangleWave'
 
 export * from './components/form/Checkbox'

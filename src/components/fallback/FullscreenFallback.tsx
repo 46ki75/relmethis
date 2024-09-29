@@ -1,12 +1,14 @@
-'use client'
+'use client' // UNIVERSAL
 
 import React from 'react'
 
-import { createPortal } from 'react-dom'
+import { DotLoadingIcon } from '../icon/DotLoadingIcon'
+
+import { RectangleWave } from './RectangleWave'
 
 import isEqual from 'react-fast-compare'
 
-import { NotFullscreenFallback } from './NotFullscreenFallback'
+import styles from './FullscreenFallback.module.scss'
 
 // # --------------------------------------------------------------------------------
 //
@@ -34,9 +36,19 @@ const FullscreenFallbackComponent = ({
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false
 }: FullscreenFallbackProps) => {
-  return createPortal(
-    <NotFullscreenFallback style={style} isDark={isDark} />,
-    document.body
+  return (
+    <div
+      className={styles['full-screen-fallback']}
+      style={{
+        backgroundColor: isDark
+          ? 'rgb(25.5, 25.5, 25.5)'
+          : 'rgb(229.5, 229.5, 229.5)',
+        ...style
+      }}
+    >
+      <RectangleWave color='rgba(128,128,128,0.8)' />
+      <DotLoadingIcon size={64} color='rgba(128,128,128,0.8)' />
+    </div>
   )
 }
 
