@@ -22,7 +22,8 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'relmethis',
-      fileName: (format) => `index.${format}.js`,
+      // fileName: (format) => `index.${format}.js`,
+      fileName: (format) => `[name].${format}.js`,
       formats: ['es', 'cjs']
     },
     rollupOptions: {
@@ -33,7 +34,8 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           'react/jsx-runtime': 'react/jsx-runtime'
         },
-        assetFileNames: `assets/[name].[ext]`
+        assetFileNames: `assets/[name].[ext]`,
+        preserveModules: true
       }
     },
     minify: false
