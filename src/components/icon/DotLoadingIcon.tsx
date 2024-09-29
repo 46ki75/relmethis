@@ -5,7 +5,6 @@ import React from 'react'
 import isEqual from 'react-fast-compare'
 
 import styles from './DotLoadingIcon.module.scss'
-import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 // # --------------------------------------------------------------------------------
 //
@@ -44,16 +43,14 @@ export const DotLoadingIconComponent = ({
   color = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
   size = 64
 }: DotLoadingIconProps) => {
-  const { ref } = useCSSVariable({
-    '--react-color': color,
-    '--react-size': size + 'px'
-  })
-
   return (
-    <div className={styles.wrapper} ref={ref}>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div
+      className={styles.wrapper}
+      style={{ width: size + 'px', height: size + 'px' }}
+    >
+      {new Array(3).fill(null).map((_, i) => (
+        <div key={i} style={{ backgroundColor: color }}></div>
+      ))}
     </div>
   )
 }
