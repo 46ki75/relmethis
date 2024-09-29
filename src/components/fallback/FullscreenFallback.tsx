@@ -31,13 +31,13 @@ export interface FullscreenFallbackProps {
 //
 // # --------------------------------------------------------------------------------
 
-const FullscreenFallbackComponent = ({
+export const NotFullscreenFallbackComponent = ({
   style,
   isDark = typeof window !== 'undefined'
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false
 }: FullscreenFallbackProps) => {
-  return createPortal(
+  return (
     <div
       className={styles['full-screen-fallback']}
       style={{
@@ -49,7 +49,18 @@ const FullscreenFallbackComponent = ({
     >
       <RectangleWave color='rgba(128,128,128,0.8)' />
       <DotLoadingIcon size={64} color='rgba(128,128,128,0.8)' />
-    </div>,
+    </div>
+  )
+}
+
+const FullscreenFallbackComponent = ({
+  style,
+  isDark = typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-color-scheme: dark)').matches
+    : false
+}: FullscreenFallbackProps) => {
+  return createPortal(
+    <NotFullscreenFallbackComponent style={style} isDark={isDark} />,
     document.body
   )
 }

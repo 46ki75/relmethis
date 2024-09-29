@@ -1,9 +1,8 @@
-'use client'
+'use client' // UNIVERSAL (NO DOM ACCESS)
 
 import React from 'react'
 
 import isEqual from 'react-fast-compare'
-import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 import styles from './RectangleWave.module.scss'
 
@@ -31,9 +30,13 @@ const RectangleWaveComponent = ({
   isDark = false,
   color = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)'
 }: RectangleWaveProps): JSX.Element => {
-  const { ref } = useCSSVariable({ '--react-color': color })
-
-  return <div ref={ref} className={styles['rectangle-wave']}></div>
+  return (
+    <div
+      aria-hidden={'true'}
+      className={styles['rectangle-wave']}
+      style={{ border: `solid 1px ${color}` }}
+    ></div>
+  )
 }
 
 // # --------------------------------------------------------------------------------

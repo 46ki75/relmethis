@@ -1,4 +1,4 @@
-'use client'
+'use client' // UNIVERSAL (NO DOM ACCESS)
 
 import React from 'react'
 
