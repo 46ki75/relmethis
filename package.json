@@ -1,6 +1,6 @@
 {
   "name": "relmethis",
-  "version": "0.1.35",
+  "version": "0.1.37",
   "engines": {
     "node": "20"
   },
@@ -89,6 +89,7 @@
     "postcss": "^8.4.47",
     "postcss-preset-env": "^10.0.5",
     "prettier": "^3.3.2",
+    "rollup-preserve-directives": "^1.1.1",
     "sass": "^1.79.4",
     "storybook": "^8.3.0",
     "typescript": "^5.6.2",
