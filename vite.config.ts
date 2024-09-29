@@ -13,9 +13,9 @@ export default defineConfig({
   plugins: [
     react(),
     dts({ tsconfigPath: './tsconfig.app.json' }),
+    preserveDirectives(), // keep 'use client'
     UnoCSS(),
-    cssInjectedByJsPlugin(), // Bundling CSS into JS
-    preserveDirectives() // keep 'use client'
+    cssInjectedByJsPlugin() // Bundling CSS into JS
   ],
   base: '/relmethis',
   build: {
@@ -36,10 +36,7 @@ export default defineConfig({
         assetFileNames: `assets/[name].[ext]`
       }
     },
-    minify: false,
-    ssr: true,
-    ssrEmitAssets: true,
-    ssrManifest: true
+    minify: false
   },
   css: {
     modules: {
