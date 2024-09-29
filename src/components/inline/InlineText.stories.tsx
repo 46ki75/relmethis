@@ -12,52 +12,52 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
-  args: { text: 'Inline Text' }
+  args: { children: 'Inline Text' }
 }
 
 export const Code: Story = {
-  args: { text: 'JSON.stringify()', code: true }
+  args: { children: 'JSON.stringify()', code: true }
 }
 
 export const Ruby: Story = {
-  args: { text: '名古屋', ruby: 'なごや' }
+  args: { children: '名古屋', ruby: 'なごや' }
 }
 
 export const PresetColor: Story = {
-  args: { text: 'Inline Text', presetColorName: 'emerald' }
+  args: { children: 'Inline Text', presetColorName: 'emerald' }
 }
 
 export const CustomColor: Story = {
-  args: { text: 'Inline Text', color: 'red' }
+  args: { children: 'Inline Text', color: 'red' }
 }
 
 export const Bold: Story = {
-  args: { text: 'Inline Text', bold: true }
+  args: { children: 'Inline Text', bold: true }
 }
 
 export const Italic: Story = {
-  args: { text: 'Inline Text', italic: true }
+  args: { children: 'Inline Text', italic: true }
 }
 
 export const Strikethrough: Story = {
-  args: { text: 'Inline Text', strikethrough: true }
+  args: { children: 'Inline Text', strikethrough: true }
 }
 
 export const Underline: Story = {
-  args: { text: 'Inline Text', underline: true }
+  args: { children: 'Inline Text', underline: true }
 }
 
 export const InlineQuote: Story = {
-  args: { text: 'Inline Text', quote: true }
+  args: { children: 'Inline Text', quote: true }
 }
 
 export const Cite: Story = {
-  args: { text: 'Inline Text', cite: true }
+  args: { children: 'Inline Text', cite: true }
 }
 
 export const All: Story = {
   args: {
-    text: 'Inline Text',
+    children: 'Inline Text',
     isDark: false,
     bold: true,
     italic: true,

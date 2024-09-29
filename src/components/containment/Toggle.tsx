@@ -45,7 +45,7 @@ const ToggleComponent = ({ children, summary }: ToggleProps) => {
         }}
       >
         <ChevronRightIcon className={styles['wrapper__summary-icon']} />
-        <InlineText text={summary} />
+        <InlineText>{summary}</InlineText>
       </div>
 
       <div

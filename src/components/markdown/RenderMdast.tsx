@@ -96,10 +96,9 @@ export const RenderMdast = ({
         } else if (node.name === 'color' && node.attributes != null) {
           const color = node.attributes.class
           markdownComponent.push(
-            <InlineText
-              text={mdastToString(node.children)}
-              presetColorName={convertStringToColorPresetName(color)}
-            />
+            <InlineText presetColorName={convertStringToColorPresetName(color)}>
+              {mdastToString(node.children)}
+            </InlineText>
           )
         } else if (node.name === 'rich-text' && node.attributes != null) {
           const classes = node.attributes.class?.split(' ')
@@ -111,14 +110,15 @@ export const RenderMdast = ({
           const code = classes?.includes('code')
           markdownComponent.push(
             <InlineText
-              text={mdastToString(node.children)}
               presetColorName={convertStringToColorPresetName(color)}
               bold={bold}
               italic={italic}
               strikethrough={strikethrough}
               underline={underline}
               code={code}
-            />
+            >
+              {mdastToString(node.children)}
+            </InlineText>
           )
         } else if (node.name === 'embed') {
           markdownComponent.push(
@@ -180,7 +180,9 @@ export const RenderMdast = ({
       // # --------------------------------------------------------------------------------
 
       case 'text': {
-        markdownComponent.push(<InlineText text={node.value} isDark={isDark} />)
+        markdownComponent.push(
+          <InlineText isDark={isDark}>{node.value}</InlineText>
+        )
         break
       }
 
@@ -196,7 +198,9 @@ export const RenderMdast = ({
 
       case 'inlineCode': {
         markdownComponent.push(
-          <InlineText text={node.value} isDark={isDark} code={true} />
+          <InlineText isDark={isDark} code={true}>
+            {node.value}
+          </InlineText>
         )
         break
       }

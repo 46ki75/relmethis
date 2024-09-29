@@ -105,12 +105,12 @@ const AudioComponent = ({
       <div className={styles['audio__info']}>
         <div className={styles['audio__title']}>
           <MusicalNoteIcon className={styles['audio__icon']} />
-          <InlineText text={title} isDark={isDark} />
+          <InlineText isDark={isDark}>{title}</InlineText>
         </div>
 
         <div className={styles['audio__artist']}>
           <UserIcon className={styles['audio__icon']} />
-          <InlineText text={artist} isDark={isDark} />
+          <InlineText isDark={isDark}>{artist}</InlineText>
         </div>
 
         <div className={styles['audio__control']}>

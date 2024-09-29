@@ -94,7 +94,7 @@ export interface InlineTextProps {
   /**
    * The text to be displayed
    */
-  text: string
+  children: string
 
   /**
    * Whether to use the dark theme
@@ -165,7 +165,7 @@ export interface InlineTextProps {
 
 const InlineTextComponent = ({
   style,
-  text,
+  children,
   isDark = false,
   bold = false,
   italic = false,
@@ -209,25 +209,25 @@ const InlineTextComponent = ({
     if (code)
       return (
         <code className={styles['text__code']} style={style}>
-          {text}
+          {children}
         </code>
       )
 
     if (cite)
       return (
         <cite className={styles['text__cite']} style={style}>
-          {text}
+          {children}
         </cite>
       )
 
     if (quote)
       return (
         <q className={styles['text__q']} style={style}>
-          {text}
+          {children}
         </q>
       )
 
-    let result: ReactNode = <>{text}</>
+    let result: ReactNode = <>{children}</>
 
     if (ruby != null) {
       result = (
