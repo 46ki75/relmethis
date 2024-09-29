@@ -40,12 +40,7 @@ export interface ImageProps {
    * ```
    */
   height?: number
-  /**
-   * **optional**
-   *
-   * Language for displaying flavor text or guide text
-   */
-  lang?: 'en' | 'ja'
+  locale?: 'en-US' | 'ja-JP'
   /**
    * Manages the loading state of the image. For example,
    * set it to `true` while asynchronously fetching the image URL.
@@ -71,7 +66,7 @@ const ImageComponent = ({
   alt = src,
   width = 1200,
   height = 630,
-  lang = 'ja',
+  locale = 'en-US',
   isLoading = false,
   isDark = typeof window !== 'undefined'
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -86,13 +81,13 @@ const ImageComponent = ({
   })
 
   const guideText = useMemo(() => {
-    switch (lang) {
-      case 'en':
+    switch (locale) {
+      case 'en-US':
         return 'Press the Escape key to close the modal'
-      case 'ja':
+      case 'ja-JP':
         return 'Escape キー押下でモーダルを閉じる'
     }
-  }, [lang])
+  }, [locale])
 
   const { ref: imageRef } = useCSSVariable<HTMLImageElement>({
     '--react-image-width': isLoading || isFetchingImage ? '0px' : '100%',

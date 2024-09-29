@@ -36,7 +36,7 @@ import {
 } from '../inline/InlineText'
 import { Bookmark } from '../typography/Bookmark'
 import { Toggle } from '../containment/Toggle'
-const ImageWithModal = React.lazy(() =>
+const Image = React.lazy(() =>
   import('../media/Image').then((module) => ({
     default: module.Image
   }))
@@ -453,9 +453,10 @@ export const RenderMdast = ({
       case 'image': {
         markdownComponent.push(
           <Suspense fallback={<BlockFallback />}>
-            <ImageWithModal
+            <Image
               src={node.url}
               alt={node.alt ?? node.title ?? 'image'}
+              locale={locale}
             />
           </Suspense>
         )
@@ -577,9 +578,10 @@ export const RenderMdast = ({
         if (imageDefinition != null) {
           markdownComponent.push(
             <Suspense fallback={<BlockFallback />}>
-              <ImageWithModal
+              <Image
                 src={imageDefinition.url}
                 alt={imageDefinition.title ?? imageDefinition.url}
+                locale={locale}
               />
             </Suspense>
           )
