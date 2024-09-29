@@ -41,6 +41,7 @@ export default defineConfig({
       scss: {
         api: 'modern-compiler'
       }
-    }
+    },
+    postcss: './postcss.config.js'
   }
 })
