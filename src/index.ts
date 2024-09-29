@@ -13,9 +13,13 @@ export * from './components/code/Mermaid'
 
 export * from './components/containment/Carousel'
 export * from './components/containment/SimpleTooltip'
+export * from './components/containment/Modal'
+export * from './components/containment/ScrollWindow'
+export * from './components/containment/Tabs'
 export * from './components/containment/Toggle'
 export * from './components/containment/Tooltip'
 export * from './components/containment/useCarousel'
+export * from './components/containment/Window'
 
 export * from './components/data/Item'
 export * from './components/data/LineProgress'
@@ -29,11 +33,10 @@ export * from './components/fallback/RectangleWave'
 export * from './components/form/Checkbox'
 export * from './components/form/Edit'
 
+export * from './components/icon/ClickableIcon'
 export * from './components/icon/DotLoadingIcon'
 export * from './components/icon/LanguageIcon'
 export * from './components/icon/SquareLoadingIcon'
-
-export * from './components/media/Image'
 
 export * from './components/inline/InlineLink'
 export * from './components/inline/InlineText'
@@ -42,6 +45,9 @@ export * from './components/markdown/Markdown'
 export * from './components/markdown/Mdast'
 export * from './components/markdown/RenderMdast'
 export * from './components/markdown/mdastToString'
+
+export * from './components/media/Image'
+export * from './components/media/Audio'
 
 export * from './components/navigation/BarPagination'
 export * from './components/navigation/Breadcrumbs'
