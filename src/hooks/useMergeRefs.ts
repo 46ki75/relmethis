@@ -1,3 +1,5 @@
+'use client'
+
 export const useMergeRefs = <T>(
   ...refs: React.Ref<T>[]
 ): React.RefCallback<T> => {

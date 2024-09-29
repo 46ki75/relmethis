@@ -1,3 +1,5 @@
+'use client'
+
 import React, { ReactNode } from 'react'
 import isEqual from 'react-fast-compare'
 import styles from './ClickableIcon.module.scss'

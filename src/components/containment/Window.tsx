@@ -1,3 +1,5 @@
+'use client'
+
 import React, { ReactNode, useState } from 'react'
 import isEqual from 'react-fast-compare'
 import styles from './Window.module.scss'

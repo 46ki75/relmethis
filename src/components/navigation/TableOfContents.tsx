@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useCallback, useEffect, useState } from 'react'
 import { BarsArrowDownIcon } from '@heroicons/react/16/solid'
 import isEqual from 'react-fast-compare'

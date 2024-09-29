@@ -1,3 +1,5 @@
+'use client'
+
 export const VITESSE_LIGHT = {
   '--prism-foreground': '#393a34',
   '--prism-background': '#f5f5f5',

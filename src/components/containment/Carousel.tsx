@@ -1,3 +1,5 @@
+'use client'
+
 import React, { ReactNode } from 'react'
 import { useCarousel, UseCarouselProps } from './useCarousel'
 import { BarPagination } from '../navigation/BarPagination'

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { Suspense } from 'react'
 import { type LanguageIconSvgProps } from './language/Props'
 import { CommandLineIcon } from '@heroicons/react/24/outline'

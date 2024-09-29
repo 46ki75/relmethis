@@ -1,3 +1,5 @@
+'use client'
+
 import React, { Suspense, useMemo } from 'react'
 
 import { remark } from 'remark'

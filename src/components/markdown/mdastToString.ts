@@ -1,3 +1,5 @@
+'use client'
+
 import { type PhrasingContent } from 'mdast'
 
 export const mdastToString = (nodes: PhrasingContent[]): string => {

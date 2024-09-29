@@ -1,3 +1,5 @@
+'use client'
+
 import React, { CSSProperties, ReactNode, useMemo } from 'react'
 
 import isEqual from 'react-fast-compare'
