@@ -3,7 +3,6 @@
 import React, { useMemo, useState } from 'react'
 import { RectangleWave } from '../fallback/RectangleWave'
 import { SquareLoadingIcon } from '../icon/SquareLoadingIcon'
-import { createPortal } from 'react-dom'
 import { useKey } from 'react-use'
 
 import isEqual from 'react-fast-compare'
@@ -128,24 +127,17 @@ const ImageComponent = ({
         }}
       />
 
-      <>
-        {createPortal(
-          <div
-            className={classNames(styles.modal, {
-              [styles['modal--visible']]: isModalShow
-            })}
-            onClick={() => {
-              setIsModalShow(false)
-            }}
-          >
-            <img alt={alt} src={src} className={styles['modal__modal-image']} />
-            <span className={styles['modal__modal-guide-text']}>
-              {guideText}
-            </span>
-          </div>,
-          document.body
-        )}
-      </>
+      <div
+        className={classNames(styles.modal, {
+          [styles['modal--visible']]: isModalShow
+        })}
+        onClick={() => {
+          setIsModalShow(false)
+        }}
+      >
+        <img alt={alt} src={src} className={styles['modal__modal-image']} />
+        <span className={styles['modal__modal-guide-text']}>{guideText}</span>
+      </div>
     </>
   )
 }

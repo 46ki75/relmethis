@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { createPortal } from 'react-dom'
 
 // scss modules
 import styles from './Pagetop.module.scss'
@@ -67,7 +66,7 @@ export const PagetopComponent = ({
     '--react-font-size': `${size / 6}px`
   })
 
-  return createPortal(
+  return (
     <nav
       ref={ref}
       onClick={toTop}
@@ -80,8 +79,7 @@ export const PagetopComponent = ({
       <div></div>
 
       <span>Back to Top</span>
-    </nav>,
-    document.body
+    </nav>
   )
 }
 
