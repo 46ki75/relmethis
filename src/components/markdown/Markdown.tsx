@@ -2,7 +2,8 @@
 
 import React, { Suspense, useMemo } from 'react'
 
-import { remark } from 'remark'
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
 import gfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import remarkDirective from 'remark-directive'
@@ -45,7 +46,8 @@ export interface MarkdownProps {
 // # --------------------------------------------------------------------------------
 
 const parseMarkdownToMdast = (markdown: string) => {
-  const processor = remark()
+  const processor = unified()
+    .use(remarkParse)
     .use(gfm)
     .use(remarkMath)
     .use(remarkDirective)
