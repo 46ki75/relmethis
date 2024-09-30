@@ -10,7 +10,7 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 import styles from './Image.module.scss'
 
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -128,7 +128,7 @@ const ImageComponent = ({
       />
 
       <div
-        className={classNames(styles.modal, {
+        className={clsx(styles.modal, {
           [styles['modal--visible']]: isModalShow
         })}
         onClick={() => {

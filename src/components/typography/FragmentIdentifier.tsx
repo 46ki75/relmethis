@@ -11,7 +11,7 @@ import { useCopy } from '../../hooks/useCopy'
 import isEqual from 'react-fast-compare'
 
 import styles from './FragmentIdentifier.module.scss'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -53,7 +53,7 @@ const FragmentIdentifierComponent = ({
   return (
     <div className={styles['fragment-identifier']}>
       <span
-        className={classNames(styles['fragment-identifier__copiedtext'], {
+        className={clsx(styles['fragment-identifier__copiedtext'], {
           [styles['fragment-identifier__copiedtext--visible']]: isCopied
         })}
       >

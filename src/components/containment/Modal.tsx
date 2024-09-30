@@ -3,7 +3,7 @@
 import React, { ReactNode } from 'react'
 import isEqual from 'react-fast-compare'
 import styles from './Modal.module.scss'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 import { createPortal } from 'react-dom'
 
@@ -58,7 +58,7 @@ const ModalComponent = ({
 }: ModalProps) => {
   return createPortal(
     <div
-      className={classNames(styles.modal, {
+      className={clsx(styles.modal, {
         [styles['modal--hidden']]: !visible,
         [styles['modal--visible']]: visible
       })}
@@ -75,7 +75,7 @@ const ModalComponent = ({
         )}
 
         <div
-          className={classNames(styles['modal__content'], {
+          className={clsx(styles['modal__content'], {
             [styles['modal__content--hidden']]: !visible,
             [styles['modal__content--visible']]: visible
           })}

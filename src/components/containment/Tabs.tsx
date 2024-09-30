@@ -5,7 +5,7 @@ import isEqual from 'react-fast-compare'
 import styles from './Tabs.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { getLuminance, rgba } from 'polished'
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { type Property } from 'csstype'
 
 // # --------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ const TabsComponent = ({
       <div className={styles['tabs__header-container']}>
         {tabs.map((tab, index) => (
           <div
-            className={classNames(styles['tabs__header'], {
+            className={clsx(styles['tabs__header'], {
               [styles['tabs__header--selected']]: index + 1 === page
             })}
             onClick={() => {

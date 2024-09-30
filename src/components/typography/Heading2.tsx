@@ -10,7 +10,7 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { useMergeRefs } from '../../hooks/useMergeRefs'
 
 import styles from './Heading2.module.scss'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -69,7 +69,7 @@ const Heading2Component = ({
   return (
     <section ref={ref} id={identifier} className={styles.section}>
       <div
-        className={classNames(styles['section__top'], {
+        className={clsx(styles['section__top'], {
           [styles['section__top--visible']]: inView
         })}
       >
@@ -77,14 +77,14 @@ const Heading2Component = ({
         <div className={styles['section__top-second']}></div>
       </div>
       <h2
-        className={classNames(styles['section__heading'], {
+        className={clsx(styles['section__heading'], {
           [styles['section__heading--visible']]: inView
         })}
       >
         {children}
       </h2>
       <div
-        className={classNames(styles['section__bottom'], {
+        className={clsx(styles['section__bottom'], {
           [styles['section__bottom--visible']]: inView
         })}
       ></div>

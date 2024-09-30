@@ -9,7 +9,7 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { useMergeRefs } from '../../hooks/useMergeRefs'
 
 import styles from './NumberedList.module.scss'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -48,7 +48,7 @@ const NumberedListComponent: React.FC<NumberedListProps> = ({
 
   return (
     <ol
-      className={classNames(styles['numberedlist'], {
+      className={clsx(styles['numberedlist'], {
         [styles['numberedlist--visible']]: inView
       })}
       ref={ref}

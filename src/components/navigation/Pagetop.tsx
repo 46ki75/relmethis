@@ -8,7 +8,7 @@ import styles from './Pagetop.module.scss'
 import { darken, lighten } from 'polished'
 import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { useWindowScroll } from '../../hooks/useWindowScroll'
 
 // # --------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ export const PagetopComponent = ({
     <nav
       ref={ref}
       onClick={toTop}
-      className={classNames(styles.wrapper, {
+      className={clsx(styles.wrapper, {
         [styles['react-is-visible']]: isVisible
       })}
     >

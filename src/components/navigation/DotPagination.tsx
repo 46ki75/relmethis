@@ -12,7 +12,7 @@ import isEqual from 'react-fast-compare'
 
 import styles from './DotPagination.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -62,7 +62,7 @@ const DotPaginationComponent = ({
   const renderDotIndicator = () =>
     new Array(length).fill(null).map((_, index) => (
       <span
-        className={classNames(styles.dot, {
+        className={clsx(styles.dot, {
           [styles.selected]: index + 1 === currentPage
         })}
         onClick={() => {
@@ -99,11 +99,11 @@ const DotPaginationComponent = ({
   return (
     <nav ref={ref} className={styles.wrapper}>
       <ChevronDoubleLeftIcon
-        className={classNames({ [styles.disable]: currentPage === 1 })}
+        className={clsx({ [styles.disable]: currentPage === 1 })}
         onClick={start}
       />
       <ChevronLeftIcon
-        className={classNames({ [styles.disable]: currentPage === 1 })}
+        className={clsx({ [styles.disable]: currentPage === 1 })}
         onClick={prev}
       />
 
@@ -112,11 +112,11 @@ const DotPaginationComponent = ({
       </div>
 
       <ChevronRightIcon
-        className={classNames({ [styles.disable]: currentPage === length })}
+        className={clsx({ [styles.disable]: currentPage === length })}
         onClick={next}
       />
       <ChevronDoubleRightIcon
-        className={classNames({ [styles.disable]: currentPage === length })}
+        className={clsx({ [styles.disable]: currentPage === length })}
         onClick={end}
       />
     </nav>

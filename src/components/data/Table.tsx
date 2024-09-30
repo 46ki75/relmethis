@@ -7,7 +7,7 @@ import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 import styles from './Table.module.scss'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -41,7 +41,7 @@ const MemoizedTableRow = React.memo(
   ({ row, isHeader = false, align = [] }: TableRow) => {
     return (
       <tr
-        className={classNames({
+        className={clsx({
           [styles['table__header__row']]: isHeader,
           [styles['table__body__row']]: !isHeader
         })}

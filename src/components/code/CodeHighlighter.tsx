@@ -7,7 +7,7 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 // styles
 import 'prism-theme-vars/base.css'
 import styles from './CodeHighlighter.module.scss'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 import { VITESSE_LIGHT, VITESSE_DARK } from './theme/vitesse'
 
@@ -235,7 +235,7 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
     <div
       style={{ ...style }}
       ref={cssRef}
-      className={classNames(
+      className={clsx(
         styles['code-highlighter'],
         'relmethis-codeblock-container-common',
         className
@@ -250,7 +250,7 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
               ? '2.5rem'
               : '1rem'
         }}
-        className={classNames(styles['code-highlighter__pre'], {
+        className={clsx(styles['code-highlighter__pre'], {
           ['line-numbers']: commandLine != null ? false : showLineNumber,
           ['command-line']: commandLine != null
         })}
@@ -266,7 +266,7 @@ const CodeHighlighterComponent = (props: CodeHighlighterProps) => {
       >
         <code
           ref={codeRef}
-          className={classNames(
+          className={clsx(
             `language-${language}`,
             styles['code-highlighter__code']
           )}

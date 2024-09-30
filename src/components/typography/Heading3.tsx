@@ -10,7 +10,7 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 import styles from './Heading3.module.scss'
 import { useInView } from 'react-intersection-observer'
 import { useMergeRefs } from '../../hooks/useMergeRefs'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -70,7 +70,7 @@ export const Heading3Component = ({
   return (
     <section className={styles.section} id={identifier} ref={ref}>
       <h3
-        className={classNames(styles['section__heading'], {
+        className={clsx(styles['section__heading'], {
           [styles['section__heading--visible']]: inView
         })}
       >

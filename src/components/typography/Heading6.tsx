@@ -12,7 +12,7 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { useMergeRefs } from '../../hooks/useMergeRefs'
 
 import styles from './Heading6.module.scss'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -64,7 +64,7 @@ const Heading6Component = ({
   return (
     <section id={identifier} ref={ref} className={styles.section}>
       <h4
-        className={classNames(styles['section__heading'], {
+        className={clsx(styles['section__heading'], {
           [styles['section__heading--visible']]: inView
         })}
       >

@@ -7,7 +7,7 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { useMergeRefs } from '../../hooks/useMergeRefs'
 
 import styles from './Paragraph.module.scss'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -49,7 +49,7 @@ const ParagraphComponent = ({
   return (
     <p
       style={style}
-      className={classNames(styles.paragraph, {
+      className={clsx(styles.paragraph, {
         [styles['paragraph--visible']]: inView
       })}
       ref={ref}

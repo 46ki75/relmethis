@@ -8,7 +8,7 @@ import isEqual from 'react-fast-compare'
 import styles from './Divider.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { useMergeRefs } from '../../hooks/useMergeRefs'
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { rgba } from 'polished'
 
 // # --------------------------------------------------------------------------------
@@ -58,30 +58,20 @@ const DividerComponent = ({
     <div className={styles.wrapper} ref={ref}>
       {text != null ? (
         <div className={styles['with-text-container']}>
-          <div
-            className={classNames(
-              styles['with-text'],
-              styles['with-text-left']
-            )}
-          >
-            <div className={classNames(styles.dot, styles.left)}></div>
-            <div className={classNames(styles.dot, styles.right)}></div>
+          <div className={clsx(styles['with-text'], styles['with-text-left'])}>
+            <div className={clsx(styles.dot, styles.left)}></div>
+            <div className={clsx(styles.dot, styles.right)}></div>
           </div>
           <div>{text}</div>
-          <div
-            className={classNames(
-              styles['with-text'],
-              styles['with-text-right']
-            )}
-          >
-            <div className={classNames(styles.dot, styles.left)}></div>
-            <div className={classNames(styles.dot, styles.right)}></div>
+          <div className={clsx(styles['with-text'], styles['with-text-right'])}>
+            <div className={clsx(styles.dot, styles.left)}></div>
+            <div className={clsx(styles.dot, styles.right)}></div>
           </div>
         </div>
       ) : (
         <div className={styles.simple}>
-          <div className={classNames(styles.dot, styles.left)}></div>
-          <div className={classNames(styles.dot, styles.right)}></div>
+          <div className={clsx(styles.dot, styles.left)}></div>
+          <div className={clsx(styles.dot, styles.right)}></div>
         </div>
       )}
     </div>

@@ -1,6 +1,6 @@
 {
   "name": "relmethis",
-  "version": "0.1.54",
+  "version": "0.1.55",
   "engines": {
     "node": "20"
   },
@@ -39,6 +39,7 @@
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
     "katex": "^0.16.11",
     "lodash": "^4.17.21",
     "mermaid": "^11.2.0",

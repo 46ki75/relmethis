@@ -11,7 +11,7 @@ import styles from './Toggle.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 
 import { InlineText } from '../inline/InlineText'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -51,7 +51,7 @@ const ToggleComponent = ({ children, summary }: ToggleProps) => {
       </div>
 
       <div
-        className={classNames(styles['wrapper__details'], {
+        className={clsx(styles['wrapper__details'], {
           [styles['wrapper__details--visible']]: isVisible
         })}
       >

@@ -6,7 +6,7 @@ import isEqual from 'react-fast-compare'
 
 import styles from './TableOfContents.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -110,7 +110,7 @@ const TableOfContentsComponent = ({
             heading.level <= maxLevel && (
               <a
                 key={`${index}-${heading.identifier}`}
-                className={classNames({
+                className={clsx({
                   [styles['in-section']]:
                     (heading.identifier ?? heading.text) === activeElementId,
                   [styles.light]: !isDark,

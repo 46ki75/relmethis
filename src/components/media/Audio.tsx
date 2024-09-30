@@ -16,7 +16,7 @@ import {
 import { Image } from './Image'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { InlineText } from '../inline/InlineText'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -134,7 +134,7 @@ const AudioComponent = ({
 
           {state.muted ? (
             <SpeakerXMarkIcon
-              className={classNames(
+              className={clsx(
                 styles['audio__control-icon'],
                 styles['audio__control-icon--muted']
               )}

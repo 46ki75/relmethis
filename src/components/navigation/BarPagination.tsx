@@ -6,7 +6,7 @@ import isEqual from 'react-fast-compare'
 
 import styles from './BarPagination.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -62,7 +62,7 @@ const BarPaginationComponent = ({
       {new Array(length).fill(null).map((_, index) => (
         <div
           key={index}
-          className={classNames(styles['bar-paginarion__bar'], {
+          className={clsx(styles['bar-paginarion__bar'], {
             [styles['bar-paginarion__bar--active']]: currentPage === index + 1
           })}
           onClick={() => {
