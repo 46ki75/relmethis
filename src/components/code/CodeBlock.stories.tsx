@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>
 
 export const Light: Story = {
   args: {
-    code: rustCode,
+    children: rustCode,
     language: 'rust',
     isDark: false,
     enablePreview: true
@@ -27,7 +27,7 @@ export const Light: Story = {
 
 export const Dark: Story = {
   args: {
-    code: rustCode,
+    children: rustCode,
     language: 'rust',
     isDark: true,
     enablePreview: true
@@ -36,7 +36,7 @@ export const Dark: Story = {
 
 export const InvalidCode: Story = {
   args: {
-    code: rustCode,
+    children: rustCode,
     language: 'rust',
     isDark: false,
     enablePreview: true,
@@ -46,7 +46,7 @@ export const InvalidCode: Story = {
 
 export const Katex: Story = {
   args: {
-    code: 'E = mc^2',
+    children: 'E = mc^2',
     language: 'katex',
     isDark: false,
     enablePreview: true
@@ -55,7 +55,7 @@ export const Katex: Story = {
 
 export const Long: Story = {
   args: {
-    code: loggCode,
+    children: loggCode,
     language: 'typescript',
     isDark: false,
     enablePreview: true
@@ -64,7 +64,7 @@ export const Long: Story = {
 
 export const Mermaid: Story = {
   args: {
-    code: gitMermaid,
+    children: gitMermaid,
     language: 'mermaid',
     isDark: false,
     enablePreview: true
@@ -73,7 +73,7 @@ export const Mermaid: Story = {
 
 export const Markdown: Story = {
   args: {
-    code: markdown,
+    children: markdown,
     language: 'markdown',
     isDark: false,
     enablePreview: true

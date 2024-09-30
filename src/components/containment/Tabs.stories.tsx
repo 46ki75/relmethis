@@ -11,15 +11,15 @@ const meta: Meta<typeof Tabs> = {
     tabs: [
       {
         header: 'javascript',
-        content: <CodeBlock language='js' code='console.log(0)' />
+        content: <CodeBlock language='js'>console.log(0)</CodeBlock>
       },
       {
         header: 'typescript',
-        content: <CodeBlock language='ts' code='console.log(0)' />
+        content: <CodeBlock language='ts'>console.log(0)</CodeBlock>
       },
       {
         header: 'rust',
-        content: <CodeBlock language='rust' code={rustCode} />
+        content: <CodeBlock language='rust'>{rustCode}</CodeBlock>
       }
     ]
   }

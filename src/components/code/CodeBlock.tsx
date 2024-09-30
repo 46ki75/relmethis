@@ -59,7 +59,7 @@ interface CodeBlockProps {
   /**
    * The source code string to be highlighted
    */
-  code: string
+  children: string
   /**
    * The language of the code
    */
@@ -98,7 +98,7 @@ interface CodeBlockProps {
 // # --------------------------------------------------------------------------------
 
 const CodeBlockComponent = ({
-  code,
+  children,
   language = 'txt',
   caption = language,
   isDark = typeof window !== 'undefined'
@@ -115,7 +115,7 @@ const CodeBlockComponent = ({
     setIsDarkLocal(isDark)
   }, [isDark])
 
-  const deferredCode = useDeferredValue(code)
+  const deferredCode = useDeferredValue(children)
   const deferredLanguage = useDeferredValue(language)
 
   // Determine whether to show or hide the number based on the screen size once
@@ -330,7 +330,7 @@ const CodeBlockComponent = ({
             language={deferredLanguage}
             showLineNumber={isShowNumber}
             isDark={isDarkLocal}
-            code={code.trim()}
+            code={children.trim()}
             highlightLines={highlightLines?.map((t) => t.toString().trim())}
             preStyle={{ margin: 0, borderRadius: '0 0 0.25rem 0.25rem' }}
           />

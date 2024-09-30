@@ -134,13 +134,13 @@ export const Code: Story = {
   args: {
     children: [
       <div style={{ margin: 'auto 0.25rem' }}>
-        <CodeBlock code={rustCode} language='rust' />
+        <CodeBlock language='rust'>{rustCode}</CodeBlock>
       </div>,
       <div style={{ margin: 'auto 0.25rem' }}>
-        <CodeBlock code={javaCode} language='java' />
+        <CodeBlock language='java'>{javaCode}</CodeBlock>
       </div>,
       <div style={{ margin: 'auto 0.25rem' }}>
-        <CodeBlock code={goCode} language='go' />
+        <CodeBlock language='go'>{goCode}</CodeBlock>
       </div>
     ],
     autoResize: true

@@ -397,13 +397,14 @@ export const RenderMdast = ({
         markdownComponent.push(
           <Suspense fallback={<BlockFallback />}>
             <CodeBlock
-              code={node.value}
               language={node.lang ?? 'txt'}
               isDark={isDark}
               caption={title ?? node.lang ?? 'txt'}
               highlightLines={highlightLines}
               locale={locale}
-            />
+            >
+              {node.value}
+            </CodeBlock>
           </Suspense>
         )
         break

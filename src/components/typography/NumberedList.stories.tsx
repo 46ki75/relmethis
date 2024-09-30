@@ -87,7 +87,7 @@ export const Block: Story = {
   args: {
     children: [
       <p>List Item 1</p>,
-      <CodeBlock code='conole.log(0)' language='typescript' />,
+      <CodeBlock language='typescript'>conole.log(0)</CodeBlock>,
       <p>List Item 3</p>
     ],
     isDark: false
