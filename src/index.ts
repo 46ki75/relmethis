@@ -44,8 +44,9 @@ export * from './components/inline/InlineText'
 
 export * from './components/markdown/Markdown'
 export * from './components/markdown/Mdast'
-export * from './components/markdown/RenderMdast'
 export * from './components/markdown/mdastToString'
+export * from './components/markdown/parseMarkdownToMdast'
+export * from './components/markdown/RenderMdast'
 
 export * from './components/media/Image'
 export * from './components/media/Audio'

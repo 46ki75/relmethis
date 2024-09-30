@@ -2,13 +2,6 @@
 
 import React, { Suspense, useMemo } from 'react'
 
-import { unified } from 'unified'
-import remarkParse from 'remark-parse'
-import gfm from 'remark-gfm'
-import remarkMath from 'remark-math'
-import remarkDirective from 'remark-directive'
-import inlineStyleRemarkPlugin from './plugins/inlineStyleRemarkPlugin'
-
 import type { Mdast as MdastType } from './Mdast'
 import { BlockFallback } from '../fallback/BlockFallback'
 
@@ -19,6 +12,7 @@ const Mdast = React.lazy(() =>
 ) as React.ComponentType<React.ComponentProps<typeof MdastType>>
 
 import isEqual from 'react-fast-compare'
+import { parseMarkdownToMdast } from './parseMarkdownToMdast'
 
 // # --------------------------------------------------------------------------------
 //
@@ -44,17 +38,6 @@ export interface MarkdownProps {
 // component
 //
 // # --------------------------------------------------------------------------------
-
-const parseMarkdownToMdast = (markdown: string) => {
-  const processor = unified()
-    .use(remarkParse)
-    .use(gfm)
-    .use(remarkMath)
-    .use(remarkDirective)
-    .use(inlineStyleRemarkPlugin)
-    .parse(markdown)
-  return processor
-}
 
 const MarkdownComponent = ({
   markdown,
