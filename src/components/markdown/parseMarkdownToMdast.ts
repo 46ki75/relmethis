@@ -1,3 +1,5 @@
+'use client'
+
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import gfm from 'remark-gfm'
