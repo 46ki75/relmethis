@@ -1,0 +1,16 @@
+@mixin icon($color) {
+  box-sizing: border-box;
+  padding: 0.25rem;
+  color: $color;
+  border-radius: 50%;
+  box-shadow: 0 0 0.125rem rgba(128, 128, 128, 0.6);
+  cursor: pointer;
+}
+
+.light {
+  @include icon(rgba(0, 0, 0, 0.8));
+}
+
+.dark {
+  @include icon(rgba(255, 255, 255, 0.8));
+}

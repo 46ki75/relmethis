@@ -37,6 +37,7 @@ export * from './components/icon/ClickableIcon'
 export * from './components/icon/DotLoadingIcon'
 export * from './components/icon/LanguageIcon'
 export * from './components/icon/SquareLoadingIcon'
+export * from './components/icon/ToggleTheme'
 
 export * from './components/inline/InlineLink'
 export * from './components/inline/InlineText'
