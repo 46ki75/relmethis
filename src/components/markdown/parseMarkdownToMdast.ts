@@ -5,7 +5,10 @@ import remarkMath from 'remark-math'
 import remarkDirective from 'remark-directive'
 import inlineStyleRemarkPlugin from './plugins/inlineStyleRemarkPlugin'
 
-export const parseMarkdownToMdast = (markdown: string) => {
+import type { Root, RootContent } from 'mdast'
+export type { Root, RootContent }
+
+export const parseMarkdownToMdast = (markdown: string): Root => {
   const processor = unified()
     .use(remarkParse)
     .use(gfm)
