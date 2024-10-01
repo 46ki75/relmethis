@@ -1,5 +1,3 @@
-'use cilent'
-
 import { useEffect, useState } from 'react'
 
 export const useInViewById = (elementId: string) => {
