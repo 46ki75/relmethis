@@ -1,11 +1,10 @@
 .section {
-  --cont-decoration-width: 10%;
+  $decoration-width: 10%;
 
   &__heading {
     margin-block-start: 1rem;
     box-sizing: border-box;
     padding: 0.5rem 1rem;
-    color: var(--react-color-fg);
     font-size: 1.6rem;
 
     transition: opacity 400ms;
@@ -13,6 +12,41 @@
     position: relative;
 
     opacity: 0;
+
+    &--light {
+      color: rgba(0, 0, 0, 0.8);
+
+      &::before {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+
+      &::after {
+        border-bottom: solid 1px rgba(0, 0, 0, 0.8);
+      }
+
+      &::selection {
+        background: rgba(0, 0, 0, 0.8);
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    &--dark {
+      color: rgba(255, 255, 255, 0.8);
+
+      &::before {
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+
+      &::after {
+        border-bottom: solid 1px rgba(255, 255, 255, 0.8);
+      }
+
+      &::selection {
+        background: rgba(255, 255, 255, 0.8);
+        color: rgba(0, 0, 0, 0.8);
+      }
+    }
+
     &--visible {
       opacity: 1;
     }
@@ -20,11 +54,10 @@
     &::before {
       position: absolute;
       content: '';
-      left: calc(50% - var(--cont-decoration-width) / 2);
-      width: var(--cont-decoration-width);
+      left: calc(50% - $decoration-width / 2);
+      width: $decoration-width;
       bottom: 0;
       height: 3px;
-      background-color: var(--react-color-fg);
       transition: transform 400ms ease-in-out 0ms;
 
       transform: scaleX(0);
@@ -40,7 +73,6 @@
       width: 100%;
       left: 0;
       bottom: 0;
-      border-bottom: solid 1px var(--react-color-fg);
       transition: transform 400ms ease-in-out 200ms;
       pointer-events: none;
 
@@ -49,11 +81,6 @@
 
     &--visible::after {
       transform: scaleX(1);
-    }
-
-    &::selection {
-      background: var(--react-color-fg);
-      color: var(--react-color-bg);
     }
   }
 }

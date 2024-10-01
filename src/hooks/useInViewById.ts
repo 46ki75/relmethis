@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-export const useInView = (elementId: string) => {
+export const useInViewById = (elementId: string) => {
   const [isInView, setIsInView] = useState(false)
 
   useEffect(() => {
