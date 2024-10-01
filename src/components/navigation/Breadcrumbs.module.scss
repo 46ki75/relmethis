@@ -1,4 +1,4 @@
-.wrapper {
+.breadcrumbs {
   color: var(--react-color);
 
   display: flex;
@@ -7,7 +7,7 @@
   gap: var(--react-gap);
   flex-wrap: wrap;
 
-  a {
+  &__link {
     all: unset;
 
     padding: 0.125rem 0.25rem;
@@ -24,14 +24,9 @@
     &:hover {
       background-color: rgba(#6987b8, 0.2);
     }
-
-    svg {
-      width: 16px;
-      height: 16px;
-    }
   }
 
-  svg {
+  &__icon {
     color: rgba(128, 128, 128, 0.8);
     width: 16px;
     height: 16px;

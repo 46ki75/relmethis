@@ -3,7 +3,6 @@
 import React, { ReactNode, useMemo } from 'react'
 
 import {
-  ArrowTopRightOnSquareIcon,
   ChevronRightIcon,
   DocumentIcon,
   FolderOpenIcon,
@@ -18,19 +17,6 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { useMergeRefs } from '../../hooks/useMergeRefs'
 
 import styles from './Breadcrumbs.module.scss'
-
-// # --------------------------------------------------------------------------------
-//
-// utils
-//
-// # --------------------------------------------------------------------------------
-
-const isExternal = (href: string) => {
-  const currentHost = window.location.hostname
-  const linkUrl = new URL(href, window.location.href)
-  const isExternal = linkUrl.hostname !== currentHost
-  return isExternal
-}
 
 // # --------------------------------------------------------------------------------
 //
@@ -49,9 +35,9 @@ export interface BreadcrumbsProps {
      */
     label: string
     /**
-     * Destination URL
+     * Function to call when clicked
      */
-    href: string
+    onClick?: () => void
     /**
      * Custom icon that can be passed as a ReactNode
      */
@@ -117,42 +103,46 @@ const BreadcrumbsComponent = ({
   const ref = useMergeRefs(a, b)
 
   const Links = links.map((link, index) => (
-    <React.Fragment key={`${index}-${link.label}-${link.href}`}>
+    <React.Fragment key={`${index}-${link.label}`}>
       {/* linktext */}
 
-      <a
-        href={link.href}
-        target={isExternal(link.href) ? '_blank' : undefined}
-        rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
+      <span
+        className={styles['breadcrumbs__link']}
         style={{
           transition: `opacity 400ms ease ${ANIMATION_SPEED * index}ms, background-color 300ms`
         }}
+        onClick={link.onClick}
       >
         {index === 0
           ? (link.icon ?? (
-              <HomeIcon style={{ color: link.color ?? defaultColor }} />
+              <HomeIcon
+                className={styles['breadcrumbs__icon']}
+                style={{ color: link.color ?? defaultColor }}
+              />
             ))
           : index + 1 !== links.length
             ? (link.icon ?? (
-                <FolderOpenIcon style={{ color: link.color ?? defaultColor }} />
+                <FolderOpenIcon
+                  className={styles['breadcrumbs__icon']}
+                  style={{ color: link.color ?? defaultColor }}
+                />
               ))
             : (link.icon ?? (
-                <DocumentIcon style={{ color: link.color ?? defaultColor }} />
+                <DocumentIcon
+                  className={styles['breadcrumbs__icon']}
+                  style={{ color: link.color ?? defaultColor }}
+                />
               ))}
 
         <span>{link.label}</span>
-        {isExternal(link.href) && (
-          <ArrowTopRightOnSquareIcon
-            style={{ color: link.color ?? defaultColor }}
-          />
-        )}
-      </a>
+      </span>
 
       {/* chevron */}
 
       {index + 1 !== links.length && (
         <ChevronRightIcon
           style={{
+            width: 16,
             transition: `opacity 400ms ease ${ANIMATION_SPEED * (index * 1) + ANIMATION_SPEED / 2}ms`
           }}
         />
@@ -161,7 +151,7 @@ const BreadcrumbsComponent = ({
   ))
 
   return (
-    <nav style={style} ref={ref} className={styles.wrapper}>
+    <nav style={style} ref={ref} className={styles.breadcrumbs}>
       {Links}
     </nav>
   )
