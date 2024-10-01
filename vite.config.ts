@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 
 import react from '@vitejs/plugin-react-swc'
 import dts from 'vite-plugin-dts'
-import UnoCSS from 'unocss/vite'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import preserveDirectives from 'rollup-preserve-directives'
 
@@ -14,7 +13,6 @@ export default defineConfig({
     react(),
     dts({ tsconfigPath: './tsconfig.app.json' }),
     preserveDirectives(), // keep 'use client'
-    UnoCSS(),
     cssInjectedByJsPlugin() // Bundling CSS into JS
   ],
   base: '/relmethis',
