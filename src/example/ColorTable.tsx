@@ -4,6 +4,7 @@ import isEqual from 'react-fast-compare'
 import { darken, parseToRgb } from 'polished'
 
 import styles from './ColorTable.module.scss'
+import { useCopyToClipboard } from 'react-use'
 
 // # --------------------------------------------------------------------------------
 //
@@ -11,9 +12,7 @@ import styles from './ColorTable.module.scss'
 //
 // # --------------------------------------------------------------------------------
 
-export interface ColorTableProps {
-  isBackground?: boolean
-}
+export interface ColorTableProps {}
 
 // # --------------------------------------------------------------------------------
 //
@@ -39,7 +38,9 @@ const toRGB = (color: string) => {
   return `rgb(${red}, ${green}, ${blue})`
 }
 
-const ColorTableComponent = ({ isBackground = false }: ColorTableProps) => {
+const ColorTableComponent = () => {
+  const [, copy] = useCopyToClipboard()
+
   return (
     <table className={styles.table}>
       <thead>
@@ -68,16 +69,22 @@ const ColorTableComponent = ({ isBackground = false }: ColorTableProps) => {
                 {color.name}
               </th>
               {amountArray.map((amount) => (
-                <td key={`${color.name}-${amount}`}>
+                <td
+                  key={`${color.name}-${amount}`}
+                  onClick={() => {
+                    copy(darken(amount, color.code))
+                  }}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div
                     style={{
-                      color: isBackground
-                        ? 'white'
-                        : darken(amount, color.code),
-                      background: !isBackground
-                        ? 'transparent'
-                        : darken(amount, color.code)
+                      background: darken(amount, color.code),
+                      width: '100%',
+                      height: 32
                     }}
+                  ></div>
+                  <div
+                    style={{ color: darken(amount, color.code) }}
                     className={styles.container}
                   >
                     <div>{`[${amount}] ${color.name}`}</div>

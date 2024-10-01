@@ -10,6 +10,4 @@ const meta: Meta<typeof ColorTable> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {
-  args: { isBackground: false }
-}
+export const Primary: Story = {}
