@@ -11,6 +11,7 @@ import { useCSSVariable } from '../../hooks/useCSSVariable'
 import styles from './Image.module.scss'
 
 import clsx from 'clsx'
+import { createPortal } from 'react-dom'
 
 // # --------------------------------------------------------------------------------
 //
@@ -127,17 +128,20 @@ const ImageComponent = ({
         }}
       />
 
-      <div
-        className={clsx(styles.modal, {
-          [styles['modal--visible']]: isModalShow
-        })}
-        onClick={() => {
-          setIsModalShow(false)
-        }}
-      >
-        <img alt={alt} src={src} className={styles['modal__modal-image']} />
-        <span className={styles['modal__modal-guide-text']}>{guideText}</span>
-      </div>
+      {createPortal(
+        <div
+          className={clsx(styles.modal, {
+            [styles['modal--visible']]: isModalShow
+          })}
+          onClick={() => {
+            setIsModalShow(false)
+          }}
+        >
+          <img alt={alt} src={src} className={styles['modal__modal-image']} />
+          <span className={styles['modal__modal-guide-text']}>{guideText}</span>
+        </div>,
+        document.body
+      )}
     </>
   )
 }
