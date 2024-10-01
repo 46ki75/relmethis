@@ -3,7 +3,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import dts from 'vite-plugin-dts'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
-// import preserveDirectives from 'rollup-preserve-directives'
 
 import path from 'path'
 
@@ -12,7 +11,6 @@ export default defineConfig({
   plugins: [
     react(),
     dts({ tsconfigPath: './tsconfig.app.json' }),
-    // preserveDirectives(), // keep
     cssInjectedByJsPlugin() // Bundling CSS into JS
   ],
   base: '/relmethis',
