@@ -141,8 +141,8 @@ const BreadcrumbsComponent = ({
 
       {index + 1 !== links.length && (
         <ChevronRightIcon
+          className={styles.chevron}
           style={{
-            width: 16,
             transition: `opacity 400ms ease ${ANIMATION_SPEED * (index * 1) + ANIMATION_SPEED / 2}ms`
           }}
         />
