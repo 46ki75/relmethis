@@ -1,5 +1,3 @@
-'use client'
-
 import React, { type ReactNode } from 'react'
 
 export const convertReactNodeToString = (children: ReactNode): string => {

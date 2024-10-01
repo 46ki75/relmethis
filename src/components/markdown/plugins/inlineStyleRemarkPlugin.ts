@@ -1,7 +1,5 @@
 /// <reference types="mdast-util-directive" />
 
-'use client'
-
 import { Root } from 'mdast'
 import { visit } from 'unist-util-visit'
 

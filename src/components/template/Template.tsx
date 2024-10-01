@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import isEqual from 'react-fast-compare'
 import styles from './Template.module.scss'

@@ -1,5 +1,3 @@
-'use client'
-
 import React, { ReactNode, Suspense } from 'react'
 
 import type { Definition, RootContent } from 'mdast'

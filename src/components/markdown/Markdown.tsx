@@ -1,5 +1,3 @@
-'use client'
-
 import React, { Suspense, useMemo } from 'react'
 
 import type { Mdast as MdastType } from './Mdast'

@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { FragmentIdentifier } from './FragmentIdentifier'
 import { useScrollToHash } from '../../hooks/useScrollToHash'

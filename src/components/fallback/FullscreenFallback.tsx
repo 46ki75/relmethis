@@ -1,5 +1,3 @@
-'use client' // UNIVERSAL
-
 import React from 'react'
 
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'

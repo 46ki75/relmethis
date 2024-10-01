@@ -1,5 +1,3 @@
-'use client' // UNIVERSAL (NO DOM ACCESS)
-
 import React from 'react'
 
 import isEqual from 'react-fast-compare'

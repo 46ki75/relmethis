@@ -1,5 +1,3 @@
-'use client'
-
 import React, { ReactNode, Suspense, useState } from 'react'
 
 import { ChevronRightIcon } from '@heroicons/react/24/outline'

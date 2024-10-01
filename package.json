@@ -1,6 +1,6 @@
 {
   "name": "relmethis",
-  "version": "0.1.66",
+  "version": "0.1.68",
   "engines": {
     "node": "20"
   },
@@ -34,7 +34,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "format": "prettier --write ./src"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",

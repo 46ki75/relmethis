@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useMemo, useState } from 'react'
 import { RectangleWave } from '../fallback/RectangleWave'
 import { SquareLoadingIcon } from '../icon/SquareLoadingIcon'

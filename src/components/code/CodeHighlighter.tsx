@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useEffect, useRef } from 'react'
 import isEqual from 'react-fast-compare'
 import { useCSSVariable } from '../../hooks/useCSSVariable'

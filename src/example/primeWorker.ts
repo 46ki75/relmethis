@@ -1,5 +1,3 @@
-'use client'
-
 export type ResultMessageType = 'progress' | 'complete'
 
 export interface ResultMessageBase<T extends ResultMessageType> {

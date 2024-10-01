@@ -1,5 +1,3 @@
-'use client'
-
 import React, { ReactNode, useDeferredValue } from 'react'
 
 import { darken, lighten } from 'polished'

@@ -1,5 +1,3 @@
-'use client'
-
 import React, { ReactNode } from 'react'
 import { LinkIcon } from '@heroicons/react/16/solid'
 import { useInView } from 'react-intersection-observer'
