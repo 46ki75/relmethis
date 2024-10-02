@@ -6,6 +6,8 @@ import './index.scss'
 //
 // # --------------------------------------------------------------------------------
 
+export * from './components/animation/RainbowFrame'
+
 export * from './components/code/CodeBlock'
 export * from './components/code/CodeHighlighter'
 export * from './components/code/KaTex'
