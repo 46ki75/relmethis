@@ -7,7 +7,6 @@ import styles from './Divider.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { useMergeRefs } from '../../hooks/useMergeRefs'
 import clsx from 'clsx'
-import { rgba } from 'polished'
 
 // # --------------------------------------------------------------------------------
 //
@@ -24,6 +23,10 @@ interface DividerProps {
    *
    */
   text?: string
+  /**
+   * Whether or not to use the dark theme
+   */
+  isDark?: boolean
   /**
    * **optional?**
    *
@@ -43,7 +46,10 @@ interface DividerProps {
 
 const DividerComponent = ({
   text,
-  color = rgba(128, 128, 128, 0.5)
+  isDark = typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-color-scheme: dark)').matches
+    : false,
+  color = isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.25)'
 }: DividerProps): JSX.Element => {
   const { ref: a, inView } = useInView()
   const { ref: b } = useCSSVariable({
