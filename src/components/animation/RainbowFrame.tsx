@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
 import styles from './RainbowFrame.module.scss'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -11,6 +12,7 @@ import styles from './RainbowFrame.module.scss'
 export interface RainbowFrameProps {
   opacity?: number
   strokeWidth?: number
+  displayOnHover?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -21,7 +23,8 @@ export interface RainbowFrameProps {
 
 const RainbowFrameComponent = ({
   opacity: opacityRatio = 0.5,
-  strokeWidth = 1
+  strokeWidth = 1,
+  displayOnHover = false
 }: RainbowFrameProps) => {
   const ref = useRef(0)
   const animationIdRef = useRef<number | null>(null)
@@ -35,7 +38,7 @@ const RainbowFrameComponent = ({
         Math.floor(ref.current) % 2 === 0
           ? ref.current - Math.trunc(ref.current)
           : 1 - (ref.current - Math.trunc(ref.current))
-      setOpacity(currentOpacity)
+      setOpacity(currentOpacity * opacityRatio)
       setRotate(ref.current * 90)
       animationIdRef.current = requestAnimationFrame(animate)
     }
@@ -47,14 +50,15 @@ const RainbowFrameComponent = ({
         cancelAnimationFrame(animationIdRef.current)
       }
     }
-  }, [])
+  }, [opacityRatio])
 
   return (
     <>
       <svg
         xmlns='http://www.w3.org/2000/svg'
-        className={styles.svg}
-        style={{ opacity: opacity }}
+        className={clsx(styles.svg, {
+          [styles['svg--display-on-hover']]: displayOnHover
+        })}
       >
         <defs>
           <linearGradient
@@ -76,7 +80,7 @@ const RainbowFrameComponent = ({
           stroke='url(#rainbowGradient)'
           strokeWidth={strokeWidth}
           fill='transparent'
-          opacity={opacityRatio}
+          opacity={opacity}
           width={'100%'}
           height={'100%'}
         />
