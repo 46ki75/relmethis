@@ -1,0 +1,20 @@
+import type { Meta, StoryObj } from '@storybook/react'
+import { RainbowFrame } from './RainbowFrame'
+
+const meta: Meta<typeof RainbowFrame> = {
+  title: 'Components/Animation/RainbowFrame',
+  component: RainbowFrame,
+  tags: ['autodocs'],
+  args: { opacity: 0.5, strokeWidth: 1 }
+}
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+export const Primary: Story = {
+  render: (args) => (
+    <div style={{ height: 300 }}>
+      <RainbowFrame {...args} />
+    </div>
+  )
+}
