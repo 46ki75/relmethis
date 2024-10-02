@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
 import styles from './RainbowFrame.module.scss'
-import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -12,7 +11,6 @@ import clsx from 'clsx'
 export interface RainbowFrameProps {
   opacity?: number
   strokeWidth?: number
-  displayOnHover?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -23,8 +21,7 @@ export interface RainbowFrameProps {
 
 const RainbowFrameComponent = ({
   opacity: opacityRatio = 0.5,
-  strokeWidth = 1,
-  displayOnHover = false
+  strokeWidth = 1
 }: RainbowFrameProps) => {
   const ref = useRef(0)
   const animationIdRef = useRef<number | null>(null)
@@ -54,12 +51,7 @@ const RainbowFrameComponent = ({
 
   return (
     <>
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        className={clsx(styles.svg, {
-          [styles['svg--display-on-hover']]: displayOnHover
-        })}
-      >
+      <svg xmlns='http://www.w3.org/2000/svg' className={styles.svg}>
         <defs>
           <linearGradient
             id='rainbowGradient'
