@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
 import styles from './RainbowFrame.module.scss'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -9,8 +10,23 @@ import styles from './RainbowFrame.module.scss'
 // # --------------------------------------------------------------------------------
 
 export interface RainbowFrameProps {
+  /**
+   * Overall opacity
+   */
   opacity?: number
+
+  /**
+   * Thickness of the border lines
+   */
   strokeWidth?: number
+
+  /**
+   * When set to `true`, the frame will be displayed when
+   * the parent element is hovered over.
+   * Note that if set to `true`, pointer events will not
+   * be passed on to the child elements.
+   */
+  displayOnHover?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -21,7 +37,8 @@ export interface RainbowFrameProps {
 
 const RainbowFrameComponent = ({
   opacity: opacityRatio = 0.5,
-  strokeWidth = 1
+  strokeWidth = 1,
+  displayOnHover = false
 }: RainbowFrameProps) => {
   const ref = useRef(0)
   const animationIdRef = useRef<number | null>(null)
@@ -51,7 +68,12 @@ const RainbowFrameComponent = ({
 
   return (
     <>
-      <svg xmlns='http://www.w3.org/2000/svg' className={styles.svg}>
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        className={clsx(styles.svg, {
+          [styles['svg--display-on-hover']]: displayOnHover
+        })}
+      >
         <defs>
           <linearGradient
             id='rainbowGradient'

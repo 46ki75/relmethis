@@ -8,6 +8,7 @@ const meta: Meta<typeof RainbowFrame> = {
   args: { opacity: 0.5, strokeWidth: 1 },
   render: (args) => (
     <div style={{ height: 300 }}>
+      <div>SAMPLE TEXT</div>
       <RainbowFrame {...args} />
     </div>
   )
@@ -17,3 +18,5 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {}
+
+export const DisplayOnHover: Story = { args: { displayOnHover: true } }

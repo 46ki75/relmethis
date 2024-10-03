@@ -7,4 +7,14 @@
   height: 100%;
 
   pointer-events: none;
+
+  &--display-on-hover {
+    pointer-events: all;
+    transition: opacity 400ms;
+    opacity: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
