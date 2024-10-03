@@ -8,6 +8,8 @@ import { Image } from '../media/Image'
 import styles from './Bookmark.module.scss'
 
 import { InlineText } from '../inline/InlineText'
+import { RainbowFrame } from '../animation/RainbowFrame'
+import clsx from 'clsx'
 
 // # --------------------------------------------------------------------------------
 //
@@ -51,7 +53,12 @@ const BookmarkComponent = ({
           <Image src={image} alt={description} disableModal={true} />
         </div>
 
-        <div className={styles['bookmark__typography']}>
+        <div
+          className={clsx(styles['bookmark__typography'], {
+            [styles['bookmark__typography--light']]: !isDark,
+            [styles['bookmark__typography--dark']]: isDark
+          })}
+        >
           <div>
             <InlineText isDark={isDark} fontSize={'1rem'} bold>
               {title}
@@ -64,11 +71,13 @@ const BookmarkComponent = ({
             </InlineText>
           </div>
 
-          <div className={styles.link}>
+          <div className={styles['bookmark__link']}>
             <LinkIcon style={{ width: 16, height: 16 }} />
             <span>{url}</span>
           </div>
         </div>
+
+        <RainbowFrame opacity={0.25} strokeWidth={2} displayOnHover />
       </a>
     </>
   )
