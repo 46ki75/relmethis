@@ -2,6 +2,7 @@
   color: var(--react-color-fg);
   font-size: var(--react-font-size);
   opacity: var(--react-opacity);
+  transition: color 500ms;
 
   &::selection,
   *::selection {
@@ -19,12 +20,11 @@
   }
 
   &__strong {
-    color: var(--react-color-strong);
+    opacity: 1;
   }
 
   &__del {
-    color: var(--react-color-del);
-    text-decoration-color: var(--react-color-del);
+    opacity: 0.75;
   }
 
   &__cite {

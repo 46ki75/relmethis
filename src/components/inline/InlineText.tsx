@@ -178,7 +178,7 @@ const InlineTextComponent = ({
   code = false,
   ruby,
   fontSize = 'inherit',
-  opacity = 'inherit'
+  opacity = 0.9
 }: InlineTextProps) => {
   const fgColor = useMemo(
     () =>
@@ -187,15 +187,13 @@ const InlineTextComponent = ({
         : presetColorName != null
           ? COLOR_PRESET[presetColorName]
           : isDark
-            ? 'rgba(255, 255, 255, 1)'
-            : 'rgba(0, 0, 0, 1)',
+            ? 'rgba(255, 255, 255, 0.8)'
+            : 'rgba(0, 0, 0, 0.8)',
     [color, isDark, presetColorName]
   )
 
   const { ref } = useCSSVariable({
     '--react-color-fg': rgba(fgColor, 0.7),
-    '--react-color-strong': rgba(fgColor, 0.8),
-    '--react-color-del': rgba(fgColor, 0.5),
     '--react-selection-color-fg':
       getLuminance(fgColor) < 0.5
         ? 'rgba(255, 255, 255, 0.7)'
