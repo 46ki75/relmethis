@@ -20,6 +20,8 @@ export interface ButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 
   children: ReactNode
+
+  isLoading?: boolean
 }
 
 // # --------------------------------------------------------------------------------
@@ -34,19 +36,28 @@ const ButtonComponent = ({
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false,
   onClick,
-  children
+  children,
+  isLoading = false
 }: ButtonProps) => {
   return (
-    <button
-      onClick={onClick}
-      className={clsx(styles.button, {
-        [styles['button--light']]: !isDark,
-        [styles['button--dark']]: isDark
-      })}
-      style={style}
-    >
-      {children}
-    </button>
+    <>
+      <button
+        onClick={(e) => {
+          if (onClick != null && !isLoading) {
+            onClick(e)
+          }
+        }}
+        className={clsx(styles.button, {
+          [styles['button--ready']]: !isLoading,
+          [styles['button--loading']]: isLoading,
+          [styles['button--light']]: !isDark,
+          [styles['button--dark']]: isDark
+        })}
+        style={style}
+      >
+        {children}
+      </button>
+    </>
   )
 }
 
