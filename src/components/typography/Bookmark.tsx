@@ -43,9 +43,6 @@ const BookmarkComponent = ({
   const { ref: a, inView } = useInView()
 
   const { ref: b } = useCSSVariable({
-    '--react-border-color': isDark
-      ? 'rgba(255,255,255, 0.15)'
-      : 'rgba(0, 0, 0, 0.2)',
     '--react-title-color': isDark
       ? 'rgba(255,255,255, 0.8)'
       : 'rgba(0, 0, 0, 0.8)',
@@ -58,13 +55,19 @@ const BookmarkComponent = ({
   const ref = useMergeRefs(a, b)
 
   return (
-    <div ref={ref} className={styles.wrapper}>
-      <a href={url} target='_blank' rel='nopager noopener'>
-        <div className={styles.image}>
+    <>
+      <a
+        href={url}
+        target='_blank'
+        rel='nopager noopener'
+        ref={ref}
+        className={styles['bookmark']}
+      >
+        <div className={styles['bookmark__image']}>
           <Image src={image} alt={description} disableModal={true} />
         </div>
 
-        <div className={styles.typography}>
+        <div className={styles['bookmark__typography']}>
           <div className={styles.title}>{title}</div>
           <div className={styles.description}>{description}</div>
           <div className={styles.link}>
@@ -73,7 +76,7 @@ const BookmarkComponent = ({
           </div>
         </div>
       </a>
-    </div>
+    </>
   )
 }
 
