@@ -23,25 +23,37 @@ export const Primary: Story = {
 
 const git = `
 gitGraph
-   commit id: "Initial Commit"
-   branch feature
-   commit id: "Feature work 1"
-   branch bugfix
-   commit id: "Bugfix work 1"
+   commit id: "Initial Commit" tag: "v1.0.0" type: HIGHLIGHT
+   branch develop
+   checkout develop
+   commit id: "Develop feature" type: HIGHLIGHT
+   branch feature/feature-1
+   checkout feature/feature-1
+   commit id: "Work on feature 1"
+   commit id: "Complete feature 1" type: HIGHLIGHT
+   checkout develop
+   merge feature/feature-1 tag: "Merge feature-1" type: HIGHLIGHT
+   commit id: "Develop feature 2"
+   branch feature/feature-2
+   checkout feature/feature-2
+   commit id: "Work on feature 2"
+   commit id: "Complete feature 2" type: HIGHLIGHT
+   checkout develop
+   merge feature/feature-2 tag: "Merge feature-2"
+   commit id: "Prepare for release"
+   branch release/v1.1.0
+   checkout release/v1.1.0
+   commit id: "Finalize release" type: HIGHLIGHT
    checkout main
-   commit id: "Main work 1"
-   checkout feature
-   commit id: "Feature work 2"
-   checkout bugfix
-   commit id: "Bugfix work 2"
+   merge release/v1.1.0 tag: "Release v1.1.0" type: HIGHLIGHT
+   commit id: "Hotfix for release"
+   branch hotfix/v1.1.1
+   checkout hotfix/v1.1.1
+   commit id: "Apply hotfix"
    checkout main
-   commit id: "Main work 2"
-   merge bugfix tag: "Bugfix merged"
-   checkout feature
-   commit id: "Feature work 3"
-   checkout main
-   merge feature tag: "Feature merged"
-   commit id: "Main work 3"
+   merge hotfix/v1.1.1 tag: "Release v1.1.1" type: HIGHLIGHT
+   checkout develop
+   merge hotfix/v1.1.1 tag: "Merge hotfix into develop"
 `
 
 export const Git: Story = {

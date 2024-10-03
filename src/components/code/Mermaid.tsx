@@ -9,6 +9,47 @@ import isEqual from 'react-fast-compare'
 
 import styles from './Mermaid.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
+import { darken } from 'polished'
+
+// # --------------------------------------------------------------------------------
+//
+// theme
+//
+// # --------------------------------------------------------------------------------
+
+const THEME_GIT = (isDark?: boolean) => ({
+  git0: '#b8a36e',
+  git1: '#59b57c',
+  git2: '#6987b8',
+  git3: '#9771bd',
+  git4: '#c9699e',
+  git5: '#b36472',
+  git6: '#bf7e71',
+  git7: '#868e9c',
+  gitBranchLabel0: 'rgba(255,255,255,0.7)',
+  gitBranchLabel1: 'rgba(255,255,255,0.7)',
+  gitBranchLabel2: 'rgba(255,255,255,0.7)',
+  gitBranchLabel3: 'rgba(255,255,255,0.7)',
+  gitBranchLabel4: 'rgba(255,255,255,0.7)',
+  gitBranchLabel5: 'rgba(255,255,255,0.7)',
+  gitBranchLabel6: 'rgba(255,255,255,0.7)',
+  gitBranchLabel7: 'rgba(255,255,255,0.7)',
+  gitBranchLabel8: 'rgba(255,255,255,0.7)',
+  gitBranchLabel9: 'rgba(255,255,255,0.7)',
+  commitLabelColor: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
+  commitLabelBackground: 'transparent',
+  tagLabelColor: 'rgba(0,0,0,0.7)',
+  tagLabelBackground: 'rgba(255,255,255,0.7)',
+  tagLabelBorder: 'rgba(0,0,0,0.7)',
+  gitInv0: darken(0.1, '#b8a36e'),
+  gitInv1: darken(0.1, '#59b57c'),
+  gitInv2: darken(0.1, '#6987b8'),
+  gitInv3: darken(0.1, '#9771bd'),
+  gitInv4: darken(0.1, '#c9699e'),
+  gitInv5: darken(0.1, '#b36472'),
+  gitInv6: darken(0.1, '#bf7e71'),
+  gitInv7: darken(0.1, '#868e9c')
+})
 
 // # --------------------------------------------------------------------------------
 //
@@ -53,7 +94,14 @@ const MermaidComponent = ({
         mermaid.initialize({
           startOnLoad: false,
           theme: isDark ? 'dark' : 'default',
-          securityLevel
+          securityLevel,
+          themeVariables: {
+            primaryTextColor: isDark
+              ? 'rgba(255,255,255,0.6)'
+              : 'rgba(0,0,0,0.6)',
+            primaryColor: 'rgba(255,255,255,0.7)',
+            ...THEME_GIT(isDark)
+          }
         })
 
         const { svg } = await mermaid.render('mermaid-svg', code)
