@@ -1,7 +1,10 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
 import styles from './Button.module.scss'
 import clsx from 'clsx'
+import { RainbowFrame } from '../animation/RainbowFrame'
+import { DotLoadingIcon } from '../icon/DotLoadingIcon'
+import { InlineText } from '../inline/InlineText'
 
 // # --------------------------------------------------------------------------------
 //
@@ -39,6 +42,23 @@ const ButtonComponent = ({
   children,
   isLoading = false
 }: ButtonProps) => {
+  const prevIsLoading = useRef(isLoading)
+
+  const [isSuccess, setIsSuccess] = useState(false)
+
+  useEffect(() => {
+    let id: number
+    if (prevIsLoading.current && !isLoading) {
+      setIsSuccess(true)
+      id = window.setTimeout(() => {
+        setIsSuccess(false)
+      }, 2000)
+    }
+    prevIsLoading.current = isLoading
+
+    return () => clearTimeout(id)
+  }, [isLoading])
+
   return (
     <>
       <button
@@ -55,7 +75,18 @@ const ButtonComponent = ({
         })}
         style={style}
       >
-        {children}
+        {isLoading ? (
+          <DotLoadingIcon isDark={isDark} size={24} />
+        ) : isSuccess ? (
+          <div key={'success'} className={styles['button__success']}>
+            <InlineText isDark={isDark}>success!</InlineText>
+            <RainbowFrame opacity={0.3} strokeWidth={2} />
+          </div>
+        ) : (
+          <div key={'children'} className={styles['button__children']}>
+            {children}
+          </div>
+        )}
       </button>
     </>
   )
