@@ -4,7 +4,7 @@ import styles from './Button.module.scss'
 import clsx from 'clsx'
 import { RainbowFrame } from '../animation/RainbowFrame'
 import { DotLoadingIcon } from '../icon/DotLoadingIcon'
-import { InlineText } from '../inline/InlineText'
+import { CheckCircleIcon } from '@heroicons/react/24/outline'
 
 // # --------------------------------------------------------------------------------
 //
@@ -79,7 +79,12 @@ const ButtonComponent = ({
           <DotLoadingIcon isDark={isDark} size={24} />
         ) : isSuccess ? (
           <div key={'success'} className={styles['button__success']}>
-            <InlineText isDark={isDark}>success!</InlineText>
+            <CheckCircleIcon
+              style={{
+                width: 24,
+                color: isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)'
+              }}
+            />
             <RainbowFrame opacity={0.3} strokeWidth={2} />
           </div>
         ) : (
