@@ -379,7 +379,7 @@ export const RenderMdast = ({
       }
 
       case 'thematicBreak': {
-        markdownComponent.push(<Divider />)
+        markdownComponent.push(<Divider isDark={isDark} />)
         break
       }
 
