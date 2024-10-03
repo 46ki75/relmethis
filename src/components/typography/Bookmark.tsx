@@ -6,9 +6,8 @@ import isEqual from 'react-fast-compare'
 import { Image } from '../media/Image'
 
 import styles from './Bookmark.module.scss'
-import { useCSSVariable } from '../../hooks/useCSSVariable'
-import { useInView } from 'react-intersection-observer'
-import { useMergeRefs } from '../../hooks/useMergeRefs'
+
+import { InlineText } from '../inline/InlineText'
 
 // # --------------------------------------------------------------------------------
 //
@@ -40,27 +39,12 @@ const BookmarkComponent = ({
   url,
   image
 }: BookmarkProps) => {
-  const { ref: a, inView } = useInView()
-
-  const { ref: b } = useCSSVariable({
-    '--react-title-color': isDark
-      ? 'rgba(255,255,255, 0.8)'
-      : 'rgba(0, 0, 0, 0.8)',
-    '--react-description-color': isDark
-      ? 'rgba(255,255,255, 0.6)'
-      : 'rgba(0, 0, 0, 0.6)',
-    '--react-opacity': inView ? 1 : 0
-  })
-
-  const ref = useMergeRefs(a, b)
-
   return (
     <>
       <a
         href={url}
         target='_blank'
         rel='nopager noopener'
-        ref={ref}
         className={styles['bookmark']}
       >
         <div className={styles['bookmark__image']}>
@@ -68,8 +52,18 @@ const BookmarkComponent = ({
         </div>
 
         <div className={styles['bookmark__typography']}>
-          <div className={styles.title}>{title}</div>
-          <div className={styles.description}>{description}</div>
+          <div>
+            <InlineText isDark={isDark} fontSize={'1rem'} bold>
+              {title}
+            </InlineText>
+          </div>
+
+          <div>
+            <InlineText isDark={isDark} fontSize={'0.8rem'} opacity={0.8}>
+              {description}
+            </InlineText>
+          </div>
+
           <div className={styles.link}>
             <LinkIcon style={{ width: 16, height: 16 }} />
             <span>{url}</span>
