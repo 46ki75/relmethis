@@ -1,0 +1,38 @@
+.button {
+  all: unset;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 0 0.125rem rgba(0, 0, 0, 0.3);
+  transition:
+    transform 400ms,
+    background-color 400ms;
+  cursor: pointer;
+  user-select: none;
+
+  &--light {
+    color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  &--dark {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  &:hover {
+    transform: translateX(-2px) translateY(-2px);
+    background-color: rgba($color: #6987b8, $alpha: 0.15);
+  }
+
+  &:active {
+    transform: translateX(2px) translateY(2px);
+    background-color: rgba($color: #b8a36e, $alpha: 0.15);
+  }
+}
