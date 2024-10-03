@@ -7,6 +7,7 @@ import styles from './Divider.module.scss'
 import { useCSSVariable } from '../../hooks/useCSSVariable'
 import { useMergeRefs } from '../../hooks/useMergeRefs'
 import clsx from 'clsx'
+import { Property } from 'csstype'
 
 // # --------------------------------------------------------------------------------
 //
@@ -36,6 +37,8 @@ interface DividerProps {
    *
    */
   color?: string
+
+  margin?: Property.MarginBlock
 }
 
 // # --------------------------------------------------------------------------------
@@ -49,12 +52,14 @@ const DividerComponent = ({
   isDark = typeof window !== 'undefined'
     ? window.matchMedia('(prefers-color-scheme: dark)').matches
     : false,
-  color = isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.25)'
+  color = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
+  margin = '4rem'
 }: DividerProps): JSX.Element => {
   const { ref: a, inView } = useInView()
   const { ref: b } = useCSSVariable({
     '--react-color': color,
-    '--react-transform': `scaleX(${inView ? 1 : 0})`
+    '--react-transform': `scaleX(${inView ? 1 : 0})`,
+    '--react-margin': margin
   })
   const ref = useMergeRefs(a, b)
 
