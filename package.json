@@ -1,9 +1,6 @@
 {
   "name": "relmethis",
   "version": "0.2.0",
-  "engines": {
-    "node": "20"
-  },
   "author": "Chomolungma Shirayuki",
   "repository": {
     "type": "git",
