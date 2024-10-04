@@ -16,7 +16,8 @@ updates:
           - '*eslint*'
       storybook-updates:
         patterns:
-          - '*storybook*'
+          - '@storybook/*'
+          - 'storybook'
       postcss-updates:
         patterns:
           - '*postcss*'
