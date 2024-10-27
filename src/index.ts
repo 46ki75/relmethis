@@ -37,6 +37,7 @@ export * from './components/form/Checkbox'
 export * from './components/form/Edit'
 
 export * from './components/icon/ClickableIcon'
+export * from './components/icon/Cube'
 export * from './components/icon/DotLoadingIcon'
 export * from './components/icon/LanguageIcon'
 export * from './components/icon/SquareLoadingIcon'
