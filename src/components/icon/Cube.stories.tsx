@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Cube } from './Cube'
 
 const meta: Meta<typeof Cube> = {
-  title: 'Examples/Cube/Cube',
+  title: 'Components/Icon/Cube',
   component: Cube,
   tags: ['autodocs']
 }
