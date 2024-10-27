@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { DotLoadingIcon } from '../icon/DotLoadingIcon'
-
 import { RectangleWave } from './RectangleWave'
 
 import isEqual from 'react-fast-compare'
 
 import styles from './FullscreenFallback.module.scss'
+import { Cube } from '../icon/Cube'
 
 // # --------------------------------------------------------------------------------
 //
@@ -45,7 +44,7 @@ const FullscreenFallbackComponent = ({
       }}
     >
       <RectangleWave color='rgba(128,128,128,0.8)' />
-      <DotLoadingIcon size={64} color='rgba(128,128,128,0.8)' />
+      <Cube size={64} isDark={isDark} />
     </div>
   )
 }
