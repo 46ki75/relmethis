@@ -21,3 +21,8 @@ updates:
       postcss-updates:
         patterns:
           - '*postcss*'
+    labels:
+      - 'dependencies'
+      - 'npm'
+    reviewers:
+      - '46ki75'
