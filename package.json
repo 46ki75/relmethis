@@ -82,7 +82,7 @@
     "eslint": "^9.20.1",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
-    "eslint-plugin-storybook": "^0.11.2",
+    "eslint-plugin-storybook": "^0.11.3",
     "postcss": "^8.5.2",
     "postcss-preset-env": "^10.1.4",
     "prettier": "^3.5.1",
